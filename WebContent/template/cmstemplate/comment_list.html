@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+	<div class="pinglun">
+	<div class="LanMu01-2">
+	 <div id="Title">${(entity.title)!""}</div>
+	<div>
+                	发布者：${entity.checkUser}
+                	作者：${entity.author}
+                	评论数量：${entity.commentCount}
+                	发布时间：${entity.checkTime}
+                </div>
+        <div class="LanMu01-1"></div>
+        <span>我来说两句</span>
+        <div class="LanMu01-3"></div>
+    </div>
+    
+    <div class="clear-10"></div>
+    <div class="pltable"></div>
+    <form id="commentForm" action="${C}/checkDetail/commentInMoreComment" method="post">
+    <div class="plfl1">评论内容：</div>
+    <div class="plfr1"><textarea name="text" class="cinput" cols="60" rows="5"></textarea></div>
+    <div class="clear"></div>
+ 
+    
+    <div class="clear"></div>
+    <div class="plfl1">&nbsp;</div>
+    
+    <div class="plfr1">
+    <input type="hidden" name="id" value="${id}"/>
+    <input type="submit" name="Submit" value=" 马上发表 " class="published" />
+    （网友评论仅供其表达个人看法，并不表明本站同意其观点或证实其描述。）
+    </div>
+    </form>
+    </div>
+ <div id="comment">
+	<div>
+	 <#if (list)??>
+		 <#list list as comment>
+		<div class="commentuser">评论用户：${(comment.commentUser)!""}</div>
+		<div class="content">评论内容：</div>
+		<div class="content"><textarea name="text" class="cinput" cols="60" rows="5" readonly="true">${(comment.commentContent)!""}</textarea></div>
+	 </#list>
+      </#if>
+	</div>
+	
+  </div>
+   <form id="tableForm" action="${C}/checkDetail/morecomment/${id}" method="post">
+   <input type="hidden" name="pageNo"/>
+   <input type="hidden" name="id" value="${id}"/>
+   <input type="hidden" name="total" value="${totalPage}"/>
+   <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="left" class="pn-sp">
+                共 ${total} 条&nbsp;
+                每页 ${pagesize} 条&nbsp;
+                <input type="button" value="首 页" onclick="_gotoPage('1','first');"/>
+                <input type="button" value="上一页" onclick="_gotoPage('${prePage}','pre');"/>
+                <input type="button" value="下一页" onclick="_gotoPage('${nextPage}','next');" />
+                <input type="button" value="尾 页" onclick="_gotoPage('${totalPage}','end');"/>&nbsp;
+                当前 ${currentPage}/ ${totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" style="width:50px" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}"/>页
+                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val(),'else');"/>
+            </td>
+            </tr>
+            </table>
+ </form>           
+		  <script type="text/javascript">
+            function _gotoPage(pageNo,status) {
+            	//首页的情况
+            	 if(status=='first')
+            	{
+            		pageAction(pageNo);
+            	}
+            	//向前翻页的情况
+            	else if(status=='pre')
+            	{
+            		if(pageNo==0)
+            		{
+            			alert("当前已是首页！！");	
+            		}else{
+            			pageAction(pageNo);
+            		}
+            	}
+            	//向后翻页的情况
+            	else if(status=='next')
+            	{
+            		//获取总页数
+            		var total =  $("input[name=total]").val();
+            		if(pageNo >= total)
+            		{
+            			alert("当前已是最后一页！！");	
+            		}else{
+            			pageAction(pageNo);
+            		}
+            	} 
+            	//尾页的情况
+            	else if(status=='end')
+            	{
+            		pageAction(pageNo);
+            	}
+            	//直接跳转的情况
+            	else{
+
+            		//获取总页数
+            		var total =  $("input[name=total]").val();
+            		if(pageNo<=0)
+            		{
+            			alert("请输入大于0的数！");
+            		}else if(pageNo > total){
+            			alert("请输入小于总页数的数！");
+            		}else{
+            			pageAction(pageNo);
+            		}
+            	}
+                
+            }
+            //向后台请求
+            function pageAction(pageNo)
+            {
+            	// try{
+                     var tableForm = document.getElementById("tableForm");
+                     $("input[name=pageNo]").val(pageNo);
+                     //tableForm.action="mycomments.jspx";
+                     tableForm.onsubmit=null;
+                     tableForm.submit();
+                 /* } catch(e) {
+                     alert('_gotoPage(pageNo)方法出错');
+                 }  */
+            }
+            </script>
+</body>
+</html>

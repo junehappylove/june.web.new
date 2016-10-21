@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="1800 seconds" debug="false">
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="USER_HOME" value="c://logs" /><!-- 日志存放目录 -->
+	<property scope="context" name="FILE_NAME" value="june_web_new" />
+
+	<timestamp key="byDay" datePattern="yyyy-MM-dd" />
+	<!-- 控制台输出 --> 
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
+		</encoder>
+	</appender>
+	<!-- 按照每天生成日志文件 --> 
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}-%i.log.zip
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>50MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n </pattern>
+		</encoder>
+	</appender>
+ 	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->  
+   <!--  
+   	<logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />  
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="DEBUG" />  
+    <logger name="org.hibernate.SQL" level="DEBUG" />  
+    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />  
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />  -->
+    
+	<!--日志异步到数据库 -->  
+    <appender name="DB_MYSQL_POOL" class="ch.qos.logback.classic.db.DBAppender">
+        <!--日志异步到数据库 --> 
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+           <!--连接池 --> 
+           <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+              <driverClass>com.mysql.jdbc.Driver</driverClass>
+              <url>jdbc:mysql://127.0.0.1:3306/june_web_new_log</url>
+              <user>root</user>
+              <password>root</password>
+            </dataSource>
+        </connectionSource>
+  </appender>
+ <!--  
+ 	<appender name="db-classic-oracle-pool" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
+                <driverClassName>oracle.jdbc.driver.OracleDriver</driverClassName>
+                <url>jdbc:oracle:thin:@192.168.3.250:1521:devdb</url>
+                <username>logback</username>
+                <password>logback</password>
+            </dataSource>
+        </connectionSource>
+    </appender> -->
+    
+	<root level="DEBUG">  
+        <appender-ref ref="STDOUT" />  
+        <!-- 对日志的双向记录 -->
+		<appender-ref ref="file" />
+        <!-- <appender-ref ref="DB_MYSQL_POOL" />   -->
+    </root>
+</configuration>

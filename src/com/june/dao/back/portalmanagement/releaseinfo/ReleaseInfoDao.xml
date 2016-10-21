@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.portalmanagement.releaseinfo.ReleaseInfoDao">
+
+	<!-- 获取咨询类型 -->
+	<select id="getChannels" resultType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		SELECT
+		T1.CHANNEL_ID AS channelId,
+		T1.CHANNEL_NAME AS channelName,
+		T1.CHANNEL_PATH AS CHANNEL_PATH
+		FROM
+		portal_channel T1
+	</select>
+	
+	<!-- 获取最新的文章id -->
+	<select id="getMaxContentId" resultType="int">
+		SELECT CAST(RIGHT(nextval('content_id'),11) AS SIGNED) 
+	</select>
+	
+	<!-- 保存操作content表插入数据 -->
+	<insert id="insertContent" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		INSERT
+		INTO
+		portal_content
+		VALUES
+		(
+			#{contentId},
+			#{channelId},
+			#{contentType},
+			#{sys_user},
+			NOW(),
+			NULL,
+			'1',
+			NULL,
+			NULL,
+			0,
+			#{commentState},
+			0,
+			NULL,
+			'0',
+			#{sys_user},
+			#{sys_date},
+			#{sys_user},
+			#{sys_date},
+			0
+		)
+	</insert>
+	
+	<!-- 保存操作content_txt表插入数据 -->
+	
+	<insert id="insertContentText" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		INSERT
+		INTO
+		portal_content_txt
+		VALUES
+		(
+			#{contentId},
+			#{contentText},
+			#{summary},
+			#{title},
+			#{sys_user},
+			#{sys_date},
+			#{sys_user},
+			#{sys_date},
+			0
+		)
+	</insert>
+	<!-- 修改操作content表更新 -->
+	<update id="updateContent" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content
+		SET
+		CHANNEL_ID = #{channelId},
+		CONTENT_TYPE = #{contentType},
+		USER_ID = #{sys_user},
+		SAVE_DATE = NOW(),
+		COMMENT_STATE = #{commentState},
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+	<!-- 修改操作content_txt表更新 -->
+	<update id="updateContentTxt" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content_txt
+		SET
+		CONTENT_TEXT = #{contentText},
+		SUMMARY = #{summary},
+		TITLE = #{title},
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+	
+	<!-- 未保存直接提交操作 content表插入 -->
+	<insert id="insertSubmitContent" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		INSERT
+		INTO
+		portal_content
+		VALUES
+		(
+			#{contentId},
+			#{channelId},
+			#{contentType},
+			#{sys_user},
+			NOW(),
+			NOW(),
+			'2',
+			NULL,
+			NULL,
+			0,
+			#{commentState},
+			0,
+			NULL,
+			'0',
+			#{sys_user},
+			#{sys_date},
+			#{sys_user},
+			#{sys_date},
+			0
+		)
+	</insert>
+	
+	<!-- 直接提交操作content_txt表插入数据 -->
+	<insert id="insertSubmitContentText" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		INSERT
+		INTO
+		portal_content_txt
+		VALUES
+		(
+			#{contentId},
+			#{contentText},
+			#{summary},
+			#{title},
+			#{sys_user},
+			#{sys_date},
+			#{sys_user},
+			#{sys_date},
+			0
+		)
+	</insert>
+	<!-- 先进行保存或者修改操作，在进行提交操作content表操作 -->
+	<update id="updateSubmitContent" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content
+		SET
+		CHANNEL_ID = #{channelId},
+		CONTENT_TYPE = #{contentType},
+		USER_ID = #{sys_user},
+		SUBMIT_DATE = NOW(),
+		STATUS='2',
+		COMMENT_STATE = #{commentState},
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+	<!-- 先进行保存或者修改操作，在进行提交操作content_txt表操作 -->
+	<update id="updateSubmitContentTxt" parameterType="com.june.dto.back.PortalManagement.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content_txt
+		SET
+		CONTENT_TEXT = #{contentText},
+		SUMMARY = #{summary},
+		TITLE = #{title},
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+</mapper>

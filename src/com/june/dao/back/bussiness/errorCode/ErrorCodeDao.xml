@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.bussiness.errorCode.ErrorCodeDao">
+	<!-- 查询列表SQL -->
+	<sql id="selectData">
+		SELECT v.ERROR_ID       AS errorId,
+		       v.ERROR_CODE     AS errorCode,
+		       v.ERROR_LEVEL    AS errorLevel,
+		       v.ERROR_DESC     AS errorDesc,
+		       v.ERROR_REASON   AS errorReason,
+		       v.SUB_SYSTEM     AS subSystem,
+		       e.VEHICLE_NAME 	AS impactVehicle,
+		       v.VEHICLE_TYPE 	AS vehicle,
+		       v.GUIDE_INFO_V0 	AS guidV0,
+		       v.GUIDE_INFO_V1 	AS guidV1,
+		       v.GUIDE_INFO_V2 	AS guidV2,
+		       v.PORT_ID 		AS port,
+		       v.WORD_OFFSET 	AS wordOffset,
+		       v.BYTE_OFFSET 	AS byteOffset,
+		       v.ADD_USER_ID    AS addUserId,
+		       v.ADD_TIME       AS addTime,
+		       v.UPDATE_USER_ID AS updateUserId,
+		       v.UPDATE_TIME    AS updateTime,
+		       v.VERSION        AS version
+		  FROM ERROR_CODE v
+		  LEFT JOIN VEHICLE_TYPE e ON e.VEHICLE_ID = v.IMPACT_VEHICLE
+		 WHERE 1 = 1
+		<if test="errorCode != null and errorCode != ''">
+			AND v.ERROR_CODE LIKE CONCAT(CONCAT('%', #{errorCode}), '%')
+		</if>
+		<if test="errorLevel != null and errorLevel != ''">
+			AND v.ERROR_LEVEL = #{errorLevel}
+		</if>
+		<if test="errorReason != null and errorReason != ''">
+			AND v.ERROR_REASON LIKE CONCAT(CONCAT('%', #{errorReason}), '%')
+		</if>
+		<if test="subSystem != null and subSystem != ''">
+			AND v.SUB_SYSTEM LIKE CONCAT(CONCAT('%', #{subSystem}), '%')
+		</if>
+		<if test="errorDesc != null and errorDesc != ''">
+			AND v.ERROR_DESC LIKE CONCAT(CONCAT('%', #{errorDesc}), '%')
+		</if>
+		<if test="impactVehicle != null and impactVehicle != ''">
+			AND v.IMPACT_VEHICLE = #{impactVehicle}
+		</if>
+		<if test="vehicle != null and vehicle != ''">
+			AND v.VEHICLE_TYPE LIKE CONCAT(CONCAT('%', #{vehicle}), '%')
+		</if>
+	</sql>
+	<!-- 查询故障代码列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto"
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		<include refid="pagetop" />
+		<include refid="selectData" />
+			ORDER BY v.ADD_TIME
+		<include refid="pageend" />
+	</select>
+	<sql id="pagetop">
+		<![CDATA[SELECT * FROM (SELECT ROWNUM AS PNUM, TNUM.* FROM ( ]]>
+	</sql>
+	<sql id="pageend">
+		<![CDATA[) TNUM WHERE ROWNUM <= #{startadd} + #{pageSize}) TPAGE WHERE TPAGE.PNUM > #{start}]]>
+	</sql>
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(1) FROM ( <include refid="selectData" /> ) T
+	</select>
+
+	<!-- 查询所有故障代码列表 -->
+	<select id="getList" resultType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		<include refid="selectData" />
+	</select>
+	
+	<!-- 根据车型id查询对应的故障代码下拉列表 -->
+	<select id="getDrops" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.ERROR_ID       AS id,
+		       v.ERROR_CODE     AS name
+		  FROM ERROR_CODE v 
+		WHERE 1=1
+		<if test="impactVehicle != null and impactVehicle != ''">
+			AND v.IMPACT_VEHICLE = #{impactVehicle}
+		</if>
+	</select>
+	
+	<!-- 根据车型id查询对应的故障代码下拉列表 -->
+	<select id="getDrops2" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.ERROR_ID       AS id,
+		       v.ERROR_CODE     AS name
+		  FROM ERROR_CODE v 
+		WHERE 1=1
+		<if test="impactVehicle != null and impactVehicle != ''">
+			AND v.IMPACT_VEHICLE = #{impactVehicle}
+		</if>
+		<if test="subSystem != 'WANG_JUN_WEI' and subSystem != '' and subSystem != null">
+			AND v.SUB_SYSTEM = #{subSystem}
+		</if>
+		<if test="subSystem == ''">
+			AND v.SUB_SYSTEM IS NULL
+		</if>
+		<if test="vehicle != 'WANG_JUN_WEI' and vehicle != '' and vehicle != null">
+			AND v.VEHICLE_TYPE = #{vehicle}
+		</if>
+		<if test="vehicle == ''">
+			AND v.VEHICLE_TYPE IS NULL
+		</if>
+		<if test="errorLevel != 'WANG_JUN_WEI' and errorLevel != '' and errorLevel != null">
+			AND v.ERROR_LEVEL = #{errorLevel}
+		</if>
+		<if test="errorLevel == ''">
+			AND v.ERROR_LEVEL IS NULL
+		</if>
+		<if test="errorReason != 'WANG_JUN_WEI' and errorReason != '' and errorReason != null">
+			AND v.ERROR_REASON = #{errorReason}
+		</if>
+		<if test="errorReason == ''">
+			AND v.ERROR_REASON IS NULL
+		</if>
+	</select>
+	
+	<!-- 根据车辆查询分类下拉列表 -->
+	<select id="getDropsByType" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.VEHICLE_TYPE AS ID,
+		       (CASE
+		         WHEN length(v.VEHICLE_TYPE) > 0 THEN
+		          v.VEHICLE_TYPE
+		         ELSE
+		          '其他'
+		       END) AS NAME
+		  FROM ERROR_CODE v
+		 WHERE 1 = 1
+		   AND v.IMPACT_VEHICLE = #{impactVehicle}
+		 GROUP BY v.VEHICLE_TYPE
+		 ORDER BY v.VEHICLE_TYPE
+	</select>
+	<!-- 根据等级查询分类下拉列表 -->
+	<select id="getDropsByLevel" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.ERROR_LEVEL AS ID,
+		       (CASE
+		         WHEN length(v.ERROR_LEVEL) >0 THEN
+		          v.ERROR_LEVEL
+		         ELSE
+		          '其他'
+		       END) AS NAME
+		  FROM ERROR_CODE v
+		 WHERE 1 = 1
+		   AND v.IMPACT_VEHICLE = #{impactVehicle}
+		 GROUP BY v.ERROR_LEVEL
+		 ORDER BY v.ERROR_LEVEL
+	</select>
+	<!-- 根据子系统查询分类下拉列表 -->
+	<select id="getDropsBySystem" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT (CASE
+		         WHEN length(v.SUB_SYSTEM) > 0 THEN
+		          v.SUB_SYSTEM
+		         ELSE
+		          '其他'
+		       END) AS ID,
+		       (CASE
+		         WHEN length(v.SUB_SYSTEM) > 0 THEN
+		          v.SUB_SYSTEM
+		         ELSE
+		          '其他'
+		       END) AS NAME,
+		       'true' AS isParent,
+		       'true' AS nocheck,
+		       #{impactVehicle} AS filter
+		  FROM ERROR_CODE v
+		 WHERE 1 = 1
+		   AND v.IMPACT_VEHICLE = #{impactVehicle}
+		 GROUP BY v.SUB_SYSTEM
+		 ORDER BY v.SUB_SYSTEM
+	</select>
+	<!-- 根据故障描述查询分类下拉列表 -->
+	<select id="getDropsByDesc" resultType="com.june.dto.back.common.TreeDto" 
+		parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.ERROR_REASON AS ID,
+		       (CASE
+		         WHEN length(v.ERROR_REASON) > 0 THEN
+		          v.ERROR_REASON
+		         ELSE
+		          '其他'
+		       END) AS NAME
+		  FROM ERROR_CODE v
+		 WHERE 1 = 1
+		   AND v.IMPACT_VEHICLE = #{impactVehicle}
+		 GROUP BY v.ERROR_REASON
+		 ORDER BY v.ERROR_REASON
+	</select>
+	<!-- 根据故障代码id 获取一条记录 -->
+	<select id="get" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto" 
+		resultType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT v.ERROR_ID       AS errorId,
+		       v.ERROR_CODE     AS errorCode,
+		       v.ERROR_LEVEL    AS errorLevel,
+		       v.ERROR_DESC     AS errorDesc,
+		       v.ERROR_REASON   AS errorReason,
+		       v.SUB_SYSTEM     AS subSystem,
+		       v.IMPACT_VEHICLE AS impactVehicle,
+		       v.VEHICLE_TYPE 	AS vehicle,
+		       v.GUIDE_INFO_V0  AS guidV0,
+		       v.GUIDE_INFO_V1  AS guidV1,
+		       v.GUIDE_INFO_V2 	AS guidV2,  
+		       v.PORT_ID 		AS port,
+		       v.WORD_OFFSET 	AS wordOffset,
+		       v.BYTE_OFFSET 	AS byteOffset,
+		       v.ADD_USER_ID    AS addUserId,
+		       v.ADD_TIME       AS addTime,
+		       v.UPDATE_USER_ID AS updateUserId,
+		       v.UPDATE_TIME    AS updateTime,
+		       v.VERSION        AS version
+		  FROM ERROR_CODE v WHERE v.ERROR_ID = #{errorId}
+	</select>
+	
+	<!-- 批量添加故障代码信息 -->
+	<insert id="addlist" parameterType="java.util.List">
+		<!-- <selectKey keyProperty="errorId" resultType="java.lang.String" order="BEFORE">
+			SELECT SEQ_ERROR_CODE.NEXTVAL AS ERROR_ID FROM DUAL 
+		</selectKey> -->
+		<![CDATA[ INSERT INTO ERROR_CODE
+		  (ERROR_ID,
+		   ERROR_CODE,
+		   ERROR_LEVEL,
+		   ERROR_DESC,
+		   ERROR_REASON,
+		   SUB_SYSTEM,
+		   IMPACT_VEHICLE,
+		   VEHICLE_TYPE,
+		   GUIDE_INFO_V0,
+		   GUIDE_INFO_V1,
+		   GUIDE_INFO_V2,
+		   PORT_ID,
+		   WORD_OFFSET,
+		   BYTE_OFFSET,
+		   ADD_USER_ID,
+		   ADD_TIME,
+		   UPDATE_USER_ID,
+		   UPDATE_TIME,
+		   VERSION ) ]]>
+		<foreach collection="list" item="item" index="index" separator="UNION ALL">
+		   SELECT error_code_id(),
+		   #{item.errorCode},
+			<if test="item.errorLevel != null and item.errorLevel != '' ">
+		   #{item.errorLevel,jdbcType=VARCHAR},
+		   </if>
+			<if test="item.errorLevel == null or item.errorLevel == '' ">
+		   '',
+		   </if>
+		   #{item.errorDesc},
+		   #{item.errorReason},
+		   #{item.subSystem},
+		   #{item.impactVehicle,jdbcType=VARCHAR},
+		   #{item.vehicle},
+		   #{item.guidV0},
+		   #{item.guidV1},
+		   #{item.guidV2},
+		   #{item.port},
+		   #{item.wordOffset},
+		   #{item.byteOffset},
+		   #{item.addUserId},
+		   SYSDATE,
+		   #{item.updateUserId},
+		   SYSDATE,
+		   0 FROM DUAL
+		</foreach>
+	</insert>
+	
+	<!-- 添加故障代码信息 -->
+	<insert id="add" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		<selectKey keyProperty="errorId" resultType="java.lang.String" order="BEFORE">
+			SELECT SEQ_ERROR_CODE.NEXTVAL AS ERROR_ID FROM DUAL 
+		</selectKey>
+		INSERT INTO ERROR_CODE
+		  (ERROR_ID,
+		   ERROR_CODE,
+		   ERROR_LEVEL,
+		   ERROR_DESC,
+		   ERROR_REASON,
+		   SUB_SYSTEM,
+		   IMPACT_VEHICLE,
+		   VEHICLE_TYPE,
+		   GUIDE_INFO_V0,
+		   GUIDE_INFO_V1,
+		   GUIDE_INFO_V2,
+		   PORT_ID,
+		   WORD_OFFSET,
+		   BYTE_OFFSET,
+		   ADD_USER_ID,
+		   ADD_TIME,
+		   UPDATE_USER_ID,
+		   UPDATE_TIME,
+		   VERSION)
+		VALUES
+		  (#{errorId},
+		   #{errorCode},
+		   #{errorLevel},
+		   #{errorDesc},
+		   #{errorReason},
+		   #{subSystem},
+		   #{impactVehicle},
+		   #{vehicle},
+		   #{guidV0},
+		   #{guidV1},
+		   #{guidV2},
+		   #{port},
+		   #{wordOffset},
+		   #{byteOffset},
+		   #{addUserId},
+		   SYSDATE,
+		   #{addUserId},
+		   SYSDATE,
+		   0)
+	</insert>
+
+	<!-- 编辑故障代码信息 -->
+	<update id="update" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		UPDATE ERROR_CODE
+		   SET ERROR_CODE     = #{errorCode},
+		       ERROR_LEVEL    = #{errorLevel},
+		       ERROR_DESC     = #{errorDesc},
+		       ERROR_REASON   = #{errorReason},
+		       SUB_SYSTEM     = #{subSystem},
+		       IMPACT_VEHICLE = #{impactVehicle},
+		       VEHICLE_TYPE   = #{vehicle},
+		       GUIDE_INFO_V0  = #{guidV0},
+		       GUIDE_INFO_V1  = #{guidV1},
+		       GUIDE_INFO_V2  = #{guidV2},
+		       PORT_ID  	  = #{port},
+		       WORD_OFFSET    = #{wordOffset},
+		       BYTE_OFFSET    = #{byteOffset},
+		       UPDATE_USER_ID = #{sys_user},
+		       UPDATE_TIME    = SYSDATE,
+		       VERSION        = VERSION + 1
+		 WHERE ERROR_ID = #{errorId}
+	</update>
+
+	<!-- 删除故障代码 -->
+	<delete id="delete" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+	  DELETE FROM ERROR_CODE WHERE 1=1 
+	  	<if test="errorId != null and errorId != '' ">
+		  AND ERROR_ID = #{errorId}
+		</if>
+	  	<if test="impactVehicle != null and impactVehicle != '' ">
+		  AND IMPACT_VEHICLE = #{impactVehicle}
+		</if>
+	</delete>
+	<!-- errorCodeTree -->
+	<select id="errorCodeTree" resultType="com.june.dto.back.common.TreeDto"
+	 	parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto">
+		SELECT
+			T1.ERROR_ID AS id,
+			T1.ERROR_CODE AS name,
+			'false' AS open,
+		    'false' AS nocheck
+		FROM
+			ERROR_CODE T1 
+		WHERE T1.IMPACT_VEHICLE = #{impactVehicle} 
+		AND T1.SUB_SYSTEM = #{subSystem}
+	</select>
+	<!-- 为批量故障代码数据导入而设计 -->
+	<select id="getListByVehicle" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto"
+		resultType="com.june.dto.back.bussiness.errorCode.ErrorCode">
+		select t.ERROR_ID as errorId,
+			t.ERROR_CODE as errorCode,
+			t.IMPACT_VEHICLE as vehicleId
+		from ERROR_CODE t where 1=1 
+		and t.IMPACT_VEHICLE = #{impactVehicle}
+	</select>
+	<select id="exit" parameterType="com.june.dto.back.bussiness.errorCode.ErrorCodeDto" resultType="int">
+ 		select count(1) from ERROR_CODE e where e.error_code=#{errorCode} and e.impact_vehicle = #{impactVehicle}
+	</select>
+</mapper>

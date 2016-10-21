@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div id="container">  
+<div id="main">
+    <div id="left" class="left">
+    </div><!--left end-->
+        <div id="main1" class="main1">
+       		 <div id="ShowNews">
+                <div id="Pos">&nbsp;<a href="/">首页</a>
+                </div>
+                <div id="Content">
+                <div id="Title">${(entity.title)!""}</div>
+                <div>
+                	发布者：${entity.checkUser}
+                	作者：${entity.author}
+                	发布时间：${entity.checkTime}
+                </div>
+                <div>
+                	${entity.contentText}
+                </div>
+                </div>
+                </div>
+        </div><!--main1 end-->
+        <div id="copyright">
+		</div>
+</div><!--main end-->
+
+</div><!--container end--> 
+<!-- 是否允许评论 -->
+<#if entity.commentState == "0">
+	<div class="pinglun">
+	<div class="LanMu01-2">
+        <div class="LanMu01-1"></div>
+        <span>我来说两句</span>
+        <div class="LanMu01-3"></div>
+    </div>
+    
+    <div class="clear-10"></div>
+    <div class="pltable"></div>
+    <form id="commentForm" action="${C}/checkDetail/comment" method="post">
+    <div class="plfl1">评论内容：</div>
+    <div class="plfr1"><textarea name="text" class="cinput" cols="60" rows="5"></textarea></div>
+    <div class="clear"></div>
+ 
+    
+    <div class="clear"></div>
+    <div class="plfl1">&nbsp;</div>
+    
+    <div class="plfr1">
+    <input type="hidden" name="id" value="${entity.contentId}"/>
+    <input type="submit" name="Submit" value=" 马上发表 " class="published" />
+    （网友评论仅供其表达个人看法，并不表明本站同意其观点或证实其描述。）
+    </div>
+    </form>
+    </div>
+    <div>
+   
+     <#if (list)??>
+		 <#list list as comment>
+            <li><span>${(comment.commentContent)!""}</span></li>
+         </#list>
+      </#if>
+     
+</div>
+<div id="more">
+<a href="${C}/checkDetail/morecomment/${entity.contentId}" target="_blank">查看更多评论</a>
+</div>
+</#if>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="shiroDbRealm" />
+		 <!-- sessionManager -->
+   		<!-- <property name="sessionManager" ref="sessionManager" /> -->
+	</bean>
+
+	<!-- 項目自定义的Realm -->
+	<bean id="shiroDbRealm" class="com.june.shiro.service.ShiroDbRealm">
+		  <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+            </bean>
+        </property>
+	</bean>
+
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login/" />
+		<property name="unauthorizedUrl" value="/denied"/>
+		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
+		<property name="filters">
+		    <map>
+		    	<entry key="authc" value-ref="clientAuthenticationFilter"/>  
+		        <entry key="logout" value-ref="logoutFilter" />
+		    </map>
+		</property>
+	</bean>
+	<bean id="chainDefinitionSectionMetaSource" class="com.june.shiro.service.ChainDefinitionSectionMetaSource"> 
+	    <property name="filterChainDefinitions"> 
+	        <value> 
+	            /logout = logout
+	            /app/logout = authc
+	            /login/main = authc
+	        </value> 
+	    </property> 
+	</bean>
+	
+	<bean id="clientAuthenticationFilter"  class="com.june.shiro.service.ClientAuthenticationFilter"/>
+	
+<!-- 安全退出filter  --> 
+<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+     <property name="redirectUrl" value="/login/" />
+</bean>
+	<!-- shiro redisManager -->
+<!-- <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+    <property name="host" value="192.168.80.128"/>
+    <property name="port" value="6379"/>
+    <property name="expire" value="5400"/>
+</bean>
+
+redisSessionDAO
+<bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+    <property name="redisManager" ref="redisManager" />
+</bean>
+
+sessionManager
+<bean id="sessionManager" class="com.june.shiro.service.SessionManager">
+    <property name="sessionDAO" ref="redisSessionDAO" />
+    <property name="globalSessionTimeout" value="5400000"/>  
+    <property name="deleteInvalidSessions" value="true"/>  
+    <property name="sessionValidationSchedulerEnabled" value="true"/>  
+    <property name="sessionValidationInterval" value="5400000"/>  
+    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+</bean>
+
+<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
+    <constructor-arg value="sid"/>
+    <property name="httpOnly" value="true"/> 
+</bean>  -->
+<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+</beans>

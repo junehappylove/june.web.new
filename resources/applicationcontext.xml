@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cache="http://www.springframework.org/schema/cache" 
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
+    http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
+	
+	<context:annotation-config/>
+	
+	<mvc:view-controller path="/" view-name="login/login" />
+	<mvc:view-controller path="/login" view-name="login/login" />
+	<mvc:view-controller path="/login/" view-name="login/login" />
+	<!-- 引入jdbc配置文件 -->
+	<import resource="classpath:jdbc.xml" />
+	<!--validation配置 start -->
+	<mvc:annotation-driven validator="validator" />
+	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="validateMessageSource" />
+	</bean>
+	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
+	<bean id="validateMessageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找 -->
+				<value>classpath:messages</value>
+				<value>classpath:org/hibernate/validator/ValidationMessages</value>
+			</list>
+		</property>
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="60" />
+	</bean>
+	<!--validation配置 end -->
+	
+	<!-- 激活自动代理功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:component-scan base-package="com.*"></context:component-scan>
+	
+	<!-- jsp视图处理 start -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 视图前缀 -->
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<!-- 视图后缀 -->
+		<property name="suffix" value=".jsp"></property>
+		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="order" value="1" />
+	</bean>
+	<!-- jsp视图处理 end -->
+
+	<!-- 配置freeMarker视图解析器 -->
+	<bean id="viewResolverFtl"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="cache" value="true" />
+		<property name="suffix" value=".ftl" />
+		<property name="order" value="0" />
+	</bean>
+
+	<!-- 配置freeMarker的模板路径 start -->
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/view/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">3600</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="number_format">#.##</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+	<!-- 配置freeMarker的模板路径 end -->
+
+	<!-- myBatis配置start -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+
+	<!-- scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.june.*" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	<!-- myBatis配置end -->
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	</bean>
+
+	<!--后台message文件配置 start -->
+	<bean id="propertyConfigurer" class="com.june.common.CustomizedPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:messages_en.properties</value>
+				<value>classpath:messages_zh.properties</value>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!--后台message文件配置 end -->
+	
+	<!-- 邮件发送配置 start -->
+	<bean id="emailService" class="com.june.utility.SendMail">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>smtp.nfschina.com</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+		<property name="username">
+			<value>caiyang@nfs-qd.com</value>
+		</property>
+		<property name="password">
+			<value>1qaz@WSX</value>
+		</property>
+	</bean>
+	<!-- 邮件发送配置 end -->
+	
+	<!-- 验证码配置 -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">red</prop>
+						<prop key="kaptcha.image.width">150</prop>
+						<prop key="kaptcha.image.height">55</prop>
+						<prop key="kaptcha.textproducer.font.size">45</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="50000000" />
+	</bean>
+
+	<!-- SpringMVC在超出上传文件限制时,会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->
+	<!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的,而且此时还没有进入到Controller方法中 -->
+	<!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings"> <props> 遇到MaxUploadSizeExceededException异常时,自动跳转到/WEB-INF/jsp/error_fileupload.jsp页面 
+		<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop> 
+		</props> </property> </bean> -->
+
+	<!--当Spring容器启动完成后执行下面的这个Bean进行系统代码的初始化 -->
+	<bean class="com.june.common.SysCodeInit" />
+
+	<!-- 防止用户退出系统后点击回退按钮在回到页面画面 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*" />
+			<bean id="webContentInterceptor"
+				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="0" />
+				<property name="useExpiresHeader" value="true" />
+				<property name="useCacheControlHeader" value="true" />
+				<property name="useCacheControlNoStore" value="true" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- aop -->
+	<bean id="logAspect" class="com.june.common.LogAspect"></bean>
+	<!-- <bean id="dataSourceAspect" class=" com.june.common.DataSourceAspect"></bean> -->
+	<import resource="classpath:applicationcontext-shiro.xml" />
+
+	<!-- Activiti begin -->
+	<!-- <import resource="classpath:activiti.xml" /> -->
+	<!-- Activiti end -->
+
+	<!-- 定时任务start -->
+	<!-- <import resource="classpath:quartz.xml" /> -->
+	<!-- 定时任务end -->
+	<!-- <import resource="classpath:redis.xml" /> -->
+	<!-- <import resource="classpath:jedis.xml" /> -->
+	<!-- websocket消息处理bean -->
+	<bean id="MinichatHandler" class="com.june.websocket.chat.MiniChatHandler" />
+	<websocket:handlers>
+		<!-- 配置消息处理bean和路径的映射关系 -->
+		<websocket:mapping path="/minichat" handler="MinichatHandler" />
+		<!-- 配置握手拦截器 -->
+		<websocket:handshake-interceptors>
+			<bean class="com.june.websocket.chat.HandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<!-- 开启sockjs，去掉则关闭sockjs -->
+		<websocket:sockjs />
+	</websocket:handlers>
+	<!-- 配置websocket消息的最大缓冲区长度 -->
+	<bean
+		class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="maxTextMessageBufferSize" value="8192" />
+		<property name="maxBinaryMessageBufferSize" value="8192" />
+	</bean>
+</beans>

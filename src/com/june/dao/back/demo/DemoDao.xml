@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.demo.DemoDao">
+	<delete id="delete">
+		DELETE
+		FROM
+		t_artical
+	</delete>
+
+	<select id="getAllSchemaData" resultType="com.june.dto.back.demo.SchemaDto" useCache="false">
+		SELECT
+		T1.SCHEMA_NAME AS schemaName
+		FROM
+		sys_schema T1
+	</select>
+	
+	<!-- 查询全部岗位信息 -->
+	<sql id="selectPosition">
+		<foreach collection="schemaTableList" item="item" index="index" separator="UNION ALL">  
+			SELECT
+			T1.MENU_ID AS menuId,
+			T1.MENU_NAME AS menuName,
+			T1.MENU_URL AS url,
+			T1.MENU_ICON AS icon
+			FROM
+   			${item.sys_menu} t1,
+   			${item.sys_role_menu} t2
+   			where
+   			t1.MENU_ID = t2.MENU_ID
+			</foreach>
+	</sql>
+
+<select id="getPageList" resultType="com.june.dto.back.demo.MenuDto" parameterType="com.june.dto.back.demo.MenuDto">
+       	  <include refid="selectPosition"/>
+          <include refid="pagelimit"/>
+	</select>
+	<sql id="pagelimit">
+	  	limit #{start}, #{pageSize}
+	</sql>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		( <include refid="selectPosition"/> ) temp
+	</select>
+<update id="createDatabase" parameterType="java.util.Map">
+	${sql}
+</update>
+</mapper>
