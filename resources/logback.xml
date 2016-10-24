@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="1800 seconds" debug="false">
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="USER_HOME" value="c://logs" /><!-- 日志存放目录 -->
+	<property name="USER_HOME" value="D://logs/june_web_new" /><!-- 日志存放目录 -->
 	<property scope="context" name="FILE_NAME" value="june_web_new" />
 
 	<timestamp key="byDay" datePattern="yyyy-MM-dd" />
@@ -45,7 +45,7 @@
            <!--连接池 --> 
            <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
               <driverClass>com.mysql.jdbc.Driver</driverClass>
-              <url>jdbc:mysql://127.0.0.1:3306/june_web_new_log</url>
+              <url>jdbc:mysql://127.0.0.1:3306/june_web_new</url>
               <user>root</user>
               <password>root</password>
             </dataSource>
