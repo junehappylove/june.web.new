@@ -5,6 +5,7 @@ thinks a lot for all the open source code lovers!
 
  > 2016-12-08 convert to the standard maven web project.
  > 新增日志记录配置，用户可以定义是否需要记录操作日志。
+ > 日志记录中,针对每一个方法,进行执行耗时统计
  
  
  
