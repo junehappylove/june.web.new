@@ -24,7 +24,7 @@
 		</rollingPolicy>
 
 		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<maxFileSize>50MB</maxFileSize>
+			<maxFileSize>10MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder>
 			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n </pattern>
@@ -63,7 +63,8 @@
         </connectionSource>
     </appender> -->
     
-	<root level="DEBUG">  
+	<!-- <root level="DEBUG"> -->  
+	<root level="INFO">  
         <appender-ref ref="STDOUT" />  
         <!-- 对日志的双向记录 -->
 		<appender-ref ref="file" />

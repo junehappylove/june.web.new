@@ -15,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.june.common.PageDTO;
-import com.june.dto.back.systemset.basicset.UserInfoDto;
+import com.june.dto.back.system.basicset.UserInfoDto;
 
 /**
  * 车型管理 <br>

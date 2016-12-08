@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
-import com.june.dao.back.systemset.basicset.rolemanagement.RoleManagementDao;
-import com.june.dto.back.systemset.basicset.RoleInfoDto;
+import com.june.dao.back.system.basicset.rolemanagement.RoleManagementDao;
+import com.june.dto.back.system.basicset.RoleInfoDto;
 import com.june.utility.exception.CustomException;
   
   

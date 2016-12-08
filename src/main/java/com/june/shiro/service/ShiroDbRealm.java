@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.june.common.Constants;
 import com.june.dao.back.login.LoginDao;
-import com.june.dto.back.systemset.basicset.UserInfoDto;
+import com.june.dto.back.system.basicset.UserInfoDto;
 import com.june.shiro.dao.ShiroUserDao;
 import com.june.shiro.dto.Resource;
 import com.june.shiro.dto.User;

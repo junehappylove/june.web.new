@@ -11,7 +11,7 @@ import com.june.common.BaseService;
 import com.june.dao.back.bussiness.vehicle.VehicleDao;
 import com.june.dto.back.bussiness.vehicle.VehicleDto;
 import com.june.dto.back.bussiness.vehicle.VehicleUser;
-import com.june.dto.back.systemset.basicset.UserInfoDto;
+import com.june.dto.back.system.basicset.UserInfoDto;
 import com.june.utility.StringUtil;
 
 /**

@@ -62,10 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="com.june.dto.back.bussiness.vehicle.VehicleDto" id="getAllVehicles">
 		<id property="vehicleId" column="VEHICLE_ID" />
 		<collection property="users" javaType="ArrayList" column="vehicleId" 
-			ofType="com.june.dto.back.systemset.basicset.UserInfoDto" select="getUsersByVehicle">
+			ofType="com.june.dto.back.system.basicset.UserInfoDto" select="getUsersByVehicle">
 		</collection>
 	</resultMap>
-	<select id="getUsersByVehicle" resultType="com.june.dto.back.systemset.basicset.UserInfoDto">
+	<select id="getUsersByVehicle" resultType="com.june.dto.back.system.basicset.UserInfoDto">
 		SELECT uv.USER_ID AS userId, su.USER_NAME AS userName
 		  FROM USER_VEHICLE uv
 		  left join SYS_USER su on uv.USER_ID = su.USER_ID

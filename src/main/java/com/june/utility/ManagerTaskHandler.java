@@ -12,7 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.june.dto.back.systemset.basicset.UserInfoDto;
+import com.june.dto.back.system.basicset.UserInfoDto;
 import com.june.service.back.demo.LeaveService;
 
 @Service
