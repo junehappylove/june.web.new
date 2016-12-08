@@ -18,9 +18,9 @@ import org.springframework.web.util.WebUtils;
 import com.june.common.BaseController;
 import com.june.common.BaseService;
 import com.june.dao.back.common.LogOperateDao;
-import com.june.dao.back.system.basicset.userinfo.UserInfoDao;
+import com.june.dao.back.system.base.userinfo.UserInfoDao;
 import com.june.dto.back.common.LogOperateDto;
-import com.june.dto.back.system.basicset.UserInfoDto;
+import com.june.dto.back.system.base.UserInfoDto;
 
 /**
  * 

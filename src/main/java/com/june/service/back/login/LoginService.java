@@ -19,7 +19,7 @@ import com.june.common.BaseService;
 import com.june.dao.back.login.LoginDao;
 import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.login.MenuDto;
-import com.june.dto.back.system.basicset.UserInfoDto;
+import com.june.dto.back.system.base.UserInfoDto;
 
 /**
  * @Description: 登录用service

@@ -27,7 +27,7 @@
 		                            <div class="col-sm-2">
 		                                <input type="text" class="form-control" name="leaveEnd" id="leaveEndConditiron"/>
 		                            </div>
-		                           <%--  <c:if test="${rolemanagement_search eq 'hasAuthority'}"> --%>
+		                           <%--  <c:if test="${role_search eq 'hasAuthority'}"> --%>
 		                             <button id="btn_add" type="button" class="btn btn-primary" onclick="searchLeaveInfo()">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
 									</button>
@@ -36,7 +36,7 @@
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
-							<%-- <c:if test="${rolemanagement_btnAdd eq 'hasAuthority'}"> --%>
+							<%-- <c:if test="${role_btnAdd eq 'hasAuthority'}"> --%>
 								<button id="btn_add" type="button" class="btn btn-outline btn-default"
 								onclick="applyLeave()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>申请休假

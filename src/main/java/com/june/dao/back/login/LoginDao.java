@@ -5,7 +5,7 @@ import java.util.List;
 import com.june.common.BaseDao;
 import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.login.MenuDto;
-import com.june.dto.back.system.basicset.UserInfoDto;
+import com.june.dto.back.system.base.UserInfoDto;
 
 /**  
 * @Description: 登录用dao

@@ -29,7 +29,7 @@ import com.june.dto.back.bussiness.vehicle.VehicleDto;
 import com.june.dto.back.bussiness.vehicle.VehicleUser;
 import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.login.ButtonDto;
-import com.june.dto.back.system.basicset.UserInfoDto;
+import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.bussiness.errorCode.ErrorCodeService;
 import com.june.service.back.bussiness.mvb.MVBService;
 import com.june.service.back.bussiness.vehicle.VehicleService;

@@ -19,7 +19,7 @@ import org.apache.shiro.web.subject.WebSubject;
 
 import com.june.dto.back.bussiness.ftp.FtpFile;
 import com.june.dto.back.common.TreeDto;
-import com.june.dto.back.system.basicset.UserInfoDto;
+import com.june.dto.back.system.base.UserInfoDto;
 
 public abstract class AbstractDTO implements Serializable {
 	

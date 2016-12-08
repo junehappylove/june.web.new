@@ -17,20 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
-import com.june.dao.back.system.basicset.rolemanagement.RoleManagementDao;
-import com.june.dto.back.system.basicset.RoleInfoDto;
+import com.june.dao.back.system.base.role.RoleDao;
+import com.june.dto.back.system.base.RoleInfoDto;
 import com.june.utility.exception.CustomException;
   
   
 @Service("simpleService")  
-public class SimpleService extends BaseService<RoleManagementDao, RoleInfoDto>{  
+public class SimpleService extends BaseService<RoleDao, RoleInfoDto>{  
       
     private static final Logger logger = LoggerFactory.getLogger(SimpleService.class);  
      @Autowired
-     RoleManagementDao roleManagementDao;
+     RoleDao roleDao;
     public void testMethod1(){  
         //这里执行定时调度业务  
-    	roleManagementDao.deleteRoleById("3");
+    	roleDao.deleteRoleById("3");
     	throw new CustomException("test");
         //logger.info("testMethod1.......1");  
     }  
