@@ -1,4 +1,4 @@
-package com.june.common;
+package com.june.common.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

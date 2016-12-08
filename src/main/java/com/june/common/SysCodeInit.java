@@ -35,7 +35,6 @@ public class SysCodeInit implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent arg0) {
-		// TODO Auto-generated method stub
 		logger.debug("onApplicationEvent");
 	}
 }

@@ -27,7 +27,7 @@ import com.june.common.AbstractDTO;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
-import com.june.common.MethodLog;
+import com.june.common.annotation.MethodLog;
 import com.june.controller.back.common.ExcelErrorCodeData;
 import com.june.dto.back.bussiness.errorCode.ErrorCode;
 import com.june.dto.back.bussiness.errorCode.ErrorCodeDto;

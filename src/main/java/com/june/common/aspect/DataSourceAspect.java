@@ -1,4 +1,4 @@
-package com.june.common;
+package com.june.common.aspect;
 
 import java.lang.reflect.Method;
 
@@ -8,18 +8,18 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import com.june.common.annotation.DataSource;
 import com.june.rwseperate.DynamicDataSourceHolder;
 
 @Aspect
 public class DataSourceAspect {
 
-	@Pointcut("@annotation(com.june.common.DataSource)")
+	@Pointcut("@annotation(com.june.common.annotation.DataSource)")
 	public void update() {
 	}
 	
 	@Before("update()")
-    public void before(JoinPoint point)
-    {
+    public void before(JoinPoint point) {
         Object target = point.getTarget();
         String method = point.getSignature().getName();
 
@@ -29,12 +29,10 @@ public class DataSourceAspect {
         try {
             Method m = classz[0].getMethod(method, parameterTypes);
             if (m != null && m.isAnnotationPresent(DataSource.class)) {
-                DataSource data = m
-                        .getAnnotation(DataSource.class);
+                DataSource data = m.getAnnotation(DataSource.class);
                 DynamicDataSourceHolder.putDataSource(data.value());
                 System.out.println(data.value());
             }
-            
         } catch (Exception e) {
         	e.printStackTrace();
         }

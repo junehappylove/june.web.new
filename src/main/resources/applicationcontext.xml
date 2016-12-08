@@ -148,7 +148,7 @@
 			</props>
 		</property>
 		<property name="username">
-			<value>caiyang@nfs-qd.com</value>
+			<value>cyyyyyy@163.com</value>
 		</property>
 		<property name="password">
 			<value>1qaz@WSX</value>
@@ -198,8 +198,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*" />
-			<bean id="webContentInterceptor"
-				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 				<property name="cacheSeconds" value="0" />
 				<property name="useExpiresHeader" value="true" />
 				<property name="useCacheControlHeader" value="true" />
@@ -209,8 +208,8 @@
 	</mvc:interceptors>
 
 	<!-- aop -->
-	<bean id="logAspect" class="com.june.common.LogAspect"></bean>
-	<!-- <bean id="dataSourceAspect" class=" com.june.common.DataSourceAspect"></bean> -->
+	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
+	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
 	<import resource="classpath:applicationcontext-shiro.xml" />
 
 	<!-- Activiti begin -->

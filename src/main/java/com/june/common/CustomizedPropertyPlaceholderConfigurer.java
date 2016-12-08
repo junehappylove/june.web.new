@@ -8,10 +8,11 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
- * 自定义PropertyPlaceholderConfigurer返回properties内容
- *
- * @author cy 2012-02-24
- *
+ * 
+ * 自定义PropertyPlaceholderConfigurer返回properties内容 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月8日 下午5:36:40
  */
 public class CustomizedPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
