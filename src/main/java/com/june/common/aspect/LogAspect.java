@@ -45,11 +45,11 @@ public class LogAspect {
 
 	@Before("methodCachePointcut()")
 	public void before(){
-		System.out.println("before");
+		//System.out.println("before");
 	}
 	@After("methodCachePointcut()")
 	public void after(){
-		System.out.println("after");
+		//System.out.println("after");
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class LogAspect {
 	 */
 	@Around("methodCachePointcut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		System.out.println("around");
+		//System.out.println("around");
 		Object object;
 		if (!Constants.IF_LOG) {
 			object = point.proceed();
