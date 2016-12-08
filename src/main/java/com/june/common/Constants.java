@@ -13,10 +13,11 @@ package com.june.common;
 import com.june.utility.MessageUtil;
 
 /**
- * @Description: 系统常量类
- * @author CL
- * @date 2015年9月18日 下午4:40:49
- * @version V1.0
+ * 
+ * 系统常量类 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月8日 下午4:36:33
  */
 public class Constants {
 
@@ -46,7 +47,7 @@ public class Constants {
 	/**
 	 * 用户
 	 */
-	public final static String DEFAULT_PASSWORD = "888888";  //新增用户默认密码
+	public final static String DEFAULT_PASSWORD = "111111";  //新增用户默认密码
 	public final static String FLAG_YES = "1";  //是
 	public final static String FLAG_NO = "0";   //否
 	
@@ -65,7 +66,7 @@ public class Constants {
 	/**
 	 * 用户用邮箱注册时，给用户发送邮件的标题
 	 */
-	public static final String REGISTER_EMAIL_SUBJECT = "欢迎注册智慧环卫平台";
+	public static final String REGISTER_EMAIL_SUBJECT = "欢迎注册XXXXXX平台";
 	public static final String REGISTER_EMAIL_CODE = "验证码已发送至您的邮箱，请验证";
 	public static final String EMAIL_ERROR = "邮箱发送失败，请重试";
 	
@@ -88,6 +89,9 @@ public class Constants {
 	public static final String OPERATE_TYPE_INIT = "Init";
 	/**  操作类型，用于操作日志时存储  Other 登录操作 */
 	public static final String OPERATE_TYPE_OTHER = "Other";
+	
+	/**  是否记录日志操作 */
+	public static final boolean IF_LOG = Boolean.parseBoolean(MessageUtil.getResourceValue("log"));//21;
 	
 	/**
 	 * 消息类型

@@ -26,9 +26,11 @@ import java.lang.annotation.Target;
  */
 
 /**
- * 在方法上标记操作备注，及操作类型，用于记录用户操作日志描述
- * @author liren
- * @Date 2015年12月10日
+ * 
+ * 在方法上标记操作备注，及操作类型，用于记录用户操作日志描述 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月8日 下午3:38:19
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

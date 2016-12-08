@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,10 +23,11 @@ import com.june.dto.back.common.LogOperateDto;
 import com.june.dto.back.system.basicset.UserInfoDto;
 
 /**
- * 操作日志Service
  * 
- * @author liren
- * @Date 2015年12月10日
+ * 操作日志Service <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月8日 下午3:51:22
  */
 @Service
 public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto> {
@@ -72,18 +74,19 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	 * 
 	 * @param httpServletRequest
 	 */
-	@SuppressWarnings("rawtypes")
-	public String getParams(HttpServletRequest httpServletRequest) {
-		Map paramsMap = new HashMap();
-		boolean isAjaxCall = (new BaseController()).isAjaxCall(httpServletRequest);
+	public String getParams(HttpServletRequest request) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		Map<String, String> paramsMap2 = new HashMap<String, String>();
+		boolean isAjaxCall = (new BaseController()).isAjaxCall(request);
 		if (isAjaxCall) {
-			paramsMap = WebUtils.getParametersStartingWith(httpServletRequest, "");
-			paramsMap = getParameterMap(paramsMap);
+			paramsMap = WebUtils.getParametersStartingWith(request, "");
+			paramsMap2 = getParameterMap(paramsMap);
 		} else {
-			paramsMap = getParameterMap((httpServletRequest.getParameterMap()));
+			Map<String, String[]> paramsMap3 = new HashMap<String, String[]>();
+			paramsMap3 = request.getParameterMap();
+			paramsMap2 = getParameterMap2(paramsMap3);
 		}
-		@SuppressWarnings("unchecked")
-		String params = mapToString(paramsMap);
+		String params = mapToString(paramsMap2);
 		return params;
 	}
 
@@ -93,16 +96,45 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
-	public Map getParameterMap(Map map) {
+	public Map<String,String> getParameterMap(Map<String,Object> map) {
 		// 返回值Map
 		Map<String, String> returnMap = new HashMap<String, String>();
-		Iterator<?> entries = map.entrySet().iterator();
-		Map.Entry entry;
+		Iterator<Entry<String, Object>> entries = map.entrySet().iterator();
+		Map.Entry<String,Object> entry;
 		String name = "";
 		String value = "";
 		while (entries.hasNext()) {
-			entry = (Map.Entry) entries.next();
+			entry = (Map.Entry<String,Object>) entries.next();
+			name = (String) entry.getKey();
+			Object valueObj = entry.getValue();
+			if (null == valueObj) {
+				value = "";
+			} else if (valueObj instanceof String[]) {
+				String[] values = (String[]) valueObj;
+				for (int i = 0; i < values.length; i++) {
+					value = values[i] + ",";
+				}
+				value = value.substring(0, value.length() - 1);
+			} else {
+				value = valueObj.toString();
+			}
+
+			if (valueObj != null && !StringUtils.isBlank(value) && !name.equals("_") && name != "_") {
+				returnMap.put(name, value);
+			}
+		}
+		return returnMap;
+	}
+	
+	public Map<String,String> getParameterMap2(Map<String,String[]> map) {
+		// 返回值Map
+		Map<String, String> returnMap = new HashMap<String, String>();
+		Iterator<Entry<String, String[]>> entries = map.entrySet().iterator();
+		Map.Entry<String,String[]> entry;
+		String name = "";
+		String value = "";
+		while (entries.hasNext()) {
+			entry = (Map.Entry<String,String[]>) entries.next();
 			name = (String) entry.getKey();
 			Object valueObj = entry.getValue();
 			if (null == valueObj) {
@@ -130,7 +162,7 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	 * @param map
 	 * @return
 	 */
-	public static String mapToString(Map<String, Object> map) {
+	public String mapToString(Map<String, String> map) {
 		if (map == null) {
 			return "";
 		}

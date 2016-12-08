@@ -20,9 +20,11 @@ import com.june.dto.back.common.LogOperateDto;
 import com.june.service.back.common.LogOperateService;
 
 /**
- * @Description 操作日志记录，添加、删除、修改、查询等方法的AOP
- * @author liren
- * @Date 2015年12月10日
+ * 操作日志记录，添加、删除、修改、查询等方法的AOP
+ *  <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月8日 下午3:44:11
  */
 @Aspect
 public class LogAspect {
@@ -37,9 +39,21 @@ public class LogAspect {
 	public void methodCachePointcut() {
 	}
 
-	@SuppressWarnings("static-access")
+	/**
+	 * spring aop中@Around @Before @After三个注解的区别@Before是在所拦截方法执行之前执行一段逻辑。@After 是在所拦截方法执行之后执行一段逻辑。@Around是可以同时在所拦截方法的前后执行一段逻辑。
+	 * @param point
+	 * @return
+	 * @throws Throwable
+	 * @date 2016年12月8日 下午4:32:17
+	 * @writer iscas
+	 */
 	@Around("methodCachePointcut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
+		Object object;
+		if(!Constants.IF_LOG){
+			object = point.proceed();
+			return object;
+		}
 		// 获取登录管理员id
 		String adminUserId = logService.getLoginUserId();
 		if (adminUserId == null) {// 没有管理员登录
@@ -57,15 +71,13 @@ public class LogAspect {
 		String methodName = className + "." + point.getSignature().getName(); // 获取方法名
 
 		Object[] methodParam = null; // 参数
-		Object object;
 		String params = "";
 		try {
 			methodParam = point.getArgs(); // 获取方法参数
-
 			// 判断参数类型
 			if (methodParam[0] instanceof Map) {
 				@SuppressWarnings("unchecked")
-				Map<String, Object> paramsMap = logService.getParameterMap((Map<String, Object>) methodParam[0]);
+				Map<String, String> paramsMap = logService.getParameterMap((Map<String, Object>)methodParam[0]);
 				params = logService.mapToString(paramsMap);
 			} else if (methodParam[0] instanceof HttpServletRequest) {
 				HttpServletRequest request = (HttpServletRequest) methodParam[0];
@@ -87,7 +99,7 @@ public class LogAspect {
 			// 异常处理记录日志..log.error(e);
 			throw e;
 		}
-
+		//@MethodLog(module = "用户管理", remark = "用户信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 		Map<String, String> methodMap = getMethodRemark(point);
 
 		String methodRemark = ""; // 操作备注
@@ -99,16 +111,13 @@ public class LogAspect {
 			operateType = methodMap.get("operateType"); // 获取操作类型
 		}
 
-		String operateRemark = methodRemark; // 操作备注
-
 		LogOperateDto logDto = new LogOperateDto();
 		logDto.setUserId(adminUserId);
 		logDto.setFunModule(funModule);
 		logDto.setOperateType(operateType);
-		logDto.setOperateRemark(operateRemark);
+		logDto.setOperateRemark(methodRemark); // 操作备注
 		logDto.setOperateMethod(methodName);
 		logDto.setOpetateParams(params);
-		//String time = DateUtil.getTimeOfNow("yyyy-MM-dd HH:mm:ss");
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		logDto.setOperateTime(now);
 
@@ -118,10 +127,12 @@ public class LogAspect {
 	}
 
 	/**
-	 * @Description 获取方法的中文备注，用于记录用户的操作日志描述
+	 * 获取方法的中文备注，用于记录用户的操作日志描述
 	 * @param joinPoint
 	 * @return
 	 * @throws Exception
+	 * @date 2016年12月8日 下午3:45:23
+	 * @writer iscas
 	 */
 	public static Map<String, String> getMethodRemark(JoinPoint joinPoint)
 			throws Exception {
@@ -132,8 +143,7 @@ public class LogAspect {
 		Object[] parameterTypes = joinPoint.getArgs();
 
 		for (Method method : targetClass.getDeclaredMethods()) {
-			if (method.getName().equals(methodName)
-					&& method.getParameterTypes().length == parameterTypes.length) {
+			if (method.getName().equals(methodName) && method.getParameterTypes().length == parameterTypes.length) {
 				MethodLog methodLog = method.getAnnotation(MethodLog.class);
 				if (methodLog != null) {
 					methodMap.put("module", methodLog.module());
@@ -144,7 +154,6 @@ public class LogAspect {
 				break;
 			}
 		}
-
 		return null;
 	}
 }
