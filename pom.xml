@@ -628,7 +628,7 @@
 		    <artifactId>fastdfs-client</artifactId>
 		    <version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/WebContent/WEB-INF/lib/fastdfs_client.jar</systemPath>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fastdfs_client.jar</systemPath>
 		</dependency>
 	</dependencies>
 	<!-- build -->
