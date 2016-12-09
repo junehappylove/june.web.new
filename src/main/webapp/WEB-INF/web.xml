@@ -145,6 +145,7 @@
 		<exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
 		<location>/WEB-INF/view/error/InvalidSessionError.jsp</location>
 	</error-page>
+	<!-- JavaMelody 监控配置 -->
 	<filter>
 		<filter-name>monitoring</filter-name>
 		<filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
