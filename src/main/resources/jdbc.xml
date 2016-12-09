@@ -108,15 +108,13 @@
                  read
                  <entry key="slave" value-ref="slavedataSource"/>  
               </map>  
-              
         </property>  
         <property name="defaultTargetDataSource" ref="masterdataSource"/>  
     </bean> -->
 	<!-- 注解式事务处理 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- 数据连接管理 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 可通过注解控制事务 -->

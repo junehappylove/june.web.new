@@ -1,0 +1,16 @@
+不在maven仓库的包，放到此目录下
+在pom.xml文件中，按照如下格式添加进去
+
+		<!-- 引入lib目录下的jar包 -->
+		<dependency>
+			<groupId>fastdfs-client</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fastdfs-client-java-1.25.jar</systemPath>
+		</dependency>
+		
+此项目中用的fastdfs的jar包，在maven仓库中是没有的
+移步到：https://github.com/junehappylove/fastdfs-client-java
+下载源码，编译后，可以放到lib目录下，然后引入
+也可以放到你自己的maven仓库中在引入

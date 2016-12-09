@@ -2,6 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib uri="http://ckeditor.com" prefix="ckeditor" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <link href="${ctx}/jslib/bootstrap/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
@@ -81,10 +82,11 @@
 <script src="${ctx}/jslib/jquery.form.js"></script>
 <script src="${ctx}/jslib/websocket/sockjs.min.js"></script>
 
-<%-- 
-<script src="${ctx}/ckeditor/ckeditor.js"></script>
-<script src="${ctx}/ckfinder/ckfinder.js"></script>
- --%>
+<!-- 富文本编辑器 -->
+<script src="${ctx}/jslib/ckeditor/ckeditor.js"></script>
+<!-- ckfinder 整合 ckeditor -->
+<%-- <script src="${ctx}/jslib/ckfinder/ckfinder.js"></script> --%>
+
 <!-- 日期格式化控件 -->
 <script type="text/javascript" src="${ctx }/jslib/date.format.js"></script>
 <!-- 动态资源加载 -->

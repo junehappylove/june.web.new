@@ -8,8 +8,7 @@
 
 <title>无标题文档</title>
 
-<script type="text/javascript"
-	src="${ctx}/js/portal/myInfo/myInfo.js"></script>
+<script type="text/javascript" src="${ctx}/js/portal/myInfo/myInfo.js"></script>
 </head>
 
 <body>

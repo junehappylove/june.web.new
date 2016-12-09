@@ -23,7 +23,7 @@ $(function() {
 	}).on('success.form.bv', function(e) {
 		// 校验成功后执行以下方法
 	    e.preventDefault();
-	    doFileFormAjax("uploadForm","post",contextPath + "/archiveManagement/addNew",success);    
+	    doFileFormAjax("uploadForm","post",contextPath + "/archive/addNew",success);    
 	}); 
 	// 表格初始化
 	$('#archiveTable')
@@ -74,7 +74,7 @@ $(function() {
 									align : "center",
 									valign : "middle",
 									formatter : function(value, row, index) {
-										var operation = '<a target="_blank" href="' + contextPath + '/archiveManagement/checkPic?id='+ row.id + '">查看图片</a>';
+										var operation = '<a target="_blank" href="' + contextPath + '/archive/checkPic?id='+ row.id + '">查看图片</a>';
 										return operation;
 									}
 								} 
@@ -95,7 +95,7 @@ $(function() {
 function searchList()
 {
 	commonGetrowdatas("archiveTable", {}, contextPath
-			+ "/archiveManagement/searchInfo", "commonCallback", true)
+			+ "/archive/searchInfo", "commonCallback", true)
 }
 
 

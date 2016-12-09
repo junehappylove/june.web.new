@@ -18,6 +18,7 @@
 		<hibernate.version>5.2.4.Final</hibernate.version>
 		<druid.version>1.0.26</druid.version>
 		<activiti.version>5.21.0</activiti.version>
+		<ckeditor.version>3.5.3</ckeditor.version>
 		<jedis.version>2.9.0</jedis.version>
 		<junit.version>4.12</junit.version>
 		<joda.version>2.9.4</joda.version>
@@ -81,9 +82,9 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
 		<dependency>
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-redis</artifactId>
-		    <version>1.7.2.RELEASE</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.7.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -155,7 +156,7 @@
 			<artifactId>spring-websocket</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- quartz 此包要放在 shiro的quartz包前-->
+		<!-- quartz 此包要放在 shiro的quartz包前 -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -204,9 +205,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-		    <groupId>org.crazycake</groupId>
-		    <artifactId>shiro-redis</artifactId>
-		    <version>2.4.2.1-RELEASE</version>
+			<groupId>org.crazycake</groupId>
+			<artifactId>shiro-redis</artifactId>
+			<version>2.4.2.1-RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -348,9 +349,9 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
 		<dependency>
-		    <groupId>commons-net</groupId>
-		    <artifactId>commons-net</artifactId>
-		    <version>${commons-net.version}</version>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>${commons-net.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
 		<dependency>
@@ -519,6 +520,12 @@
 			<artifactId>javamelody-core</artifactId>
 			<version>1.61.0</version>
 		</dependency>
+		<!-- ckeditor -->
+		<dependency>
+			<groupId>com.ckeditor</groupId>
+			<artifactId>ckeditor-java-core</artifactId>
+			<version>${ckeditor.version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -556,9 +563,9 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
 		<dependency>
-		    <groupId>com.github.penggle</groupId>
-		    <artifactId>kaptcha</artifactId>
-		    <version>2.3.2</version>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>2.3.2</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -622,14 +629,29 @@
 			<artifactId>xwork-core</artifactId>
 			<version>${xwork-core.version}</version>
 		</dependency>
-		<!-- 引入lib目录下的jar包 -->
-		<dependency>
-		    <groupId>fastdfs-client</groupId>
+		<!-- https://mvnrepository.com/artifact/com.github.tobato/fastdfs-client -->
+		<!-- <dependency>
+		    <groupId>com.github.tobato</groupId>
 		    <artifactId>fastdfs-client</artifactId>
-		    <version>1.0</version>
+		    <version>1.25.2-RELEASE</version>
+		</dependency> -->
+		<!-- fastdfs-client -->
+		<!-- 这个在maven仓库中是没有的，源码在：https://github.com/junehappylove/fastdfs-client-java -->
+		<!-- 请自己下载源码编译，然后放到自己的maven库中，然后引入 -->
+		<dependency>
+		    <groupId>org.csource</groupId>
+		    <artifactId>fastdfs-client-java</artifactId>
+		    <version>1.25</version>
+		</dependency>
+		<!-- 引入lib目录下的jar包 -->
+		<!-- 如果不引人的话，还可以如下引入这个包 -->
+		<!-- <dependency>
+			<groupId>fastdfs-client</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fastdfs_client.jar</systemPath>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	<!-- build -->
 	<build>

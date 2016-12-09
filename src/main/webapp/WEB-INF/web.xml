@@ -42,13 +42,31 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!-- Druid Monitor 监控 -->
 	<filter>
 		<filter-name>DruidWebStatFilter</filter-name>
 		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
 		<init-param>
+			<!-- 经常需要排除一些不必要的url，比如.js,/jslib/等等。配置在init-param中 -->
 			<param-name>exclusions</param-name>
 			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,*.ttf,*.woff,*.less</param-value>
 		</init-param>
+		<!-- 缺省sessionStatMaxCount是1000个。你可以按需要进行配置 -->
+		<init-param>
+			<param-name>sessionStatMaxCount</param-name>
+			<param-value>1000</param-value>
+		</init-param>
+		<!-- druid 0.2.7版本开始支持profile，配置profileEnable能够监控单个url调用的sql列表 -->
+		<init-param>
+			<param-name>profileEnable</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>principalSessionName</param-name>
+			<param-value>users.username</param-value>
+		</init-param>
+		<!-- 你可以关闭session统计功能 <init-param> <param-name>sessionStatEnable</param-name> 
+			<param-value>true</param-value> </init-param> -->
 	</filter>
 	<filter-mapping>
 		<filter-name>DruidWebStatFilter</filter-name>
@@ -57,6 +75,35 @@
 	<servlet>
 		<servlet-name>DruidStatView</servlet-name>
 		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+		<!-- deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。 如果allow没有配置或者为空，则允许所有访问 -->
+		<init-param>
+			<param-name>allow</param-name>
+			<param-value>10.50.200.38,127.0.0.1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>deny</param-name>
+			<param-value>192.168.1.118</param-value>
+		</init-param>
+		<!-- 在StatViewSerlvet输出的html页面中，有一个功能是Reset All，执行这个操作之后，会导致所有计数器清零，重新计数 -->
+		<span style="white-space:pre">
+		</span>
+		<init-param>
+			<span style="white-space:pre"> </span>
+			<param-name>resetEnable</param-name>
+			<span style="white-space:pre"> </span>
+			<param-value>false</param-value>
+			<span style="white-space:pre"> </span>
+		</init-param>
+		<span style="white-space:pre"> </span><!-- 用户名和密码 -->
+		<span style="white-space:pre"> </span>
+		<init-param>
+			<param-name>loginUsername</param-name>
+			<param-value>druid</param-value>
+		</init-param>
+		<init-param>
+			<param-name>loginPassword</param-name>
+			<param-value>druid</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DruidStatView</servlet-name>
@@ -162,7 +209,7 @@
 		<listener-class>net.bull.javamelody.SessionListener</listener-class>
 	</listener>
 	<!-- 配置websocket -->
-<!-- 	<servlet>
+	<!-- <servlet>
 		<servlet-name>spring-websocket</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
