@@ -30,9 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 
 	<!-- 根据schem查询用户列表 -->
-	<select id="getPageList" resultType="com.june.dto.back.system.base.RoleInfoDto" parameterType="com.june.dto.back.system.base.RoleInfoDto">
-       	  <include refid="selectData"/>
-          <!-- <include refid="pagelimit"/> -->
+	<select id="getPageList" resultType="com.june.dto.back.system.base.RoleInfoDto"
+		parameterType="com.june.dto.back.system.base.RoleInfoDto">
+		<include refid="selectData" />
+		<!-- <include refid="pagelimit"/> -->
 	</select>
 	
 	<sql id="pagelimit">
@@ -151,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sys_menu T1
 		WHERE
 			T1.PARENT_MENU_ID = '0'
+		ORDER BY T1.ORDER_NUM
 	</select>
 	<select id="getFirstMenusByRole" parameterType="String" resultType="com.june.dto.back.common.TreeDto">
 		SELECT
@@ -166,6 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND T2.ROLE_ID = #{roleId}
 		AND T2.ROLE_ID = T3.ROLE_ID
 		AND T3.MENU_ID = T1.MENU_ID
+		ORDER BY T1.ORDER_NUM
 	</select>
 	<select id="getSubMenu" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
 		SELECT
@@ -176,6 +179,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sys_menu T1
 		WHERE
 			T1.PARENT_MENU_ID = #{id}
+		ORDER BY T1.ORDER_NUM
 	</select>
 	
 	<select id="getSubMenuByRole" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
@@ -192,6 +196,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND T2.ROLE_ID = #{roleId}
 		AND T2.ROLE_ID = T3.ROLE_ID
 		AND T3.MENU_ID = T1.MENU_ID
+		ORDER BY T1.ORDER_NUM
 	</select>
 	
 	<select id="getFunctions" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
