@@ -85,7 +85,7 @@ public class ReleaseInfoController extends BaseController{
 			releaseInfoService.saveContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.getFormatMessage("content_save_success", null));
+	        errList.add(MessageUtil.formatMessage("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -94,7 +94,7 @@ public class ReleaseInfoController extends BaseController{
 			releaseInfoService.updateContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.getFormatMessage("content_save_success", null));
+	        errList.add(MessageUtil.formatMessage("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -131,7 +131,7 @@ public class ReleaseInfoController extends BaseController{
 			releaseInfoService.submitDirect(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.getFormatMessage("content_submit_success", null));
+	        errList.add(MessageUtil.formatMessage("content_submit_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -139,7 +139,7 @@ public class ReleaseInfoController extends BaseController{
 			releaseInfoService.submitNoDirect(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.getFormatMessage("content_submit_success", null));
+	        errList.add(MessageUtil.formatMessage("content_submit_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end

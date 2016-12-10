@@ -51,7 +51,7 @@ public class UploadEditorPicController{
 	public void uploadPic(@RequestParam MultipartFile imgFile,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException
 	{
 		String ctp = httpServletRequest.getServletContext().getRealPath("/") + "kindeditor\\";
-		String filename = FileUpLoadDownload.getFileName(imgFile, null);
+		String filename = FileUpLoadDownload.getFileName(imgFile,null);
 		PrintWriter out = httpServletResponse.getWriter();
 		JSONObject obj = new JSONObject(); 
 		try {
@@ -111,14 +111,14 @@ public class UploadEditorPicController{
 			} else {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.getFormatMessage("error_image_file", null) + "');");
+						+ MessageUtil.formatMessage("error_image_file") + "');");
 				out.println("</script>");
 				return null;
 			}
 			if (upload.getSize() > 6000 * 1024) {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.getFormatMessage("error_file_size", new String[] { "6M" }) + "');");
+						+ MessageUtil.formatMessage("error_file_size", new String[] { "6M" }) + "');");
 				out.println("</script>");
 				return null;
 			}

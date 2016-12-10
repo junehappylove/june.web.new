@@ -116,7 +116,7 @@ public class CheckInfoController extends BaseController{
 		checkInfoService.checkPass(releaseInfoDto);
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_checkpass_success", null));
+        errList.add(MessageUtil.formatMessage("content_checkpass_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -133,7 +133,7 @@ public class CheckInfoController extends BaseController{
 		checkInfoService.checkBack(releaseInfoDto);
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_checkback_success", null));
+        errList.add(MessageUtil.formatMessage("content_checkback_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -185,7 +185,7 @@ public class CheckInfoController extends BaseController{
 		}
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_checkpass_success", null));
+        errList.add(MessageUtil.formatMessage("content_checkpass_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -215,7 +215,7 @@ public class CheckInfoController extends BaseController{
 		}
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_checkback_success", null));
+        errList.add(MessageUtil.formatMessage("content_checkback_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end

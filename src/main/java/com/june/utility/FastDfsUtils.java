@@ -25,10 +25,11 @@ import com.june.utility.exception.CustomException;
 import com.june.utility.exception.FastDFSException;
 
 /**
- * @Description: FastDFS文件上传下载工具类
- * @author 蔡阳
- * @date 2015年10月8日 下午4:24:21
- * @version V1.0
+ * 
+ * FastDFS文件上传下载工具类 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月10日 下午4:47:03
  */
 public class FastDfsUtils {
 
@@ -53,11 +54,12 @@ public class FastDfsUtils {
 			groupName = url.split(":")[0];
 			fileName = url.split(":")[1];
 		} else {
-			throw new FastDFSException(MessageUtil.getFormatMessage("remotefile_address_error", null));
+			throw new FastDFSException(MessageUtil.formatMessage("remotefile_address_error"));
 		}
 
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		String configFilePath = classPath + File.separator + "fdfs_client.conf";
+		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
 		ClientGlobal.init(configFilePath);
 		TrackerServer trackerServer = null;
 		TrackerClient trackerClient = new TrackerClient();
@@ -68,7 +70,7 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.getFormatMessage("noavaliablearacker", null));
+			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
@@ -79,7 +81,7 @@ public class FastDfsUtils {
 		// remote_filename);
 		byte[] buffer = storageClient.download_file(group_name, remote_filename);
 		if (buffer == null) {
-			throw new FastDFSException(MessageUtil.getFormatMessage("remotefile_not_exist", null));
+			throw new FastDFSException(MessageUtil.formatMessage("remotefile_not_exist"));
 		}
 		return buffer;
 	}
@@ -104,7 +106,8 @@ public class FastDfsUtils {
 		}
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		String configFilePath = classPath + File.separator + "fdfs_client.conf";
+		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);
 		// 连接服务器
@@ -117,7 +120,7 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.getFormatMessage("noavaliablearacker", null));
+			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
@@ -182,7 +185,8 @@ public class FastDfsUtils {
 		}
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		String configFilePath = classPath + File.separator + "fdfs_client.conf";
+		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);
 		// 连接服务器
@@ -195,7 +199,7 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.getFormatMessage("noavaliablearacker", null));
+			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);

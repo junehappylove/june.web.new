@@ -99,7 +99,7 @@ public class MyInfoController extends BaseController{
 		MessageDto messageDto = new MessageDto();
         //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_submit_success", null));
+        errList.add(MessageUtil.formatMessage("content_submit_success"));
         messageDto.setErrList(errList);
         messageDto.setErrType("info");
         //返回消息 end
@@ -154,7 +154,7 @@ public class MyInfoController extends BaseController{
 		releaseInfoService.updateContent(releaseInfoDto);;
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_change_success", null));
+        errList.add(MessageUtil.formatMessage("content_change_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -186,7 +186,7 @@ public class MyInfoController extends BaseController{
 		releaseInfoService.submitNoDirect(releaseInfoDto);
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_submit_success", null));
+        errList.add(MessageUtil.formatMessage("content_submit_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -235,7 +235,7 @@ public class MyInfoController extends BaseController{
 		myInfoService.deleteRow(releaseInfoDto);
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_delete_success", null));
+        errList.add(MessageUtil.formatMessage("content_delete_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -265,7 +265,7 @@ public class MyInfoController extends BaseController{
 		}
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_submit_success", null));
+        errList.add(MessageUtil.formatMessage("content_submit_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end
@@ -295,7 +295,7 @@ public class MyInfoController extends BaseController{
 		}
 		 //返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-        errList.add(MessageUtil.getFormatMessage("content_delete_success", null));
+        errList.add(MessageUtil.formatMessage("content_delete_success"));
         releaseInfoDto.setErrList(errList);
         releaseInfoDto.setErrType("info");
         //返回消息 end

@@ -1,7 +1,7 @@
 package com.june.dto.back.common;
 
 
-import java.util.Date;
+import com.june.common.PageDTO;
 
 /**
  * (SYS_ORG)
@@ -9,7 +9,7 @@ import java.util.Date;
  * @author caiyang
  * @version 1.0.0
  */
-public class SysOrgDto implements java.io.Serializable {
+public class SysOrgDto extends PageDTO<SysOrgDto> {
     /** 版本号 */
     private static final long serialVersionUID = -883775885175559465L;
     
@@ -35,19 +35,19 @@ public class SysOrgDto implements java.io.Serializable {
     private String delFlag;
     
     /** 添加用户 */
-    private String addUserId;
+    //private String addUserId;
     
     /** 添加时间 */
-    private Date addTime;
+    //private Date addTime;
     
     /** 更新用户 */
-    private String updateUserId;
+    //private String updateUserId;
     
     /** 更新时间 */
-    private Date updateTime;
+    //private Date updateTime;
     
     /** 版本号 */
-    private Double version;
+    //private Double version;
     
     /**
      * 获取组织ID
@@ -182,98 +182,4 @@ public class SysOrgDto implements java.io.Serializable {
         this.delFlag = delFlag;
      }
     
-    /**
-     * 获取添加用户
-     * 
-     * @return 添加用户
-     */
-     public String getAddUserId() {
-        return this.addUserId;
-     }
-     
-    /**
-     * 设置添加用户
-     * 
-     * @param addUserId
-     *          添加用户
-     */
-     public void setAddUserId(String addUserId) {
-        this.addUserId = addUserId;
-     }
-    
-    /**
-     * 获取添加时间
-     * 
-     * @return 添加时间
-     */
-     public Date getAddTime() {
-        return this.addTime;
-     }
-     
-    /**
-     * 设置添加时间
-     * 
-     * @param addTime
-     *          添加时间
-     */
-     public void setAddTime(Date addTime) {
-        this.addTime = addTime;
-     }
-    
-    /**
-     * 获取更新用户
-     * 
-     * @return 更新用户
-     */
-     public String getUpdateUserId() {
-        return this.updateUserId;
-     }
-     
-    /**
-     * 设置更新用户
-     * 
-     * @param updateUserId
-     *          更新用户
-     */
-     public void setUpdateUserId(String updateUserId) {
-        this.updateUserId = updateUserId;
-     }
-    
-    /**
-     * 获取更新时间
-     * 
-     * @return 更新时间
-     */
-     public Date getUpdateTime() {
-        return this.updateTime;
-     }
-     
-    /**
-     * 设置更新时间
-     * 
-     * @param updateTime
-     *          更新时间
-     */
-     public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-     }
-    
-    /**
-     * 获取版本号
-     * 
-     * @return 版本号
-     */
-     public Double getVersion() {
-        return this.version;
-     }
-     
-    /**
-     * 设置版本号
-     * 
-     * @param version
-     *          版本号
-     */
-     public void setVersion(Double version) {
-        this.version = version;
-     }
 }

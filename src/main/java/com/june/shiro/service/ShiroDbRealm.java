@@ -169,7 +169,7 @@ public class ShiroDbRealm extends AuthorizingRealm{
 			if (attempt == Constants.ATTEMP_TIME) {
 				int min = (int) ((Constants.LOCK_TIME * 60 * 1000 -time)/60000);
 				int sec = (int) (((Constants.LOCK_TIME * 60 * 1000) -( min * 60 * 1000) - time)/1000);
-				throw new LoginAttemptException(MessageUtil.getFormatMessage("login_attempt_error", new String[] {String.valueOf(min),String.valueOf(sec)}));
+				throw new LoginAttemptException(MessageUtil.formatMessage("login_attempt_error", new String[] {String.valueOf(min),String.valueOf(sec)}));
 			}
 		
 		}else{

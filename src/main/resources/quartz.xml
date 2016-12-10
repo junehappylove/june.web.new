@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd"> 
 
 	<bean id="jobFactory" class="com.june.quartz.MyJobFactory"></bean>
-     <bean name="quartzScheduler"  
-        class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false"  >  
-        <property name="dataSource">  
-            <ref bean="dataSource" />  
-        </property>  
-        <property name="jobFactory" ref="jobFactory"></property>
-        <property name="applicationContextSchedulerContextKey" value="applicationContextKey" />  
-        <property name="configLocation" value="classpath:quartz.properties" />     
-        <property name="triggers">  
-            <list>  
-                <ref bean="trigger1" />  
-                <ref bean="trigger2" />  
-            </list>  
-        </property>  
-    </bean>  
-  
-    <bean id="jobDetail1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
-        <property name="jobClass">  
-            <value>com.june.quartz.MyQuartzJobBean1</value>  
-        </property>     
-        <property name="durability" value="true" />     
-        <property name="requestsRecovery" value="true" />
-    </bean>  
-    <bean id="trigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-        <property name="jobDetail" ref="jobDetail1" />  
-        <property name="cronExpression" value="0/10 * * ? * * *" />  
-    </bean>  
-  
-     <bean id="jobDetail2" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">  
-        <property name="jobClass">  
-            <value>com.june.quartz.MyQuartzJobBean2</value>  
-        </property>     
-        <property name="durability" value="true" />     
-        <property name="requestsRecovery" value="true" />       
-    </bean>  
-    <bean id="trigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
-        <property name="jobDetail" ref="jobDetail2" />  
-        <property name="cronExpression" value="0/10 * * ? * * *" />  
-    </bean>
-  
+	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="jobFactory" ref="jobFactory"></property>
+		<property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
+		<property name="configLocation" value="classpath:conf/quartz.properties" />
+		<property name="triggers">
+			<list>
+				<ref bean="trigger1" />
+				<ref bean="trigger2" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jobDetail1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<value>com.june.quartz.MyQuartzJobBean1</value>
+		</property>
+		<property name="durability" value="true" />
+		<property name="requestsRecovery" value="true" />
+	</bean>
+	<bean id="trigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDetail1" />
+		<property name="cronExpression" value="0/10 * * ? * * *" />
+	</bean>
+
+	<bean id="jobDetail2" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass">
+			<value>com.june.quartz.MyQuartzJobBean2</value>
+		</property>
+		<property name="durability" value="true" />
+		<property name="requestsRecovery" value="true" />
+	</bean>
+	<bean id="trigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDetail2" />
+		<property name="cronExpression" value="0/10 * * ? * * *" />
+	</bean>
 </beans>

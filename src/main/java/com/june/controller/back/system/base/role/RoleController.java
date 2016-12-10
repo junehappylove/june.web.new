@@ -154,7 +154,7 @@ public class RoleController extends BaseController {
 			if (roleInfoDtoByName != null) {
 				// 返回消息 start
 				ArrayList<String> errList = new ArrayList<String>();
-				errList.add(MessageUtil.getFormatMessage("role_exist_error",
+				errList.add(MessageUtil.formatMessage("role_exist_error",
 						new String[] { roleInfoDtoByName.getRoleName() }));
 				messageDto.setErrList(errList);
 				messageDto.setErrType("error");
@@ -163,7 +163,7 @@ public class RoleController extends BaseController {
 				roleService.addDto(roleInfoDto);
 				// 返回消息 start
 				ArrayList<String> errList = new ArrayList<String>();
-				errList.add(MessageUtil.getFormatMessage("save_new_success", new String[] { "角色" }));
+				errList.add(MessageUtil.formatMessage("save_new_success", new String[] { "角色" }));
 				messageDto.setErrList(errList);
 				messageDto.setErrType("info");
 				// 返回消息 end
@@ -188,7 +188,7 @@ public class RoleController extends BaseController {
 			RoleInfoDto roleInfoDto) throws Exception {
 		if (roleInfoDto.getRoleId().isEmpty()) {
 			ArrayList<String> errList = new ArrayList<String>();
-			errList.add(MessageUtil.getFormatMessage("not_empty_error", new String[] { "角色ID" }));
+			errList.add(MessageUtil.formatMessage("not_empty_error", new String[] { "角色ID" }));
 			roleInfoDto.setErrList(errList);
 			roleInfoDto.setErrType("error");
 		} else {
@@ -197,7 +197,7 @@ public class RoleController extends BaseController {
 			if (roleInfoDto == null) {
 				ArrayList<String> errList = new ArrayList<String>();
 				roleInfoDto = new RoleInfoDto();
-				errList.add(MessageUtil.getFormatMessage("role_not_exist", new String[] { roleName }));
+				errList.add(MessageUtil.formatMessage("role_not_exist", new String[] { roleName }));
 				roleInfoDto.setErrList(errList);
 				roleInfoDto.setErrType("error");
 			}
@@ -254,7 +254,7 @@ public class RoleController extends BaseController {
 		MessageDto messageDto = new MessageDto();// 返回消息dto
 		if (roleId.isEmpty()) {
 			ArrayList<String> errList = new ArrayList<String>();
-			errList.add(MessageUtil.getFormatMessage("not_empty_error", new String[] { "角色ID" }));
+			errList.add(MessageUtil.formatMessage("not_empty_error", new String[] { "角色ID" }));
 			messageDto.setErrList(errList);
 			messageDto.setErrType("error");
 		} else {
@@ -276,10 +276,10 @@ public class RoleController extends BaseController {
 				}
 			}
 			if (!errorString.equals("")) {
-				errList.add(MessageUtil.getFormatMessage("delete_role_error", new String[] { errorString }));
+				errList.add(MessageUtil.formatMessage("delete_role_error", new String[] { errorString }));
 			}
 			if (!successString.equals("")) {
-				errList.add(MessageUtil.getFormatMessage("delete_role_success", new String[] { successString }));
+				errList.add(MessageUtil.formatMessage("delete_role_success", new String[] { successString }));
 			}
 			messageDto.setErrList(errList);
 			if (!errorString.equals("")) {

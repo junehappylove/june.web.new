@@ -126,9 +126,9 @@ public class QurartzController extends BaseController {
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
 		if (result) {
-			errList.add(MessageUtil.getFormatMessage("quartz_delete_success", null));
+			errList.add(MessageUtil.formatMessage("quartz_delete_success"));
 		} else {
-			errList.add(MessageUtil.getFormatMessage("quartz_delete_error", null));
+			errList.add(MessageUtil.formatMessage("quartz_delete_error"));
 		}
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");
@@ -152,7 +152,7 @@ public class QurartzController extends BaseController {
 		quartzService.addSimpleTrigger(quartzTriggerDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getFormatMessage("quartz_add_success", new String[] { "simpleTrigger" }));
+		errList.add(MessageUtil.formatMessage("quartz_add_success", new String[] { "simpleTrigger" }));
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");
 		// 返回消息 end
@@ -193,7 +193,7 @@ public class QurartzController extends BaseController {
 		quartzService.addCrontrigger(quartzTriggerDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getFormatMessage("quartz_add_success", new String[] { "cronTrigger" }));
+		errList.add(MessageUtil.formatMessage("quartz_add_success", new String[] { "cronTrigger" }));
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");
 		// 返回消息 end
@@ -216,7 +216,7 @@ public class QurartzController extends BaseController {
 		quartzService.runTrigger(quartzTriggerDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getFormatMessage("quartz_run_success", null));
+		errList.add(MessageUtil.formatMessage("quartz_run_success"));
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");
 		// 返回消息 end

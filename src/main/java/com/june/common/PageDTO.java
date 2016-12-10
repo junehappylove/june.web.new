@@ -3,7 +3,7 @@ package com.june.common;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageDTO<T extends AbstractDTO> extends AbstractDTO {
+public class PageDTO<T extends BaseDTO> extends BaseDTO {
 	
 	/**
 	 * long serialVersionUID

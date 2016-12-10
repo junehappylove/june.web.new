@@ -293,7 +293,7 @@ public class DemoController extends BaseController {
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getFormatMessage("export_success", null));
+		errList.add(MessageUtil.formatMessage("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
@@ -716,7 +716,7 @@ public class DemoController extends BaseController {
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getFormatMessage("export_success", null));
+		errList.add(MessageUtil.formatMessage("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end

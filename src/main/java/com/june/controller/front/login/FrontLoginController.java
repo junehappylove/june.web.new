@@ -44,14 +44,14 @@ public class FrontLoginController extends BaseController{
 			  //用户不存在
 	    	  result = new ModelAndView("front/login");
             //用户不存在，去出错误信息返回
-            String error = MessageUtil.getFormatMessage("user_not_exist",null);
+            String error = MessageUtil.formatMessage("user_not_exist");
             result.addObject("error", error);
             return result;
 	      }else if (userInfoDto.getUserLock().equals("1")) {
 	    	//用户被锁定
 	    	  result = new ModelAndView("front/login");
 	    	//用户被锁定，取出错误信息返回
-            String error = MessageUtil.getFormatMessage("user_locked",null);
+            String error = MessageUtil.formatMessage("user_locked");
             result.addObject("error", error);
             return result;
 	      }else{

@@ -175,7 +175,7 @@ public final class CheckUtil {
 	public static void checkMust(String itemValue, String itemName, String index, ArrayList<String> errList)
 			throws Exception {
 		if (StringUtils.isEmpty(itemValue)) {
-			errList.add(MessageUtil.getFormatMessage("excel_mustinput_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_mustinput_error", new String[] { index, itemName }));
 		}
 	}
 
@@ -200,7 +200,7 @@ public final class CheckUtil {
 	public static void checkLength(String itemValue, String itemName, int bitMax, boolean equal, String index,
 			ArrayList<String> errList) throws Exception {
 		if (!byteCount(itemValue, bitMax, equal)) {
-			errList.add(MessageUtil.getFormatMessage("excel_length_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_length_error", new String[] { index, itemName }));
 		}
 	}
 
@@ -225,7 +225,7 @@ public final class CheckUtil {
 	public static void checkNumber(String itemValue, String itemName, int intMax, int decMax, String index,
 			ArrayList<String> errList) throws Exception {
 		if (!isNumber(itemValue, intMax, decMax)) {
-			errList.add(MessageUtil.getFormatMessage("excel_type_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_type_error", new String[] { index, itemName }));
 		}
 	}
 
@@ -248,7 +248,7 @@ public final class CheckUtil {
 	public static void checkDate(String itemValue, String itemName, String format, String index, ArrayList<String> errList)
 			throws Exception {
 		if (!isDate(itemValue, format)) {
-			errList.add(MessageUtil.getFormatMessage("excel_type_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_type_error", new String[] { index, itemName }));
 		}
 	}
 
@@ -268,7 +268,7 @@ public final class CheckUtil {
 	 */
 	public static void checkTel(String itemValue, String itemName, String index, ArrayList<String> errList) throws Exception {
 		if (!isTel(itemValue)) {
-			errList.add(MessageUtil.getFormatMessage("excel_type_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_type_error", new String[] { index, itemName }));
 		}
 	}
 
@@ -288,7 +288,7 @@ public final class CheckUtil {
 	 */
 	public static void checkMail(String itemValue, String itemName, String index, ArrayList<String> errList) throws Exception {
 		if (!isMail(itemValue)) {
-			errList.add(MessageUtil.getFormatMessage("excel_type_error", new String[] { index, itemName }));
+			errList.add(MessageUtil.formatMessage("excel_type_error", new String[] { index, itemName }));
 		}
 	}
 }

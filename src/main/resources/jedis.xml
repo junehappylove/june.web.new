@@ -6,7 +6,6 @@
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 	</bean>
 	<bean id="jedis.shardInfo" class="redis.clients.jedis.JedisShardInfo">

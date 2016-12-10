@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
+    http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
+
+	<!-- websocket消息处理bean -->
+	<bean id="MinichatHandler" class="com.june.websocket.chat.MiniChatHandler" />
+	<websocket:handlers>
+		<!-- 配置消息处理bean和路径的映射关系 -->
+		<websocket:mapping path="/minichat" handler="MinichatHandler" />
+		<!-- 配置握手拦截器 -->
+		<websocket:handshake-interceptors>
+			<bean class="com.june.websocket.chat.HandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<!-- 开启sockjs，去掉则关闭sockjs -->
+		<websocket:sockjs />
+	</websocket:handlers>
+	<!-- 配置websocket消息的最大缓冲区长度 -->
+	<bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="maxTextMessageBufferSize" value="8192" />
+		<property name="maxBinaryMessageBufferSize" value="8192" />
+	</bean>
+
+</beans>

@@ -16,10 +16,13 @@ import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.demo.LeaveService;
 
 @Service
-@SuppressWarnings("serial")
 public class ManagerTaskHandler implements TaskListener {
-
 	
+	/**
+	 * long serialVersionUID
+	 */
+	private static final long serialVersionUID = -7422711371450947390L;
+
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		//获取当前登录用户的id

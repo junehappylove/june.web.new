@@ -10,11 +10,9 @@
 
 package com.june.dto.back.demo;
 
-import java.io.Serializable;
+import com.june.common.BaseDTO;
 
-import com.june.common.AbstractDTO;
-
-public class ComboxDto extends AbstractDTO implements Serializable{
+public class ComboxDto extends BaseDTO {
 	/**
 	 * long serialVersionUID
 	 */

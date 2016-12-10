@@ -122,17 +122,17 @@ public class LoginController extends BaseController{
 			  
 		    }catch (UnknownAccountException e) {
 		      token.clear();
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.getFormatMessage("user_not_exist", null));
+		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_not_exist"));
 			  return  "redirect:/login/"; 
 		    }catch (LockedAccountException e) {
 		      token.clear();
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.getFormatMessage("user_locked", null));
+		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_locked"));
 			  return  "redirect:/login/"; 
 		    }catch (IncorrectCredentialsException e) {
 		      token.clear();
 		      userInfoDto.setUserId(username);
 		      loginService.updateFailLoginAttempt(userInfoDto);
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.getFormatMessage("user_not_exist", null));
+		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_not_exist"));
 			  return  "redirect:/login/"; 
 			}catch (LoginAttemptException e) {
 				token.clear();
@@ -269,7 +269,7 @@ public class LoginController extends BaseController{
 		ModelAndView result = null;
 		
 		result = new ModelAndView("error/403");
-		String msg = MessageUtil.getFormatMessage("access_denied", null);
+		String msg = MessageUtil.formatMessage("access_denied");
 		// 将错误信息返回到页面
 		result.addObject("error", msg);
 		return result;

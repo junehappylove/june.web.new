@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xmlns:cache="http://www.springframework.org/schema/cache"
@@ -22,7 +24,7 @@
 	<mvc:view-controller path="/login" view-name="login/login" />
 	<mvc:view-controller path="/login/" view-name="login/login" />
 	<!-- 引入jdbc配置文件 -->
-	<import resource="classpath:mybatis/jdbc.xml" />
+	<import resource="classpath:mybatis/mybatis-jdbc.xml" />
 	<!--validation配置 start -->
 	<mvc:annotation-driven validator="validator" />
 	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
@@ -45,6 +47,7 @@
 		<property name="cacheSeconds" value="60" />
 	</bean>
 	<!--validation配置 end -->
+	
  	<!-- FastJson注入 -->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -96,47 +99,10 @@
 	<!-- jsp视图处理 end -->
 
 	<!-- 配置freeMarker视图解析器 -->
-	<bean id="viewResolverFtl"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
-		<property name="contentType" value="text/html; charset=UTF-8" />
-		<property name="exposeRequestAttributes" value="true" />
-		<property name="exposeSessionAttributes" value="true" />
-		<property name="exposeSpringMacroHelpers" value="true" />
-		<property name="cache" value="true" />
-		<property name="suffix" value=".ftl" />
-		<property name="order" value="0" />
-	</bean>
-
-	<!-- 配置freeMarker的模板路径 start -->
-	<bean id="freemarkerConfig"
-		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/WEB-INF/view/" />
-		<property name="freemarkerVariables">
-			<map>
-				<entry key="xml_escape" value-ref="fmXmlEscape" />
-			</map>
-		</property>
-		<property name="defaultEncoding" value="UTF-8" />
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="template_update_delay">3600</prop>
-				<prop key="locale">zh_CN</prop>
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
-				<prop key="date_format">yyyy-MM-dd</prop>
-				<prop key="number_format">#.##</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+	<import resource="classpath:spring/spring-freemarker.xml" />
 	<!-- 配置freeMarker的模板路径 end -->
 
-
-
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 	</bean>
 
 	<!--后台message文件配置 start -->
@@ -144,35 +110,17 @@
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 			<list>
-				<value>classpath:messages_en.properties</value>
-				<value>classpath:messages_zh.properties</value>
-				<value>classpath:config.properties</value>
+				<value>classpath:i18n/messages_en.properties</value>
+				<value>classpath:i18n/messages_zh.properties</value>
+				<value>classpath:conf/config.properties</value>
 			</list>
 		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
 	</bean>
 	<!--后台message文件配置 end -->
 
 	<!-- 邮件发送配置 start -->
-	<bean id="emailService" class="com.june.utility.SendMail">
-		<property name="mailSender" ref="mailSender" />
-	</bean>
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host">
-			<value>smtp.nfschina.com</value>
-		</property>
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.timeout">25000</prop>
-			</props>
-		</property>
-		<property name="username">
-			<value>cyyyyyy@163.com</value>
-		</property>
-		<property name="password">
-			<value>1qaz@WSX</value>
-		</property>
-	</bean>
+	<import resource="classpath:spring/spring-email.xml" />
 	<!-- 邮件发送配置 end -->
 
 	<!-- 验证码配置 -->
@@ -227,11 +175,6 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
-	<!-- aop -->
-	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
-	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
-	<import resource="classpath:apache-shiro.xml" />
-
 	<!-- Activiti begin -->
 	<!-- <import resource="classpath:activiti.xml" /> -->
 	<!-- Activiti end -->
@@ -239,25 +182,15 @@
 	<!-- 定时任务start -->
 	<!-- <import resource="classpath:quartz.xml" /> -->
 	<!-- 定时任务end -->
+	<!-- Redis -->
 	<!-- <import resource="classpath:redis.xml" /> -->
 	<!-- <import resource="classpath:jedis.xml" /> -->
 	
-	<!-- websocket消息处理bean -->
-	<bean id="MinichatHandler" class="com.june.websocket.chat.MiniChatHandler" />
-	<websocket:handlers>
-		<!-- 配置消息处理bean和路径的映射关系 -->
-		<websocket:mapping path="/minichat" handler="MinichatHandler" />
-		<!-- 配置握手拦截器 -->
-		<websocket:handshake-interceptors>
-			<bean class="com.june.websocket.chat.HandshakeInterceptor" />
-		</websocket:handshake-interceptors>
-		<!-- 开启sockjs，去掉则关闭sockjs -->
-		<websocket:sockjs />
-	</websocket:handlers>
-	<!-- 配置websocket消息的最大缓冲区长度 -->
-	<bean
-		class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
-		<property name="maxTextMessageBufferSize" value="8192" />
-		<property name="maxBinaryMessageBufferSize" value="8192" />
-	</bean>
+	<!-- aop配置 -->
+	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
+	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
+	<!-- 引入websocket消息处理 -->
+	<import resource="classpath:spring/spring-websocket.xml" />
+	<!-- 引入Shiro配置 -->
+	<import resource="classpath:spring/apache-shiro.xml" />
 </beans>

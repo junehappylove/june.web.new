@@ -23,7 +23,7 @@ public class MessageUtil {
 
 	// 根据id获取配置文件消息
 	private static String getMessage(String msgId) {
-		return (String) CustomizedPropertyPlaceholderConfigurer.getContextProperty(msgId);
+		return (String)CustomizedPropertyPlaceholderConfigurer.getContextProperty(msgId);
 	}
 
 	/**
@@ -38,34 +38,42 @@ public class MessageUtil {
 	 *             异常信息
 	 */
 	private static String setMessageByParam(String message, String[] messageParam) throws Exception {
-
 		MessageFormat messageFormat = new MessageFormat(message);
-
 		String messageValue = messageFormat.format(messageParam);
-
 		return messageValue;
 	}
 
+	
+//	public static String getFormatMessage(String msgId, String[] messageParam) {
+//		try {
+//			String message = getMessage(msgId);
+//			message = StringUtil.isNotBlank(message) ? message : msgId;
+//			return setMessageByParam(message, messageParam);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	/**
 	 * 根据消息id获取配置文件中的消息内容
 	 * 
 	 * @param msgId
-	 * @param messageParam
+	 * @param param
 	 *            消息内容中替换的参数
 	 * @throws Exception
 	 * @return: String
 	 */
-	public static String getFormatMessage(String msgId, String[] messageParam) {
+	public static String formatMessage(String msgId, String... param) {
 		try {
 			String message = getMessage(msgId);
 			message = StringUtil.isNotBlank(message) ? message : msgId;
-			return setMessageByParam(message, messageParam);
+			return setMessageByParam(message, param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
+	
 	/**
 	 * 获取资源文件(config.properties)中的属性
 	 * 
@@ -73,7 +81,6 @@ public class MessageUtil {
 	 * @return: String
 	 */
 	public static String getResourceValue(String key) {
-		String value = getMessage(key);
-		return value;
+		return getMessage(key);
 	}
 }

@@ -13,7 +13,7 @@
 		</encoder>
 	</appender>
 	<!-- 按照每天生成日志文件 --> 
-	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}.log</file>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -32,8 +32,8 @@
 	</appender>
  	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->  
    <!--  
-   	<logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />  
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="DEBUG" />  
+   	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />  
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />  
     <logger name="org.hibernate.SQL" level="DEBUG" />  
     <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />  
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />  -->
@@ -63,11 +63,11 @@
         </connectionSource>
     </appender> -->
     
-	<root level="DEBUG">  
+	<root level="DEBUG">
 	<!-- <root level="INFO"> -->
         <appender-ref ref="STDOUT" />  
         <!-- 对日志的双向记录 -->
-		<appender-ref ref="file" />
+		<appender-ref ref="FILE" />
         <!-- <appender-ref ref="DB_MYSQL_POOL" />   -->
     </root>
 </configuration>

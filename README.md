@@ -13,6 +13,8 @@ Thinks a lot for all the open source code lovers!
  	引入ckeditor；
  	加入 druid sql监控（登录用户名密码 druid/druid）；
  	整理pom.xml
+ > 3. 2016-12-11 解决shrio的quartz1.6同项目本身quartz2.2的jar包冲突问题；
+ 	优化项目的配置文件；
  
  
  

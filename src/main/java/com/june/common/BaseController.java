@@ -507,7 +507,7 @@ public class BaseController {
 				ArrayList<String> errList = new ArrayList<String>();
 				try {
 					logger.error("Exception:" + e + ":" + e.getMessage());
-					errList.add(MessageUtil.getFormatMessage("sys_error", null));
+					errList.add(MessageUtil.formatMessage("sys_error"));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -522,7 +522,7 @@ public class BaseController {
 			if (e instanceof FastDFSException) {
 				ArrayList<String> errList = new ArrayList<String>();
 				logger.error("Exception:" + e + ":" + e.getMessage());
-				errList.add(MessageUtil.getFormatMessage("noavaliablearacker", null));
+				errList.add(MessageUtil.formatMessage("noavaliablearacker"));
 				messageDto.setErrList(errList);
 				messageDto.setErrType("error");
 				// throw new
@@ -811,7 +811,7 @@ public class BaseController {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
 		// message.setErrList(null);
-		errList.add(MessageUtil.getFormatMessage(messages, null));
+		errList.add(MessageUtil.formatMessage(messages));
 		message.setErrList(errList);
 		message.setErrType(type);
 		// 返回消息 end
@@ -832,7 +832,7 @@ public class BaseController {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
 		// message.setErrList(null);
-		errList.add(MessageUtil.getFormatMessage(messages, params));
+		errList.add(MessageUtil.formatMessage(messages, params));
 		message.setErrList(errList);
 		message.setErrType(type);
 		// 返回消息 end

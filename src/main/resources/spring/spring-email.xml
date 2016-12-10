@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+
+	<!-- 引入config.properties配置文件 ,注意ignore-unresolvable="true"属性引入多个文件扫描器需要添加这个属性-->
+	<context:property-placeholder location="classpath:conf/config.properties" ignore-unresolvable="true"/>
+	<bean id="emailService" class="com.june.utility.SendMail">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>smtp.nfschina.com</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+		<property name="username" value="${email.user}" />
+		<property name="password" value="${email.pass}" />
+	</bean>
+</beans>

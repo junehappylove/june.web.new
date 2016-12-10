@@ -32,10 +32,11 @@ import com.june.utility.StringUtil;
 import com.june.utility.exception.CustomException;
 
 /**
- * @Description: 定时任务用service
- * @author caiyang
- * @date 2016年3月31日 下午2:21:36
- * @version V1.0
+ * 定时任务用service
+ *  <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月11日 上午12:24:13
  */
 // @Service
 public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
@@ -47,9 +48,11 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	private Scheduler scheduler;
 
 	/**
-	 * @Description: 获取任务列表 @author caiyang @param: @param
-	 *               quartzTriggerDto @param: @return @return:
-	 *               QuartzTriggerDto @throws
+	 * 获取任务列表
+	 * @param quartzTriggerDto
+	 * @return
+	 * @date 2016年12月11日 上午12:25:29
+	 * @writer iscas
 	 */
 	public QuartzTriggerDto getPageList(QuartzTriggerDto quartzTriggerDto) {
 		List<QuartzTriggerDto> list = quartzDao.getPageList(quartzTriggerDto);
@@ -60,8 +63,11 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 暂停任务 @author caiyang @param: @param
-	 *               triggerName @param: @param groupName @return: void @throws
+	 * 暂停任务
+	 * @param triggerName
+	 * @param groupName
+	 * @date 2016年12月11日 上午12:24:31
+	 * @writer iscas
 	 */
 	public void pause(String triggerName, String groupName) {
 		try {
@@ -72,8 +78,11 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 恢复任务 @author caiyang @param: @param
-	 *               triggerName @param: @param groupName @return: void @throws
+	 * 恢复任务
+	 * @param triggerName
+	 * @param groupName
+	 * @date 2016年12月11日 上午12:24:38
+	 * @writer iscas
 	 */
 	public void resume(String triggerName, String groupName) {
 		try {
@@ -84,8 +93,12 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 删除任务 @author caiyang @param: @param
-	 *               triggerName @param: @param groupName @return: void @throws
+	 * 删除任务
+	 * @param triggerName
+	 * @param groupName
+	 * @return
+	 * @date 2016年12月11日 上午12:24:44
+	 * @writer iscas
 	 */
 	public boolean remove(String triggerName, String groupName) {
 		TriggerKey triggerKey = new TriggerKey(triggerName, groupName);
@@ -143,16 +156,20 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 获取所有的job名称 @author caiyang @param: @return @return: List
-	 *               <String> @throws
+	 * 获取所有的job名称
+	 * @return
+	 * @date 2016年12月11日 上午12:24:54
+	 * @writer iscas
 	 */
 	public List<QuartzTriggerDto> getAllJobName() {
 		return quartzDao.getAllJobName();
 	}
 
 	/**
-	 * @Description: 添加cron trigger @author caiyang @param: @param
-	 *               quartzTriggerDto @return: void @throws
+	 * 添加cron trigger
+	 * @param quartzTriggerDto
+	 * @date 2016年12月11日 上午12:25:01
+	 * @writer iscas
 	 */
 	public void addCrontrigger(QuartzTriggerDto quartzTriggerDto) {
 		try {
@@ -184,8 +201,10 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 立即执行一次job @author caiyang @param: @param
-	 *               quartzTriggerDto @return: void @throws
+	 * 立即执行一次job
+	 * @param quartzTriggerDto
+	 * @date 2016年12月11日 上午12:25:09
+	 * @writer iscas
 	 */
 	public void runTrigger(QuartzTriggerDto quartzTriggerDto) {
 		JobKey jobKey = new JobKey(quartzTriggerDto.getJobName(), quartzTriggerDto.getJobGroup());
@@ -198,8 +217,11 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	}
 
 	/**
-	 * @Description: 校验cron表达式是否正确 @author caiyang @param: @param
-	 *               cronExpression @param: @return @return: boolean @throws
+	 * 校验cron表达式是否正确
+	 * @param cronExpression
+	 * @return
+	 * @date 2016年12月11日 上午12:25:15
+	 * @writer iscas
 	 */
 	private boolean isValidExpression(final CronExpression cronExpression) {
 
