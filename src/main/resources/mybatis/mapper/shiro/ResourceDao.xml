@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getButtonResource" resultType="com.june.dto.back.login.ButtonDto">
 		SELECT
-		T1.BUTTON_ID AS buttonId,
-		T1.BUTTON_URL AS buttonUrl
+			T1.BUTTON_ID AS buttonId,
+			T1.BUTTON_URL AS buttonUrl
 		FROM
-		sys_function T1
+			sys_function T1
 	</select>
 </mapper>
