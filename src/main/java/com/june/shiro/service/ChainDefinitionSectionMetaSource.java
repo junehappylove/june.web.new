@@ -31,7 +31,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
     @Autowired  
     private ResourceDao resourceDao;  
  
-    private String filterChainDefinitions;  
+    private String filterChainDefinitions;
  
     /**
      * 默认premission字符串  
@@ -39,8 +39,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
     public static final String PREMISSION_STRING="authc,perms[{0}]";  
  
     @Override
-    public Section getObject() throws BeansException {  
- 
+    public Section getObject() throws BeansException {
         //获取所有菜单Resource  
         List<Resource> list = resourceDao.getAll();  
         //获取所有的页面业务resource

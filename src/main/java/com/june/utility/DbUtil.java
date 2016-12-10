@@ -38,7 +38,7 @@ public class DbUtil {
 	 */
 	public static void runSqlScript(String newSchemaName) throws Exception {
 		// 获取jdbc中的数据库url并将url中的schemaname置换成newSchemaName
-		Properties props = Resources.getResourceAsProperties("jdbc.properties");
+		Properties props = Resources.getResourceAsProperties("mybatis/jdbc.properties");
 		String url = props.getProperty("url");
 		String temp = url.split("/")[3];
 		String schemaName = temp.split("\\?")[0];

@@ -19,11 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 
-/**  
-* @Description: 身份验证登录，验证失败抛出session异常，重新登录
-* @author caiyang
-* @date 2016年2月16日 上午9:54:33 
-* @version V1.0  
+/**
+ * 
+ * 身份验证登录，验证失败抛出session异常，重新登录 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月10日 上午9:11:23
  */
 public class ClientAuthenticationFilter extends AuthenticationFilter {  
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {  

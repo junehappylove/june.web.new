@@ -13,7 +13,7 @@ import com.june.dto.back.common.TreeDto;
 /**
  * 
  * 基础服务类 <br>
- * 
+ * 提供注解式事务支持
  * @author 王俊伟 wjw.happy.love@163.com
  * @date 2016年5月13日 上午11:42:15
  * @param <DAO>

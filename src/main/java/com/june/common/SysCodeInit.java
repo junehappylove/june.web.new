@@ -17,7 +17,13 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
-
+/**
+ * 
+ * 服务启动后即完成系统代码的初始化工作 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @date 2016年12月10日 上午12:26:55
+ */
 public class SysCodeInit implements ApplicationListener<ContextRefreshedEvent> {
 
 	private final transient Logger logger = Logger.getLogger(SysCodeInit.class);

@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:p="http://www.springframework.org/schema/p" 
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" 
-	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:cache="http://www.springframework.org/schema/cache" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
@@ -19,26 +15,24 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
     http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
-	
-	<context:annotation-config/>
-	
+
+	<context:annotation-config />
+
 	<mvc:view-controller path="/" view-name="login/login" />
 	<mvc:view-controller path="/login" view-name="login/login" />
 	<mvc:view-controller path="/login/" view-name="login/login" />
 	<!-- 引入jdbc配置文件 -->
-	<import resource="classpath:jdbc.xml" />
+	<import resource="classpath:mybatis/jdbc.xml" />
 	<!--validation配置 start -->
 	<mvc:annotation-driven validator="validator" />
 	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
 		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
 		<property name="validationMessageSource" ref="validateMessageSource" />
 	</bean>
 	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
-	<bean id="validateMessageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="validateMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找 -->
@@ -51,18 +45,52 @@
 		<property name="cacheSeconds" value="60" />
 	</bean>
 	<!--validation配置 end -->
-	
+ 	<!-- FastJson注入 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+            <!-- FastJson -->
+            <bean id="fastJsonHttpMessageConverter"  class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!-- 这里顺序不能反，一定先写text/html,不然ie下出现下载提示 -->
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                        <!-- 避免循环引用 -->
+                        <value>DisableCircularReferenceDetect</value>
+                        <!-- 是否输出值为null的字段 -->
+                        <value>WriteMapNullValue</value>
+                        <!-- 数值字段如果为null,输出为0,而非null -->
+                        <value>WriteNullNumberAsZero</value>
+                        <!-- 字符类型字段如果为null,输出为"",而非null  -->
+                        <value>WriteNullStringAsEmpty</value>
+                        <!-- List字段如果为null,输出为[],而非null -->
+                        <value>WriteNullListAsEmpty</value>
+                        <!-- Boolean字段如果为null,输出为false,而非null -->
+                        <value>WriteNullBooleanAsFalse</value>
+                    </array>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<context:component-scan base-package="com.*"></context:component-scan>
-	
+	<!-- (自动注入) -->
+	<context:component-scan base-package="com.june.*"></context:component-scan>
+
 	<!-- jsp视图处理 start -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 视图前缀 -->
 		<property name="prefix" value="/WEB-INF/view/"></property>
 		<!-- 视图后缀 -->
 		<property name="suffix" value=".jsp"></property>
-		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.InternalResourceView" />
 		<property name="order" value="1" />
 	</bean>
 	<!-- jsp视图处理 end -->
@@ -70,7 +98,8 @@
 	<!-- 配置freeMarker视图解析器 -->
 	<bean id="viewResolverFtl"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 		<property name="contentType" value="text/html; charset=UTF-8" />
 		<property name="exposeRequestAttributes" value="true" />
 		<property name="exposeSessionAttributes" value="true" />
@@ -104,18 +133,8 @@
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 	<!-- 配置freeMarker的模板路径 end -->
 
-	<!-- myBatis配置start -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:mybatis-config.xml" />
-	</bean>
 
-	<!-- scan for mappers and let them be autowired -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.june.*" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-	</bean>
-	<!-- myBatis配置end -->
+
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 	</bean>
@@ -132,7 +151,7 @@
 		</property>
 	</bean>
 	<!--后台message文件配置 end -->
-	
+
 	<!-- 邮件发送配置 start -->
 	<bean id="emailService" class="com.june.utility.SendMail">
 		<property name="mailSender" ref="mailSender" />
@@ -155,7 +174,7 @@
 		</property>
 	</bean>
 	<!-- 邮件发送配置 end -->
-	
+
 	<!-- 验证码配置 -->
 	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
 		<property name="config">
@@ -198,7 +217,8 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/*" />
-			<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<bean id="webContentInterceptor"
+				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 				<property name="cacheSeconds" value="0" />
 				<property name="useExpiresHeader" value="true" />
 				<property name="useCacheControlHeader" value="true" />
@@ -210,7 +230,7 @@
 	<!-- aop -->
 	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
 	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
-	<import resource="classpath:applicationcontext-shiro.xml" />
+	<import resource="classpath:apache-shiro.xml" />
 
 	<!-- Activiti begin -->
 	<!-- <import resource="classpath:activiti.xml" /> -->
@@ -221,6 +241,7 @@
 	<!-- 定时任务end -->
 	<!-- <import resource="classpath:redis.xml" /> -->
 	<!-- <import resource="classpath:jedis.xml" /> -->
+	
 	<!-- websocket消息处理bean -->
 	<bean id="MinichatHandler" class="com.june.websocket.chat.MiniChatHandler" />
 	<websocket:handlers>

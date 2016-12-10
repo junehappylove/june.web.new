@@ -75,7 +75,6 @@ public interface LoginDao extends BaseDao<UserInfoDto> {
 	 */
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto);
 	
-	
 	/**   
 	 * @Description: 获取角色对应的有权限的按钮
 	 * @author caiyang

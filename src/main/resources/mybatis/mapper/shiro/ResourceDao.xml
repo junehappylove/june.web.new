@@ -3,13 +3,12 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.june.shiro.dao.ResourceDao">
-	
 	<select id="getAll" resultType="com.june.shiro.dto.Resource">
 		SELECT
-		T1.MENU_ID AS menuId,
-		T1.MENU_URL AS menuUrl
+			T1.MENU_ID AS menuId,
+			T1.MENU_URL AS menuUrl
 		FROM
-		sys_menu T1
+			sys_menu T1
 	</select>
 	<select id="getButtonResource" resultType="com.june.dto.back.login.ButtonDto">
 		SELECT

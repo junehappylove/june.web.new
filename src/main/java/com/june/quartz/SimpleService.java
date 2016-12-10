@@ -6,10 +6,9 @@
  * and shall use it only in accordance with the terms of the agreements   
  * you entered into with JUNE.   
  *   
- */ 
+ */
 
 package com.june.quartz;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,22 +19,22 @@ import com.june.common.BaseService;
 import com.june.dao.back.system.base.role.RoleDao;
 import com.june.dto.back.system.base.RoleInfoDto;
 import com.june.utility.exception.CustomException;
-  
-  
-@Service("simpleService")  
-public class SimpleService extends BaseService<RoleDao, RoleInfoDto>{  
-      
-    private static final Logger logger = LoggerFactory.getLogger(SimpleService.class);  
-     @Autowired
-     RoleDao roleDao;
-    public void testMethod1(){  
-        //这里执行定时调度业务  
-    	roleDao.deleteRoleById("3");
-    	throw new CustomException("test");
-        //logger.info("testMethod1.......1");  
-    }  
-      
-    public void testMethod2(){  
-        logger.info("testMethod2.......2");   
-    }  
-}  
+
+@Service("simpleService")
+public class SimpleService extends BaseService<RoleDao, RoleInfoDto> {
+
+	private static final Logger logger = LoggerFactory.getLogger(SimpleService.class);
+	@Autowired
+	RoleDao roleDao;
+
+	public void testMethod1() {
+		// 这里执行定时调度业务
+		roleDao.deleteRoleById("3");
+		throw new CustomException("test");
+		// logger.info("testMethod1.......1");
+	}
+
+	public void testMethod2() {
+		logger.info("testMethod2.......2");
+	}
+}

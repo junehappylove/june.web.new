@@ -9,10 +9,8 @@ $(function() {
 		    validating: 'glyphicon glyphicon-refresh'
 		},
 	    fields: {
-	    	
 	    	archiveName: {
 	            validators: {
-	              
 	                notEmpty: {
 	                    message: getMessageFromList("ErrorMustInput",['档案名称'])
 	                }
@@ -24,7 +22,7 @@ $(function() {
 		// 校验成功后执行以下方法
 	    e.preventDefault();
 	    doFileFormAjax("uploadForm","post",contextPath + "/archive/addNew",success);    
-	}); 
+	});
 	// 表格初始化
 	$('#archiveTable')
 			.bootstrapTable(
@@ -95,7 +93,7 @@ $(function() {
 function searchList()
 {
 	commonGetrowdatas("archiveTable", {}, contextPath
-			+ "/archive/searchInfo", "commonCallback", true)
+			+ "/archive/searchInfo", "commonCallback", true);
 }
 
 
