@@ -9,6 +9,7 @@
 	<description>june_web_new</description>
 	<!-- 项目属性 -->
 	<properties>
+		<finalName>june_web_new</finalName>
 		<!-- jar 版本设置 -->
 		<spring.version>4.2.5.RELEASE</spring.version>
 		<shiro.version>1.2.4</shiro.version>
@@ -50,8 +51,8 @@
 		<xwork-core.version>2.3.30</xwork-core.version>
 		<aspectjweaver.version>1.8.9</aspectjweaver.version>
 		<cglib.version>3.1</cglib.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.7</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -485,7 +486,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<scope>provided</scope>
+			<scope>provided</scope><!-- 必须有范围限定 -->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
@@ -716,22 +717,6 @@
 	</dependencies>
 	<!-- build -->
 	<build>
-		<finalName>june_web_new</finalName>
-		<sourceDirectory>src</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>resources</directory>
-				<excludes>
-					<exclude>**/*.*</exclude>
-				</excludes>
-			</resource>
-		</resources>
 		<plugins>
 			<!-- 用来解决循环依赖的问题 -->
 			<plugin>
@@ -748,6 +733,7 @@
 					<skip>true</skip>
 				</configuration>
             </plugin>
+            <!-- 编译 -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
@@ -756,14 +742,31 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
+			<!-- 打包 -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
-				<configuration>
-					<warSourceDirectory>target</warSourceDirectory>
+				<!-- <configuration>
+					<warSourceDirectory>webapp</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration> -->
+			</plugin>
+			<!-- 实现web项目在tomcat7下的自动部署 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<url>http://localhost:8090/manager/text</url>
+					<server>tomcat</server>
+					<username>admin</username>
+					<password>admin</password>
+					<path>/${finalName}</path>
 				</configuration>
 			</plugin>
+			<!-- maven 自动部署到tomcat下，需要设置 修改$TOMCAT_HOME/conf/context.xml -->
+			<!-- 为: <Context antiJARLocking="true" antiResourceLocking="true"> -->
+			<!-- 其次，如果在pom中有引入 servlet-api 的jar包，则必须给次限定范围<scope>provided</scope> -->
 		</plugins>
 	</build>
 </project>
