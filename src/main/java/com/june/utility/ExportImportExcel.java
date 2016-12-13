@@ -200,7 +200,6 @@ public class ExportImportExcel {
 		List<AbstractDTO> DataFromExcel = new ArrayList();
 		// 获取文件
 		// InputStream is = new FileInputStream(filepath);
-		@SuppressWarnings("resource")
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
 		for (int numSheet = 0; numSheet < xssfWorkbook.getNumberOfSheets(); numSheet++) {
 			XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(numSheet);
@@ -259,7 +258,6 @@ public class ExportImportExcel {
 		List<AbstractDTO> DataFromExcel = new ArrayList();
 		// 获取文件
 		InputStream is = myfiles[0].getInputStream();
-		@SuppressWarnings("resource")
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
 		for (int numSheet = 0; numSheet < xssfWorkbook.getNumberOfSheets(); numSheet++) {
 			XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(numSheet);

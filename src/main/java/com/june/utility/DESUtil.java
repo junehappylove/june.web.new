@@ -7,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */ 
-
 package com.june.utility;
 
 import java.security.Key;
@@ -16,9 +15,10 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
+//import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Encoder;
 /**
  * 
  * DES算法工具类 <br>
@@ -27,7 +27,7 @@ import sun.misc.BASE64Encoder;
  * @date 2016年8月31日 下午5:54:20
  */
 public class DESUtil {
-	  String KEY_STRING = Const.KEY_STRING;
+	 String KEY_STRING = Const.KEY_STRING;
      static Key key;       
        
      /**    
@@ -56,16 +56,17 @@ public class DESUtil {
          DESUtil.getKey(Const.KEY_STRING);// 生成密匙       
          byte[] byteMi = null;       
          byte[] byteMing = null;       
-         String strMi = "";       
-         BASE64Encoder base64en = new BASE64Encoder();       
+         String strMi = "";
+         //BASE64Encoder base64en = new BASE64Encoder();       
          try {       
-             byteMing = strMing.getBytes("UTF8");       
+             byteMing = strMing.getBytes("UTF-8");       
              byteMi = getEncCode(byteMing);       
-             strMi = base64en.encode(byteMi);       
+             //strMi = base64en.encode(byteMi);
+             strMi = Base64.encodeBase64String(byteMi);
          } catch (Exception e) {       
              e.printStackTrace();       
          } finally {       
-             base64en = null;       
+             //base64en = null;       
              byteMing = null;       
              byteMi = null;       
          }       
@@ -80,18 +81,19 @@ public class DESUtil {
       */      
      public static String getDesString(String strMi) {   
          DESUtil.getKey(Const.KEY_STRING);// 生成密匙       
-         BASE64Decoder base64De = new BASE64Decoder();       
+         //BASE64Decoder base64De = new BASE64Decoder();       
          byte[] byteMing = null;       
          byte[] byteMi = null;       
          String strMing = "";       
          try {       
-             byteMi = base64De.decodeBuffer(strMi);       
+             //byteMi = base64De.decodeBuffer(strMi);
+        	 byteMi = Base64.decodeBase64(strMi);
              byteMing = getDesCode(byteMi);       
-             strMing = new String(byteMing, "UTF8");       
+             strMing = new String(byteMing, "UTF-8");       
          } catch (Exception e) {       
              e.printStackTrace();       
          } finally {       
-             base64De = null;       
+             //base64De = null;       
              byteMing = null;       
              byteMi = null;       
          }       
@@ -138,14 +140,14 @@ public class DESUtil {
              cipher = null;       
          }       
          return byteFina;       
-       
      }       
        
-     public static void main(String[] args) {       
-          
-         String strEnc = DESUtil.getEncString("jdbc:mysql://localhost:3306/chinaws_kaifa?useUnicode=yes&amp;characterEncoding=UTF8");// 加密字符串,返回String的密文       
-         System.out.println(strEnc);       
-         String strDes = DESUtil.getDesString("XmxrYb+mTim0gviEkr/3wRWg06i5MhLTddSsEZDRp72t1GLnXGk0TBKE2cfU5GLN276EZ3H681j8GhuZwBgEKj9xTKbaamYPBRr5PsXt0Bkbl2d2mWtkeQ==");// 把String 类型的密文解密        
+     public static void main(String[] args) {
+    	 String key = "jdbc:mysql://localhost:3306/june_web_new?useUnicode=yes&amp;characterEncoding=UTF-8";
+    	 String strEnc = DESUtil.getEncString(key);// 加密字符串,返回String的密文       
+         System.out.println(strEnc);
+         String decode = "edPGEaedFAU6W3vfL5QCuEJiYfxsN51RiIUPLbuY7MYJBbOGYi/d29aBNMe9jmeu7HgnWQVvctMieS1XKAhQoIpS5oNaFUcnPKO7Od38hXHsnLQB58j/AA==";
+         String strDes = DESUtil.getDesString(decode);// 把String 类型的密文解密        
          System.out.println(strDes);       
      }
 }

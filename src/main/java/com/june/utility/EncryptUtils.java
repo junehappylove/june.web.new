@@ -15,8 +15,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * 常用加密算法工具类
@@ -55,8 +54,7 @@ public class EncryptUtils {
 	 * @return base64加密后的结果
 	 */
 	public static String encodeBase64String(String str) {
-		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(str.getBytes());
+		return Base64.encodeBase64String(str.getBytes());
 	}
 
 	/**
@@ -68,8 +66,7 @@ public class EncryptUtils {
 	 * @throws IOException
 	 */
 	public static String decodeBase64String(String str) throws IOException {
-		BASE64Decoder encoder = new BASE64Decoder();
-		return new String(encoder.decodeBuffer(str));
+		return new String(Base64.decodeBase64(str));
 	}
 
 	private static String encode(String str, String method) {
@@ -86,7 +83,7 @@ public class EncryptUtils {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String user = "wjw.happy.love@163.com";
+		String user = "wjw.happy.love@163.com";//1bac3fb3461156b864028dd09ffec698
 		System.out.println("MD5加密 " + encodeMD5String(user));
 	}
 }

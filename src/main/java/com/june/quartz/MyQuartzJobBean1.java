@@ -10,15 +10,17 @@
 
 package com.june.quartz;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.PersistJobDataAfterExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;  
   
-//@PersistJobDataAfterExecution  
-//@DisallowConcurrentExecution// 不允许并发执行  
+@PersistJobDataAfterExecution  
+@DisallowConcurrentExecution// 不允许并发执行  
 public class MyQuartzJobBean1 extends QuartzJobBean {  
   
     private static final Logger logger = LoggerFactory.getLogger(MyQuartzJobBean1.class);  

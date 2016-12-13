@@ -10,11 +10,9 @@
 <title>JUNE_WEB_NEW - 主页</title>
 <%@include file="../common/import.jsp"%>
 <meta name="keywords" content="后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-<meta name="description"
-	content="基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+<meta name="description" content="基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 </head>
-<body class="fixed-sidebar full-height-layout gray-bg"
-	style="overflow: hidden">
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
 	<div id="wrapper">
 		<!--左侧导航开始-->
 		<nav class="navbar-default navbar-static-side" role="navigation">
@@ -80,16 +78,12 @@
 													</li>
 												</c:forEach>
 											</ul></li>
-
 									</c:if>
 								</c:forEach>
-
 							</ul>
 						</li>
 					</c:if>
 				</c:forEach>
-
-
 			</ul>
 		</div>
 		</nav>

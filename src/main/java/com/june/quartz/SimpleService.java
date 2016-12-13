@@ -30,8 +30,8 @@ public class SimpleService extends BaseService<RoleDao, RoleInfoDto> {
 	public void testMethod1() {
 		// 这里执行定时调度业务
 		roleDao.deleteRoleById("3");
+		logger.info("testMethod1.......1");
 		throw new CustomException("test");
-		// logger.info("testMethod1.......1");
 	}
 
 	public void testMethod2() {

@@ -180,7 +180,7 @@
 	<!-- Activiti end -->
 
 	<!-- 定时任务start -->
-	<!-- <import resource="classpath:quartz.xml" /> -->
+	<import resource="classpath:quartz.xml" />
 	<!-- 定时任务end -->
 	<!-- Redis -->
 	<!-- <import resource="classpath:redis.xml" /> -->
