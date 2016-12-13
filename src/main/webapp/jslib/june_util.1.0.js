@@ -1,6 +1,6 @@
 /**
  * JUNE软件有限公司<br>
- * jslib.iscas_june.1.0.js
+ * jslib.june_util.1.0.js
  * 日期：2015年12月8日
  */
 
@@ -49,12 +49,12 @@ DynamicLoading = {
 // 调用被加载的资源文件中的方法
 
 /////////////////////////////////////////////////////
-// 调用方法：iscas.info("hello world!");
+// 调用方法：june.info("hello world!");
 // ///////////////////////////////////////////////////
 var INFO = "info", ERROR = "error", WARN = "warning", QUESTION = "question";
 var GET = "get", POST = "post", JSON = "json";
 var FLAG = "WANG_JUN_WEI";
-iscas={
+june={
 		info:function(info){
 			$.messager.alert("提示",info,"info");
 		},

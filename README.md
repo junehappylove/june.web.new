@@ -16,8 +16,10 @@ Thinks a lot for all the open source code lovers!
  > 3. 2016-12-11 解决shrio的quartz1.6同项目本身quartz2.2的jar包冲突问题；
  	优化项目的配置文件；
  	对系统菜单，加入排序展示；
- > 4. 2016-12-12 重新整理pom,实现maven自动构建打包发布到tomcat下，可以参考这三个帖子![开发过程使用Tomcat Maven插件持续快捷部署Web项目](https://my.oschina.net/feichexia/blog/326893,"开发过程使用Tomcat Maven插件持续快捷部署Web项目")
- 、![maven tomcat plugin实现热部署](http://blog.csdn.net/a468903507/article/details/45392083)、![Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署](http://blog.csdn.net/chwshuang/article/details/48499231)
+ > 4. 2016-12-12 重新整理pom,实现maven自动构建打包发布到tomcat下，可以参考这三个帖子
+ [maven tomcat plugin实现热部署](http://blog.csdn.net/a468903507/article/details/45392083,"maven tomcat plugin实现热部署")、
+ [开发过程使用Tomcat Maven插件持续快捷部署Web项目](https://my.oschina.net/feichexia/blog/326893,"开发过程使用Tomcat Maven插件持续快捷部署Web项目") 、
+ [Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署](http://blog.csdn.net/chwshuang/article/details/48499231,"Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署")
  
  
 ## 技术选择 
@@ -32,4 +34,4 @@ Thinks a lot for all the open source code lovers!
  > 9. MethodLog(Spring AOP 方法日志记录)
  > 10. ...
  
-### if you like , contact me by QQ **980154978** .
+### if you like , contact me by QQ =980154978= .

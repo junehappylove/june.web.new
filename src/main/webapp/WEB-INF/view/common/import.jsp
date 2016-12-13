@@ -90,5 +90,5 @@
 <!-- 日期格式化控件 -->
 <script type="text/javascript" src="${ctx }/jslib/date.format.js"></script>
 <!-- 动态资源加载 -->
-<script type="text/javascript" src="${ctx }/jslib/iscas_june.1.0.js"></script>
+<script type="text/javascript" src="${ctx }/jslib/june_util.1.0.js"></script>
 <script>var contextPath = '${ctx}';</script>

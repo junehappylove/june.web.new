@@ -1,5 +1,5 @@
 /**
- * 中科方德软件有限公司<br>
+ * 普导慧智软件有限公司<br>
  * june_web_new:com.june.common.BaseDTO.java
  * 日期:2016年12月11日
  */

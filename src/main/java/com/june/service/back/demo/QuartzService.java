@@ -52,7 +52,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * @param quartzTriggerDto
 	 * @return
 	 * @date 2016年12月11日 上午12:25:29
-	 * @writer iscas
+	 * @writer june
 	 */
 	public QuartzTriggerDto getPageList(QuartzTriggerDto quartzTriggerDto) {
 		List<QuartzTriggerDto> list = quartzDao.getPageList(quartzTriggerDto);
@@ -67,7 +67,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * @param triggerName
 	 * @param groupName
 	 * @date 2016年12月11日 上午12:24:31
-	 * @writer iscas
+	 * @writer june
 	 */
 	public void pause(String triggerName, String groupName) {
 		try {
@@ -82,7 +82,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * @param triggerName
 	 * @param groupName
 	 * @date 2016年12月11日 上午12:24:38
-	 * @writer iscas
+	 * @writer june
 	 */
 	public void resume(String triggerName, String groupName) {
 		try {
@@ -98,7 +98,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * @param groupName
 	 * @return
 	 * @date 2016年12月11日 上午12:24:44
-	 * @writer iscas
+	 * @writer june
 	 */
 	public boolean remove(String triggerName, String groupName) {
 		TriggerKey triggerKey = new TriggerKey(triggerName, groupName);
@@ -149,7 +149,6 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 				scheduler.scheduleJob(trigger);
 			}
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -159,7 +158,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * 获取所有的job名称
 	 * @return
 	 * @date 2016年12月11日 上午12:24:54
-	 * @writer iscas
+	 * @writer june
 	 */
 	public List<QuartzTriggerDto> getAllJobName() {
 		return quartzDao.getAllJobName();
@@ -169,7 +168,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * 添加cron trigger
 	 * @param quartzTriggerDto
 	 * @date 2016年12月11日 上午12:25:01
-	 * @writer iscas
+	 * @writer june
 	 */
 	public void addCrontrigger(QuartzTriggerDto quartzTriggerDto) {
 		try {
@@ -190,12 +189,10 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 						scheduler.scheduleJob(trigger);
 					}
 				} catch (SchedulerException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -204,14 +201,13 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * 立即执行一次job
 	 * @param quartzTriggerDto
 	 * @date 2016年12月11日 上午12:25:09
-	 * @writer iscas
+	 * @writer june
 	 */
 	public void runTrigger(QuartzTriggerDto quartzTriggerDto) {
 		JobKey jobKey = new JobKey(quartzTriggerDto.getJobName(), quartzTriggerDto.getJobGroup());
 		try {
 			scheduler.triggerJob(jobKey);
 		} catch (SchedulerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -221,7 +217,7 @@ public class QuartzService extends BaseService<QuartzDao, QuartzTriggerDto> {
 	 * @param cronExpression
 	 * @return
 	 * @date 2016年12月11日 上午12:25:15
-	 * @writer iscas
+	 * @writer june
 	 */
 	private boolean isValidExpression(final CronExpression cronExpression) {
 

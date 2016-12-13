@@ -66,7 +66,7 @@ public class LogAspect {
 	 * @return
 	 * @throws Throwable
 	 * @date 2016年12月8日 下午4:32:17
-	 * @writer iscas
+	 * @writer june
 	 */
 	@Around("methodCachePointcut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
@@ -160,7 +160,7 @@ public class LogAspect {
 	 * @return
 	 * @throws Exception
 	 * @date 2016年12月8日 下午3:45:23
-	 * @writer iscas
+	 * @writer june
 	 */
 	public static Map<String, String> getMethodRemark(JoinPoint joinPoint) throws Exception {
 		Map<String, String> methodMap = new HashMap<String, String>();
