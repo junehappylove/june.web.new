@@ -40,7 +40,7 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping("/mvb")
-public class MVBController extends BaseController {
+public class MVBController extends BaseController<MVBDto> {
 
 	@Autowired
 	protected MVBService mvbService;
@@ -186,7 +186,7 @@ public class MVBController extends BaseController {
 		mvbDto = mvbService.getDtoById(mvbDto);
 		// 判断MVB信息是否为空
 		if (mvbDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, response);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(mvbDto, response);
 		}
@@ -212,7 +212,7 @@ public class MVBController extends BaseController {
 			if (StringUtils.isBlank(mvbDto.getMvbId())) {
 				setCreater(mvbDto, request);
 				mvbService.addDto(mvbDto);// 添加MVB
-				throwMessage("save_success", MESSAGE_INFO, response);
+				throwMessage(response,"save_success", MESSAGE_INFO);
 			} else {
 				// MVB存在的情况返回消息
 				messageErrorExist(response);

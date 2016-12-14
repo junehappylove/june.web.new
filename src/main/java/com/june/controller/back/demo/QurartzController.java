@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
-import com.june.common.PageDTO;
 import com.june.dto.back.demo.QuartzTriggerDto;
 import com.june.service.back.demo.QuartzService;
 import com.june.utility.MessageUtil;
@@ -37,7 +36,7 @@ import net.sf.json.JSONObject;
  */
 // @Controller
 // @RequestMapping("/quatrz")
-public class QurartzController extends BaseController {
+public class QurartzController extends BaseController<QuartzTriggerDto> {
 
 	@Autowired
 	private QuartzService quartzService;
@@ -169,13 +168,12 @@ public class QurartzController extends BaseController {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/getinitdata")
-	public void getinitdata(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getinitdata(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		List<QuartzTriggerDto> jobNames = quartzService.getAllJobName();
-		PageDTO<QuartzTriggerDto> pageDTO = new PageDTO<QuartzTriggerDto>();
-		pageDTO.setRows(jobNames);
-		JSONObject jsonObject = JSONObject.fromObject(pageDTO);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		pageDTO = null;
+		QuartzTriggerDto qtd = new QuartzTriggerDto();
+		qtd.setRows(jobNames);
+		toJson(qtd, response);
+		qtd = null;
 	}
 
 	/**

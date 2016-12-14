@@ -42,7 +42,7 @@ import freemarker.template.TemplateException;
  */
 @Controller
 @RequestMapping("/checkDetail")
-public class CheckDetailController extends BaseController {
+public class CheckDetailController extends BaseController<ArticleDto> {
 
 	@Autowired
 	protected CheckDetailService checkDetailService;

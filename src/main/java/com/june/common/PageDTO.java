@@ -3,12 +3,9 @@ package com.june.common;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageDTO<T extends BaseDTO> extends BaseDTO {
+public abstract class PageDTO<T extends BaseDTO> extends BaseDTO {
 	
-	/**
-	 * long serialVersionUID
-	 */
-	private static final long serialVersionUID = 5525408090405361036L;
+	private static final long serialVersionUID = 103L;
 	//总条数
 	private int  total;
 	//当前页
@@ -77,6 +74,11 @@ public class PageDTO<T extends BaseDTO> extends BaseDTO {
 
 	public void setRows(List<T> rows) {
 		this.rows = rows;
+	}
+
+	@Override
+	protected String getDtoName() {
+		return "分页(PageDTO)";
 	}
 	
 }

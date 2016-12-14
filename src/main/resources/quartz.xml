@@ -6,6 +6,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd"> 
 
 	<bean id="jobFactory" class="com.june.quartz.MyJobFactory"></bean>
+	<!-- 启动触发器的配置开始 -->
 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" lazy-init="false">
 		<property name="dataSource">
 			<ref bean="dataSource" />
@@ -20,7 +21,9 @@
 			</list>
 		</property>
 	</bean>
-
+	<!-- 启动触发器的配置结束 -->
+	
+	<!-- job的配置开始 -->
 	<bean id="jobDetail1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
 		<property name="jobClass">
 			<value>com.june.quartz.MyQuartzJobBean1</value>
@@ -28,11 +31,17 @@
 		<property name="durability" value="true" />
 		<property name="requestsRecovery" value="true" />
 	</bean>
+	<!-- job的配置结束 -->
+	
+	<!-- 调度的配置开始 -->
 	<bean id="trigger1" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDetail1" />
-		<property name="cronExpression" value="0/10 * * ? * * *" />
+		<property name="cronExpression">
+			<value>0/10 * * ? * * *</value>
+			<!-- <value>0 0 0 * * ?</value> --><!--middle night 24. do it  -->
+		</property>
 	</bean>
-
+	<!-- 调度的配置结束 -->
 	<bean id="jobDetail2" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
 		<property name="jobClass">
 			<value>com.june.quartz.MyQuartzJobBean2</value>

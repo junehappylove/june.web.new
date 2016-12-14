@@ -42,7 +42,7 @@ import net.sf.json.JsonConfig;
  */
 // @Controller
 // @RequestMapping("/myflow")
-public class MyFlowController extends BaseController {
+public class MyFlowController extends BaseController<FlowListDto> {
 
 	@Autowired
 	private MyflowService myflowService;

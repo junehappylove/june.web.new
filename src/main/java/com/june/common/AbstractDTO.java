@@ -27,7 +27,8 @@ import com.june.dto.back.system.base.UserInfoDto;
  */
 public abstract class AbstractDTO implements Serializable {
 	
-	private static final long serialVersionUID = 2215994476692153946L;
+	private static final long serialVersionUID = 101L;
+	
 	private Date sys_date = new Date();//获取当前系统时间
 	private String sys_user;//获取系统当前登录的用户id
 	private String identifyCode;  //验证码
@@ -48,6 +49,8 @@ public abstract class AbstractDTO implements Serializable {
 	private Timestamp updateTime;
 	private String version;
 	private List<TreeDto> tree;	//DTO的下拉值
+	
+	protected abstract String getDtoName();
 
 	@Override
 	public String toString() {

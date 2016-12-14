@@ -29,4 +29,9 @@ public class SchemaDto extends AbstractDTO implements Serializable{
 	public void setSchemaName(String schemaName) {
 		this.schemaName = schemaName;
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "租户(Schema)";
+	}
 }

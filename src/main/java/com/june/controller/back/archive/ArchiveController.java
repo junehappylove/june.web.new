@@ -24,7 +24,7 @@ import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/archive")
-public class ArchiveController extends BaseController {
+public class ArchiveController extends BaseController<ArchiveDto> {
 
 	@Autowired
 	private ArchiveService archiveService;

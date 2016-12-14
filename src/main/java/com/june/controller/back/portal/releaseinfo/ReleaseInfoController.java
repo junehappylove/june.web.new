@@ -32,7 +32,7 @@ import com.june.utility.MessageUtil;
 
 @Controller
 @RequestMapping("/portal/ReleaseInfo/")
-public class ReleaseInfoController extends BaseController{
+public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 
 	/**
 	 * 咨询发布用service注入

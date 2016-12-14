@@ -34,7 +34,7 @@ import net.sf.json.JSONObject;
  */
 // @Controller
 // @RequestMapping("/leave")
-public class LeaveActivitiController extends BaseController {
+public class LeaveActivitiController extends BaseController<LeaveDto> {
 
 	@Autowired
 	private LeaveService leaveService;

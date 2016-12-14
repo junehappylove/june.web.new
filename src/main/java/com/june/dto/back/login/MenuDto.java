@@ -198,4 +198,9 @@ public class MenuDto extends AbstractDTO implements Serializable{
 		this.clazz = clazz;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "菜单";
+	}
+
 }

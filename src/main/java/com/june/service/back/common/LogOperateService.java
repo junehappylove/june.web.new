@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
-import com.june.common.BaseController;
 import com.june.common.BaseService;
 import com.june.dao.back.common.LogOperateDao;
 import com.june.dao.back.system.base.userinfo.UserInfoDao;
@@ -77,7 +76,7 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	public String getParams(HttpServletRequest request) {
 		Map<String, Object> paramsMap = new HashMap<String, Object>();
 		Map<String, String> paramsMap2 = new HashMap<String, String>();
-		boolean isAjaxCall = (new BaseController()).isAjaxCall(request);
+		boolean isAjaxCall = this.isAjaxCall(request);
 		if (isAjaxCall) {
 			paramsMap = WebUtils.getParametersStartingWith(request, "");
 			paramsMap2 = getParameterMap(paramsMap);

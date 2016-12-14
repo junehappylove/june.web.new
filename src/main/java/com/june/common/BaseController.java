@@ -35,9 +35,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang.StringUtils;
 //import org.apache.commons.beanutils.PropertyUtilsBean;
 //import org.apache.shiro.authc.AuthenticationException;
@@ -51,9 +49,12 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.june.common.converter.DateConverter;
+import com.june.common.converter.TimestampConverter;
 import com.june.dto.back.bussiness.ftp.FtpDto;
 import com.june.dto.back.bussiness.guide.ImageXML;
 import com.june.dto.back.bussiness.guide.ImageXML_;
@@ -75,13 +76,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Transactional
-public class BaseController {
+public abstract class BaseController<DTO extends PageDTO<DTO>> {
+	//public abstract class BaseController<S extends BaseService<DAO,DTO>,DAO extends BaseDao<DTO>,DTO extends PageDTO<DTO>> {
 	
 	// 打印log
 	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	protected static String article_template_path = "template/cmstemplate/article.html";
 	protected static String commentlist_template_path = "template/cmstemplate/comment_list.html";
-	// mail发送注入
 	@Autowired
 	public SendMail sendMail;
 
@@ -93,13 +94,51 @@ public class BaseController {
 	private HttpServletRequest request;
 	@Autowired
 	protected VehicleService vehicleService;
-
-	/**
-	 * 共通业务service注入
-	 */
 	@Autowired
 	protected CommonService commonService;
 
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	
+	/**
+	 * form表单后台验证
+	 * @param request
+	 * @param response
+	 * @param dto
+	 * @return
+	 * @throws Exception
+	 * @date 2016年12月14日 下午11:09:34
+	 * @writer junehappylove
+	 */
+	@ModelAttribute
+	public DTO validateForm(HttpServletRequest request, HttpServletResponse response,DTO dto)
+			throws Exception {
+		// 将参数映射到对应的业务dto中并返回
+		fillRequestDto(request, dto);
+		return dto;
+	}
+		
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	//=====================================================================================
+	
+	/**
+	 * 
+	 * @return
+	 * @date 2016年12月14日 下午11:38:48
+	 * @writer junehappylove
+	 */
 	protected String getProjectName() {
 		String hostname = request.getContextPath();
 		return hostname;
@@ -115,7 +154,7 @@ public class BaseController {
 	 * @param request
 	 * @param dest
 	 */
-	protected void fillRequestDto(HttpServletRequest request, AbstractDTO dest) {
+	protected void fillRequestDto(HttpServletRequest request, BaseDTO dest) {
 		// 注册Date类型
 		ConvertUtils.register(new DateConverter(), java.util.Date.class);
 		// 注册Timestamp类型
@@ -130,77 +169,7 @@ public class BaseController {
 			e.printStackTrace();
 		}
 	}
-
-	class TimestampConverter implements Converter {
-
-		@Override
-		public Object convert(@SuppressWarnings("rawtypes") Class arg0, Object arg1) {
-			if (arg1 == null) {
-				return null;
-			}
-			if (!(arg1 instanceof String)) {
-				throw new ConversionException("只支持字符串转换 !");
-			}
-			String str = (String) arg1;
-			if (str.trim().equals("")) {
-				return null;
-			}
-			SimpleDateFormat sd = null;
-			if (str.length() == 10) {
-				sd = new SimpleDateFormat("yyyy-MM-dd");
-			} else {
-				sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			}
-			try {
-				Date date = sd.parse(str);
-				sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				str = sd.format(date);
-				Timestamp ts = new Timestamp(System.currentTimeMillis());
-				ts = Timestamp.valueOf(str);
-				return ts;
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-	}
-
-	class DateConverter implements Converter {
-
-		@Override
-		public Object convert(@SuppressWarnings("rawtypes") Class arg0, Object arg1) {
-			if (arg1 == null) {
-				return null;
-			}
-			if (!(arg1 instanceof String)) {
-				throw new ConversionException("只支持字符串转换 !");
-			}
-			String str = (String) arg1;
-			if (str.trim().equals("")) {
-				return null;
-			}
-			SimpleDateFormat sd = null;
-			if (str.length() == 10) {
-				if (str.contains("-")) {
-					sd = new SimpleDateFormat("yyyy-MM-dd");
-				} else if (str.contains("/")) {
-					sd = new SimpleDateFormat("yyyy/MM/dd");
-				}
-			} else {
-				if (str.contains("-")) {
-					sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				} else if (str.contains("/")) {
-					sd = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				}
-			}
-			try {
-				return sd.parse(str);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-
+	
 	/**
 	 * 将dto转换成map形式
 	 * 
@@ -208,7 +177,7 @@ public class BaseController {
 	 * @param bean
 	 * @return Map <String,Object>
 	 */
-	public void beantoMap(Map<String, Object> returnMap, AbstractDTO bean) {
+	public void beantoMap(Map<String, Object> returnMap, DTO bean) {
 		BeanInfo beanInfo = null;
 		try {
 			beanInfo = Introspector.getBeanInfo(bean.getClass());
@@ -253,7 +222,53 @@ public class BaseController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			logger.debug(jsonObject.toString());
+			//logger.debug(jsonObject.toString());
+			logger.debug("ConvetDtoToJson");
+			out.println(jsonObject.toString());
+		} catch (IOException ex1) {
+			ex1.printStackTrace();
+		} finally {
+			out.close();
+		}
+	}
+	
+	/**
+	 * list转成json对象
+	 * 
+	 * @param response
+	 * @param jsonArray
+	 * @date 2015年12月16日 上午10:51:14
+	 * @writer wjw.happy.love@163.com
+	 */
+	protected void ConvertListToJson(HttpServletResponse response, JSONArray jsonArray) {
+		response.setContentType("text/json;charset=gbk");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			//logger.debug(jsonArray.toString());
+			logger.debug("ConvertListToJson");
+			out.println(jsonArray.toString());
+		} catch (IOException ex1) {
+			ex1.printStackTrace();
+		} finally {
+			out.close();
+		}
+	}
+
+	/**
+	 * dto转成json对象传回前台（上传下载专用）
+	 * 
+	 * @param response
+	 * @param jsonObject
+	 * @date 2015年12月16日 上午10:51:05
+	 * @writer wjw.happy.love@163.com
+	 */
+	protected void Converttojsonobjectajax(HttpServletResponse response, JSONObject jsonObject) {
+		response.setContentType("text/html;charset=gbk");
+		PrintWriter out = null;
+		try {
+			out = response.getWriter();
+			logger.debug("Converttojsonobjectajax");
 			out.println(jsonObject.toString());
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
@@ -279,7 +294,7 @@ public class BaseController {
 			JSONObject jsonObject = JSONObject.fromObject(bean);
 			response.setContentType("text/Xml;charset=gbk");
 			out = response.getWriter();
-			logger.debug(jsonObject.toString());
+			//logger.debug(jsonObject.toString());
 			out.println(jsonObject.toString());
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
@@ -346,13 +361,13 @@ public class BaseController {
 	 * @param response
 	 * @date 2015年12月4日 下午2:52:44
 	 */
-	protected void toJson(AbstractDTO bean, HttpServletResponse response) {
+	protected void toJson(DTO bean, HttpServletResponse response) {
 		JSONObject jsonObject = JSONObject.fromObject(bean);
 		response.setContentType("text/Xml;charset=gbk");
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			logger.debug(jsonObject.toString());
+			//logger.debug(jsonObject.toString());
 			out.println(jsonObject.toString());
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
@@ -374,52 +389,9 @@ public class BaseController {
 		PrintWriter out = null;
 		try {
 			out = response.getWriter();
-			logger.debug(jsonArray.toString());
+			//logger.debug(jsonArray.toString());
 			out.println(jsonArray.toString());
 
-		} catch (IOException ex1) {
-			ex1.printStackTrace();
-		} finally {
-			out.close();
-		}
-	}
-
-	/**
-	 * list转成json对象
-	 * 
-	 * @param response
-	 * @param jsonArray
-	 * @date 2015年12月16日 上午10:51:14
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected void ConvertListToJson(HttpServletResponse response, JSONArray jsonArray) {
-		response.setContentType("text/json;charset=gbk");
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			logger.debug(jsonArray.toString());
-			out.println(jsonArray.toString());
-		} catch (IOException ex1) {
-			ex1.printStackTrace();
-		} finally {
-			out.close();
-		}
-	}
-
-	/**
-	 * dto转成json对象传回前台（上传下载专用）
-	 * 
-	 * @param response
-	 * @param jsonObject
-	 * @date 2015年12月16日 上午10:51:05
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected void Converttojsonobjectajax(HttpServletResponse response, JSONObject jsonObject) {
-		response.setContentType("text/html;charset=gbk");
-		PrintWriter out = null;
-		try {
-			out = response.getWriter();
-			out.println(jsonObject.toString());
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
 		} finally {
@@ -435,11 +407,11 @@ public class BaseController {
 	 * @date 2015年12月16日 上午10:50:51
 	 * @writer wjw.happy.love@163.com
 	 */
-	protected void returnImage(HttpServletResponse httpServletResponse, String filePath) {
+	protected void returnImage(HttpServletResponse response, String filePath) {
 		FileInputStream fis = null;
-		httpServletResponse.setContentType("image/gif");
+		response.setContentType("image/gif");
 		try {
-			OutputStream out = httpServletResponse.getOutputStream();
+			OutputStream out = response.getOutputStream();
 			File file = new File(filePath);
 			fis = new FileInputStream(file);
 			byte[] b = new byte[fis.available()];
@@ -459,12 +431,29 @@ public class BaseController {
 		}
 	}
 
-	// 普通邮件发送
+	/**
+	 * 普通邮件发送
+	 * @param emails
+	 * @param subject
+	 * @param text
+	 * @param fromEmail
+	 * @date 2016年12月14日 下午9:25:29
+	 * @writer iscas
+	 */
 	protected void sendTextEmail(String emails, String subject, String text, String fromEmail) {
 		sendMail.sendTextEmail(emails, subject, text, fromEmail);
 	}
 
-	// html格式邮件发送
+	/**
+	 * html格式邮件发送
+	 * @param emails
+	 * @param subject
+	 * @param text
+	 * @param fromEmail
+	 * @throws MessagingException
+	 * @date 2016年12月14日 下午9:25:35
+	 * @writer iscas
+	 */
 	protected void sendHtmlEmail(String emails, String subject, String text, String fromEmail)
 			throws MessagingException {
 		sendMail.sendHtmlEmail(emails, subject, text, fromEmail);
@@ -528,8 +517,7 @@ public class BaseController {
 				// throw new
 				// FastDFSException(MessageUtil.getFormatMessage("noavaliablearacker",
 				// null));
-				JSONObject jsonObject = JSONObject.fromObject(messageDto);
-				Converttojsonobjectajax(response, jsonObject);
+				toJson(messageDto, response);
 				// 页面不跳转
 				return null;
 			} else {
@@ -554,8 +542,11 @@ public class BaseController {
 	}
 
 	/**
-	 * @Description: 根据字节流返回图片 @author caiyang @param: @param
-	 *               httpServletResponse @param: @param b @return: void @throws
+	 * 根据字节流返回图片
+	 * @param httpServletResponse
+	 * @param b
+	 * @date 2016年12月14日 下午9:31:42
+	 * @writer junehappylove
 	 */
 	protected void returnImageByBuffer(HttpServletResponse httpServletResponse, byte[] b) {
 		httpServletResponse.setContentType("image/gif");
@@ -569,8 +560,10 @@ public class BaseController {
 	}
 
 	/**
-	 * @Description: 日期类型绑定处理 @author caiyang @param: @param binder @return:
-	 *               void @throws
+	 * 日期类型绑定处理 
+	 * @param binder
+	 * @date 2016年12月14日 下午9:31:51
+	 * @writer junehappylove
 	 */
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -634,11 +627,11 @@ public class BaseController {
 	/**
 	 * 获取当前登录的用户
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @return
 	 */
-	public UserInfoDto loginUser(HttpServletRequest httpServletRequest) {
-		UserInfoDto userInfoDto = (UserInfoDto) httpServletRequest.getSession().getAttribute("userInfo");
+	public UserInfoDto loginUser(HttpServletRequest request) {
+		UserInfoDto userInfoDto = (UserInfoDto) request.getSession().getAttribute("userInfo");
 		return userInfoDto;
 	}
 
@@ -657,10 +650,10 @@ public class BaseController {
 	 * 
 	 * @param view
 	 * @param bean
-	 * @param httpServletRequest
+	 * @param request
 	 */
-	public void setCreater(AbstractDTO bean, HttpServletRequest httpServletRequest) {
-		UserInfoDto userInfoDto = this.loginUser(httpServletRequest);
+	public void setCreater(DTO bean, HttpServletRequest request) {
+		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setAddUserId(userId);// 设置操作人id
 		bean.setUpdateUserId(userId);// 设置操作人id
@@ -678,10 +671,10 @@ public class BaseController {
 	 * 
 	 * @param view
 	 * @param bean
-	 * @param httpServletRequest
+	 * @param request
 	 */
-	public void setUpdater(AbstractDTO bean, HttpServletRequest httpServletRequest) {
-		UserInfoDto userInfoDto = this.loginUser(httpServletRequest);
+	public void setUpdater(DTO bean, HttpServletRequest request) {
+		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setUpdateUserId(userId);// 设置操作人id
 		Timestamp time = new Timestamp(System.currentTimeMillis());
@@ -698,10 +691,10 @@ public class BaseController {
 	 * 新页面初始化数据
 	 * 
 	 * @param page
-	 * @param httpServletRequest
+	 * @param request
 	 */
-	public void htmlPageInit(ModelAndView page, HttpServletRequest httpServletRequest) {
-		UserInfoDto user = this.loginUser(httpServletRequest);
+	public void htmlPageInit(ModelAndView page, HttpServletRequest request) {
+		UserInfoDto user = this.loginUser(request);
 		String userId = user.getUserId();
 		String username = user.getUserName();
 		page.addObject("addUserName", username);
@@ -718,7 +711,7 @@ public class BaseController {
 	 * @param page
 	 * @param bean
 	 */
-	public void htmlEditInit(ModelAndView page, AbstractDTO bean) {
+	public void htmlEditInit(ModelAndView page, DTO bean) {
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(bean.getUpdateUserId()));
 		page.addObject("updateUserName", user != null ? user.getUserName() : "未知用户");
 		// TODO 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
@@ -755,7 +748,7 @@ public class BaseController {
 	public void messageSaveSuccess(HttpServletResponse response) throws Exception {
 		String messages = "save_success";
 		String type = MESSAGE_INFO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
 
 	/**
@@ -768,7 +761,7 @@ public class BaseController {
 	public void messageSendSuccess(HttpServletResponse response) throws Exception {
 		String messages = "send_success";
 		String type = MESSAGE_INFO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
 
 	/**
@@ -781,7 +774,7 @@ public class BaseController {
 	public void messageDeleteSuccess(HttpServletResponse response) throws Exception {
 		String messages = "delete_success";
 		String type = MESSAGE_INFO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
 
 	/**
@@ -795,44 +788,24 @@ public class BaseController {
 	public void messageUpdateSuccess(HttpServletResponse response) throws Exception {
 		String messages = "update_success";
 		String type = MESSAGE_INFO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
-
+	
 	/**
 	 * 处理消息
-	 * 
-	 * @param messages
-	 * @param type
-	 *            [MESSAGE_INFO,MESSAGE_ERRO,MESSAGE_WARN,MESSAGE_QUES]
 	 * @param response
+	 * @param messages 
+	 * @param type [MESSAGE_INFO,MESSAGE_ERRO,MESSAGE_WARN,MESSAGE_QUES]
+	 * @param params 消息的替换参数
 	 * @throws Exception
+	 * @date 2016年12月14日 下午11:56:32
+	 * @writer junehappylove
 	 */
-	public void throwMessage(String messages, String type, HttpServletResponse response) throws Exception {
+	public void throwMessage(HttpServletResponse response,String messages, String type, String... params) throws Exception {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
 		// message.setErrList(null);
-		errList.add(MessageUtil.formatMessage(messages));
-		message.setErrList(errList);
-		message.setErrType(type);
-		// 返回消息 end
-		toJson(message, response);
-	}
-
-	/**
-	 * 处理消息
-	 * 
-	 * @param messages
-	 * @param type
-	 *            [MESSAGE_INFO,MESSAGE_ERRO,MESSAGE_WARN,MESSAGE_QUES]
-	 * @param response
-	 * @throws Exception
-	 */
-	public void throwMessage(String messages, String[] params, String type, HttpServletResponse response)
-			throws Exception {
-		ArrayList<String> errList = new ArrayList<String>();
-		message = new MessageDto();
-		// message.setErrList(null);
-		errList.add(MessageUtil.formatMessage(messages, params));
+		errList.add(MessageUtil.formatMessage(messages,params));
 		message.setErrList(errList);
 		message.setErrType(type);
 		// 返回消息 end
@@ -867,24 +840,24 @@ public class BaseController {
 	public void messageErrorExist(HttpServletResponse response) throws Exception {
 		String messages = "error_exist";
 		String type = MESSAGE_ERRO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
 
 	public void messageErrorNotExist(HttpServletResponse response) throws Exception {
 		String messages = "error_not_exist";
 		String type = MESSAGE_ERRO;
-		throwMessage(messages, type, response);
+		throwMessage(response,messages, type);
 	}
 
-	public ModelAndView initPage(HttpServletRequest httpServletRequest, String page) {
+	public ModelAndView initPage(HttpServletRequest request, String page) {
 		ModelAndView result = null;
 		result = new ModelAndView(page);
 		// 获取用户信息
-		UserInfoDto userInfoDto = loginUser(httpServletRequest);
+		UserInfoDto userInfoDto = loginUser(request);
 		ButtonDto buttonDto = new ButtonDto();
 		if (userInfoDto != null) {
 			buttonDto.setRoleId(userInfoDto.getRoleId());
-			buttonDto.setMenuUrl(httpServletRequest.getServletPath());
+			buttonDto.setMenuUrl(request.getServletPath());
 			// 根据故障代码角色和初始化的页面获取该页面有权限的操作
 			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
 			for (int i = 0; i < list.size(); i++) {

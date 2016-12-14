@@ -125,10 +125,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{userName},
 			#{userPassword},
 			#{userEmail},
-		<if test="userBirthday != null and userBirthday != '' ">
-			#{userBirthday},
+		<if test="userBirthday != null">
+			#{userBirthday,jdbcType=TIMESTAMP},
 		</if>
-		<if test="userBirthday == null or userBirthday == '' ">
+		<if test="userBirthday == null">
 			null,
 		</if>
 			#{userAddress},
@@ -165,10 +165,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			USER_PASSWORD = NULL,
 		</if>
 			USER_EMAIL = #{userEmail},
-		<if test="userBirthday != null and userBirthday != '' ">
-			USER_BITTHDAY = #{userBirthday},
+		<!-- <if test="userBirthday != null and userBirthday != '' "> -->
+		<if test="userBirthday != null">
+			USER_BITTHDAY = #{userBirthday,jdbcType=TIMESTAMP},
 		</if>
-		<if test="userBirthday == null or userBirthday == '' ">
+		<if test="userBirthday == null">
 			USER_BITTHDAY = NULL,
 		</if>
 			USER_ADDRESS = #{userAddress},

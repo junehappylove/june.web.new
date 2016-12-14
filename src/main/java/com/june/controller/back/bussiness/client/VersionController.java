@@ -46,7 +46,7 @@ import com.june.service.back.bussiness.client.VersionService;
  */
 @Controller
 @RequestMapping("/version")
-public class VersionController extends BaseController {
+public class VersionController extends BaseController<VersionDto> {
 
 	@Autowired
 	protected VersionService versionService;
@@ -184,7 +184,7 @@ public class VersionController extends BaseController {
 		versionDto = versionService.getDtoById(versionDto);
 		// 判断客户端版本信息是否为空
 		if (versionDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, response);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(versionDto, response);
 		}
@@ -218,7 +218,7 @@ public class VersionController extends BaseController {
 				ftpService.createDirectory(ftp);
 				//上传所选文件，单个文件
 				uploadFiles(request, response, versionDto, myfiles);
-				throwMessage("save_success", MESSAGE_INFO, response);
+				throwMessage(response,"save_success", MESSAGE_INFO);
 			} else {
 				// 客户端版本存在的情况返回消息
 				messageErrorExist(response);
@@ -330,7 +330,7 @@ public class VersionController extends BaseController {
 		ftp.setFileMap(map);
 		ftpService.createDirectory(ftp);//创建目录
 		ftpService.uploadFile(ftp);//上传文件
-		throwMessage("upload_success", MESSAGE_INFO, response);
+		throwMessage(response,"upload_success", MESSAGE_INFO);
 		//throwMessage("upload_failed", MESSAGE_ERRO, response);
 	}
 	

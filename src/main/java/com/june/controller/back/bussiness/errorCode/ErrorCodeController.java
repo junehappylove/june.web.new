@@ -50,7 +50,7 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping("/errorCode")
-public class ErrorCodeController extends BaseController {
+public class ErrorCodeController extends BaseController<ErrorCodeDto> {
 
 	@Autowired
 	protected ErrorCodeService errorCodeService;
@@ -299,7 +299,7 @@ public class ErrorCodeController extends BaseController {
 		errorCodeDto = errorCodeService.getDtoById(errorCodeDto);
 		// 判断故障代码信息是否为空
 		if (errorCodeDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, response);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(errorCodeDto, response);
 		}
@@ -329,9 +329,9 @@ public class ErrorCodeController extends BaseController {
 				boolean exit = exit(errorCodeDto);
 				if(!exit){
 					errorCodeService.addDto(errorCodeDto);// 添加故障代码
-					throwMessage("save_success", MESSAGE_INFO, response);
+					throwMessage(response,"save_success", MESSAGE_INFO);
 				}else{
-					throwMessage("error_code_exit",new String[]{errorCodeDto.getErrorCode()}, MESSAGE_WARN, response);
+					throwMessage(response,"error_code_exit",MESSAGE_WARN,errorCodeDto.getErrorCode());
 				}
 			} else {
 				// 故障代码存在的情况返回消息

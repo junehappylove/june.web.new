@@ -20,7 +20,8 @@ import com.june.utility.MessageUtil;
  * @date 2016年12月8日 下午4:36:33
  */
 public class Constants {
-
+	/** 空 "" */
+	public final static String EMPTY = "";
 	public final static int COMMIT_NUM = 1000;//最多一次性提交1000条
 	
 	/**

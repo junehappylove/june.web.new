@@ -44,7 +44,7 @@ import com.june.utility.FtpTree;
  */
 @Controller
 @RequestMapping("/vehicle")
-public class VehicleController extends BaseController {
+public class VehicleController extends BaseController<VehicleDto> {
 
 	@Autowired
 	protected VehicleService vehicleService;
@@ -203,7 +203,7 @@ public class VehicleController extends BaseController {
 		vehicleDto = vehicleService.getDtoById(vehicleDto);
 		// 判断车型信息是否为空
 		if (vehicleDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, response);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(vehicleDto, response);
 		}
@@ -262,7 +262,7 @@ public class VehicleController extends BaseController {
 				ftp.setFtpPath(vehicleDto.getFtpPath());//设置ftp路径
 				ftp.setPaths(Constants.DIRECTORYS);//初始化目录集合
 				ftpService.createDirectory(ftp);
-				throwMessage("save_success", MESSAGE_INFO, response);
+				throwMessage(response,"save_success", MESSAGE_INFO);
 			} else {
 				// 车型存在的情况返回消息
 				messageErrorExist(response);
@@ -386,7 +386,7 @@ public class VehicleController extends BaseController {
 			vehicleService.addVehicleUsers(vehicleDto);// 再添加新的
 			messageSaveSuccess(response);
 		} else {
-			throwMessage("请先选择车型", MESSAGE_ERRO, response);
+			throwMessage(response,"请先选择车型", MESSAGE_ERRO);
 		}
 	}
 
@@ -483,7 +483,7 @@ public class VehicleController extends BaseController {
 		fillRequestDto(request, userInfoDto);
 		userInfoDto.setUserId(this.loginUser().getUserId());
 		userInfoService.setDefaultVehicle(userInfoDto);
-		throwMessage("设置成功！", MESSAGE_INFO, response);
+		throwMessage(response,"设置成功！", MESSAGE_INFO);
 	}
 
 	@RequestMapping("/getErrorCodes")

@@ -41,7 +41,7 @@ import com.june.utility.MessageUtil;
  */
 @Controller
 @RequestMapping("/portal/MyInfo/")
-public class MyInfoController extends BaseController{
+public class MyInfoController extends BaseController<ReleaseInfoDto>{
 	
 	/**
 	 * 我的资讯用service注入

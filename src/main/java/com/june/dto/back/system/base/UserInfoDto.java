@@ -14,9 +14,6 @@ import com.june.common.PageDTO;
 
 //sys_user表的实体类
 public class UserInfoDto extends PageDTO<UserInfoDto> implements Serializable {
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = -3281195967211539360L;
 
 	@NotNull(message = "{mustinput_error};用户ID")
@@ -215,6 +212,11 @@ public class UserInfoDto extends PageDTO<UserInfoDto> implements Serializable {
 
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
+	}
+
+	@Override
+	public String getDtoName() {
+		return "用户(User)";
 	}
 
 }

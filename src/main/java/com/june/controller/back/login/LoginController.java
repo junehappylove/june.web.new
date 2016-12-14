@@ -47,8 +47,9 @@ import com.june.utility.exception.LoginAttemptException;
 import com.google.code.kaptcha.Producer;
 
 import net.sf.json.JSONObject;
+
 @Controller
-public class LoginController extends BaseController{
+public class LoginController extends BaseController<UserInfoDto>{
 	
 	Logger logger = LoggerFactory.getLogger(LoginController.class);
 	/**
@@ -56,7 +57,6 @@ public class LoginController extends BaseController{
 	 */
 	@Autowired
 	protected LoginService loginService;
-
 
 	/**
 	 * 用户信息 service

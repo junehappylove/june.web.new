@@ -15,7 +15,7 @@ import com.june.utility.MessageUtil;
 
 @Controller
 @RequestMapping("/frontLogin")
-public class FrontLoginController extends BaseController{
+public class FrontLoginController extends BaseController<UserInfoDto>{
 
 	@Autowired
 	FrontLoginService frontLoginService;

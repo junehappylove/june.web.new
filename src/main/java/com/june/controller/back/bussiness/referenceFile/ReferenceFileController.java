@@ -44,7 +44,7 @@ import com.june.service.back.bussiness.referenceFile.ReferenceFileService;
  */
 @Controller
 @RequestMapping("/referenceFile")
-public class ReferenceFileController extends BaseController {
+public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 
 	@Autowired
 	protected ReferenceFileService referenceFileService;
@@ -404,7 +404,7 @@ public class ReferenceFileController extends BaseController {
 		ftp.setFileMap(map);
 		ftpService.createDirectory(ftp);//创建目录
 		ftpService.uploadFile(ftp);//上传文件
-		throwMessage("upload_success", MESSAGE_INFO, response);
+		throwMessage(response,"upload_success", MESSAGE_INFO);
 	}
 
 	@RequestMapping("/systemDrops")

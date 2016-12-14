@@ -19,7 +19,7 @@ import com.june.service.front.portalinit.PortalInitService;
  */
 @Controller
 //@RequestMapping("/index")
-public class PortalInitController extends BaseController{
+public class PortalInitController extends BaseController<ArticleDto>{
 
 	/**
 	 * 门户首页初始化用service注入

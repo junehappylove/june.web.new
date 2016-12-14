@@ -51,7 +51,7 @@ import com.june.service.back.bussiness.vehicle.VehicleService;
  */
 @Controller
 @RequestMapping("/guide")
-public class GuideController extends BaseController {
+public class GuideController extends BaseController<GuideDto> {
 
 	@Autowired
 	protected GuideService guideService;
@@ -432,9 +432,9 @@ public class GuideController extends BaseController {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			guideDto.setFileTime(now);
 			guideService.updateDtoById(guideDto);
-			throwMessage("upload_success", MESSAGE_INFO, response);
+			throwMessage(response,"upload_success", MESSAGE_INFO);
 		}else{
-			throwMessage("upload_failed", MESSAGE_ERRO, response);
+			throwMessage(response,"upload_failed", MESSAGE_ERRO);
 		}
 	}
 	
@@ -462,9 +462,9 @@ public class GuideController extends BaseController {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			guideDto.setVideoTime(now);
 			guideService.updateDtoById(guideDto);
-			throwMessage("upload_success", MESSAGE_INFO, response);
+			throwMessage(response,"upload_success", MESSAGE_INFO);
 		}else{
-			throwMessage("upload_failed", MESSAGE_ERRO, response);
+			throwMessage(response,"upload_failed", MESSAGE_ERRO);
 		}
 	}
 	
@@ -591,7 +591,7 @@ public class GuideController extends BaseController {
 			guideDto.setFileTime(now);
 		}
 		guideService.updateDtoById(guideDto);
-		throwMessage("upload_success", MESSAGE_INFO, response);
+		throwMessage(response,"upload_success", MESSAGE_INFO);
 	}
 	
 	/**

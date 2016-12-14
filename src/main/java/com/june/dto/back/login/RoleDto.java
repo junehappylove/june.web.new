@@ -52,4 +52,8 @@ public class RoleDto extends AbstractDTO{
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
 	}
+	@Override
+	protected String getDtoName() {
+		return "角色";
+	}
 }

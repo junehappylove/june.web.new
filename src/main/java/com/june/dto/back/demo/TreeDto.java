@@ -13,7 +13,7 @@ package com.june.dto.back.demo;
 import java.io.Serializable;
 import java.util.List;
 
-import com.june.common.AbstractDTO;
+import com.june.common.BaseDTO;
 
 /**  
 * @Description: 树形结构用dto
@@ -21,7 +21,7 @@ import com.june.common.AbstractDTO;
 * @date 2015年10月9日 上午8:59:54 
 * @version V1.0  
  */
-public class TreeDto extends AbstractDTO implements Serializable{
+public class TreeDto extends BaseDTO implements Serializable{
 
 	/**
 	 * long serialVersionUID
@@ -76,6 +76,10 @@ public class TreeDto extends AbstractDTO implements Serializable{
 	}
 	public void setIsParent(String isParent) {
 		this.isParent = isParent;
+	}
+	@Override
+	protected String getDtoName() {
+		return "Tree树";
 	}
 
 }

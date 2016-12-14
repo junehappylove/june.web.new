@@ -42,10 +42,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
 import com.june.common.AbstractDTO;
 import com.june.common.BaseController;
 import com.june.common.MessageDto;
-import com.june.common.PageDTO;
 import com.june.dto.back.demo.ComboxDto;
 import com.june.dto.back.demo.DemoDto;
 import com.june.dto.back.demo.ExcelDto;
@@ -60,15 +61,13 @@ import com.june.utility.ExportImportExcel;
 import com.june.utility.FastDfsUtils;
 import com.june.utility.FileUpLoadDownload;
 import com.june.utility.MessageUtil;
-import com.google.code.kaptcha.Constants;
-import com.google.code.kaptcha.Producer;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/demo")
-public class DemoController extends BaseController {
+public class DemoController extends BaseController<MenuDto> {
 
 	@Autowired
 	DemoService demoService;
@@ -692,9 +691,9 @@ public class DemoController extends BaseController {
 	}
 
 	@RequestMapping("/selectChange")
-	public void selectChange(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void selectChange(HttpServletRequest httpServletRequest, HttpServletResponse response)
 			throws Exception {
-		PageDTO<ComboxDto> pageDTO = new PageDTO<ComboxDto>();
+		ComboxDto DTO = new ComboxDto();
 		ComboxDto comboxDto = new ComboxDto();
 		comboxDto.setCode("3");
 		comboxDto.setName("岗位3");
@@ -704,10 +703,8 @@ public class DemoController extends BaseController {
 		List<ComboxDto> list = new ArrayList<ComboxDto>();
 		list.add(comboxDto);
 		list.add(comboxDto2);
-		pageDTO.setRows(list);
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(pageDTO);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		DTO.setRows(list);
+		toJson(DTO, response);
 	}
 
 	@RequestMapping("/delete")

@@ -18,13 +18,12 @@ import com.june.dto.back.bussiness.ftp.FtpFile;
  * @author 王俊伟 wjw.happy.love@163.com
  * @date 2016年12月11日 上午1:56:48
  */
-public class BaseDTO extends AbstractDTO {
+public abstract class BaseDTO extends AbstractDTO {
 
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = -2126615952862633621L;
 
+	private String appid;	//表示表中的id字段，主键定义为appid，禁止随意命名
+	
 	private String lastName;	//上一次的修改名称，针对FTP修改目录名称而设置的
 	
 	private List<FtpFile> files;//FTP目录下的文件信息
@@ -32,7 +31,13 @@ public class BaseDTO extends AbstractDTO {
 	private String currVehicle;//当前车型ID
 	private String currVehicleName;//当前车型名称
 	
+	public String getAppid() {
+		return appid;
+	}
 
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
 
 	public String getLastName() {
 		return lastName;

@@ -12,7 +12,7 @@
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
             <div>
-                <h1 class="logo-name">R=</h1>
+                <h1 class="logo-name">R++</h1>
             </div>
             <h3>角色选择</h3>
             <form class="m-t" role="form" method="post" id="roleForm">

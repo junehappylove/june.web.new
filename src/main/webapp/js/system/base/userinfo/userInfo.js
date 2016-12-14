@@ -1,3 +1,4 @@
+var api_getPagedList = contextPath + "/system/UserInfo/getPagedList";
 /**
  * 用户信息js
  */
@@ -290,8 +291,7 @@ function initDate()
 //查询表格信息
 function searchUserInfo() {
 	var data = getFormJson("searchForm");//获取查询条件
-	commonGetrowdatas("userInfoTable", data, contextPath
-			+ "/system/UserInfo/getUserInfos", "commonCallback", true)
+	commonGetrowdatas("userInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 
 function deleteRow() {

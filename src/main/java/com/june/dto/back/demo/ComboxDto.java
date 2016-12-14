@@ -10,9 +10,9 @@
 
 package com.june.dto.back.demo;
 
-import com.june.common.BaseDTO;
+import com.june.common.PageDTO;
 
-public class ComboxDto extends BaseDTO {
+public class ComboxDto extends PageDTO<ComboxDto> {
 	/**
 	 * long serialVersionUID
 	 */
@@ -37,5 +37,9 @@ public class ComboxDto extends BaseDTO {
 	}
 	public void setCodeType(String codeType) {
 		this.codeType = codeType;
+	}
+	@Override
+	protected String getDtoName() {
+		return "ComboxDto";
 	}
 }

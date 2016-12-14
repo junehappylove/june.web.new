@@ -3,6 +3,8 @@ package com.june.common;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,5 +157,16 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 				params.put(tablesName[i], schemaName + "." + tablesName[i]);
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @date 2016年12月14日 下午11:04:51
+	 * @writer junehappylove
+	 */
+	protected boolean isAjaxCall(HttpServletRequest request) {
+		return ("XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
 	}
 }

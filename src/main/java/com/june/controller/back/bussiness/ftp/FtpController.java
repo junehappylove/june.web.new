@@ -29,7 +29,7 @@ import com.june.service.back.bussiness.ftp.FtpService;
  */
 @Controller
 @RequestMapping("/ftp")
-public class FtpController extends BaseController {
+public class FtpController extends BaseController<FtpDto> {
 
 	@Autowired
 	protected FtpService ftpService;
@@ -38,12 +38,12 @@ public class FtpController extends BaseController {
 	 * form表单后台验证
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @throws Exception
 	 * @return AbstractDTO
 	 */
 	@ModelAttribute
-	public AbstractDTO validateForm(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public AbstractDTO validateForm(HttpServletRequest httpServletRequest, HttpServletResponse response)
 			throws Exception {
 		// 将参数映射到对应的业务dto中并返回
 		FtpDto ftpDto = new FtpDto();
@@ -67,44 +67,44 @@ public class FtpController extends BaseController {
 	 * 获取FTP设置信息
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @return void
 	 */
 	@RequestMapping("/getFtps")
-	public void getFtps(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getFtps(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		FtpDto ftpDto = new FtpDto();
 		fillRequestDto(httpServletRequest, ftpDto);
 		ftpDto = ftpService.getPagedDtos(ftpDto);
-		toJson(ftpDto, httpServletResponse);
+		toJson(ftpDto, response);
 	}
 
 	@RequestMapping("/loadAllFtp")
-	public void loadAllFtp(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void loadAllFtp(HttpServletRequest httpServletRequest, HttpServletResponse response) {
 		FtpDto ftpDto = new FtpDto();
 		fillRequestDto(httpServletRequest, ftpDto);
 		List<FtpDto> list = ftpService.getDtos(ftpDto);
-		toJson(list, httpServletResponse);
+		toJson(list, response);
 	}
 
 	/**
 	 * 查看详细，编辑触发事件
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @return void
 	 * @throws Exception
 	 */
 	@RequestMapping("/checkDetail")
-	public void checkDetail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void checkDetail(HttpServletRequest httpServletRequest, HttpServletResponse response)
 			throws Exception {
 		FtpDto ftpDto = new FtpDto();
 		fillRequestDto(httpServletRequest, ftpDto);
 		ftpDto = ftpService.getDtoById(ftpDto);
 		// 判断FTP设置信息是否为空
 		if (ftpDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, httpServletResponse);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
-			toJson(ftpDto, httpServletResponse);
+			toJson(ftpDto, response);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class FtpController extends BaseController {
 	 * 保存新增FTP设置
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @param ftpDto
 	 * @param bindingResult
 	 * @throws Exception
@@ -120,7 +120,7 @@ public class FtpController extends BaseController {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/newSave")
-	public void newSave(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public void newSave(HttpServletRequest httpServletRequest, HttpServletResponse response,
 			@Valid FtpDto ftpDto, BindingResult bindingResult) throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);// 将校验消息存放到messagedto中
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
@@ -128,14 +128,14 @@ public class FtpController extends BaseController {
 			if (StringUtils.isBlank(ftpDto.getFtpId())) {
 				setCreater(ftpDto, httpServletRequest);
 				ftpService.addDto(ftpDto);// 添加FTP设置
-				throwMessage("save_success", MESSAGE_INFO, httpServletResponse);
+				throwMessage(response,"save_success", MESSAGE_INFO);
 			} else {
 				// FTP设置存在的情况返回消息
-				messageErrorExist(httpServletResponse);
+				messageErrorExist(response);
 			}
 		} else {
 			// 有错误返回
-			toJson(messageDto, httpServletResponse);
+			toJson(messageDto, response);
 		}
 	}
 
@@ -143,7 +143,7 @@ public class FtpController extends BaseController {
 	 * 编辑保存FTP设置信息
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @param ftpDto
 	 * @param bindingResult
 	 * @throws Exception
@@ -151,21 +151,21 @@ public class FtpController extends BaseController {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/saveEdit")
-	public void saveEdit(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public void saveEdit(HttpServletRequest httpServletRequest, HttpServletResponse response,
 			@Valid FtpDto ftpDto, BindingResult bindingResult) throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);// 将校验消息存放到messagedto中
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
 			if (ftpService.getDtoById(ftpDto) == null) {
 				// FTP设置不存在的情况返回消息
-				messageErrorNotExist(httpServletResponse);
+				messageErrorNotExist(response);
 			} else {
 				// FTP设置存在的情况进行更新
 				ftpService.updateDtoById(ftpDto);// FTP设置信息更新
-				messageUpdateSuccess(httpServletResponse);
+				messageUpdateSuccess(response);
 			}
 		} else {
 			// 有错误返回
-			toJson(messageDto, httpServletResponse);
+			toJson(messageDto, response);
 		}
 	}
 
@@ -173,14 +173,14 @@ public class FtpController extends BaseController {
 	 * 删除FTP设置，已及FTP设置-用户关联信息
 	 * 
 	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param response
 	 * @param ftpDto
 	 * @throws Exception
 	 * @date 2016年5月10日 下午1:28:22
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/deleteSelected")
-	public void deleteSelected(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public void deleteSelected(HttpServletRequest httpServletRequest, HttpServletResponse response,
 			FtpDto ftpDto) throws Exception {
 		// 选中的FTP设置id
 		String ftpIds = ftpDto.getFtpId();
@@ -191,6 +191,6 @@ public class FtpController extends BaseController {
 				ftpService.deleteDtoById(ftpDto);
 			}
 		}
-		messageDeleteSuccess(httpServletResponse);
+		messageDeleteSuccess(response);
 	}
 }

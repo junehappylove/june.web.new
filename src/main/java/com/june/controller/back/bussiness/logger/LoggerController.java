@@ -31,7 +31,7 @@ import com.june.service.back.bussiness.vehicle.VehicleService;
  */
 @Controller
 @RequestMapping("/logger")
-public class LoggerController extends BaseController {
+public class LoggerController extends BaseController<LoggerDto> {
 
 	@Autowired
 	protected LoggerService loggerService;
@@ -127,7 +127,7 @@ public class LoggerController extends BaseController {
 		loggerDto = loggerService.getDtoById(loggerDto);
 		// 判断Logger信息是否为空
 		if (loggerDto == null) {
-			throwMessage("error_not_exist", MESSAGE_ERRO, response);
+			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(loggerDto, response);
 		}
@@ -153,7 +153,7 @@ public class LoggerController extends BaseController {
 			if (StringUtils.isBlank(loggerDto.getLoggerId())) {
 				setCreater(loggerDto, request);
 				loggerService.addDto(loggerDto);// 添加Logger
-				throwMessage("save_success", MESSAGE_INFO, response);
+				throwMessage(response,"save_success", MESSAGE_INFO);
 			} else {
 				// Logger存在的情况返回消息
 				messageErrorExist(response);

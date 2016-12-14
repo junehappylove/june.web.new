@@ -13,12 +13,11 @@ package com.june.dto.back.demo;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.june.common.AbstractDTO;
+import com.june.common.BaseDTO;
 
-public class DemoDto extends AbstractDTO implements Serializable{
+public class DemoDto extends BaseDTO implements Serializable{
 
 	/**
 	 * long serialVersionUID
@@ -83,5 +82,9 @@ public class DemoDto extends AbstractDTO implements Serializable{
 	}
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	@Override
+	protected String getDtoName() {
+		return "DEMO";
 	}
 }
