@@ -159,4 +159,8 @@ public class ArticleDto extends PageDTO<ArticleDto>{
 	public void setStaticPage(String staticPage) {
 		this.staticPage = staticPage;
 	}
+	@Override
+	protected String getDtoName() {
+		return "文章";
+	}
 }

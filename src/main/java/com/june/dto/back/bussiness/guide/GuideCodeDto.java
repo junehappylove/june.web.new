@@ -83,4 +83,9 @@ public class GuideCodeDto extends PageDTO<GuideCodeDto> implements Serializable 
 		super();
 		this.guideId = guideId;
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "操作指南与故障代码";
+	}
 }

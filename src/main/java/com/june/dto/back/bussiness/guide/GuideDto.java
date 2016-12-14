@@ -181,4 +181,8 @@ public class GuideDto extends PageDTO<GuideDto> implements Serializable {
 			return super.getFiles();
 		}
 	}
+	@Override
+	protected String getDtoName() {
+		return "操作指南";
+	}
 }

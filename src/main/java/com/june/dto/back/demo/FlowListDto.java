@@ -94,5 +94,10 @@ public class FlowListDto extends PageDTO<FlowListDto> implements Serializable{
 	public void setFullMessage(String fullMessage) {
 		this.fullMessage = fullMessage;
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "流程列表";
+	}
 	
 }

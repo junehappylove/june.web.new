@@ -134,4 +134,8 @@ public class VersionDto extends PageDTO<VersionDto> implements Serializable {
 			return super.getFiles();
 		}
 	}
+	@Override
+	protected String getDtoName() {
+		return "客户端版本";
+	}
 }

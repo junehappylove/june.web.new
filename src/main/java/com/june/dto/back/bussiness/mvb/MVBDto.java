@@ -171,5 +171,9 @@ public class MVBDto extends PageDTO<MVBDto> implements Serializable {
 	public void setVehicleName(String vehicleName) {
 		this.vehicleName = vehicleName;
 	}
+	@Override
+	protected String getDtoName() {
+		return "MVB";
+	}
 
 }

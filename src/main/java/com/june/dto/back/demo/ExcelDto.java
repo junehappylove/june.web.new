@@ -97,4 +97,8 @@ public class ExcelDto extends PageDTO<ExcelDto> implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	@Override
+	protected String getDtoName() {
+		return "电子表格";
+	}
 }

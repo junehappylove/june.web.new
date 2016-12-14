@@ -90,4 +90,9 @@ public class LogOperateDto extends PageDTO<LogOperateDto> implements Serializabl
 		this.operateTime = operateTime;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "操作日志";
+	}
+
 }

@@ -92,5 +92,9 @@ public class UserInfoDto extends PageDTO<UserInfoDto>{
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
 	}
+	@Override
+	protected String getDtoName() {
+		return "用户";
+	}
 	
 }

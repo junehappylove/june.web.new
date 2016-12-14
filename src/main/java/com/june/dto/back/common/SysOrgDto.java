@@ -181,5 +181,10 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
      public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
      }
+
+	@Override
+	protected String getDtoName() {
+		return "组织";
+	}
     
 }

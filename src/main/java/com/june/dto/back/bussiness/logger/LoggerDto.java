@@ -79,5 +79,10 @@ public class LoggerDto extends PageDTO<LoggerDto> implements Serializable {
 	public void setOperateTime(Timestamp operateTime) {
 		this.operateTime = operateTime;
 	}
+	@Override
+	protected String getDtoName() {
+		// TODO 
+		return "日志";
+	}
 	
 }

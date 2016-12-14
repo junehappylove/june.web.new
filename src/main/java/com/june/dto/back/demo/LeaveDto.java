@@ -225,4 +225,9 @@ public class LeaveDto extends PageDTO<LeaveDto> implements Serializable {
 	public void setList(List<FlowListDto> list) {
 		this.list = list;
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "请假";
+	}
 }

@@ -122,4 +122,8 @@ public class FtpDto extends PageDTO<FtpDto> implements Serializable {
 	}
 	public FtpDto() {
 	}
+	@Override
+	protected String getDtoName() {
+		return "FTP设置";
+	}
 }

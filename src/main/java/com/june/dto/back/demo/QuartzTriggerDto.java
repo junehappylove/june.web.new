@@ -401,4 +401,9 @@ public class QuartzTriggerDto extends PageDTO<QuartzTriggerDto> implements Seria
 	public void setCronExpress(String cronExpress) {
 		this.cronExpress = cronExpress;
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "触发器";
+	}
 }

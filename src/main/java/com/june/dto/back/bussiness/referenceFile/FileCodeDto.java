@@ -81,4 +81,9 @@ public class FileCodeDto extends PageDTO<FileCodeDto> implements Serializable {
 		this.fileId = fileId;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "参考文件与故障代码";
+	}
+
 }

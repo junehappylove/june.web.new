@@ -10,8 +10,6 @@
 
 package com.june.dto.back.system.base;
 
-import java.io.Serializable;
-
 import com.june.common.PageDTO;
 
 /**
@@ -21,12 +19,12 @@ import com.june.common.PageDTO;
  * @author 王俊伟 wjw.happy.love@163.com
  * @date 2016年5月20日 下午12:16:45
  */
-public class MenuInfoDto extends PageDTO<MenuInfoDto> implements Serializable {
+public class MenuInfoDto extends PageDTO<MenuInfoDto> {
 
 	/**
 	 * long serialVersionUID
 	 */
-	private static final long serialVersionUID = -8510087054445180342L;
+	private static final long serialVersionUID = 1000L;
 	private String id;// 菜单id
 	private String text;// 菜单名
 	private String roleId;// 角色id
@@ -148,6 +146,11 @@ public class MenuInfoDto extends PageDTO<MenuInfoDto> implements Serializable {
 	 */
 	public void setThirdMenuId(String thirdMenuId) {
 		this.thirdMenuId = thirdMenuId;
+	}
+
+	@Override
+	protected String getDtoName() {
+		return "菜单";
 	}
 
 }

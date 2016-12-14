@@ -83,4 +83,8 @@ public class TreeGridDto extends PageDTO<TreeGridDto> implements Serializable{
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
+	@Override
+	protected String getDtoName() {
+		return "TreeGridDto";
+	}
 }

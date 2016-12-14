@@ -41,4 +41,9 @@ public class AutoGridDto extends PageDTO<AutoGridDto> implements Serializable{
 	public void setAge(String age) {
 		this.age = age;
 	}
+	@Override
+	protected String getDtoName() {
+		// TODO 
+		return null;
+	}
 }

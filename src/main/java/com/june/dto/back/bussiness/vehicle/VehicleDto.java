@@ -96,4 +96,9 @@ public class VehicleDto extends PageDTO<VehicleDto> implements Serializable {
 		this.ftpPath = ftpPath;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "车型";
+	}
+
 }

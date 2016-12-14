@@ -144,4 +144,9 @@ public class ReferenceFileDto extends PageDTO<ReferenceFileDto> implements Seria
 			return super.getFiles();
 		}
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "参考文件";
+	}
 }

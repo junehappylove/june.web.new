@@ -42,5 +42,9 @@ public class CommentDto extends PageDTO<CommentDto>{
 	public void setCommentUser(String commentUser) {
 		this.commentUser = commentUser;
 	}
+	@Override
+	protected String getDtoName() {
+		return "评论";
+	}
 	
 }

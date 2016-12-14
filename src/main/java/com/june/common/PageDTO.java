@@ -75,10 +75,5 @@ public abstract class PageDTO<T extends BaseDTO> extends BaseDTO {
 	public void setRows(List<T> rows) {
 		this.rows = rows;
 	}
-
-	@Override
-	protected String getDtoName() {
-		return "分页(PageDTO)";
-	}
 	
 }

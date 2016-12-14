@@ -169,5 +169,9 @@ public class GuideApproveDto extends PageDTO<GuideApproveDto> implements Seriali
 	public void setVideoName(String videoName) {
 		this.videoName = videoName;
 	}
+	@Override
+	protected String getDtoName() {
+		return "操作指南审批";
+	}
 	
 }

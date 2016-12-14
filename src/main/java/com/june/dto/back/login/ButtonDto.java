@@ -91,5 +91,9 @@ public class ButtonDto extends PageDTO<ButtonDto> implements Serializable{
 	public void setMenuUrl(String menuUrl) {
 		this.menuUrl = menuUrl;
 	}
+	@Override
+	protected String getDtoName() {
+		return "按钮";
+	}
 	
 }

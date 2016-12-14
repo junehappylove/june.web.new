@@ -69,4 +69,9 @@ public class UserRoleDto extends PageDTO<UserRoleDto> implements Serializable{
 		this.roleDesc = roleDesc;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "用户角色";
+	}
+
 }

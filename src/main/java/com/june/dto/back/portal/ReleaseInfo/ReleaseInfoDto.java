@@ -166,4 +166,8 @@ public class ReleaseInfoDto extends PageDTO<ReleaseInfoDto> implements Serializa
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+	@Override
+	protected String getDtoName() {
+		return "咨询";
+	}
 }

@@ -70,4 +70,8 @@ public class VehicleUser extends PageDTO<VehicleUser>{
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	@Override
+	protected String getDtoName() {
+		return "车型人员";
+	}
 }

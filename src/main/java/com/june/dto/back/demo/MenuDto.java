@@ -182,4 +182,9 @@ public class MenuDto extends PageDTO<MenuDto> implements Serializable{
 		this.roleName = roleName;
 	}
 
+	@Override
+	protected String getDtoName() {
+		return "菜单";
+	}
+
 }

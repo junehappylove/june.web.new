@@ -194,4 +194,9 @@ public class ErrorCodeDto extends PageDTO<ErrorCodeDto> implements Serializable 
 	public ErrorCodeDto() {
 		super();
 	}
+
+	@Override
+	protected String getDtoName() {
+		return "故障代码";
+	}
 }

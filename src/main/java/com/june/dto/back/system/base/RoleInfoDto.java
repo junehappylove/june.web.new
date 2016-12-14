@@ -118,4 +118,8 @@ public class RoleInfoDto extends PageDTO<RoleInfoDto> implements Serializable{
 		super();
 		this.roleId = roleId;
 	}
+	@Override
+	protected String getDtoName() {
+		return "角色";
+	}
 }
