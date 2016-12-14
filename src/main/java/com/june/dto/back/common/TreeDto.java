@@ -16,10 +16,12 @@ import java.util.List;
 import com.june.common.PageDTO;
 
 /**
- * @Description: 树形结构用dto
- * @author caiyang
- * @date 2015年10月9日 上午8:59:54
- * @version V1.0
+ * 树形结构用dto
+ *  <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月15日 上午2:37:43
  */
 public class TreeDto extends PageDTO<TreeDto> implements Serializable {
 

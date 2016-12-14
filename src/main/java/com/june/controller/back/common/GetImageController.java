@@ -25,16 +25,16 @@ import com.june.utility.FastDfsUtils;
 public class GetImageController {
 
 	@RequestMapping("/test/{date}/{url}/")
-	public void getImage(@PathVariable(value = "url") String url, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public void getImage(@PathVariable(value = "url") String url, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		byte[] buffer = FastDfsUtils.getFile("group1-M00-00-00-wKhIgFaM0QSAeLiPAAS4VPEmAjY095.jpg");
-		returnImageByBuffer(httpServletResponse, buffer);
+		returnImageByBuffer(response, buffer);
 	}
 	
-	private void returnImageByBuffer(HttpServletResponse httpServletResponse, byte[] b) {
-		httpServletResponse.setContentType("image/gif");
+	private void returnImageByBuffer(HttpServletResponse response, byte[] b) {
+		response.setContentType("image/gif");
 		try {
-			OutputStream out = httpServletResponse.getOutputStream();
+			OutputStream out = response.getOutputStream();
 			out.write(b);
 			out.flush();
 		} catch (Exception e) {

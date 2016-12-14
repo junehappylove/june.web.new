@@ -37,17 +37,17 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * form表单后台验证
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @throws Exception
 	 * @return AbstractDTO
 	 */
 	@ModelAttribute
-	public AbstractDTO validateForm(HttpServletRequest httpServletRequest, HttpServletResponse response)
+	public AbstractDTO validateForm(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// 将参数映射到对应的业务dto中并返回
 		FtpDto ftpDto = new FtpDto();
-		fillRequestDto(httpServletRequest, ftpDto);
+		fillRequestDto(request, ftpDto);
 		return ftpDto;
 	}
 
@@ -66,22 +66,22 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * 获取FTP设置信息
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @return void
 	 */
 	@RequestMapping("/getFtps")
-	public void getFtps(HttpServletRequest httpServletRequest, HttpServletResponse response) {
+	public void getFtps(HttpServletRequest request, HttpServletResponse response) {
 		FtpDto ftpDto = new FtpDto();
-		fillRequestDto(httpServletRequest, ftpDto);
+		fillRequestDto(request, ftpDto);
 		ftpDto = ftpService.getPagedDtos(ftpDto);
 		toJson(ftpDto, response);
 	}
 
 	@RequestMapping("/loadAllFtp")
-	public void loadAllFtp(HttpServletRequest httpServletRequest, HttpServletResponse response) {
+	public void loadAllFtp(HttpServletRequest request, HttpServletResponse response) {
 		FtpDto ftpDto = new FtpDto();
-		fillRequestDto(httpServletRequest, ftpDto);
+		fillRequestDto(request, ftpDto);
 		List<FtpDto> list = ftpService.getDtos(ftpDto);
 		toJson(list, response);
 	}
@@ -89,20 +89,20 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * 查看详细，编辑触发事件
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @return void
 	 * @throws Exception
 	 */
 	@RequestMapping("/checkDetail")
-	public void checkDetail(HttpServletRequest httpServletRequest, HttpServletResponse response)
+	public void checkDetail(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		FtpDto ftpDto = new FtpDto();
-		fillRequestDto(httpServletRequest, ftpDto);
+		fillRequestDto(request, ftpDto);
 		ftpDto = ftpService.getDtoById(ftpDto);
 		// 判断FTP设置信息是否为空
 		if (ftpDto == null) {
-			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
+			message(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(ftpDto, response);
 		}
@@ -111,7 +111,7 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * 保存新增FTP设置
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @param ftpDto
 	 * @param bindingResult
@@ -120,15 +120,15 @@ public class FtpController extends BaseController<FtpDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/newSave")
-	public void newSave(HttpServletRequest httpServletRequest, HttpServletResponse response,
+	public void newSave(HttpServletRequest request, HttpServletResponse response,
 			@Valid FtpDto ftpDto, BindingResult bindingResult) throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);// 将校验消息存放到messagedto中
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
 			// 该FTP设置不存在的情况
 			if (StringUtils.isBlank(ftpDto.getFtpId())) {
-				setCreater(ftpDto, httpServletRequest);
+				setCreater(ftpDto, request);
 				ftpService.addDto(ftpDto);// 添加FTP设置
-				throwMessage(response,"save_success", MESSAGE_INFO);
+				message(response,"save_success", MESSAGE_INFO);
 			} else {
 				// FTP设置存在的情况返回消息
 				messageErrorExist(response);
@@ -142,7 +142,7 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * 编辑保存FTP设置信息
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @param ftpDto
 	 * @param bindingResult
@@ -151,7 +151,7 @@ public class FtpController extends BaseController<FtpDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/saveEdit")
-	public void saveEdit(HttpServletRequest httpServletRequest, HttpServletResponse response,
+	public void saveEdit(HttpServletRequest request, HttpServletResponse response,
 			@Valid FtpDto ftpDto, BindingResult bindingResult) throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);// 将校验消息存放到messagedto中
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
@@ -172,7 +172,7 @@ public class FtpController extends BaseController<FtpDto> {
 	/**
 	 * 删除FTP设置，已及FTP设置-用户关联信息
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @param response
 	 * @param ftpDto
 	 * @throws Exception
@@ -180,7 +180,7 @@ public class FtpController extends BaseController<FtpDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/deleteSelected")
-	public void deleteSelected(HttpServletRequest httpServletRequest, HttpServletResponse response,
+	public void deleteSelected(HttpServletRequest request, HttpServletResponse response,
 			FtpDto ftpDto) throws Exception {
 		// 选中的FTP设置id
 		String ftpIds = ftpDto.getFtpId();

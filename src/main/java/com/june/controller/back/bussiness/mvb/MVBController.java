@@ -29,8 +29,6 @@ import com.june.dto.back.common.TreeDto;
 import com.june.service.back.bussiness.mvb.MVBService;
 import com.june.service.back.bussiness.vehicle.VehicleService;
 
-import net.sf.json.JSONObject;
-
 /**
  * 
  * MVB管理controller <br>
@@ -120,8 +118,7 @@ public class MVBController extends BaseController<MVBDto> {
 		}
 
 		MessageDto messageDto = new MessageDto();
-		JSONObject object = JSONObject.fromObject(messageDto);
-		Converttojsonobjectajax(response, object);
+		toJson(messageDto, response);
 	}
 /*	public static void main(String[] args) {
 		int num = 535;
@@ -186,7 +183,7 @@ public class MVBController extends BaseController<MVBDto> {
 		mvbDto = mvbService.getDtoById(mvbDto);
 		// 判断MVB信息是否为空
 		if (mvbDto == null) {
-			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
+			message(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(mvbDto, response);
 		}
@@ -212,7 +209,7 @@ public class MVBController extends BaseController<MVBDto> {
 			if (StringUtils.isBlank(mvbDto.getMvbId())) {
 				setCreater(mvbDto, request);
 				mvbService.addDto(mvbDto);// 添加MVB
-				throwMessage(response,"save_success", MESSAGE_INFO);
+				message(response,"save_success", MESSAGE_INFO);
 			} else {
 				// MVB存在的情况返回消息
 				messageErrorExist(response);

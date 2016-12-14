@@ -297,11 +297,11 @@ public class MyflowService extends BaseService<LeaveDao, LeaveDto> {
 		return pd;
 	}
 
-	public String viewImage(String deploymentId, String imageName, HttpServletResponse httpServletResponse) {
+	public String viewImage(String deploymentId, String imageName, HttpServletResponse response) {
 		InputStream in = repositoryService.getResourceAsStream(deploymentId, imageName);
-		httpServletResponse.setContentType("image/png;charset=UTF-8");
+		response.setContentType("image/png;charset=UTF-8");
 		try {
-			OutputStream out = httpServletResponse.getOutputStream();
+			OutputStream out = response.getOutputStream();
 			// 把图片的输入流程写入resp的输出流中
 			byte[] b = new byte[1024];
 			for (int len = -1; (len = in.read(b)) != -1;) {

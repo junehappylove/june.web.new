@@ -127,7 +127,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 		loggerDto = loggerService.getDtoById(loggerDto);
 		// 判断Logger信息是否为空
 		if (loggerDto == null) {
-			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
+			message(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(loggerDto, response);
 		}
@@ -153,7 +153,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 			if (StringUtils.isBlank(loggerDto.getLoggerId())) {
 				setCreater(loggerDto, request);
 				loggerService.addDto(loggerDto);// 添加Logger
-				throwMessage(response,"save_success", MESSAGE_INFO);
+				message(response,"save_success", MESSAGE_INFO);
 			} else {
 				// Logger存在的情况返回消息
 				messageErrorExist(response);

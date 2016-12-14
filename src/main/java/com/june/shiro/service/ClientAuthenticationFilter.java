@@ -32,9 +32,9 @@ public class ClientAuthenticationFilter extends AuthenticationFilter {
         return subject.isAuthenticated();  
     }  
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {  
-    	   HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-           HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-   		   httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/logout");
+    	   HttpServletRequest hrequest = (HttpServletRequest) request;
+           HttpServletResponse hresponse = (HttpServletResponse) response;
+   		   hresponse.sendRedirect(hrequest.getContextPath() + "/logout");
            return false;
     }  
 }

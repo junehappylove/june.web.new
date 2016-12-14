@@ -49,8 +49,8 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 
 	@RequestMapping("/detail/{id}")
 	public String checkDetail(@PathVariable(value = "id") Integer id,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws TemplateException {
+			HttpServletRequest request,
+			HttpServletResponse response) throws TemplateException {
 		ArticleDto articleDto = new ArticleDto();
 		articleDto.setContentId(Integer.toString(id));
 		// 先判断是否有此静态页面，没有的话先生存，有的话直接进入到此页面中
@@ -82,11 +82,11 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 								+ articleDto.getContentId() + ".html", map,
 						articleDto.getChannelPath() + "/"
 								+ articleDto.getCheckTime().substring(0, 10)
-								+ "/", httpServletRequest, httpServletResponse);
+								+ "/", request, response);
 			}
 		}
-		String ctp = (String) (httpServletRequest.getContextPath());
-		httpServletRequest.setAttribute("url",
+		String ctp = (String) (request.getContextPath());
+		request.setAttribute("url",
 				ctp + "/" + articleDto.getChannelPath() + "/"
 						+ articleDto.getCheckTime().substring(0, 10) + "/"
 						+ articleDto.getCheckTime().substring(0, 10) + "-"
@@ -97,11 +97,11 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 	// 查看更多评论
 	@RequestMapping("/morecomment/{id}")
 	public String moreComments(@PathVariable(value = "id") Integer id,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
+			HttpServletRequest request,
+			HttpServletResponse response) {
 		CommentDto commentDto = new CommentDto();
 		// 获取要跳转的页
-		String pageNo = httpServletRequest.getParameter("pageNo");
+		String pageNo = request.getParameter("pageNo");
 		if (pageNo == null) {
 			pageNo = "1";
 		}
@@ -124,16 +124,16 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 		map.put("nextPage", commentDto.getCurrpage() + 1);
 		map.put("id", id);
 		String htmlString = FreemarkerUtil.printString(
-				commentlist_template_path, map, httpServletRequest);
-		httpServletRequest.setAttribute("url", htmlString);
+				commentlist_template_path, map, request);
+		request.setAttribute("url", htmlString);
 		return "/util/urlRedirect";
 	}
 
 	/**
 	 * @Description: 发表评论
 	 * @author caiyang
-	 * @param: @param httpServletRequest
-	 * @param: @param httpServletResponse
+	 * @param: @param request
+	 * @param: @param response
 	 * @param: @return
 	 * @param: @throws TemplateException
 	 * @param: @throws UnsupportedEncodingException
@@ -141,14 +141,14 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 	 * @throws
 	 */
 	@RequestMapping("/comment")
-	public ModelAndView articleComment(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws TemplateException,
+	public ModelAndView articleComment(HttpServletRequest request,
+			HttpServletResponse response) throws TemplateException,
 			UnsupportedEncodingException {
-		httpServletRequest.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		// 获取文章的id
-		String id = (String) httpServletRequest.getParameter("id");
+		String id = (String) request.getParameter("id");
 		// 获取评论内容
-		String content = (String) httpServletRequest.getParameter("text");
+		String content = (String) request.getParameter("text");
 		// 获取t_comment表的最新id
 		int commentId = checkDetailService.getLatestIdOfComment();
 		CommentDto commentDto = new CommentDto();
@@ -177,9 +177,9 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 						+ articleDto.getContentId() + ".html", map,
 				articleDto.getChannelPath() + "/"
 						+ articleDto.getCheckTime().substring(0, 10) + "/",
-				httpServletRequest, httpServletResponse);
-		String ctp = (String) (httpServletRequest.getContextPath());
-		httpServletRequest.setAttribute("url",
+				request, response);
+		String ctp = (String) (request.getContextPath());
+		request.setAttribute("url",
 				ctp + "/" + articleDto.getChannelPath() + "/"
 						+ articleDto.getCheckTime().substring(0, 10) + "/"
 						+ articleDto.getCheckTime().substring(0, 10) + "-"
@@ -189,14 +189,14 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 	}
 	
 	@RequestMapping("/commentInMoreComment")
-	public String commentInMoreComment(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws TemplateException, UnsupportedEncodingException
+	public String commentInMoreComment(HttpServletRequest request,
+			HttpServletResponse response) throws TemplateException, UnsupportedEncodingException
 	{
-		httpServletRequest.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		// 获取文章的id
-		String id = (String) httpServletRequest.getParameter("id");
+		String id = (String) request.getParameter("id");
 		// 获取评论内容
-		String content = (String) httpServletRequest.getParameter("text");
+		String content = (String) request.getParameter("text");
 		// 获取t_comment表的最新id
 		int commentId = checkDetailService.getLatestIdOfComment();
 		CommentDto commentDto = new CommentDto();
@@ -212,7 +212,7 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 		articleDto.setContentId(id);
 		articleDto = checkDetailService.getArticleById(articleDto);
 		// 获取要跳转的页
-		/*String pageNo = httpServletRequest.getParameter("pageNo");
+		/*String pageNo = request.getParameter("pageNo");
 		if (pageNo == null) {
 			pageNo = "1";
 		}*/
@@ -232,8 +232,8 @@ public class CheckDetailController extends BaseController<ArticleDto> {
 		map.put("nextPage", commentDto.getCurrpage() + 1);
 		map.put("id", id);
 		String htmlString = FreemarkerUtil.printString(
-				commentlist_template_path, map, httpServletRequest);
-		httpServletRequest.setAttribute("url", htmlString);
+				commentlist_template_path, map, request);
+		request.setAttribute("url", htmlString);
 		return "/util/urlRedirect";
 	}
 }

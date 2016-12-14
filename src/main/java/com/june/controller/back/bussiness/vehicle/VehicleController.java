@@ -203,7 +203,7 @@ public class VehicleController extends BaseController<VehicleDto> {
 		vehicleDto = vehicleService.getDtoById(vehicleDto);
 		// 判断车型信息是否为空
 		if (vehicleDto == null) {
-			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
+			message(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(vehicleDto, response);
 		}
@@ -262,7 +262,7 @@ public class VehicleController extends BaseController<VehicleDto> {
 				ftp.setFtpPath(vehicleDto.getFtpPath());//设置ftp路径
 				ftp.setPaths(Constants.DIRECTORYS);//初始化目录集合
 				ftpService.createDirectory(ftp);
-				throwMessage(response,"save_success", MESSAGE_INFO);
+				message(response,"save_success", MESSAGE_INFO);
 			} else {
 				// 车型存在的情况返回消息
 				messageErrorExist(response);
@@ -386,7 +386,7 @@ public class VehicleController extends BaseController<VehicleDto> {
 			vehicleService.addVehicleUsers(vehicleDto);// 再添加新的
 			messageSaveSuccess(response);
 		} else {
-			throwMessage(response,"请先选择车型", MESSAGE_ERRO);
+			message(response,"请先选择车型", MESSAGE_ERRO);
 		}
 	}
 
@@ -483,7 +483,7 @@ public class VehicleController extends BaseController<VehicleDto> {
 		fillRequestDto(request, userInfoDto);
 		userInfoDto.setUserId(this.loginUser().getUserId());
 		userInfoService.setDefaultVehicle(userInfoDto);
-		throwMessage(response,"设置成功！", MESSAGE_INFO);
+		message(response,"设置成功！", MESSAGE_INFO);
 	}
 
 	@RequestMapping("/getErrorCodes")

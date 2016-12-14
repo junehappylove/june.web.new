@@ -29,11 +29,11 @@ public class FrontLoginController extends BaseController<UserInfoDto>{
 		return modelAndView;
 	}
 	@RequestMapping("/main")
-	public ModelAndView frontLoginto(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception
+	public ModelAndView frontLoginto(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
 		ModelAndView result = null;
-		String userid = httpServletRequest.getParameter("username");
-	    String password = httpServletRequest.getParameter("password");
+		String userid = request.getParameter("username");
+	    String password = request.getParameter("password");
 	    UserInfoDto userInfoDto = new UserInfoDto();
 	    userInfoDto.setUserId(userid);
 	    userInfoDto.setUserPassword(password);
@@ -55,8 +55,8 @@ public class FrontLoginController extends BaseController<UserInfoDto>{
             result.addObject("error", error);
             return result;
 	      }else{
-	    	  httpServletRequest.getSession().setAttribute("frontLogin","success");
-	    	  httpServletRequest.getSession().setAttribute("frontuserid",userInfoDto.getUserId());
+	    	  request.getSession().setAttribute("frontLogin","success");
+	    	  request.getSession().setAttribute("frontuserid",userInfoDto.getUserId());
 	    	  //result.addObject("userid", userInfoDto.getUserId());
 	    	  result = new ModelAndView("front/front");
 	      }
@@ -65,12 +65,12 @@ public class FrontLoginController extends BaseController<UserInfoDto>{
 	
 	//门户首页退出登录
 	@RequestMapping("/frontlogout")
-	public ModelAndView frontlogout(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse)
+	public ModelAndView frontlogout(HttpServletRequest request,HttpServletResponse response)
 	{
 		
 		ModelAndView result = null;
-		httpServletRequest.getSession().removeAttribute("frontuserid");
-		httpServletRequest.getSession().removeAttribute("frontLogin");
+		request.getSession().removeAttribute("frontuserid");
+		request.getSession().removeAttribute("frontLogin");
 		result = new ModelAndView("front/front");
 		return result;
 	}

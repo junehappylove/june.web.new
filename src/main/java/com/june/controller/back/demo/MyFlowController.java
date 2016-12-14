@@ -62,33 +62,34 @@ public class MyFlowController extends BaseController<FlowListDto> {
 
 	/**
 	 * 获取页面数据一览
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:21:50
 	 * @writer wjw.happy.love@163.com
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/getmyFlow")
-	public void getflowlist(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getflowlist(HttpServletRequest request, HttpServletResponse response) {
 		FlowListDto flowListDto = new FlowListDto();
-		fillRequestDto(httpServletRequest, flowListDto);
+		fillRequestDto(request, flowListDto);
 		flowListDto = myflowService.findTaskListByName(flowListDto);
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 		JSONObject jsonObject = JSONObject.fromObject(flowListDto, jsonConfig);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		ConvetDtoToJson(response, jsonObject);
 	}
 
 	/**
 	 * 任务审批 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:21:56
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/doprocess")
-	public void doprocess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void doprocess(HttpServletRequest request, HttpServletResponse response) {
 		FlowListDto flowListDto = new FlowListDto();
-		fillRequestDto(httpServletRequest, flowListDto);
+		fillRequestDto(request, flowListDto);
 		myflowService.submitTask(flowListDto);
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
@@ -97,60 +98,59 @@ public class MyFlowController extends BaseController<FlowListDto> {
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(messageDto, response);
 	}
 
 	/**
 	 * 办理任务页面初始化
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:22:04
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/doprocessinit")
-	public void doprocessinit(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void doprocessinit(HttpServletRequest request, HttpServletResponse response) {
 		LeaveDto leaveDto = new LeaveDto();
-		fillRequestDto(httpServletRequest, leaveDto);
+		fillRequestDto(request, leaveDto);
 		String taskid = leaveDto.getTaskId();
 		leaveDto = myflowService.getLeaveInfoByTaskid(taskid);
 		List<FlowListDto> list = myflowService.findOutComeListByTaskId(taskid);
 		leaveDto.setList(list);
 		leaveDto.setTaskId(taskid);
-		JSONObject jsonObject = JSONObject.fromObject(leaveDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(leaveDto, response);
 	}
 
 	/**
 	 * 获取审批历史记录 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:22:10
 	 * @writer wjw.happy.love@163.com
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/gethistory")
-	public void gethistory(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void gethistory(HttpServletRequest request, HttpServletResponse response) {
 		LeaveDto leaveDto = new LeaveDto();
-		fillRequestDto(httpServletRequest, leaveDto);
+		fillRequestDto(request, leaveDto);
 		String taskid = leaveDto.getTaskId();
 		List<FlowListDto> list = myflowService.gethistory(taskid);
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor());
 		JSONArray jsonArray = JSONArray.fromObject(list, jsonConfig);
-		ConvertListToJson(httpServletResponse, jsonArray);
+		ConvertListToJson(response, jsonArray);
 	}
 
 	/**
 	 * 获取流程图 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:22:16
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/getimage")
-	public void getimage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		String taskId = httpServletRequest.getParameter("taskId");
+	public void getimage(HttpServletRequest request, HttpServletResponse response) {
+		String taskId = request.getParameter("taskId");
 		ProcessDefinition pd = myflowService.findProcessDefinitionBytaskId(taskId);
-		myflowService.viewImage(pd.getDeploymentId(), pd.getDiagramResourceName(), httpServletResponse);
+		myflowService.viewImage(pd.getDeploymentId(), pd.getDiagramResourceName(), response);
 	}
 }

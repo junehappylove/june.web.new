@@ -7,7 +7,7 @@
 <title>JUNE_WEB_NEW</title>
 <%@include file="../../../common/import.jsp"%>
 <script type="text/javascript"
-	src="${ctx}/js/system/base/userinfo/userInfo.js"></script>
+	src="${ctx}/js/system/base/user/userInfo.js"></script>
 </head>
 <body>
 	 <div class="ibox-content">
@@ -27,7 +27,7 @@
 		                            <div class="col-sm-2">
 		                                <input type="text" class="form-control" name="userName" id="userName"/>
 		                            </div>
-		                            <c:if test="${userinfo_search eq 'hasAuthority'}">
+		                            <c:if test="${search eq 'hasAuthority'}">
 		                             <button id="btn_add" type="button" class="btn btn-primary" onclick="searchUserInfo()">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
 									</button>
@@ -36,20 +36,20 @@
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
-							<c:if test="${userinfo_btnAdd eq 'hasAuthority'}">
+							<c:if test="${btnAdd eq 'hasAuthority'}">
 								<button id="btn_add" type="button" class="btn btn-outline btn-default"
 								onclick="addNew()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 								</button>
 							</c:if>
-							<c:if test="${userinfo_btnEdit eq 'hasAuthority'}">
+							<c:if test="${btnEdit eq 'hasAuthority'}">
 								<button id="btn_edit" type="button" class="btn btn-outline btn-default"
 									onclick="editRow()">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									编辑
 								</button>
 							</c:if>
-							<c:if test="${userinfo_btnDelete eq 'hasAuthority'}">
+							<c:if test="${btnDelete eq 'hasAuthority'}">
 								<button id="btn_delete" type="button" class="btn btn-outline btn-default"
 									onclick="deleteRow()">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
@@ -143,7 +143,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-					<c:if test="${userinfo_btnAddSave eq 'hasAuthority' || userinfo_btnEditSave eq 'hasAuthority'}">
+					<c:if test="${btnAddSave eq 'hasAuthority' || btnEditSave eq 'hasAuthority'}">
 						<button type="button" class="btn btn-primary"
 							onclick="closemodal()">取消</button>
 						<button type="submit" id="saveBtn" class="btn btn-primary">保存</button>

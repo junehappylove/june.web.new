@@ -16,8 +16,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,18 +57,18 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 	/**   
 	 * @Description: 保存资讯操作
 	 * @author	caiyang
-	 * @param: @param httpServletRequest
-	 * @param: @param httpServletResponse
+	 * @param: @param request
+	 * @param: @param response
 	 * @param: @throws Exception      
 	 * @return: void      
 	 * @throws   
 	 */
 	@RequestMapping("/saveContent")
 	@MethodLog(module="发布资讯",remark="保存资讯",operateType=Constants.OPERATE_TYPE_ADD)
-	public void saveContent(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception
+	public void saveContent(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		//设置评论状态0可评论，1不可评论
 		if (releaseInfoDto.getCommentState() != null && releaseInfoDto.getCommentState().equals("true")) {
 			releaseInfoDto.setCommentState("0");
@@ -99,25 +97,24 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
 		}
-        JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-        ConvetDtoToJson(httpServletResponse, jsonObject);
+        toJson(releaseInfoDto, response);
 	}
 	
 	/**
 	 * @throws Exception    
 	 * @Description: 提交资讯操作
 	 * @author caiyang
-	 * @param: @param httpServletRequest
-	 * @param: @param httpServletResponse      
+	 * @param: @param request
+	 * @param: @param response      
 	 * @return: void      
 	 * @throws   
 	 */
 	@RequestMapping("/submitContent")
 	@MethodLog(module="发布资讯",remark="提交资讯",operateType=Constants.OPERATE_TYPE_ADD)
-	public void submitContent(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws Exception
+	public void submitContent(HttpServletRequest request,HttpServletResponse response) throws Exception
 	{
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		//设置评论状态0可评论，1不可评论
 		if (releaseInfoDto.getCommentState() != null && releaseInfoDto.getCommentState().equals("true")) {
 			releaseInfoDto.setCommentState("0");
@@ -129,12 +126,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			int contentId = releaseInfoService.getMaxContentId();
 			releaseInfoDto.setContentId(Integer.toString(contentId));
 			releaseInfoService.submitDirect(releaseInfoDto);
-			 //返回消息 start
-			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.formatMessage("content_submit_success"));
-	        releaseInfoDto.setErrList(errList);
-	        releaseInfoDto.setErrType("info");
-	        //返回消息 end
+	        message(response,"content_submit_success",MESSAGE_INFO);
 		}else {//先进行保存再提交
 			releaseInfoService.submitNoDirect(releaseInfoDto);
 			 //返回消息 start
@@ -143,8 +135,8 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
+	        message(response,"content_submit_success",MESSAGE_INFO);
 		}
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-        ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 }

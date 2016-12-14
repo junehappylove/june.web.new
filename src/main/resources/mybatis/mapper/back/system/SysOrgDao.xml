@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.base.org.SysOrgDao">
+	<sql id="selectData">
+		SELECT
+			T1.ORG_ID AS orgId,
+			T1.DISTRICT_ID AS districtId,
+			T1.ORG_NAME AS orgName,
+			T1.PARENT_ORG_ID AS parentOrgId,
+			T1.ORG_LEADER AS orgLeader,
+			T1.REMARK AS remark,
+			T1.DEL_FLAG AS delFlag,
+			T2.USER_NAME AS addUserId,
+			T1.ADD_TIME AS addTime,
+			T3.USER_NAME AS updateUserId,
+			T1.UPDATE_TIME AS updateTime
+		FROM
+			sys_org T1
+		LEFT JOIN sys_user T2
+			ON T2.USER_ID = T1.ADD_USER_ID
+		LEFT JOIN sys_user T3
+			ON T3.USER_ID = T1.UPDATE_USER_ID
+		WHERE
+			1=1
+		<if test="orgName != null and orgName != ''"> 
+			AND T1.ORG_NAME like '%${orgName}%' 
+		</if> 
+		<if test="remark != null and remark != ''"> 
+			AND T1.REMARK like '%${remark}%'  
+		</if> 
+		ORDER BY T1.ORG_ID
+	</sql>
+
+	<!-- 根据schem查询用户列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.base.SysOrgDto"
+		parameterType="com.june.dto.back.system.base.SysOrgDto">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	<select id="getList" resultType="com.june.dto.back.system.base.SysOrgDto"
+		parameterType="com.june.dto.back.system.base.SysOrgDto">
+		<include refid="selectData" />
+	</select>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.base.SysOrgDto">
+		select count(1) from ( <include refid="selectData"/> ) temp
+	</select>
+
+	<insert id="add" parameterType="com.june.dto.back.system.base.SysOrgDto"
+		useGeneratedKeys="true" keyProperty="roleId">
+		INSERT
+		INTO
+		sys_org
+		(
+			DISTRICT_ID,
+			ORG_NAME,
+			PARENT_ORG_ID,
+			ORG_LEADER,
+			REMARK,
+			DEL_FLAG,
+			ADD_USER_ID,
+			ADD_TIME,
+			UPDATE_USER_ID,
+			UPDATE_TIME,
+			VERSION
+		)
+		VALUES(
+			#{districtId},
+			#{orgName},
+			#{parentOrgId},
+			#{orgLeader},
+			#{remark},
+			#{delFlag},
+			#{sys_user},
+			NOW(),
+			#{sys_user},
+			NOW(),
+			0
+		)
+	</insert>
+		
+	<select id="get" parameterType="com.june.dto.back.system.base.SysOrgDto" resultType="com.june.dto.back.system.base.SysOrgDto">
+		SELECT
+			T1.ORG_ID AS orgId,
+			T1.DISTRICT_ID AS districtId,
+			T1.ORG_NAME AS orgName,
+			T1.PARENT_ORG_ID AS parentOrgId,
+			T1.ORG_LEADER AS orgLeader,
+			T1.REMARK AS remark,
+			T1.DEL_FLAG AS delFlag,
+			T1.ADD_USER_ID AS addUserId,
+			T1.ADD_TIME AS addTime,
+			T1.UPDATE_USER_ID AS updateUserId,
+			T1.UPDATE_TIME AS updateTime
+		FROM
+			sys_org T1
+		WHERE
+			T1.ORG_ID = #{orgId} 
+	</select>
+		
+	<update id="update" parameterType="com.june.dto.back.system.base.SysOrgDto">
+		UPDATE sys_org
+		SET
+			DISTRICT_ID #{districtId},
+			ORG_NAME = #{orgName},
+			PARENT_ORG_ID #{parentOrgId},
+			ORG_LEADER #{orgLeader},
+			REMARK #{remark},
+			DEL_FLAG #{delFlag},
+			UPDATE_USER_ID = #{sys_user},
+			UPDATE_TIME = NOW(),
+			VERSION = VERSION + 1
+		WHERE
+			ORG_ID=#{orgId}
+	</update>
+	
+	<delete id="delete" parameterType="com.june.dto.back.system.base.SysOrgDto">
+		DELETE FROM
+			sys_org
+		WHERE
+			ORG_ID=#{orgId}
+	</delete>
+	
+</mapper>

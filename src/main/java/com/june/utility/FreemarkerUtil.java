@@ -123,19 +123,19 @@ public class FreemarkerUtil {
 	}
 
 	public static void creteHtml(String ftl, String htmlName, Map<String, Object> map, String realPath,
-			HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws TemplateException {
+			HttpServletRequest request, HttpServletResponse response) throws TemplateException {
 		// Configuration config = new
 		// Configuration(Configuration.VERSION_2_3_23);
 		// 设置要解析的模板所在的目录，并加载模板文件
 		try {
-			config.setServletContextForTemplateLoading(httpServletRequest.getServletContext(), PATH_SEPARATOR);
+			config.setServletContextForTemplateLoading(request.getServletContext(), PATH_SEPARATOR);
 			config.setEncoding(Locale.getDefault(), UTF8);
 
-			map.put("C", httpServletRequest.getContextPath());
+			map.put("C", request.getContextPath());
 			Template template = config.getTemplate(ftl);
 			// template.setEncoding("utf-8");//过时
 			// 合并数据模型与模板
-			String path = httpServletRequest.getServletContext().getRealPath(PATH_SEPARATOR);
+			String path = request.getServletContext().getRealPath(PATH_SEPARATOR);
 			File file = new File(path + realPath.split(PATH_SEPARATOR)[0]);
 			// 如果文件夹不存在则创建
 			if (!file.exists() && !file.isDirectory()) {
@@ -166,15 +166,15 @@ public class FreemarkerUtil {
 	 * @return
 	 */
 	public static String printString(String templatePaht, Map<String, Object> root,
-			HttpServletRequest httpServletRequest) {
+			HttpServletRequest request) {
 		// Configuration config = new
 		// Configuration(Configuration.VERSION_2_3_23);
 		StringWriter out = new StringWriter();
 		try {
-			config.setServletContextForTemplateLoading(httpServletRequest.getServletContext(), PATH_SEPARATOR);
+			config.setServletContextForTemplateLoading(request.getServletContext(), PATH_SEPARATOR);
 			config.setEncoding(Locale.getDefault(), UTF8);
 
-			root.put("C", httpServletRequest.getContextPath());
+			root.put("C", request.getContextPath());
 			// 通过一个文件输出流，就可以写到相应的文件中
 			Template temp = config.getTemplate(templatePaht);
 			temp.process(root, out);

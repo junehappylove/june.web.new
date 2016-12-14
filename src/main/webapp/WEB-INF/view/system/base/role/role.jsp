@@ -26,7 +26,7 @@
 		                            <div class="col-sm-2">
 		                                <input type="text" class="form-control" name="roleDesc" id="roleDesc"/>
 		                            </div>
-		                            <c:if test="${role_search eq 'hasAuthority'}">
+		                            <c:if test="${search eq 'hasAuthority'}">
 		                             <button id="btn_add" type="button" class="btn btn-primary" onclick="searchRoleInfo()">
 										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
 									</button>
@@ -35,32 +35,32 @@
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
-							<c:if test="${role_btnAdd eq 'hasAuthority'}">
+							<c:if test="${btnAdd eq 'hasAuthority'}">
 								<button id="btn_add" type="button" class="btn btn-outline btn-default"
 								onclick="addNew()">
 									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 								</button>
 								</c:if>
-								<c:if test="${role_btnEdit eq 'hasAuthority'}">
+								<c:if test="${btnEdit eq 'hasAuthority'}">
 								<button id="btn_edit" type="button" class="btn btn-outline btn-default"
 									onclick="editRow()">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 									编辑
 								</button>
 								</c:if>
-								<c:if test="${role_btnDelete eq 'hasAuthority'}">
+								<c:if test="${btnDelete eq 'hasAuthority'}">
 								<button id="btn_delete" type="button" class="btn btn-outline btn-default"
 									onclick="deleteRow()">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 								</button>
 								</c:if>
-								<c:if test="${role_btnAssignUser eq 'hasAuthority'}">
+								<c:if test="${btnAssignUser eq 'hasAuthority'}">
 								<button id="btn_assignUser" type="button" class="btn btn-outline btn-default"
 									onclick="initUser()">
 									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>分配用户
 								</button>
 								</c:if>
-								<c:if test="${role_btnAssignMenu eq 'hasAuthority'}">
+								<c:if test="${btnAssignMenu eq 'hasAuthority'}">
 								<button id="btn_assignMenu" type="button" class="btn btn-outline btn-default" onclick="initMenu()">
 									<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>分配菜单
 								</button>
@@ -107,7 +107,7 @@
                     
 					</div>
 					<div class="modal-footer">
-					<c:if test="${role_saveAssignUser eq 'hasAuthority' || role_saveAssignMenu eq 'hasAuthority'}">
+					<c:if test="${saveAssignUser eq 'hasAuthority' || saveAssignMenu eq 'hasAuthority'}">
 						<button type="button" class="btn btn-primary"
 							onclick="closemodal()">取消</button>
 						<button type="submit" id="saveBtn" class="btn btn-primary">保存</button>
@@ -119,8 +119,8 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="height: 1000px;">
+	<div class="modal fade bs-example-modal-sm" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="closemenumodal()">×</button>
@@ -130,14 +130,14 @@
 				<div class="modal-body">
 					<div class="row">
 						<div>
-							<div class="zTreeDemoBackground" style="width: 150px;">
+							<div class="zTreeDemoBackground" style="width: 100%; height: 280px; overflow: auto;">
 								<ul id="menuTree" class="ztree"></ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-				<c:if test="${role_saveAssignMenu eq 'hasAuthority'}">
+				<c:if test="${saveAssignMenu eq 'hasAuthority'}">
 					<button type="button" class="btn btn-primary"
 						onclick="closemenumodal()">取消</button>
 					<button type="button" id="saveAssignMenu" class="btn btn-primary" onclick="assignMenu()">确定</button>
@@ -146,8 +146,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="height: 1000px;">
+	<div class="modal fade bs-example-modal-sm" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="closeusermodal()">×</button>
@@ -157,14 +157,14 @@
 				<div class="modal-body">
 					<div class="row">
 						<div>
-							<div class="zTreeDemoBackground" style="width: 150px;">
+							<div class="zTreeDemoBackground" style="width: 100%; height: 280px; overflow: auto;">
 								<ul id="userTree" class="ztree"></ul>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-				<c:if test="${role_saveAssignUser eq 'hasAuthority'}">
+				<c:if test="${saveAssignUser eq 'hasAuthority'}">
 					<button type="button" class="btn btn-primary"
 						onclick="closeusermodal()">取消</button>
 					<button type="button" id="saveAssignUser" class="btn btn-primary" onclick="assignUser()">确定</button>

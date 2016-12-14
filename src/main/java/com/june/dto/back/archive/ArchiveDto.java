@@ -58,7 +58,7 @@ public class ArchiveDto extends PageDTO<ArchiveDto>{
 		this.operateUserName = operateUserName;
 	}
 	@Override
-	protected String getDtoName() {
+	public String getDtoName() {
 		return "文档";
 	}
 }

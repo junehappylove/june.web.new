@@ -432,9 +432,9 @@ public class GuideController extends BaseController<GuideDto> {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			guideDto.setFileTime(now);
 			guideService.updateDtoById(guideDto);
-			throwMessage(response,"upload_success", MESSAGE_INFO);
+			message(response,"upload_success", MESSAGE_INFO);
 		}else{
-			throwMessage(response,"upload_failed", MESSAGE_ERRO);
+			message(response,"upload_failed", MESSAGE_ERRO);
 		}
 	}
 	
@@ -462,9 +462,9 @@ public class GuideController extends BaseController<GuideDto> {
 			Timestamp now = new Timestamp(System.currentTimeMillis());
 			guideDto.setVideoTime(now);
 			guideService.updateDtoById(guideDto);
-			throwMessage(response,"upload_success", MESSAGE_INFO);
+			message(response,"upload_success", MESSAGE_INFO);
 		}else{
-			throwMessage(response,"upload_failed", MESSAGE_ERRO);
+			message(response,"upload_failed", MESSAGE_ERRO);
 		}
 	}
 	
@@ -591,7 +591,7 @@ public class GuideController extends BaseController<GuideDto> {
 			guideDto.setFileTime(now);
 		}
 		guideService.updateDtoById(guideDto);
-		throwMessage(response,"upload_success", MESSAGE_INFO);
+		message(response,"upload_success", MESSAGE_INFO);
 	}
 	
 	/**

@@ -227,11 +227,11 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 								ftpService.uploadFile(ftp); 	// 上传操作
 							} else {
 								// 步骤不存在
-								throwMessage(response,"step_not_exist", MESSAGE_ERRO);
+								message(response,"step_not_exist", MESSAGE_ERRO);
 							}
 						}else{
 							// 如果原始图文信息不存在，则不能修改存在步骤，只能添加新步骤
-							throwMessage(response,"update_step_error",MESSAGE_ERRO);
+							message(response,"update_step_error",MESSAGE_ERRO);
 						}
 						// 更新 fileTime
 						guideDto.setFileTime(new Timestamp(System.currentTimeMillis()));
@@ -332,7 +332,7 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 						guideService.updateDtoById(guideDto);
 					}else{
 						// 传入操作类型错误无法处理
-						throwMessage(response,"operate_type_error", MESSAGE_ERRO);
+						message(response,"operate_type_error", MESSAGE_ERRO);
 					}
 				}
 				messageUpdateSuccess(response);
@@ -413,7 +413,7 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 			guideDto.setFtpPath(ftpPath+Constants.DIRECTORY_ROOT+fileName);
 			toJson(guideDto, response);
 		}else{
-			throwMessage(response,"data_not_exist", MESSAGE_ERRO);
+			message(response,"data_not_exist", MESSAGE_ERRO);
 		}
 	}
 	
@@ -477,7 +477,7 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 					toJson(imageXml, response);
 				} else {
 					// 步骤不存在
-					throwMessage(response,"stpe_not_exist", MESSAGE_ERRO);
+					message(response,"stpe_not_exist", MESSAGE_ERRO);
 				}
 			}else if(StringUtils.isNotEmpty(type) && "2".equals(type)){
 				// 增加指南步骤2 ,比较麻烦情况比较多【向后追加步骤;修改现有步骤，其他步骤依次后移】
@@ -514,10 +514,10 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 				}
 				toJson(imageXml, response);
 			}else{
-				throwMessage(response,"data_error_from_client", MESSAGE_ERRO);
+				message(response,"data_error_from_client", MESSAGE_ERRO);
 			}
 		}else{
-			throwMessage(response,"data_not_exist", MESSAGE_ERRO);
+			message(response,"data_not_exist", MESSAGE_ERRO);
 		}
 	}
 	
@@ -587,7 +587,7 @@ public class GuideApproveController extends BaseController<GuideApproveDto> {
 			approveDto.setFtpPath(ftpPath);
 			toJson(approveDto, response);
 		}else{
-			throwMessage(response,"data_not_exist", MESSAGE_ERRO);
+			message(response,"data_not_exist", MESSAGE_ERRO);
 		}
 	}
 	

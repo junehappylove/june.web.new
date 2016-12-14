@@ -56,8 +56,8 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * form表单后台验证
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @throws Exception
 	 * @return AbstractDTO
 	 */
@@ -90,7 +90,7 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * 上传参考文件页面
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 * @return
 	 * @date 2016年5月11日 上午11:02:33
 	 * @writer wjw.happy.love@163.com
@@ -117,17 +117,17 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * 获取参考文件信息
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return void
 	 */
 	@RequestMapping("/getReferenceFiles")
 	@MethodLog(module = "参考文件管理", remark = "参考文件查询", operateType = Constants.OPERATE_TYPE_SEARCH)
-	public void getPagedReferenceFiles(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getPagedReferenceFiles(HttpServletRequest request, HttpServletResponse response) {
 		ReferenceFileDto referenceFileDto = new ReferenceFileDto();
-		fillRequestDto(httpServletRequest, referenceFileDto);
+		fillRequestDto(request, referenceFileDto);
 		referenceFileDto = referenceFileService.getPagedDtos(referenceFileDto);
-		toJson(referenceFileDto, httpServletResponse);
+		toJson(referenceFileDto, response);
 	}
 	
 	/**
@@ -148,46 +148,46 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * 获取所有的参考文件
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年5月16日 下午2:43:19
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/loadAllReferenceFile")
-	public void loadAllReferenceFile(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void loadAllReferenceFile(HttpServletRequest request, HttpServletResponse response) {
 		ReferenceFileDto referenceFileDto = new ReferenceFileDto();
-		fillRequestDto(httpServletRequest, referenceFileDto);
+		fillRequestDto(request, referenceFileDto);
 		List<ReferenceFileDto> list = referenceFileService.getDtos(referenceFileDto);
-		toJson(list, httpServletResponse);
+		toJson(list, response);
 	}
 
 	/**
 	 * 查看详细，编辑触发事件
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return void
 	 * @throws Exception
 	 */
 	@RequestMapping("/checkDetail")
-	public void checkDetail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void checkDetail(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ReferenceFileDto referenceFileDto = new ReferenceFileDto();
-		fillRequestDto(httpServletRequest, referenceFileDto);
+		fillRequestDto(request, referenceFileDto);
 		referenceFileDto = referenceFileService.getDtoById(referenceFileDto);
 		// 判断参考文件信息是否为空
 		if (referenceFileDto == null) {
-			messageErrorNotExist(httpServletResponse);
+			messageErrorNotExist(response);
 		} else {
-			toJson(referenceFileDto, httpServletResponse);
+			toJson(referenceFileDto, response);
 		}
 	}
 
 	/**
 	 * 保存新增参考文件
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @param referenceFileDto
 	 * @param bindingResult
 	 * @throws Exception
@@ -249,8 +249,8 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * 编辑保存参考文件信息
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @param referenceFileDto
 	 * @param bindingResult
 	 * @throws Exception
@@ -321,8 +321,8 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	/**
 	 * 删除参考文件，已及参考文件-用户关联信息
 	 * 
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @param referenceFileDto
 	 * @throws Exception
 	 * @date 2016年5月10日 下午1:28:22
@@ -330,7 +330,7 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 	 */
 	@RequestMapping("/deleteSelected")
 	@MethodLog(module = "参考文件管理", remark = "删除参考文件", operateType = Constants.OPERATE_TYPE_DELETE)
-	public void deleteSelected(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	public void deleteSelected(HttpServletRequest request, HttpServletResponse response,
 			ReferenceFileDto referenceFileDto) throws Exception {
 		// 选中的参考文件id
 		String referenceFileIds = referenceFileDto.getReferenceFileId();
@@ -351,7 +351,7 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 				ftpService.deleteDirectory(ftpDto);
 			}
 		}
-		messageDeleteSuccess(httpServletResponse);
+		messageDeleteSuccess(response);
 	}
 
 	@RequestMapping("/getFtpPath")
@@ -404,7 +404,7 @@ public class ReferenceFileController extends BaseController<ReferenceFileDto> {
 		ftp.setFileMap(map);
 		ftpService.createDirectory(ftp);//创建目录
 		ftpService.uploadFile(ftp);//上传文件
-		throwMessage(response,"upload_success", MESSAGE_INFO);
+		message(response,"upload_success", MESSAGE_INFO);
 	}
 
 	@RequestMapping("/systemDrops")

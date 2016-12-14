@@ -17,8 +17,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,11 +61,11 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 
 	/**
 	 * @Description: 审核资讯页面初始化 @author caiyang @param: @param
-	 *               httpServletRequest @param: @param
-	 *               httpServletResponse @return: void @throws
+	 *               request @param: @param
+	 *               response @return: void @throws
 	 */
 	@RequestMapping("/CheckInfo")
-	public ModelAndView init(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public ModelAndView init(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView result = new ModelAndView("portal/checkInfo/checkInfo");
 		List<ReleaseInfoDto> channelList = releaseInfoService.getChannels();
 		result.addObject("channelList", channelList);
@@ -76,32 +74,31 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 
 	/**
 	 * @Description: 页面表格数据初始化 @author caiyang @param: @param
-	 *               httpServletRequest @param: @param
-	 *               httpServletResponse @return: void @throws
+	 *               request @param: @param
+	 *               response @return: void @throws
 	 */
 	@RequestMapping("/search")
 	@MethodLog(module = "审核资讯", remark = "查询待审核资讯", operateType = Constants.OPERATE_TYPE_SEARCH)
-	public void search(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void search(HttpServletRequest request, HttpServletResponse response) {
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
 		// 将参数映射到dto中
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		releaseInfoDto = checkInfoService.search(releaseInfoDto);
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 
 	/**
 	 * @throws Exception
 	 * 			@Description: 审核通过操作 @author caiyang @param: @param
-	 *             httpServletRequest @param: @param
-	 *             httpServletResponse @return: void @throws
+	 *             request @param: @param
+	 *             response @return: void @throws
 	 */
 	@RequestMapping("/checkPass")
 	@MethodLog(module = "审核资讯", remark = "通过待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
-	public void checkPass(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void checkPass(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		checkInfoService.checkPass(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
@@ -109,16 +106,15 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 
 	@RequestMapping("/checkBack")
 	@MethodLog(module = "审核资讯", remark = "驳回待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
-	public void checkBack(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void checkBack(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		checkInfoService.checkBack(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
@@ -126,19 +122,18 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 
 	/**
 	 * @Description: 预览资讯操作 @author caiyang @param: @param
-	 *               httpServletRequest @param: @param
-	 *               httpServletResponse @param: @return @return:
+	 *               request @param: @param
+	 *               response @param: @return @return:
 	 *               ModelAndView @throws
 	 */
 	@RequestMapping("/checkView")
-	public ModelAndView checkView(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		String contentId = httpServletRequest.getParameter("contentId");
+	public ModelAndView checkView(HttpServletRequest request, HttpServletResponse response) {
+		String contentId = request.getParameter("contentId");
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
 		releaseInfoDto.setContentId(contentId);
 		// 根据id获取文章信息
@@ -150,16 +145,16 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 
 	/**
 	 * @Description: 批量通过审核操作 @author caiyang @param: @param
-	 *               httpServletRequest @param: @param
-	 *               httpServletResponse @param: @throws Exception @return:
+	 *               request @param: @param
+	 *               response @param: @throws Exception @return:
 	 *               void @throws
 	 */
 	@RequestMapping("/batchCheckPass")
 	@MethodLog(module = "审核资讯", remark = "批量通过待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
-	public void batchCheckPass(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void batchCheckPass(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		String contentId = releaseInfoDto.getContentId();
 		for (int i = 0; i < contentId.split(",").length; i++) {
 			releaseInfoDto.setContentId(contentId.split(",")[i]);
@@ -171,22 +166,21 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 
 	/**
 	 * @throws Exception
 	 * 			@Description: 批量驳回资讯操作 @author caiyang @param: @param
-	 *             httpServletRequest @param: @param
-	 *             httpServletResponse @return: void @throws
+	 *             request @param: @param
+	 *             response @return: void @throws
 	 */
 	@RequestMapping("batchCheckBack")
 	@MethodLog(module = "审核资讯", remark = "批量驳回待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
-	public void batchCheckBack(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void batchCheckBack(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ReleaseInfoDto releaseInfoDto = new ReleaseInfoDto();
-		fillRequestDto(httpServletRequest, releaseInfoDto);
+		fillRequestDto(request, releaseInfoDto);
 		String contentId = releaseInfoDto.getContentId();
 		for (int i = 0; i < contentId.split(",").length; i++) {
 			releaseInfoDto.setContentId(contentId.split(",")[i]);
@@ -198,8 +192,7 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(releaseInfoDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(releaseInfoDto, response);
 	}
 
 }

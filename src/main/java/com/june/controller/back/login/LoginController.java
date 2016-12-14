@@ -35,16 +35,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.code.kaptcha.Producer;
 import com.june.common.BaseController;
 import com.june.common.MessageDto;
 import com.june.dto.back.login.MenuDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.base.UserRoleDto;
 import com.june.service.back.login.LoginService;
-import com.june.service.back.system.base.userinfo.UserInfoService;
+import com.june.service.back.system.base.user.UserInfoService;
 import com.june.utility.MessageUtil;
 import com.june.utility.exception.LoginAttemptException;
-import com.google.code.kaptcha.Producer;
 
 import net.sf.json.JSONObject;
 
@@ -98,8 +98,8 @@ public class LoginController extends BaseController<UserInfoDto>{
 	
 	/**
 	 * 用户登录验证入口
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @param redirectAttributes
 	 * @return
 	 * @throws Exception
@@ -107,12 +107,12 @@ public class LoginController extends BaseController<UserInfoDto>{
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/logincheck")
-	public String checkLogin(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,RedirectAttributes redirectAttributes) throws Exception{
-		String username = httpServletRequest.getParameter("username");
-	    String password = httpServletRequest.getParameter("password");
-	    //String kaptchaFormjsp = httpServletRequest.getParameter("kaptcha");//获取页面传过来的额验证码
-	    //String kaptchaExpected = (String) httpServletRequest.getSession().getAttribute("kaptcha");//获取session中的验证码
+	public String checkLogin(HttpServletRequest request,
+			HttpServletResponse response,RedirectAttributes redirectAttributes) throws Exception{
+		String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+	    //String kaptchaFormjsp = request.getParameter("kaptcha");//获取页面传过来的额验证码
+	    //String kaptchaExpected = (String) request.getSession().getAttribute("kaptcha");//获取session中的验证码
 	    Subject subject = SecurityUtils.getSubject();
 	    UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		token.setRememberMe(false);
@@ -141,14 +141,14 @@ public class LoginController extends BaseController<UserInfoDto>{
 			}
 	     userInfoDto.setUserId(username);
 		 loginService.updateSuccessLoginAttempt(userInfoDto);
-		 httpServletRequest.getSession().setAttribute("username",username);
+		 request.getSession().setAttribute("username",username);
 		 //限制只能一个用户登录 start
 //		 String sessionId = shardedJedisPool.getResource().get(username);
 //		 if (sessionId != null) {
 //			//如果该sessionId已经存在，则删除该sessionid
 //			 shardedJedisPool.getResource().del("shiro_redis_session:" + sessionId);
 //		 }
-//		 shardedJedisPool.getResource().set(username,httpServletRequest.getSession().getId());
+//		 shardedJedisPool.getResource().set(username,request.getSession().getId());
 		//限制只能一个用户登录 end
 		 return "redirect:/login/main"; 
 	    
@@ -157,19 +157,19 @@ public class LoginController extends BaseController<UserInfoDto>{
 	
 	/**
 	 * 主界面入口
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return
 	 * @throws Exception
 	 * @date 2016年10月21日 下午8:18:03
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/login/main")
-	public ModelAndView loginto(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public ModelAndView loginto(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String username = (String) httpServletRequest.getSession().getAttribute("username");
-		String roleId = httpServletRequest.getParameter("roleId");// 获取角色选择页面的roleId
-		String roleName = httpServletRequest.getParameter("roleName");// 获取角色选择页面的roleName
+		String username = (String) request.getSession().getAttribute("username");
+		String roleId = request.getParameter("roleId");// 获取角色选择页面的roleId
+		String roleName = request.getParameter("roleName");// 获取角色选择页面的roleName
 		// 根据用户id获取用户的角色
 		UserInfoDto userInfoDto1 = new UserInfoDto();
 		userInfoDto1.setUserId(username);
@@ -197,8 +197,8 @@ public class LoginController extends BaseController<UserInfoDto>{
 			}
 
 			// 根据用户id获取用户信息
-			httpServletRequest.getSession().setAttribute("userInfo", userInfoDto);
-			httpServletRequest.getSession().setAttribute("roles", roles);
+			request.getSession().setAttribute("userInfo", userInfoDto);
+			request.getSession().setAttribute("roles", roles);
 			// 一级菜单取得
 			List<MenuDto> firstMenu = loginService.getFristMenu(userInfoDto);
 			firstMenu = getMenus(firstMenu);
@@ -206,10 +206,10 @@ public class LoginController extends BaseController<UserInfoDto>{
 			
 //			List<ButtonDto> buttonList = loginService.getRoleButton(userInfoDto);
 //			for (int i = 0; i < buttonList.size(); i++) {
-//				httpServletRequest.getSession().setAttribute(buttonList.get(i).getButtonPageId(), "hasAuthority");
+//				request.getSession().setAttribute(buttonList.get(i).getButtonPageId(), "hasAuthority");
 //			}
 			 
-			httpServletRequest.getSession().setAttribute("firstMenu", firstMenu);
+			request.getSession().setAttribute("firstMenu", firstMenu);
 			result = new ModelAndView("main/main");//成功后跳转到的主页
 			result.addObject("firstMenu", firstMenu);
 			if (list.size() > 1) {
@@ -256,16 +256,16 @@ public class LoginController extends BaseController<UserInfoDto>{
 	
 	/**
 	 * 没有权限返回页面
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return
 	 * @throws Exception
 	 * @date 2016年10月21日 下午6:36:49
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/denied")
-	public ModelAndView noauthority(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public ModelAndView noauthority(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		ModelAndView result = null;
 		
 		result = new ModelAndView("error/403");
@@ -278,17 +278,17 @@ public class LoginController extends BaseController<UserInfoDto>{
 	
 	/**
 	 * 切换登录角色
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return
 	 * @date 2016年10月21日 下午6:37:33
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/login/changeRole")
-	public ModelAndView changeRole(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
+	public ModelAndView changeRole(HttpServletRequest request,
+			HttpServletResponse response) {
 		// 获取用户信息
-		UserInfoDto userInfoDto = (UserInfoDto) httpServletRequest.getSession()
+		UserInfoDto userInfoDto = (UserInfoDto) request.getSession()
 				.getAttribute("userInfo");
 		
 		List<UserInfoDto> roleList = loginService.getRoleInfoByUserId(userInfoDto);
@@ -303,19 +303,19 @@ public class LoginController extends BaseController<UserInfoDto>{
 
 	/**
 	 * 登录后面直接输入url返回的页面
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @return
 	 * @throws Exception
 	 * @date 2016年10月21日 下午6:37:41
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/login/error")
-	public ModelAndView error(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public ModelAndView error(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		ModelAndView result = null;
 		// 获取错误代码
-		String errorCode = httpServletRequest.getParameter("error");
+		String errorCode = request.getParameter("error");
 		if (errorCode.equals("401")) {
 			result = new ModelAndView("error/InvalidSessionError");
 		}
@@ -409,16 +409,16 @@ public class LoginController extends BaseController<UserInfoDto>{
 
 	/**
 	 * 验证验证码是否输入正确
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:38:45
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/isKaptchaRight")
-	public void isKaptchaRight(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
-		String kaptcha = (String) httpServletRequest.getParameter("kaptcha");
-		String capText = (String) httpServletRequest.getSession().getAttribute(
+	public void isKaptchaRight(HttpServletRequest request,
+			HttpServletResponse response) {
+		String kaptcha = (String) request.getParameter("kaptcha");
+		String capText = (String) request.getSession().getAttribute(
 				"kaptcha");// 获取session里的验证码
 
 		MessageDto messageDto = new MessageDto();
@@ -428,16 +428,15 @@ public class LoginController extends BaseController<UserInfoDto>{
 		} else {
 			messageDto.setErrType("error");
 		}
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(messageDto, response);
 	}
 	
 	@RequestMapping("/app/login")
-	public void applogin(HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws IOException
+	public void applogin(HttpServletRequest request,
+			HttpServletResponse response) throws IOException
 	{
-		String username = httpServletRequest.getParameter("j_username");
-	    String password = httpServletRequest.getParameter("j_password");
+		String username = request.getParameter("j_username");
+	    String password = request.getParameter("j_password");
 	    Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		token.setRememberMe(false);
@@ -446,16 +445,16 @@ public class LoginController extends BaseController<UserInfoDto>{
 		      UserInfoDto userInfoDto = new UserInfoDto();
 		      userInfoDto = loginService.getUserInfoById(username);
 		      //根据用户id获取用户信息
-		      httpServletRequest.getSession().setAttribute("userinfodto", userInfoDto);
-		      httpServletRequest.getSession().setAttribute("LOGIN_SUCCESS","success");
-		      httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-		      System.out.println(httpServletRequest.getSession().getId());
-		      httpServletResponse.getWriter().write(httpServletRequest.getSession().getId());
+		      request.getSession().setAttribute("userinfodto", userInfoDto);
+		      request.getSession().setAttribute("LOGIN_SUCCESS","success");
+		      response.setStatus(HttpServletResponse.SC_OK);
+		      System.out.println(request.getSession().getId());
+		      response.getWriter().write(request.getSession().getId());
 		    }catch (Exception e) {
 		      e.printStackTrace();
 		      token.clear();
-		      httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  
-		      httpServletResponse.getWriter().write("login error");
+		      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  
+		      response.getWriter().write("login error");
 		    }
 	}
 	

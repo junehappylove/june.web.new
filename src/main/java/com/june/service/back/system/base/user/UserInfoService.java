@@ -1,4 +1,4 @@
-package com.june.service.back.system.base.userinfo;
+package com.june.service.back.system.base.user;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
-import com.june.dao.back.system.base.userinfo.UserInfoDao;
+import com.june.dao.back.system.base.user.UserInfoDao;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.base.UserRoleDto;
 import com.june.utility.StringUtil;

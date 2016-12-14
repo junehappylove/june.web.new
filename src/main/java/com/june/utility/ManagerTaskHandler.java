@@ -26,10 +26,10 @@ public class ManagerTaskHandler implements TaskListener {
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		//获取当前登录用户的id
-		HttpServletRequest httpServletRequest = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(httpServletRequest.getServletContext()); 
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		ApplicationContext ac2 = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext()); 
 		LeaveService leaveService = (LeaveService) ac2.getBean("leaveService");
-		UserInfoDto userInfoDto =  (UserInfoDto) httpServletRequest.getSession().getAttribute("userInfo");
+		UserInfoDto userInfoDto =  (UserInfoDto) request.getSession().getAttribute("userInfo");
 		String orgId = userInfoDto.getOrgId();
 		String leader = leaveService.getLeader(orgId);
 		//设置个人任务的办理人

@@ -17,7 +17,7 @@ import org.springframework.web.util.WebUtils;
 
 import com.june.common.BaseService;
 import com.june.dao.back.common.LogOperateDao;
-import com.june.dao.back.system.base.userinfo.UserInfoDao;
+import com.june.dao.back.system.base.user.UserInfoDao;
 import com.june.dto.back.common.LogOperateDto;
 import com.june.dto.back.system.base.UserInfoDto;
 
@@ -71,7 +71,7 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	/**
 	 * 获取参数
 	 * 
-	 * @param httpServletRequest
+	 * @param request
 	 */
 	public String getParams(HttpServletRequest request) {
 		Map<String, Object> paramsMap = new HashMap<String, Object>();

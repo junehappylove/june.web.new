@@ -62,7 +62,6 @@ import com.june.utility.FastDfsUtils;
 import com.june.utility.FileUpLoadDownload;
 import com.june.utility.MessageUtil;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -76,18 +75,18 @@ public class DemoController extends BaseController<MenuDto> {
 	private Producer captchaProducer = null;
 
 	@ModelAttribute
-	public AbstractDTO validateForm(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public AbstractDTO validateForm(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		DemoDto demoDto = new DemoDto();
-		fillRequestDto(httpServletRequest, demoDto);
+		fillRequestDto(request, demoDto);
 		return demoDto;
 	}
 
 	@RequestMapping("/demoInit")
-	public ModelAndView demoInit(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public ModelAndView demoInit(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView result = null;
 		@SuppressWarnings("unused")
-		HttpSession session = httpServletRequest.getSession();
+		HttpSession session = request.getSession();
 		result = new ModelAndView("demo/demo");
 		// 前台select数据start
 		result.addObject("checkbox3", "1");
@@ -108,21 +107,20 @@ public class DemoController extends BaseController<MenuDto> {
 	}
 
 	@RequestMapping("/demo")
-	public void demo(@RequestParam MultipartFile[] myfiles, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, @Valid DemoDto demoDto, BindingResult bindingResult)
+	public void demo(@RequestParam MultipartFile[] myfiles, HttpServletRequest request,
+			HttpServletResponse response, @Valid DemoDto demoDto, BindingResult bindingResult)
 					throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);
 		// 判断是否有参数验证错误
 		if (!messageDto.getErrType().isEmpty()) {
 			// 有错误返回
-			JSONObject jsonObject = JSONObject.fromObject(messageDto);
-			ConvetDtoToJson(httpServletResponse, jsonObject);
+			toJson(messageDto, response);
 		} else {
 			// 没错误执行业务逻辑
 			// TODO
 		}
 		// DemoDto demoDto = new DemoDto();
-		// fillRequestDto(httpServletRequest, demoDto);
+		// fillRequestDto(request, demoDto);
 		// System.out.println("aaaa");
 		// MessageDto messageDto = new MessageDto();
 		// //返回消息 start
@@ -133,17 +131,17 @@ public class DemoController extends BaseController<MenuDto> {
 		// messageDto.setErrType("info");
 		// //返回消息 end
 		// JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		// ConvetDtoToJson(httpServletResponse, jsonObject);
+		// ConvetDtoToJson(response, jsonObject);
 
 	}
 
 	@RequestMapping("/importData")
-	public void importData(@RequestParam MultipartFile[] myfiles, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public void importData(@RequestParam MultipartFile[] myfiles, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		MessageDto messageDto = new MessageDto();
 		ArrayList<String> errList = new ArrayList<String>();
 		// String realPath =
-		// httpServletRequest.getSession().getServletContext().getRealPath("/upload");
+		// request.getSession().getServletContext().getRealPath("/upload");
 		String originalFilename = null;
 		InputStream inputStream = null;
 		for (MultipartFile myfile : myfiles) {
@@ -192,14 +190,13 @@ public class DemoController extends BaseController<MenuDto> {
 
 		}
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		Converttojsonobjectajax(httpServletResponse, jsonObject);
+		toJson(messageDto, response);
 	}
 
 	/**
 	 * 导出文件，直接以页面下载的方式导出
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
@@ -208,7 +205,7 @@ public class DemoController extends BaseController<MenuDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/exportData")
-	public void exportData(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void exportData(HttpServletRequest request, HttpServletResponse response)
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException {
 		ExcelDto excelDto = new ExcelDto();
 		excelDto.setAddress("aaa");
@@ -241,19 +238,19 @@ public class DemoController extends BaseController<MenuDto> {
 		String[] titles = { "编号", "姓名", "部门", "岗位", "打卡日期", "上班时间", "下班时间", "卡钟地址", "采集日期", "车牌号", "处理状态" };
 		String[] attrs = { "no", "name", "dept", "title", "date", "onTime", "offTime", "address", "getDate", "carNo",
 				"status" };
-		ExportImportExcel.exportExcelForDownload(list, titles, attrs, httpServletResponse, "test", "aa");
+		ExportImportExcel.exportExcelForDownload(list, titles, attrs, response, "test", "aa");
 	}
 
 	/**
 	 * 导出文件到指定的文件夹，导出的路径在config.properties文件中设置
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @throws Exception
 	 * @date 2016年6月27日 下午1:43:01
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/exporttofolder")
-	public void exporttofolder(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void exporttofolder(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ExcelDto excelDto = new ExcelDto();
 		excelDto.setAddress("aaa");
@@ -296,8 +293,7 @@ public class DemoController extends BaseController<MenuDto> {
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(messageDto, response);
 	}
 
 	@RequestMapping("/throwException")
@@ -307,13 +303,13 @@ public class DemoController extends BaseController<MenuDto> {
 
 	// 获取多个schema的数据
 	@RequestMapping("/getAllSchemaData")
-	public void getAllSchemaData(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-		httpServletRequest.getSession(false).removeAttribute("token");
+	public void getAllSchemaData(HttpServletRequest request, HttpServletResponse response) {
+		request.getSession(false).removeAttribute("token");
 		// 获取所有的schema
 		List<SchemaDto> list = demoService.getAllSchemaData();
 		MenuDto menuDto = new MenuDto();
 		// 将前台参数映射到dto
-		fillRequestDto(httpServletRequest, menuDto);
+		fillRequestDto(request, menuDto);
 		// 声明一个map类型的list
 		List<Map<String, Object>> listMaps = new ArrayList<Map<String, Object>>();
 		// 要查询的表
@@ -332,20 +328,19 @@ public class DemoController extends BaseController<MenuDto> {
 		// menuDto.setSchemaTableList(listMaps);
 		// 检索数据
 		menuDto = demoService.getMenus(menuDto);
-		JSONObject jsonObject = JSONObject.fromObject(menuDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(menuDto, response);
 	}
 
 	// 上传图片
 	@RequestMapping("/uploadPic")
 	// 如果是多个文件的话用MultipartFile[] myfiles接收参数，如果就一个文件，用MultipartFile myfile接收即可
-	public void uploadPic(@RequestParam MultipartFile[] myfiles, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public void uploadPic(@RequestParam MultipartFile[] myfiles, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		MessageDto messageDto = new MessageDto();
 
 		// 获取文件保存的路径，路径在配置文件config.properties文件中保存
 		String realPath = MessageUtil.getResourceValue("savePicUrl");
-		String message = FileUpLoadDownload.uploadSingleFile(myfiles[0], httpServletRequest, httpServletResponse,
+		String message = FileUpLoadDownload.uploadSingleFile(myfiles[0], request, response,
 				realPath, null);
 		ArrayList<String> errList = new ArrayList<String>();
 		errList.add(message);
@@ -357,22 +352,21 @@ public class DemoController extends BaseController<MenuDto> {
 		// TODO 将路径保存到db操作
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
-		JSONObject object = JSONObject.fromObject(messageDto);
-		Converttojsonobjectajax(httpServletResponse, object);
+		toJson(messageDto, response);
 	}
 
 	// 获取图片
 	@RequestMapping("/getImage")
-	public void getImage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getImage(HttpServletRequest request, HttpServletResponse response) {
 		String realPath = MessageUtil.getResourceValue("savePicUrl");
 		String filePath = realPath + "22.png";
-		returnImage(httpServletResponse, filePath);
+		returnImage(response, filePath);
 	}
 
 	// fastdfs上传图片文件
 	@RequestMapping("/uploadpicture")
-	public void uploadpicture(@RequestParam MultipartFile[] myfiles, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) throws Exception {
+	public void uploadpicture(@RequestParam MultipartFile[] myfiles, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		// 循环进行文件上传处理
 		for (int i = 0; i < myfiles.length; i++) {
 
@@ -386,23 +380,22 @@ public class DemoController extends BaseController<MenuDto> {
 
 		MessageDto messageDto = new MessageDto();
 		// TODO
-		JSONObject object = JSONObject.fromObject(messageDto);
-		Converttojsonobjectajax(httpServletResponse, object);
+		toJson(messageDto, response);
 	}
 
 	// fastdfs获取图片文件
 	@RequestMapping("/getPicture")
-	public void getPicture(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void getPicture(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// TODO 从db中获取图片路径
 		// 根据路径获取图片
 		byte[] buffer = FastDfsUtils.getFile("group1:M00/00/00/CjLIrVYgET2AHxNAAADTg_tD710250.png");
-		returnImageByBuffer(httpServletResponse, buffer);
+		returnImageByBuffer(response, buffer);
 	}
 
 	// 树结构数据初始化
 	@RequestMapping("/initTree")
-	public void initTree(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void initTree(HttpServletRequest request, HttpServletResponse response) {
 		TreeDto treeDto = new TreeDto();
 		treeDto.setId("1");
 		treeDto.setName("bb");
@@ -421,15 +414,14 @@ public class DemoController extends BaseController<MenuDto> {
 		list.add(treeDto2);
 		list.add(treeDto3);
 		treeDto.setChildren(list);
-		JSONArray jsonArray = JSONArray.fromObject(treeDto);
-		ConvertListToJson(httpServletResponse, jsonArray);
+		toJson(treeDto, response);
 	}
 
 	@RequestMapping(value = "/restful", method = RequestMethod.POST)
-	public void restful(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void restful(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		// httpServletRequest.getSession().getServletContext();
-		BufferedReader br = new BufferedReader(new InputStreamReader(httpServletRequest.getInputStream()));
+		// request.getSession().getServletContext();
+		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 		String line = null;
 		StringBuilder sb = new StringBuilder();
 		while ((line = br.readLine()) != null) {
@@ -447,18 +439,14 @@ public class DemoController extends BaseController<MenuDto> {
 		// map.put("id",id);
 		// JSONObject jsonObject = JSONObject.fromObject(id);
 
-		JSONObject jsonObject = JSONObject.fromObject(map);
-
-		// JSONArray jsonArray = JSONArray.fromObject(treeDto);
-		// ConvertListToJson(httpServletResponse, jsonArray);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(map, response);
 
 	}
 
 	@RequestMapping("/treegridInit")
-	public void treegridInit(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void treegridInit(HttpServletRequest request, HttpServletResponse response) {
 		TreeGridDto treeGridDto = new TreeGridDto();
-		fillRequestDto(httpServletRequest, treeGridDto);
+		fillRequestDto(request, treeGridDto);
 		treeGridDto.setTotal(1);
 		TreeGridDto treeGridDto2 = new TreeGridDto();
 		treeGridDto2.setId("1");
@@ -478,13 +466,12 @@ public class DemoController extends BaseController<MenuDto> {
 		list.add(treeGridDto2);
 		list.add(treeGridDto3);
 		treeGridDto.setRows(list);
-		JSONObject object = JSONObject.fromObject(treeGridDto);
-		ConvetDtoToJson(httpServletResponse, object);
+		toJson(treeGridDto, response);
 	}
 
 	@RequestMapping("/getsubTree/{id}")
-	public void getsubTree(@PathVariable(value = "id") String id, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
+	public void getsubTree(@PathVariable(value = "id") String id, HttpServletRequest request,
+			HttpServletResponse response) {
 		String pid = id;
 		TreeGridDto treeGridDto2 = new TreeGridDto();
 		treeGridDto2.setId("11" + Math.random());
@@ -496,8 +483,7 @@ public class DemoController extends BaseController<MenuDto> {
 		treeGridDto2.setState("closed");
 		List<TreeGridDto> list = new ArrayList<TreeGridDto>();
 		list.add(treeGridDto2);
-		JSONArray jsonArray = JSONArray.fromObject(list);
-		ConvertListToJson(httpServletResponse, jsonArray);
+		toJson(list, response);
 	}
 
 	/*public static void main(String[] args) throws UnsupportedEncodingException {
@@ -519,9 +505,9 @@ public class DemoController extends BaseController<MenuDto> {
 	}*/
 
 	@RequestMapping("/appuploadfile")
-	public void appuploadfile(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void appuploadfile(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) httpServletRequest;
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> map1 = new HashMap<String, MultipartFile>();
 		// 获取客户端传过来的文件
 		map1 = multipartRequest.getFileMap();
@@ -545,7 +531,7 @@ public class DemoController extends BaseController<MenuDto> {
 			multipartFile = entry.getValue();
 			String realPath = MessageUtil.getResourceValue("savePicUrl");
 			// 上传文件到指定文件夹
-			String message = FileUpLoadDownload.uploadSingleFile(multipartFile, httpServletRequest, httpServletResponse,
+			String message = FileUpLoadDownload.uploadSingleFile(multipartFile, request, response,
 					realPath, null);
 			// 获取文件流
 			@SuppressWarnings("unused")
@@ -556,7 +542,7 @@ public class DemoController extends BaseController<MenuDto> {
 		messageDto.setErrType("info");
 		JSONObject object = JSONObject.fromObject(messageDto);
 		object.put("status", "1");
-		Converttojsonobjectajax(httpServletResponse, object);
+		toJson(object, response);
 	}
 
 	@RequestMapping("/demopop")
@@ -614,23 +600,23 @@ public class DemoController extends BaseController<MenuDto> {
 
 	/**
 	 * 发送邮件和验证码生成的demo
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @throws Exception
 	 * @date 2016年6月15日 上午10:39:29
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/sendmail")
-	public void sendmail(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void sendmail(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		getKaptchaImage(httpServletRequest, httpServletResponse);
+		getKaptchaImage(request, response);
 		// sendTextEmail("caiyang90@163.com", "测试", "测试",
 		// "liuyufeng@nfs-qd.com");
 
 	}
 
 	@RequestMapping("/createDatabase")
-	public void createDatabase(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void createDatabase(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// 创建一个新的schema
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -691,7 +677,7 @@ public class DemoController extends BaseController<MenuDto> {
 	}
 
 	@RequestMapping("/selectChange")
-	public void selectChange(HttpServletRequest httpServletRequest, HttpServletResponse response)
+	public void selectChange(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ComboxDto DTO = new ComboxDto();
 		ComboxDto comboxDto = new ComboxDto();
@@ -708,7 +694,7 @@ public class DemoController extends BaseController<MenuDto> {
 	}
 
 	@RequestMapping("/delete")
-	public void delete(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
+	public void delete(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
@@ -716,24 +702,22 @@ public class DemoController extends BaseController<MenuDto> {
 		errList.add(MessageUtil.formatMessage("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		// 返回消息 endlist
+		toJson(messageDto, response);
 	}
 
 	@RequestMapping("/getEditData")
-	public void getEditData(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getEditData(HttpServletRequest request, HttpServletResponse response) {
 		ComboxDto comboxDto = new ComboxDto();
 		comboxDto.setCode("1");
 		comboxDto.setName("岗位1");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(comboxDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(comboxDto, response);
 	}
 
 	// 一级树结构数据初始化
 	@RequestMapping("/initAjaxTree")
-	public void initAjaxTree(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void initAjaxTree(HttpServletRequest request, HttpServletResponse response) {
 		TreeDto treeDto = new TreeDto();
 		treeDto.setId("1");
 		treeDto.setpId("0");
@@ -741,22 +725,20 @@ public class DemoController extends BaseController<MenuDto> {
 		treeDto.setName("bb");
 		// treeDto.setOpen(false);
 		// treeDto.setChecked(true);
-		JSONArray jsonArray = JSONArray.fromObject(treeDto);
-		ConvertListToJson(httpServletResponse, jsonArray);
+		toJson(treeDto, response);
 	}
 
 	// 树结构数据初始化
 	@RequestMapping("/getAjaxNode")
-	public void getAjaxNode(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getAjaxNode(HttpServletRequest request, HttpServletResponse response) {
 
 		TreeDto treeDto = new TreeDto();
 		// 参数映射到dto
-		fillRequestDto(httpServletRequest, treeDto);
+		fillRequestDto(request, treeDto);
 		treeDto.setId("2");
 		treeDto.setName("bb");
 		treeDto.setOpen(false);
-		JSONArray jsonArray = JSONArray.fromObject(treeDto);
-		ConvertListToJson(httpServletResponse, jsonArray);
+		toJson(treeDto, response);
 	}
 
 }

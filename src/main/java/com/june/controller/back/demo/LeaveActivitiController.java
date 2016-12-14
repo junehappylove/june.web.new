@@ -24,8 +24,6 @@ import com.june.common.MessageDto;
 import com.june.dto.back.demo.LeaveDto;
 import com.june.service.back.demo.LeaveService;
 
-import net.sf.json.JSONObject;
-
 /**
  * @Description: 申请休假用controller
  * @author caiyang
@@ -41,7 +39,7 @@ public class LeaveActivitiController extends BaseController<LeaveDto> {
 
 	// 申请休假页面初始化
 	@RequestMapping("/leaveinit/")
-	public ModelAndView leaveinit(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public ModelAndView leaveinit(HttpServletRequest request, HttpServletResponse response) {
 		// flowListService.processback();
 		ModelAndView result = null;
 		result = new ModelAndView("demo/leave");
@@ -50,24 +48,23 @@ public class LeaveActivitiController extends BaseController<LeaveDto> {
 
 	/**
 	 * 获取请假列表
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:20:38
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/getleave")
-	public void getleave(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getleave(HttpServletRequest request, HttpServletResponse response) {
 		LeaveDto leaveDto = new LeaveDto();
-		fillRequestDto(httpServletRequest, leaveDto);
+		fillRequestDto(request, leaveDto);
 		leaveDto = leaveService.getleave(leaveDto);
-		JSONObject jsonObject = JSONObject.fromObject(leaveDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(leaveDto, response);
 	}
 
 	@RequestMapping("/saveleave")
-	public void saveleave(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void saveleave(HttpServletRequest request, HttpServletResponse response) {
 		LeaveDto leaveDto = new LeaveDto();
-		fillRequestDto(httpServletRequest, leaveDto);
+		fillRequestDto(request, leaveDto);
 		leaveDto.setLeaveStatus(0);// 提出申请，还未启动
 		leaveService.savenewleave(leaveDto);
 		// 启动流程
@@ -79,8 +76,7 @@ public class LeaveActivitiController extends BaseController<LeaveDto> {
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(messageDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
+		toJson(messageDto, response);
 	}
 
 }

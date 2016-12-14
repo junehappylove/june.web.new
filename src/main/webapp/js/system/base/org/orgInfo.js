@@ -1,10 +1,8 @@
-var api_getPagedList = contextPath + "/system/UserInfo/getPagedList";
+var api_getPagedList = contextPath + "/system/org/getPagedList";
 /**
- * 用户信息js
+ * 组织信息js
  */
 $(function() {
-	//日期初始化
-	initDate();
 	// modalform校验
 	$('#modalForm').bootstrapValidator(
 			{
@@ -14,107 +12,25 @@ $(function() {
 					validating : 'glyphicon glyphicon-refresh'
 				},
 				fields : {
-					userId : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",[ '用户ID' ])
-							},
-							stringLength: {
-			                    min: 5,
-			                    max: 16,
-			                    message: getMessageFromList("ErrorLength2",['用户ID','5','16'])
-			                }
-						}
-					},
-					userPassword : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",[ '密码' ])
-							}
-						}
-					},
 					orgName : {
 						validators : {
 							notEmpty : {
 								message : getMessageFromList("ErrorMustInput",[ '组织名' ])
-							}
-						}
-					},
-					userName : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",[ '用户名' ])
 							},
 							stringLength: {
 			                    min: 5,
 			                    max: 16,
-			                    message: getMessageFromList("ErrorLength2",['用户名','5','16'])
+			                    message: getMessageFromList("ErrorLength2",['组织名','0','32'])
 			                }
 						}
 					},
-					userEmail : {
-						validators : {
-							emailAddress: {
-								message: getMessageFromList("ErrorFormat",['邮箱'])
-	                    	},
-							stringLength: {
-			                    min: 0,
-			                    max: 50,
-			                    message: getMessageFromList("ErrorLength",['邮箱','50'])
-			                }
-						}
-					},
-					userAddress : {
+					remark : {
 						validators : {
 							stringLength: {
 			                    min: 0,
 			                    max: 255,
 			                    message: getMessageFromList("ErrorLength",['地址','255'])
 			                }
-						}
-					},
-					userMobile : {
-						validators : {
-							stringLength: {
-			                    min: 0,
-			                    max: 11,
-			                    message: getMessageFromList("ErrorLength",['手机','11'])
-			                },
-			                regexp: { 
-								regexp: /^(1[0-9])\d{9}$/, 
-								message: getMessageFromList("ErrorFormat",['手机号码'])
-			                } 
-						}
-					},
-					userTel : {
-						validators : {
-							stringLength: {
-			                    min: 0,
-			                    max: 13,
-			                    message: getMessageFromList("ErrorLength",['电话号码','13'])
-			                },
-			                regexp: { 
-								regexp: /^(0[0-9]{2,3}-)?([2-9][0-9]{6,7})$/, 
-								message: getMessageFromList("ErrorFormat",['电话号码'])
-			                } 
-						}
-					},
-					roleName : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",[ '角色' ])
-								}
-						}
-					},
-					userBirthday : {
-						validators : {
-								notEmpty : {
-									message : getMessageFromList("ErrorMustInput",[ '生日' ])
-								},
-								date: {
-				                    format: 'YYYY-MM-DD',
-				                    message: getMessageFromList("ErrorFormat",[ '生日' ])
-				                }
 						}
 					}
 				}
@@ -128,18 +44,17 @@ $(function() {
 		if($("#isNew").val()== 0)
 		{
 			//编辑保存
-			doAjax("post",contextPath + "/system/UserInfo/saveEdit",$form.serialize(),saveSuccess);
+			doAjax("post",contextPath + "/system/org/saveEdit",$form.serialize(),saveSuccess);
 		}
 		else if($("#isNew").val() == 1)
 		{
 			//新增保存
-			doAjax("post",contextPath + "/system/UserInfo/newSave",$form.serialize(),saveSuccess);
+			doAjax("post",contextPath + "/system/org/newSave",$form.serialize(),saveSuccess);
 		}
 	});
 	
-	bindChange();
 	// 表格初始化
-	$('#userInfoTable')
+	$('#orgInfoTable')
 			.bootstrapTable(
 					{
 						cache : false,
@@ -157,79 +72,60 @@ $(function() {
 									checkbox : true
 								},
 								{
-									field : "userId",
-									title : "用户ID",
+									field : "orgId",
+									title : "组织ID",
 									align : "center",
 									valign : "middle"
 								},
 								{
 									field : "orgName",
-									title : "所属机构",
+									title : "组织名",
 									align : "center",
 									valign : "middle"
 								},
 								{
-									field : "userName",
-									title : "用户名",
+									field : "parentOrgId",
+									title : "上级",
 									align : "center",
 									valign : "middle"
 								},
 								{
-									title : '角色',
-									field : 'roleName',
+									title : '领导',
+									field : 'orgLeader',
 									width : '',
 									align : 'center'
 								},
 								{
-									field : "userEmail",
-									title : "邮箱",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "userBirthday",
-									title : "生日",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "userAddress",
+									field : "remark",
 									title : "地址",
 									align : "center",
 									valign : "middle"
 								},
 								{
-									field : "userTel",
-									title : "座机",
+									field : "delFlag",
+									title : "状态",
 									align : "center",
 									valign : "middle"
 								},
 								{
-									field : "userMobile",
-									title : "手机",
+									field : "districtId",
+									title : "地区",
 									align : "center",
 									valign : "middle"
 								},
-								{
-									title : '用户账号状态',
-									field : 'userLocked',
-									width : '',
-									align : 'center'
-								}
-								,
 								{
 									field : "opration",
 									title : "操作",
 									align : "center",
 									valign : "middle",
 									formatter : function(value, row, index) {
-										var operation = '<a href="#" onclick="checkDetail(\''+ row.userId + '\')">查看详细</a>';
+										var operation = '<a href="#" onclick="checkDetail(\''+ row.orgId + '\')">查看详细</a>';
 										return operation;
 									}
 								} 
 								],
 						onPageChange : function(size, number) {
-							searchUserInfo();
+							searchInfo();
 						},
 						formatNoMatches : function() {
 							return '无符合条件的记录';
@@ -238,7 +134,7 @@ $(function() {
 });
 
 $(function() {
-	searchUserInfo();
+	searchInfo();
 });
 
 function saveSuccess(response)
@@ -256,60 +152,29 @@ function saveSuccess(response)
 	
 }
 
-//input框绑定change事件，用于校验
-function bindChange()
-{
-	//日期绑定改变时间进行check
-	$("#userBirthday").bind("change",function(){
-		 $('#modalForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('userBirthday', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('userBirthday');
-	   
-	});
-}
-
-function initDate()
-{
-	// 开始日期的日期控件初始化
-	$('#userBirthday').daterangepicker({
-		singleDatePicker : true,// false选择一个日期范围，true选择一个单独的日期
-		showDropdowns : true,// 是否有下拉列表选择日期
-		showWeekNumbers: true,// 是否显示第几周的数字
-		// 设置格式
-		locale : {
-			"format" : "YYYY-MM-DD",// 设置日期格式,默认为YYYY-MM-DD
-			// "separator" : " - ",//设置日期范围的分隔符号
-		}
-	});
-}
-
 
 //查询表格信息
-function searchUserInfo() {
+function searchInfo() {
 	var data = getFormJson("searchForm");//获取查询条件
-	commonGetrowdatas("userInfoTable", data, api_getPagedList, "commonCallback", true);
+	commonGetrowdatas("orgInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 
 function deleteRow() {
-	var rowCount = GetDataGridRows("userInfoTable");
+	var rowCount = GetDataGridRows("orgInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("userInfoTable");
+		var rows = GetSelectedRowsObj("orgInfoTable");
 		var rowIds = "";
 		 for(var i=0;i<rows.length;i++)
 		 {
-			rowIds = rowIds + rows[i].userId + ",";
+			rowIds = rowIds + rows[i].orgId + ",";
 		 }
 		 var data = {
-		      userId:rowIds       
+		      orgId:rowIds       
 		 }
 
 		showConfirm(sureDelete, "是否要删除选中的行？", "post", contextPath
-				+ "/system/UserInfo/deleteSelected", data, searchUserInfo);
+				+ "/system/org/deleteSelected", data, searchUserInfo);
 	} else {
 		showOnlyMessage("error", getMessageFromList("ErrorSelectNoDelete", null));
 	}
@@ -323,7 +188,7 @@ function sureDelete(type, url, data, success) {
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
 	//
-    var selectRows = GetDataGridRows("userInfoTable");
+    var selectRows = GetDataGridRows("orgInfoTable");
     if (selectRows == 0)
     {
     	showOnlyMessage("error",getMessageFromList("ErrorNoSelectEdit",null));
@@ -332,9 +197,9 @@ function editRow() {
     	showOnlyMessage("error",getMessageFromList("ErrorSelectMultiEdit",null));
     }
     else{
-    	var row = GetSelectedRowsObj("userInfoTable");
+    	var row = GetSelectedRowsObj("orgInfoTable");
     	$("#isNew").val('0');
-    	checkDetail(row[0].userId);
+    	checkDetail(row[0].orgId);
     }
 	
 }
@@ -349,39 +214,35 @@ function closemodal() {
 	$("#orgId").val('');
 	$("#roleId").val('');
 	$('#title').html('');//设置modal的标题
-	$("#modalForm #userId").removeAttr("readonly");
+	$("#modalForm #orgId").removeAttr("readonly");
 	$('#myModal').modal('hide');
 }
 
-//查看用户详细信息
-function checkDetail(userId) {
+//查看组织详细信息
+function checkDetail(orgId) {
 	var data={
-	    userId:userId
+	    orgId:orgId
 	}
-	doAjax("post",contextPath + "/system/UserInfo/checkDetail",data,checkDetailSuccess)
+	doAjax("post",contextPath + "/system/org/checkDetail",data,checkDetailSuccess)
 }
 
 function checkDetailSuccess(response)
 {
 	if(response.errList.length == 0)
 	{
-		$("#modalForm #userId").attr("readonly","readonly");
-		$("#modalForm #userId").val(response.userId);
-		$("#modalForm #userPassword").val(response.userPassword);
-		$("#modalForm #orgName").val(response.orgName);
+		$("#modalForm #orgId").attr("readonly","readonly");
 		$("#modalForm #orgId").val(response.orgId);
-		$("#modalForm #userAddress").val(response.userAddress);
-		$("#modalForm #userTel").val(response.userTel);
-		$("#modalForm #userBirthday").val(response.userBirthday);
-		$("#modalForm #userName").val(response.userName);
-		$("#modalForm #userEmail").val(response.userEmail);
-		$("#modalForm #userMobile").val(response.userMobile);
-		$("#modalForm #roleName").val(response.roleName);
-		$("#modalForm #roleId").val(response.roleId);
-		$("#modalForm #userLocked").val(response.userLocked);
-		$('#modalForm #userLocked').selectpicker('refresh');
+		$("#modalForm #orgLeader").val(response.orgLeader);
+		$("#modalForm #orgName").val(response.orgName);
+		$("#modalForm #remark").val(response.remark);
+		$("#modalForm #districtId").val(response.districtId);
+		$('#modalForm #districtId').selectpicker('refresh');
+		$("#modalForm #parentOrgId").val(response.parentOrgId);
+		$('#modalForm #parentOrgId').selectpicker('refresh');
+		$("#modalForm #delFlag").val(response.delFlag);
+		$('#modalForm #delFlag').selectpicker('refresh');
 		$('#title').html('');
-		$('#title').append("编辑用户信息");//设置modal的标题
+		$('#title').append("编辑组织信息");//设置modal的标题
 		//$('#myModal').modal('show');
 		$('#myModal').modal({show:true,backdrop: 'static', keyboard: false});
 	}
@@ -402,7 +263,7 @@ function closeTreemodal()
 // 组织树初始化
 function loadOrgTree()
 {
-	doAjax("post",contextPath+"/system/UserInfo/initOrgTree",null,orgtreeCallback)
+	doAjax("post",contextPath+"/system/org/initOrgTree",null,orgtreeCallback)
 }
 //回调函数中加载组织树
 function orgtreeCallback(response)
@@ -449,7 +310,7 @@ function loadRoleTree()
 	var data={
 	    id:$("#roleId").val()
 	}
-	doAjax("post",contextPath+"/system/UserInfo/initRoleTree",data,roleTreeCallback);
+	doAjax("post",contextPath+"/system/org/initRoleTree",data,roleTreeCallback);
 }
 
 function roleTreeCallback(response)
@@ -503,18 +364,11 @@ function roleSureClick()
 	$('#roleModal').modal('hide');
 }
 
-//新增用户
+//新增组织
 function addNew(){
 	$('#title').html('');
-	$('#title').append("添加用户");//设置modal的标题
-	$('#userBirthday').val('');
+	$('#title').append("添加组织");//设置modal的标题
 	$("#isNew").val('1');
 	//$('#myModal').modal('show');
 	$('#myModal').modal({show:true,backdrop: 'static', keyboard: false});
-}
-//将密码用md5加密
-function EncryptPassword(){
-	Encrypt("userPassword");
-	Encrypt("userPassword");
-	//(Encrypt(Encrypt("userPassword")));
 }

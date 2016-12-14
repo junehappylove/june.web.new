@@ -63,8 +63,8 @@ public abstract class AbstractDTO implements Serializable {
     }
 
 	public String getSys_user() {
-		HttpServletRequest httpServletRequest = (HttpServletRequest) ((((WebSubject)SecurityUtils.getSubject()).getServletRequest()));
-		UserInfoDto userInfoDto = (UserInfoDto)httpServletRequest.getSession().getAttribute("userInfo");
+		HttpServletRequest request = (HttpServletRequest) ((((WebSubject)SecurityUtils.getSubject()).getServletRequest()));
+		UserInfoDto userInfoDto = (UserInfoDto)request.getSession().getAttribute("userInfo");
 		if (userInfoDto!=null) {
 			sys_user = userInfoDto.getUserId();
 			return sys_user;

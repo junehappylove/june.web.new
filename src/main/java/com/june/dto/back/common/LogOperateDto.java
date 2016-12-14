@@ -6,15 +6,18 @@ import java.sql.Timestamp;
 import com.june.common.PageDTO;
 
 /**
- * @Description 操作日志
- * @author liren
- * @Date 2015年12月10日
+ * 
+ * 操作日志 <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月15日 上午2:37:13
  */
 public class LogOperateDto extends PageDTO<LogOperateDto> implements Serializable{
 	/**
 	 * long serialVersionUID
 	 */
-	private static final long serialVersionUID = 5074329977508065425L;
+	private static final long serialVersionUID = 507L;
 	private String logId;
 	private String userId;
 	private String operateType; // 操作类型

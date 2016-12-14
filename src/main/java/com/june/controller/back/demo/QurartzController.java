@@ -25,8 +25,6 @@ import com.june.dto.back.demo.QuartzTriggerDto;
 import com.june.service.back.demo.QuartzService;
 import com.june.utility.MessageUtil;
 
-import net.sf.json.JSONObject;
-
 /**
  * 
  * 定时任务用controller <br>
@@ -56,71 +54,56 @@ public class QurartzController extends BaseController<QuartzTriggerDto> {
 
 	/**
 	 * 获取全部的任务
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:23:26
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/getquartzlist")
-	public void getquartzlist(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void getquartzlist(HttpServletRequest request, HttpServletResponse response) {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzTriggerDto = quartzService.getPageList(quartzTriggerDto);
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		toJson(quartzTriggerDto, response);
 	}
 
 	/**
 	 * 暂停任务
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
+	 * @throws Exception 
 	 * @date 2016年10月21日 下午6:23:32
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/pause")
-	public void pause(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void pause(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzService.pause(quartzTriggerDto.getTriggerName(), quartzTriggerDto.getTriggerGroup());
-		// 返回消息 start
-		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getResourceValue("quartz_pause_success"));
-		quartzTriggerDto.setErrList(errList);
-		quartzTriggerDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		
+		message(response,"quartz_pause_success",MESSAGE_INFO);
 	}
 
 	/**
 	 * 恢复任务
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
+	 * @throws Exception 
 	 * @date 2016年10月21日 下午6:23:37
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/resume")
-	public void resume(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void resume(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzService.resume(quartzTriggerDto.getTriggerName(), quartzTriggerDto.getTriggerGroup());
-		// 返回消息 start
-		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.getResourceValue("quartz_resume_success"));
-		quartzTriggerDto.setErrList(errList);
-		quartzTriggerDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		message(response,"quartz_resume_success",MESSAGE_INFO);
 	}
 
 	@RequestMapping("/remove")
-	public void remove(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void remove(HttpServletRequest request, HttpServletResponse response) {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		boolean result = quartzService.remove(quartzTriggerDto.getTriggerName(), quartzTriggerDto.getTriggerGroup());
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
@@ -132,43 +115,35 @@ public class QurartzController extends BaseController<QuartzTriggerDto> {
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");
 		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		toJson(quartzTriggerDto, response);
 	}
 
 	/**
 	 * 添加simpletrigger
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
+	 * @throws Exception 
 	 * @date 2016年10月21日 下午6:23:45
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/addsimpletrigger")
-	public void addsimpletrigger(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void addsimpletrigger(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzService.addSimpleTrigger(quartzTriggerDto);
-		// 返回消息 start
-		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.formatMessage("quartz_add_success", new String[] { "simpleTrigger" }));
-		quartzTriggerDto.setErrList(errList);
-		quartzTriggerDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+
+		message(response,"quartz_add_success",MESSAGE_INFO,"simpleTrigger");
 	}
 
 	/**
 	 * 获取添加modal的初始化数据
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
 	 * @date 2016年10月21日 下午6:23:51
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/getinitdata")
-	public void getinitdata(HttpServletRequest httpServletRequest, HttpServletResponse response) {
+	public void getinitdata(HttpServletRequest request, HttpServletResponse response) {
 		List<QuartzTriggerDto> jobNames = quartzService.getAllJobName();
 		QuartzTriggerDto qtd = new QuartzTriggerDto();
 		qtd.setRows(jobNames);
@@ -178,48 +153,34 @@ public class QurartzController extends BaseController<QuartzTriggerDto> {
 
 	/**
 	 * 根据cron表达式添加crontrigger
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
+	 * @throws Exception 
 	 * @date 2016年10月21日 下午6:23:58
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/addcrontrigger")
-	public void addCrontrigger(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-
+	public void addCrontrigger(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzService.addCrontrigger(quartzTriggerDto);
-		// 返回消息 start
-		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.formatMessage("quartz_add_success", new String[] { "cronTrigger" }));
-		quartzTriggerDto.setErrList(errList);
-		quartzTriggerDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		
+		message(response,"quartz_add_success",MESSAGE_INFO,"cronTrigger");
 	}
 
 	/**
 	 * 立即执行一次
-	 * @param httpServletRequest
-	 * @param httpServletResponse
+	 * @param request
+	 * @param response
+	 * @throws Exception 
 	 * @date 2016年10月21日 下午6:24:04
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/runTrigger")
-	public void runTrigger(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+	public void runTrigger(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		QuartzTriggerDto quartzTriggerDto = new QuartzTriggerDto();
-		fillRequestDto(httpServletRequest, quartzTriggerDto);
+		fillRequestDto(request, quartzTriggerDto);
 		quartzService.runTrigger(quartzTriggerDto);
-		// 返回消息 start
-		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.formatMessage("quartz_run_success"));
-		quartzTriggerDto.setErrList(errList);
-		quartzTriggerDto.setErrType("info");
-		// 返回消息 end
-		JSONObject jsonObject = JSONObject.fromObject(quartzTriggerDto);
-		ConvetDtoToJson(httpServletResponse, jsonObject);
-		quartzTriggerDto = null;
+		message(response,"quartz_run_success",MESSAGE_INFO);
 	}
 }

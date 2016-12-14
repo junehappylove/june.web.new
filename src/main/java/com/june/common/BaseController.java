@@ -54,6 +54,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.june.common.converter.DateConverter;
+import com.june.common.converter.DateJsonValueProcessor;
 import com.june.common.converter.TimestampConverter;
 import com.june.dto.back.bussiness.ftp.FtpDto;
 import com.june.dto.back.bussiness.guide.ImageXML;
@@ -65,7 +66,7 @@ import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.bussiness.ftp.FtpService;
 import com.june.service.back.bussiness.vehicle.VehicleService;
 import com.june.service.back.common.CommonService;
-import com.june.service.back.system.base.userinfo.UserInfoService;
+import com.june.service.back.system.base.user.UserInfoService;
 import com.june.utility.DateUtil;
 import com.june.utility.MessageUtil;
 import com.june.utility.SendMail;
@@ -74,11 +75,17 @@ import com.june.utility.exception.FastDFSException;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 @Transactional
 public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	//public abstract class BaseController<S extends BaseService<DAO,DTO>,DAO extends BaseDao<DTO>,DTO extends PageDTO<DTO>> {
-	
+	private static final JsonConfig JSON_CONFIG = new JsonConfig();
+	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	static{
+		JSON_CONFIG.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor(DATE_FORMAT));
+		JSON_CONFIG.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor(DATE_FORMAT));
+	}
 	// 打印log
 	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	protected static String article_template_path = "template/cmstemplate/article.html";
@@ -216,6 +223,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param jsonObject
 	 * @date 2015年12月16日 上午10:51:53
 	 * @writer wjw
+	 * @deprecated {@link #toJson(PageDTO, HttpServletResponse)}
 	 */
 	protected void ConvetDtoToJson(HttpServletResponse response, JSONObject jsonObject) {
 		response.setContentType("text/json;charset=gbk");
@@ -239,6 +247,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param jsonArray
 	 * @date 2015年12月16日 上午10:51:14
 	 * @writer wjw.happy.love@163.com
+	 * @deprecated {@link #toJson(List, HttpServletResponse)}
 	 */
 	protected void ConvertListToJson(HttpServletResponse response, JSONArray jsonArray) {
 		response.setContentType("text/json;charset=gbk");
@@ -262,6 +271,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param jsonObject
 	 * @date 2015年12月16日 上午10:51:05
 	 * @writer wjw.happy.love@163.com
+	 * @deprecated {@link #toJson(Object, HttpServletResponse)}
 	 */
 	protected void Converttojsonobjectajax(HttpServletResponse response, JSONObject jsonObject) {
 		response.setContentType("text/html;charset=gbk");
@@ -291,7 +301,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected void toJson(Object bean, HttpServletResponse response) {
 		PrintWriter out = null;
 		try {
-			JSONObject jsonObject = JSONObject.fromObject(bean);
+			JSONObject jsonObject = JSONObject.fromObject(bean,JSON_CONFIG);
 			response.setContentType("text/Xml;charset=gbk");
 			out = response.getWriter();
 			//logger.debug(jsonObject.toString());
@@ -317,13 +327,13 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 				image.setPath(bean.getPath());
 				image.setSize(bean.getSize());
 				image.setStep(list);
-				jsonObject = JSONObject.fromObject(image);
+				jsonObject = JSONObject.fromObject(image,JSON_CONFIG);
 			}else{
-				jsonObject = JSONObject.fromObject(bean);
+				jsonObject = JSONObject.fromObject(bean,JSON_CONFIG);
 			}
 			response.setContentType("text/Xml;charset=gbk");
 			out = response.getWriter();
-			logger.debug(jsonObject.toString());
+			//logger.debug(jsonObject.toString());
 			out.println(jsonObject.toString());
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
@@ -341,11 +351,11 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	protected void toJson(String string, HttpServletResponse response) {
-		response.setContentType("text/Xml;charset=gbk");
 		PrintWriter out = null;
 		try {
+			response.setContentType("text/Xml;charset=gbk");
 			out = response.getWriter();
-			logger.debug(string);
+			//logger.debug(string);
 			out.println(string);
 		} catch (IOException ex1) {
 			ex1.printStackTrace();
@@ -362,10 +372,10 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2015年12月4日 下午2:52:44
 	 */
 	protected void toJson(DTO bean, HttpServletResponse response) {
-		JSONObject jsonObject = JSONObject.fromObject(bean);
-		response.setContentType("text/Xml;charset=gbk");
 		PrintWriter out = null;
 		try {
+			response.setContentType("text/Xml;charset=gbk");
+			JSONObject jsonObject = JSONObject.fromObject(bean,JSON_CONFIG);
 			out = response.getWriter();
 			//logger.debug(jsonObject.toString());
 			out.println(jsonObject.toString());
@@ -384,10 +394,11 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2015年12月4日 下午2:53:31
 	 */
 	protected void toJson(List<?> beans, HttpServletResponse response) {
-		JSONArray jsonArray = JSONArray.fromObject(beans);
-		response.setContentType("text/Xml;charset=gbk");
 		PrintWriter out = null;
 		try {
+			//TODO ### bug ### 需要测试
+			JSONArray jsonArray = JSONArray.fromObject(beans,JSON_CONFIG);
+			response.setContentType("text/Xml;charset=gbk");
 			out = response.getWriter();
 			//logger.debug(jsonArray.toString());
 			out.println(jsonArray.toString());
@@ -402,7 +413,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	/**
 	 * 将图片返回到页面显示
 	 * 
-	 * @param httpServletResponse
+	 * @param response
 	 * @param filePath
 	 * @date 2015年12月16日 上午10:50:51
 	 * @writer wjw.happy.love@163.com
@@ -543,15 +554,15 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 
 	/**
 	 * 根据字节流返回图片
-	 * @param httpServletResponse
+	 * @param response
 	 * @param b
 	 * @date 2016年12月14日 下午9:31:42
 	 * @writer junehappylove
 	 */
-	protected void returnImageByBuffer(HttpServletResponse httpServletResponse, byte[] b) {
-		httpServletResponse.setContentType("image/gif");
+	protected void returnImageByBuffer(HttpServletResponse response, byte[] b) {
+		response.setContentType("image/gif");
 		try {
-			OutputStream out = httpServletResponse.getOutputStream();
+			OutputStream out = response.getOutputStream();
 			out.write(b);
 			out.flush();
 		} catch (Exception e) {
@@ -748,7 +759,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void messageSaveSuccess(HttpServletResponse response) throws Exception {
 		String messages = "save_success";
 		String type = MESSAGE_INFO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 
 	/**
@@ -761,7 +772,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void messageSendSuccess(HttpServletResponse response) throws Exception {
 		String messages = "send_success";
 		String type = MESSAGE_INFO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 
 	/**
@@ -774,7 +785,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void messageDeleteSuccess(HttpServletResponse response) throws Exception {
 		String messages = "delete_success";
 		String type = MESSAGE_INFO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 
 	/**
@@ -788,7 +799,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void messageUpdateSuccess(HttpServletResponse response) throws Exception {
 		String messages = "update_success";
 		String type = MESSAGE_INFO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 	
 	/**
@@ -801,7 +812,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年12月14日 下午11:56:32
 	 * @writer junehappylove
 	 */
-	public void throwMessage(HttpServletResponse response,String messages, String type, String... params) throws Exception {
+	public void message(HttpServletResponse response,String messages, String type, String... params) throws Exception {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
 		// message.setErrList(null);
@@ -840,13 +851,13 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void messageErrorExist(HttpServletResponse response) throws Exception {
 		String messages = "error_exist";
 		String type = MESSAGE_ERRO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 
 	public void messageErrorNotExist(HttpServletResponse response) throws Exception {
 		String messages = "error_not_exist";
 		String type = MESSAGE_ERRO;
-		throwMessage(response,messages, type);
+		message(response,messages, type);
 	}
 
 	public ModelAndView initPage(HttpServletRequest request, String page) {

@@ -1,4 +1,4 @@
-package com.june.controller.back.system.base.userinfo;
+package com.june.controller.back.system.base.user;
 
 import java.util.List;
 
@@ -22,16 +22,18 @@ import com.june.dto.back.bussiness.vehicle.VehicleUser;
 import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.bussiness.vehicle.VehicleUserService;
-import com.june.service.back.system.base.userinfo.UserInfoService;
+import com.june.service.back.system.base.user.UserInfoService;
 
 /**
- * @Description: 用户信息模块用controller
- * @author liren
- * @date 2015年11月09日
- * @version V1.0
+ * 
+ * 用户信息模块用controller <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月15日 上午2:48:48
  */
 @Controller
-@RequestMapping("/system/UserInfo")
+@RequestMapping("/system/user")
 public class UserInfoController extends BaseController<UserInfoDto> {
 
 	/**
@@ -50,17 +52,17 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	 * @date 2016年5月10日 下午3:36:52
 	 * @writer wjw.happy.love@163.com
 	 */
-	@RequestMapping("/BasicInfo/")
+	@RequestMapping("/")
 	@MethodLog(module = "用户管理", remark = "用户信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public ModelAndView InitUserManagement(HttpServletRequest request) {
-		return initPage(request,"system/base/userinfo/userinfo");
+		return initPage(request,"system/base/user/userinfo");
 	}
 	
 	@RequestMapping("/view/{id}")
 	@MethodLog(module = "用户管理", remark = "用户信息查看页面", operateType = Constants.OPERATE_TYPE_VIEW)
 	public ModelAndView view(HttpServletRequest request,HttpServletResponse response,@PathVariable String id) {
 		ModelAndView result = null;
-		result = new ModelAndView("system/base/userinfo/view");
+		result = new ModelAndView("system/base/user/view");
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(id));
 		result.addObject("user", user);
 		return result;
@@ -74,7 +76,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	 * @date 2016年5月10日 下午3:35:44
 	 * @writer wjw.happy.love@163.com
 	 */
-	@RequestMapping("/getUserInfos")
+	@RequestMapping("/getPagedList")
 	@MethodLog(module = "用户管理", remark = "分页获取用户信息", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void getUserInfos(HttpServletRequest request, HttpServletResponse response) {
 		UserInfoDto userInfoDto = new UserInfoDto();
@@ -110,7 +112,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 		userInfoDto = userInfoService.getDtoById(userInfoDto);
 		// 判断用户信息是否为空
 		if (userInfoDto == null) {
-			throwMessage(response,"info_not_exist", MESSAGE_ERRO, name);
+			message(response,"info_not_exist", MESSAGE_ERRO, name);
 		} else {
 			toJson(userInfoDto, response);
 		}
@@ -125,7 +127,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 		userInfoDto = userInfoService.getDtoById(userInfoDto);
 		// 判断用户信息是否为空
 		if (userInfoDto == null) {
-			throwMessage(response,"info_not_exist", MESSAGE_ERRO, name);
+			message(response,"info_not_exist", MESSAGE_ERRO, name);
 		} else {
 			toJson(userInfoDto, response);
 		}
@@ -193,10 +195,10 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 			if (userInfoService.getDtoById(userInfoDto) == null) {
 				userInfoService.addDto(userInfoDto);// 添加用户
 				userInfoService.addUserRoleInfo(userInfoDto);// 添加用户角色
-				throwMessage(response,"new_save_success", MESSAGE_INFO, userInfoDto.getDtoName());
+				message(response,"new_save_success", MESSAGE_INFO, userInfoDto.getDtoName());
 			} else {
 				// 用户存在的情况返回消息
-				throwMessage(response,"error_user_exist", MESSAGE_ERRO,userInfoDto.getUserId());
+				message(response,"error_user_exist", MESSAGE_ERRO,userInfoDto.getUserId());
 			}
 		} else {
 			// 有错误返回
@@ -223,12 +225,12 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
 			if (userInfoService.getDtoById(userInfoDto) == null) {
 				// 用户不存在的情况返回消息
-				throwMessage(response,"error_info_not_exist", MESSAGE_ERRO,userInfoDto.getDtoName(), userInfoDto.getUserId());
+				message(response,"error_info_not_exist", MESSAGE_ERRO,userInfoDto.getDtoName(), userInfoDto.getUserId());
 			} else {
 				// 用户存在的情况进行更新
 				userInfoService.updateDtoById(userInfoDto);// 用户信息更新
 				userInfoService.updateUserRoleInfo(userInfoDto);// 用户角色更新
-				throwMessage(response,"info_edit_success", MESSAGE_INFO, userInfoDto.getDtoName());
+				message(response,"info_edit_success", MESSAGE_INFO, userInfoDto.getDtoName());
 			}
 		} else {
 			// 有错误返回
@@ -248,7 +250,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 				userInfoService.deleteDtoById(userInfoDto);
 			}
 		}
-		throwMessage(response,"user_delete_success", MESSAGE_INFO);
+		message(response,"user_delete_success", MESSAGE_INFO);
 	}
 	
 	/**

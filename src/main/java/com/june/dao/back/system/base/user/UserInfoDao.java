@@ -1,4 +1,4 @@
-package com.june.dao.back.system.base.userinfo;
+package com.june.dao.back.system.base.user;
 
 import java.util.List;
 

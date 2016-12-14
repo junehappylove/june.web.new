@@ -39,8 +39,6 @@ import com.june.service.back.bussiness.guide.GuideCodeService;
 import com.june.service.back.bussiness.referenceFile.FileCodeService;
 import com.june.service.back.bussiness.vehicle.VehicleService;
 
-import net.sf.json.JSONObject;
-
 /**
  * 
  * 故障代码管理controller <br>
@@ -162,8 +160,7 @@ public class ErrorCodeController extends BaseController<ErrorCodeDto> {
 		}
 
 		MessageDto messageDto = new MessageDto();
-		JSONObject object = JSONObject.fromObject(messageDto);
-		Converttojsonobjectajax(response, object);
+		toJson(messageDto, response);
 	}
 
 	/**
@@ -299,7 +296,7 @@ public class ErrorCodeController extends BaseController<ErrorCodeDto> {
 		errorCodeDto = errorCodeService.getDtoById(errorCodeDto);
 		// 判断故障代码信息是否为空
 		if (errorCodeDto == null) {
-			throwMessage(response,"error_not_exist", MESSAGE_ERRO);
+			message(response,"error_not_exist", MESSAGE_ERRO);
 		} else {
 			toJson(errorCodeDto, response);
 		}
@@ -329,9 +326,9 @@ public class ErrorCodeController extends BaseController<ErrorCodeDto> {
 				boolean exit = exit(errorCodeDto);
 				if(!exit){
 					errorCodeService.addDto(errorCodeDto);// 添加故障代码
-					throwMessage(response,"save_success", MESSAGE_INFO);
+					message(response,"save_success", MESSAGE_INFO);
 				}else{
-					throwMessage(response,"error_code_exit",MESSAGE_WARN,errorCodeDto.getErrorCode());
+					message(response,"error_code_exit",MESSAGE_WARN,errorCodeDto.getErrorCode());
 				}
 			} else {
 				// 故障代码存在的情况返回消息

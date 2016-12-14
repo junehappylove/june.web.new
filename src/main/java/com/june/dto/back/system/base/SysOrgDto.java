@@ -1,4 +1,4 @@
-package com.june.dto.back.common;
+package com.june.dto.back.system.base;
 
 
 import com.june.common.PageDTO;
@@ -11,10 +11,10 @@ import com.june.common.PageDTO;
  */
 public class SysOrgDto extends PageDTO<SysOrgDto> {
     /** 版本号 */
-    private static final long serialVersionUID = -883775885175559465L;
+    private static final long serialVersionUID = 99L;
     
     /** 组织ID */
-    private Double orgId;
+    private String orgId;
     
     /** 地区ID */
     private Double districtId;
@@ -23,7 +23,7 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
     private String orgName;
     
     /** 上级组织ID */
-    private Double parentOrgId;
+    private String parentOrgId;
     
     /** 领导 */
     private String orgLeader;
@@ -34,27 +34,19 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
     /** 删除标志 */
     private String delFlag;
     
-    /** 添加用户 */
-    //private String addUserId;
-    
-    /** 添加时间 */
-    //private Date addTime;
-    
-    /** 更新用户 */
-    //private String updateUserId;
-    
-    /** 更新时间 */
-    //private Date updateTime;
-    
-    /** 版本号 */
-    //private Double version;
-    
-    /**
+    public SysOrgDto(String id) {
+		this.orgId = id;
+	}
+
+	public SysOrgDto() {
+	}
+
+	/**
      * 获取组织ID
      * 
      * @return 组织ID
      */
-     public Double getOrgId() {
+     public String getOrgId() {
         return this.orgId;
      }
      
@@ -64,7 +56,7 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
      * @param orgId
      *          组织ID
      */
-     public void setOrgId(Double orgId) {
+     public void setOrgId(String orgId) {
         this.orgId = orgId;
      }
     
@@ -111,7 +103,7 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
      * 
      * @return 上级组织ID
      */
-     public Double getParentOrgId() {
+     public String getParentOrgId() {
         return this.parentOrgId;
      }
      
@@ -121,9 +113,11 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
      * @param parentOrgId
      *          上级组织ID
      */
-     public void setParentOrgId(Double parentOrgId) {
-        this.parentOrgId = parentOrgId;
-     }
+     public void setParentOrgId(String parentOrgId) {
+         this.parentOrgId = parentOrgId;
+      }
+     public void setParentOrgId() {
+      }
     
     /**
      * 获取领导
@@ -183,7 +177,7 @@ public class SysOrgDto extends PageDTO<SysOrgDto> {
      }
 
 	@Override
-	protected String getDtoName() {
+	public String getDtoName() {
 		return "组织";
 	}
     
