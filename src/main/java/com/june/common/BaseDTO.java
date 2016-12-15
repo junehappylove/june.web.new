@@ -7,7 +7,11 @@ package com.june.common;
 
 import java.io.IOException;
 import java.net.SocketException;
+import java.sql.Timestamp;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.june.dto.back.bussiness.ftp.FtpFile;
 
@@ -19,11 +23,13 @@ import com.june.dto.back.bussiness.ftp.FtpFile;
  * @date 2016年12月11日 上午1:56:48
  */
 public abstract class BaseDTO extends AbstractDTO {
-
-	private static final long serialVersionUID = -2126615952862633621L;
+	protected static final Logger logger = LoggerFactory.getLogger(BaseDTO.class);
+	private static final long serialVersionUID = 97L;
 
 	private String appid;	//表示表中的id字段，主键定义为appid，禁止随意命名
-	
+	private String updUserId;//
+	private Timestamp updTime;//
+
 	private String lastName;	//上一次的修改名称，针对FTP修改目录名称而设置的
 	
 	private List<FtpFile> files;//FTP目录下的文件信息
@@ -31,8 +37,24 @@ public abstract class BaseDTO extends AbstractDTO {
 	private String currVehicle;//当前车型ID
 	private String currVehicleName;//当前车型名称
 	
+	public Timestamp getUpdTime() {
+		return updTime;
+	}
+
+	public void setUpdTime(Timestamp updTime) {
+		this.updTime = updTime;
+	}
+	
 	public String getAppid() {
 		return appid;
+	}
+
+	public String getUpdUserId() {
+		return updUserId;
+	}
+
+	public void setUpdUserId(String updUserId) {
+		this.updUserId = updUserId;
 	}
 
 	public void setAppid(String appid) {

@@ -43,6 +43,14 @@ public interface BaseDao<T extends AbstractDTO> extends AbstractDao<T> {
 	public void update(T t);
 	
 	/**
+	 * 批量更新数据表
+	 * @param list
+	 * @date 2016年12月15日 下午10:16:00
+	 * @writer junehappylove
+	 */
+	public void updateList(List<T> list);
+	
+	/**
 	 * 获取一条记录
 	 * 
 	 * @param t

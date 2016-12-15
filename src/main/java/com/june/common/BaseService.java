@@ -68,7 +68,7 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 	}
 	
 	/**
-	 * 获取一条DTO
+	 * 获取一条DTO,一搬是根据主键去查询唯一数据
 	 * 
 	 * @param dto
 	 * @return DTO
@@ -122,6 +122,10 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 	 */
 	public void updateDtoById(DTO dto) {
 		dao.update(dto);
+	}
+	
+	public void updateList(List<DTO> list){
+		dao.updateList(list);
 	}
 
 	/**

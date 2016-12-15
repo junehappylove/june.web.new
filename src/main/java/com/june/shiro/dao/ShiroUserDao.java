@@ -19,10 +19,11 @@ import com.june.shiro.dto.User;
 
 /**
  * 
- * TODO <br>
+ * ShiroUserDao <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
- * @date 2016年6月23日 下午1:39:14
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月15日 下午6:10:11
  */
 public interface ShiroUserDao {
 

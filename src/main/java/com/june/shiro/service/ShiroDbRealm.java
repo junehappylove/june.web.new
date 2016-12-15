@@ -54,13 +54,11 @@ public class ShiroDbRealm extends AuthorizingRealm{
     private LoginDao loginDao;
  
     /**
-     *   
      * 当用户进行访问链接时的授权方法  
      *   
      */ 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {  
-    	
     	// 因为非正常退出，即没有显式调用 SecurityUtils.getSubject().logout()
         // (可能是关闭浏览器，或超时)，但此时缓存依旧存在(principals)，所以会自己跑到授权方法里。
         if (!SecurityUtils.getSubject().isAuthenticated()) {

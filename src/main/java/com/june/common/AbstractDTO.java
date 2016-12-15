@@ -14,6 +14,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.subject.WebSubject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.UserInfoDto;
@@ -26,6 +28,8 @@ import com.june.dto.back.system.base.UserInfoDto;
  * @date 2016年12月11日 上午1:52:16
  */
 public abstract class AbstractDTO implements Serializable {
+	
+	protected static final Logger logger = LoggerFactory.getLogger(AbstractDTO.class);
 	
 	private static final long serialVersionUID = 101L;
 	

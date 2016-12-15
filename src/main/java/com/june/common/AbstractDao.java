@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import com.june.dto.back.common.TreeDto;
 
 public abstract interface AbstractDao<T extends AbstractDTO> {
+	
 	/**
 	 * 获取一览数据
 	 * 
@@ -37,7 +38,7 @@ public abstract interface AbstractDao<T extends AbstractDTO> {
 
 	/**
 	 * 获取通用下拉数据
-	 * 
+	 * TODO 后期还需要另重新设计下来数据，树形数据，列表数据等
 	 * @param T
 	 * @return 
 	 */

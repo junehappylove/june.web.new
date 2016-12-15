@@ -19,5 +19,7 @@ hs_err_pid*
 .buildpath
 .classpath
 .project
+/.externalToolBuilders/
+/.externalToolBuilders/*
 # /src/main/resources/jdbc.properties
 # /src/main/resources/config.properties

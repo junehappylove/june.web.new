@@ -9,7 +9,7 @@ import com.june.common.BaseDao;
 import com.june.dto.back.system.base.SysOrgDto;
 
 /**
- * TODO <br>
+ * SysOrgDao <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
  * @blog https://www.github.com/junehappylove

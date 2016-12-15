@@ -143,7 +143,7 @@ function saveSuccess(response)
 	if(errType != "error")
 	{
 		closemodal();
-		searchUserInfo();
+		searchInfo();
 	}else{
 		//$('#modalForm').bootstrapValidator('validate');
 		//return true;
