@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.front.checkdetail.CheckDetailDao">
+	<select id="getArticleById" resultType="com.june.dto.front.portalinit.ArticleDto" parameterType="com.june.dto.front.portalinit.ArticleDto">
+		SELECT
+		T1.CONTENT_ID AS contentId,
+		T1.CHANNEL_ID AS channelId,
+		T1.CHECK_USER AS checkUser,
+		T1.CHECK_DATE AS checkTime,
+		T1.COMMENT_STATE AS commentState,
+		T1.COMMENT_COUNT AS commentCount,
+		T1.CONTENT_TYPE AS contentType,
+		T1.STATIC AS staticPage,
+		T1.VIEW AS view,
+		T2.CONTENT_TEXT AS contentText,
+		T2.TITLE AS title,
+		T2.SUMMARY AS summary,
+		T3.USER_NAME AS author,
+		T4.CHANNEL_PATH AS channelPath
+		FROM
+		portal_content T1,
+		portal_content_txt T2,
+		sys_user T3,
+		portal_channel T4
+		WHERE
+		T1.CONTENT_ID = T2.CONTENT_ID
+		AND T1.USER_ID = T3.USER_ID
+		AND T1.CONTENT_ID = #{contentId}
+		AND T1.STATUS = '3'
+		AND T1.CHANNEL_ID = T4.CHANNEL_ID
+		ORDER BY CAST(T1.CONTENT_ID AS SIGNED)
+	</select>
+	
+	<select id="getComment" resultType="com.june.dto.front.checkdetail.CommentDto" parameterType="com.june.dto.front.checkdetail.CommentDto">
+		SELECT
+		T1.COMMENT_ID AS commentId,
+		T1.COMMENT_CONTENT AS commentContent,
+		T1.CONTENT_ID AS contentId,
+		T1.COMMENT_DATE AS commentDate,
+		T1.COMMENT_USER AS commentUser
+		FROM
+		portal_comment T1
+		WHERE
+		T1.CONTENT_ID = #{contentId}
+		ORDER BY CAST(T1.COMMENT_ID AS SIGNED)
+		LIMIT #{start},#{pageSize}
+	</select>
+	
+	<update id="updateStatic" parameterType="com.june.dto.front.portalinit.ArticleDto">
+		UPDATE
+		portal_content
+		SET
+		STATIC = '1'
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+	
+	<select id="getLatestIdOfComment" resultType="int">
+		SELECT CAST(RIGHT(nextval('comment_id'),11) AS SIGNED) 
+	</select>
+	
+	<insert id="insertComment" parameterType="com.june.dto.front.checkdetail.CommentDto">
+		INSERT
+		INTO
+		portal_comment
+		VALUES
+		(
+			#{commentId},
+			#{commentContent},
+			NOW(),
+			#{contentId},
+			#{commentUser}
+		)
+	</insert>
+	
+	<sql id="selectdata">
+		SELECT
+		T1.COMMENT_ID AS commentId,
+		T1.COMMENT_CONTENT AS commentContent,
+		T1.CONTENT_ID AS contentId,
+		T1.COMMENT_DATE AS commentDate,
+		T1.COMMENT_USER AS commentUser
+		FROM
+		portal_comment T1
+		WHERE
+		T1.CONTENT_ID = #{contentId}
+		ORDER BY  T1.COMMENT_DATE DESC
+	</sql>
+	<select id="getPageList" resultType="com.june.dto.front.checkdetail.CommentDto" parameterType="com.june.dto.front.checkdetail.CommentDto">
+       	  <include refid="selectdata"/>
+          <include refid="pagelimit"/>
+	</select>
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		( <include refid="selectdata"/> ) temp
+	</select>
+	
+	<!-- 评论数量更新 -->
+	<update id="updateCommentcount" parameterType="com.june.dto.front.checkdetail.CommentDto">
+		UPDATE
+		portal_content
+		SET COMMENT_COUNT = COMMENT_COUNT + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+</mapper>

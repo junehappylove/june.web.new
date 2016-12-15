@@ -112,7 +112,7 @@ function batchCheckPass()
 		var contentId="";
 		for(var i=0;i<rows.length;i++)
 		{
-			contentId=contentId +　rows[i].contentId + ",";
+			contentId=contentId + rows[i].contentId + ",";
 		}
 		var data={
 			contentId:contentId
@@ -132,7 +132,7 @@ function batchCheckBack()
 		var contentId="";
 		for(var i=0;i<rows.length;i++)
 		{
-			contentId=contentId +　rows[i].contentId + ",";
+			contentId=contentId + rows[i].contentId + ",";
 		}
 		var data={
 			contentId:contentId

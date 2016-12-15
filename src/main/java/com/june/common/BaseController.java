@@ -42,6 +42,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -92,7 +93,6 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected static String commentlist_template_path = "template/cmstemplate/comment_list.html";
 	@Autowired
 	public SendMail sendMail;
-
 	@Autowired
 	protected UserInfoService userInfoService;
 	@Autowired
@@ -103,6 +103,9 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected VehicleService vehicleService;
 	@Autowired
 	protected CommonService commonService;
+	 /** 配置文件名称，早config.properties文件中定义，区分不同打包指令后各环境的配置文件内容    */
+	@Value("${propertiesName}")
+	protected String propertiesName;
 
 	//=====================================================================================
 	//=====================================================================================

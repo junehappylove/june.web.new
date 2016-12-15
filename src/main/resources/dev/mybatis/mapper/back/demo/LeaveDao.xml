@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.demo.LeaveDao">
+	
+	
+	<!-- 分页查询 -->
+	<sql id="selectdata">
+		SELECT
+			T1.LEAVE_ID AS leaveId,
+			T2.USER_NAME AS leaveUser,
+			T1.LEAVE_DAYS AS leaveDays,
+			T1.LEAVE_REASON AS leaveReason,
+			T1.LEAVE_START AS leaveStart,
+			T1.LEAVE_END AS leaveEnd,
+			T1.LEAVE_STATUS AS leaveStatus
+		FROM
+			sys_leave T1,
+			sys_user T2
+		WHERE
+		T2.USER_ID = T1.LEAVE_USER
+		AND T1.LEAVE_USER = #{sys_user}
+		<if test="leaveStart != null and leaveStart != ''">
+			AND T1.LEAVE_START >= #{leaveStart}
+		</if>
+		<if test="leaveEnd != null and leaveEnd != ''">
+			AND T1.LEAVE_END >= #{leaveEnd}
+		</if>
+	</sql>
+	<select id="getPageList" resultType="com.june.dto.back.demo.LeaveDto" parameterType="com.june.dto.back.demo.LeaveDto">
+       	  <include refid="selectdata"/>
+          <include refid="pagelimit"/>
+	</select>
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.demo.LeaveDto">
+		select count(*) from
+		( <include refid="selectdata"/> ) temp
+	</select>
+	
+	
+	<insert id="savenewleave" parameterType="com.june.dto.back.demo.LeaveDto" useGeneratedKeys="true" keyProperty="leaveId">
+		INSERT
+		INTO
+		sys_leave
+		(
+			LEAVE_USER,
+			LEAVE_DAYS,
+			LEAVE_REASON,
+			LEAVE_START,
+			LEAVE_END,
+			LEAVE_STATUS
+		)
+		VALUES
+		(
+			#{sys_user},
+			#{leaveDays},
+			#{leaveReason},
+			#{leaveStart},
+			#{leaveEnd},
+			#{leaveStatus}
+		)
+	</insert>
+	
+	<select id="getleaveByid" parameterType="com.june.dto.back.demo.LeaveDto" resultType="com.june.dto.back.demo.LeaveDto">
+		SELECT
+			T1.LEAVE_ID AS leaveId,
+			T1.LEAVE_DAYS AS leaveDays,
+			T1.LEAVE_REASON AS leaveReason,
+			T1.LEAVE_START AS leaveStart,
+			T1.LEAVE_END AS leaveEnd,
+			T1.LEAVE_STATUS AS leaveStatus
+		FROM
+		sys_leave T1
+		WHERE
+		T1.LEAVE_ID = #{leaveId}
+	</select>
+	
+	<select id="getAssignName" parameterType="String" resultType="String">
+		SELECT
+		T1.USER_NAME AS userName
+		FROM
+		sys_user T1
+		WHERE
+		T1.USER_ID = #{userid}
+	</select>
+	
+	<select id="getLeader" parameterType="String" resultType="String">
+		SELECT
+		T1.USER_ID AS leader
+		FROM
+		sys_user T1,
+		sys_org T2
+		WHERE
+		T2.ORG_ID = #{orgId}
+		AND T2.ORG_LEADER = T1.USER_ID
+	</select>
+	
+	<update id="updataLeaveStatus" parameterType="com.june.dto.back.demo.LeaveDto">
+		UPDATE
+		sys_leave
+		SET
+		LEAVE_STATUS = #{leaveStatus}
+		WHERE
+		LEAVE_ID = #{leaveId}
+	</update>
+	
+	<!--<delete id="deleteleave" parameterType="com.dto.leaveActivitiDto.LeaveDto">
+		DELETE
+		FROM
+		tm_leave
+		WHERE
+		LEAVE_ID=#{leaveId}
+	</delete>
+	 -->
+</mapper>

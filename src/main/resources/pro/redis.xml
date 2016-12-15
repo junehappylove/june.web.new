@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<!-- 开启缓存注解 -->
+	<cache:annotation-driven />
+	<!-- jedis客户端连接工厂 -->
+	<bean id="clusterRedisNodes1" class="org.springframework.data.redis.connection.RedisNode">
+		<constructor-arg value="192.168.32.129" />
+		<constructor-arg value="7000" type="int" />
+	</bean>
+	<bean id="clusterRedisNodes2" class="org.springframework.data.redis.connection.RedisNode">
+		<constructor-arg value="192.168.32.129" />
+		<constructor-arg value="7001" type="int" />
+	</bean>
+	<bean id="clusterRedisNodes3" class="org.springframework.data.redis.connection.RedisNode">
+		<constructor-arg value="192.168.32.129" />
+		<constructor-arg value="7002" type="int" />
+	</bean>
+	<bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+		<property name="clusterNodes">
+			<set>
+				<ref bean="clusterRedisNodes1" />
+				<ref bean="clusterRedisNodes2" />
+				<ref bean="clusterRedisNodes3" />
+			</set>
+		</property>
+	</bean>
+	<!-- jedis客户端连接工厂 -->
+	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<!-- <property name="hostName" value="192.168.72.139"/> <property name="port" 
+			value="6379"/> <property name="usePool" value="false"/> -->
+		<constructor-arg ref="redisClusterConfiguration" />
+	</bean>
+	<!-- redisTemplate模板 -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory" />
+	</bean>
+
+	<!-- redis缓存管理器 -->
+	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg index="0" ref="redisTemplate"></constructor-arg>
+	</bean>
+</beans>

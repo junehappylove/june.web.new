@@ -170,7 +170,7 @@ function batchSubmit()
 		{
 			if(rows[i].status == '1' || rows[i].status == '4')
 			{
-				contentId=contentId +　rows[i].contentId + ",";
+				contentId=contentId + rows[i].contentId + ",";
 			}
 		}
 		if(contentId!="")
@@ -180,11 +180,11 @@ function batchSubmit()
 			}
 			doAjax("post",contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null))
+			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null));
 		}
 		
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null))
+		showOnlyMessage("error",getMessageFromList("SelectRow",null));
 	}
 }
 
@@ -200,20 +200,20 @@ function batchDel()
 		{
 			if(rows[i].status == '1' || rows[i].status == '4')
 			{
-				contentId=contentId +　rows[i].contentId + ",";
+				contentId=contentId + rows[i].contentId + ",";
 			}
 		}
 		if(contentId!="")
 		{
 			var data={
 				contentId:contentId
-			}
+			};
 			doAjax("post",contextPath + "/portal/MyInfo/batchDel",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null))
+			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null));
 		}
 		
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null))
+		showOnlyMessage("error",getMessageFromList("SelectRow",null));
 	}
 }

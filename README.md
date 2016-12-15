@@ -20,7 +20,11 @@ Thinks a lot for all the open source code lovers!
  [maven tomcat plugin实现热部署](http://blog.csdn.net/a468903507/article/details/45392083,"maven tomcat plugin实现热部署")、
  [开发过程使用Tomcat Maven插件持续快捷部署Web项目](https://my.oschina.net/feichexia/blog/326893,"开发过程使用Tomcat Maven插件持续快捷部署Web项目") 、
  [Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署](http://blog.csdn.net/chwshuang/article/details/48499231,"Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署")
- > 5. 2016-12-15 解决后台期类型传递到前台总是展示成[Object obj]对象类型问题；代码大量优化
+ > 5. 2016-12-15 解决后台期类型传递到前台总是展示成[Object obj](http://www.cnblogs.com/aquriushu/p/5777844.html)对象类型问题；代码大量优化
+ > 6. 2016-12-15 加入maven自动打包发布功能
+ 
+ 
+ 
  
 ## 技术选择 
  > 1. springmvc

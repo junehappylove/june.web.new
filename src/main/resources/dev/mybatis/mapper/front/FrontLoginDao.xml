@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.front.login.FrontLoginDao">
+	<select id="frontloginCheck" parameterType="com.june.dto.front.login.UserInfoDto" resultType="com.june.dto.front.login.UserInfoDto">
+		SELECT
+		T1.USER_ID AS userId,
+		T1.USER_PASSWORD AS userPassword,
+		T1.USER_LOCKED AS userLock,
+		T3.ROLE_NAME AS roleName,
+		T3.ROLE_ID AS roleId
+		FROM
+		t_user T1,
+		t_user_role T2,
+		t_role T3
+		WHERE
+		T1.USER_ID = #{userId}
+		AND T1.USER_PASSWORD = #{userPassword}
+		AND T2.USER_ID = T1.USER_ID
+		AND T3.ROLE_ID = T2.ROLE_ID
+	</select>
+	
+	
+	
+	
+	
+</mapper>

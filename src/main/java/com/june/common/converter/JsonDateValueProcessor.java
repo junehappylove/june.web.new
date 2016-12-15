@@ -1,4 +1,4 @@
-package com.june.utility;
+package com.june.common.converter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

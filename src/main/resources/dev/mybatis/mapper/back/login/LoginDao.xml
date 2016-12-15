@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.login.LoginDao">
+	<select id="loginCheck" parameterType="com.june.dto.back.system.base.UserInfoDto"
+		resultType="com.june.dto.back.system.base.UserInfoDto">
+		SELECT
+			T1.USER_ID AS userId,
+			T1.USER_PASSWORD AS userPassword,
+			T1.USER_LOCKED AS userLock,
+			T3.ROLE_NAME AS roleName,
+			T3.ROLE_ID AS roleId
+		FROM
+			sys_user T1,
+			sys_user_role T2,
+			sys_role T3
+		WHERE
+			T1.USER_ID = #{userId}
+		AND T1.USER_PASSWORD = #{userPassword}
+		AND T2.USER_ID = T1.USER_ID
+		AND T3.ROLE_ID = T2.ROLE_ID
+	</select>
+
+	<select id="getFristMenu" parameterType="com.june.dto.back.system.base.UserInfoDto"
+		resultType="com.june.dto.back.login.MenuDto">
+		SELECT
+			T1.USER_ID AS userId,
+			T2.ROLE_ID AS roleId,
+			T2.ROLE_NAME AS roleName,
+			T3.MENU_ID AS menuId,
+			T3.MENU_ICON AS icon,
+			T3.MENU_NAME AS menuName,
+			T3.MENU_URL AS url,
+			T3.ORDER_NUM AS orderNum
+		FROM
+			sys_user T1,
+			sys_role T2,
+			sys_menu T3,
+			sys_role_menu T4,
+			sys_user_role T5
+		WHERE
+			T1.USER_ID = #{userId}
+		AND T2.ROLE_ID = #{roleId}
+		AND T1.USER_ID = T5.USER_ID
+		AND T2.ROLE_ID = T5.ROLE_ID
+		AND T4.ROLE_ID = T2.ROLE_ID
+		AND T4.MENU_ID = T3.MENU_ID
+		AND T3.PARENT_MENU_ID = '0'
+		ORDER BY T3.ORDER_NUM
+	</select>
+
+	<select id="getSecondMenu" parameterType="com.june.dto.back.login.MenuDto"
+		resultType="com.june.dto.back.login.MenuDto">
+		SELECT
+			T1.USER_ID AS userId,
+			T2.ROLE_ID AS roleId,
+			T2.ROLE_NAME AS roleName,
+			T3.MENU_ID AS menuId,
+			T3.MENU_ICON AS icon,
+			T3.MENU_NAME AS menuName,
+			T3.MENU_URL AS url,
+			T3.ORDER_NUM AS orderNum
+		FROM
+			sys_user T1,
+			sys_role T2,
+			sys_menu T3,
+			sys_role_menu T4,
+			sys_user_role T5
+		WHERE
+			T1.USER_ID = #{userId}
+		AND T2.ROLE_ID = #{roleId}
+		AND T1.USER_ID = T5.USER_ID
+		AND T2.ROLE_ID = T5.ROLE_ID
+		AND T4.ROLE_ID = T2.ROLE_ID
+		AND T4.MENU_ID = T3.MENU_ID
+		AND T3.PARENT_MENU_ID = #{menuId}
+		ORDER BY T3.ORDER_NUM
+	</select>
+
+	<select id="getMenuById" parameterType="com.june.dto.back.login.MenuDto"
+		resultType="com.june.dto.back.login.MenuDto">
+		SELECT
+			T1.MENU_ID AS menuId,
+			T1.MENU_NAME AS menuName,
+			T1.MENU_URL AS url,
+			T1.MENU_ICON AS icon
+		FROM
+			sys_menu T1
+		WHERE
+			T1.MENU_ID = #{menuId}
+	</select>
+
+	<select id="getUserInfoById" parameterType="String"
+		resultType="com.june.dto.back.system.base.UserInfoDto">
+		SELECT
+			T1.USER_ID AS userId,
+			T1.USER_NAME AS userName,
+			T1.ORG_ID AS orgId,
+			T1.USER_EMAIL AS userEmail,
+			T1.USER_BITTHDAY AS userBirthday,
+			T1.USER_ADDRESS AS userAddress,
+			T1.USER_TEL AS userTel,
+			T1.USER_MOBILE AS userMobile,
+			T1.USER_LOCKED AS userLock
+		FROM
+			sys_user T1
+		WHERE
+			T1.USER_ID = #{userId}
+	</select>
+
+	<select id="getRoleInfoByUserId" resultType="com.june.dto.back.system.base.UserInfoDto"
+		parameterType="com.june.dto.back.system.base.UserInfoDto">
+		SELECT
+			T3.ROLE_NAME AS roleName,
+			T3.ROLE_ID AS roleId
+		FROM
+			sys_user_role T2,
+			sys_role T3
+		WHERE T2.USER_ID =#{userId}
+		AND T3.ROLE_ID = T2.ROLE_ID
+	</select>
+
+
+	<select id="getRoleButton" parameterType="com.june.dto.back.system.base.UserInfoDto"
+		resultType="com.june.dto.back.login.ButtonDto">
+		SELECT
+			T3.BUTTON_ID AS buttonId,
+			T3.BUTTON_NAME buttonName,
+			T3.BUTTON_PAGE_ID buttonPageId
+		FROM
+			sys_role T1,
+			sys_role_function T2,
+			sys_function T3
+		WHERE
+			T1.ROLE_ID = T2.ROLE_ID
+		AND T2.BUTTON_ID = T3.BUTTON_ID
+		AND T1.ROLE_ID=#{roleId}
+	</select>
+
+	<update id="updateFailLoginAttempt" parameterType="com.june.dto.back.system.base.UserInfoDto">
+		UPDATE
+			sys_user
+		SET
+			ATTEMTP = ATTEMTP + 1,
+			LAST_LOGIN_TIME = #{sys_date}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
+	<update id="updateSuccessLoginAttempt" parameterType="com.june.dto.back.system.base.UserInfoDto">
+		UPDATE
+			sys_user
+		SET
+			ATTEMTP = 0,
+			LAST_LOGIN_TIME = #{sys_date}
+		WHERE
+			USER_ID = #{userId}
+	</update>
+</mapper>

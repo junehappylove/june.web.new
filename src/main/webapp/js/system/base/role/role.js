@@ -165,8 +165,8 @@ function editRow() {
 function checkDetail(roleId) {
 	var data={
 		roleId:roleId
-	}
-	doAjax("post",contextPath + "/system/base/role/checkDetail",data,checkDetailSuccess)
+	};
+	doAjax("post",contextPath + "/system/base/role/checkDetail",data,checkDetailSuccess);
 }
 
 function checkDetailSuccess(response)
@@ -198,7 +198,7 @@ function deleteRow() {
 		 }
 		 var data = {
 		      roleId:rowIds       
-		 }
+		 };
 
 		showConfirm(sureDelete, "是否要删除选中的行？", "post", contextPath
 				+ "/system/base/role/delRole", data, searchRoleInfo);
@@ -209,7 +209,7 @@ function deleteRow() {
 }
 
 function sureDelete(type, url, data, success) {
-	doAjax("post", url, data, success)
+	doAjax("post", url, data, success);
 }
 
 // 关闭modal画面
@@ -287,7 +287,7 @@ function assignMenu()
 		authorityMenusId:ids,
 		roleId:row[0].roleId
 	}
-	doAjax("post",contextPath + "/system/base/role/authorityMenus",data,authorityMenuSuccess)
+	doAjax("post",contextPath + "/system/base/role/authorityMenus",data,authorityMenuSuccess);
 }
 
 function authorityMenuSuccess()
@@ -365,7 +365,7 @@ function assignUser()
 		authorityMenusId:ids,
 		roleId:row[0].roleId
 	}
-	doAjax("post",contextPath + "/system/base/role/assginUsers",data,authorityUserSuccess)
+	doAjax("post",contextPath + "/system/base/role/assginUsers",data,authorityUserSuccess);
 }
 
 function authorityUserSuccess()

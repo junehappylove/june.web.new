@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.portal.myinfo.MyInfoDao">
+	<sql id="getMyInfo">
+		SELECT
+		T1.CONTENT_ID AS contentId,
+		T1.CHANNEL_ID AS channelId,
+		T1.CONTENT_TYPE AS contentType,
+		T1.`STATUS` AS status,
+		T1.SAVE_DATE AS saveTime,
+		T1.SUBMIT_DATE AS submitTime,
+		T1.CHECK_DATE AS checkTime,
+		T4.USER_NAME AS checkUser,
+		T1.VIEW AS view,
+		T1.COMMENT_COUNT AS commentCount,
+		T1.USER_ID AS author,
+		T2.SUMMARY AS summary,
+		T2.TITLE AS title,
+		T3.CHANNEL_NAME AS channelName,
+		T3.CHANNEL_PATH AS channelPath
+		FROM
+		portal_content T1
+		LEFT JOIN sys_user T4
+		ON T1.CHECK_USER = T4.USER_ID,
+		portal_content_txt T2,
+		portal_channel T3
+		WHERE
+		T1.CONTENT_ID = T2.CONTENT_ID
+		AND
+		T1.CHANNEL_ID = T3.CHANNEL_ID
+		AND T1.USER_ID=#{sys_user}
+		<if test="channelId != null and channelId != ''">
+			AND T1.CHANNEL_ID = #{channelId}
+		</if>
+		<if test="contentType != null and contentType != ''">
+			AND T1.CONTENT_TYPE = #{contentType}
+		</if>
+		<if test="title != null and title != ''">
+			AND T2.TITLE like  '%${title}%'
+		</if>
+		<if test="summary != null and summary != ''">
+			AND T2.summary like  '%${summary}%'
+		</if>
+		<if test="status != null and status != ''">
+			AND T1.status=#{status}
+		</if>
+		ORDER BY CAST(T1.CONTENT_ID AS SIGNED)
+	</sql>
+	
+	<select id="getPageList" resultType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
+       	  <include refid="getMyInfo"/>
+          <include refid="pagelimit"/>
+	</select>
+	<sql id="pagelimit">
+	  	limit #{start}, #{pageSize}
+	</sql>
+	
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
+		select count(*) from
+		( <include refid="getMyInfo"/> ) temp
+	</select>
+	
+	<update id="submitRow" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content
+		SET
+		SUBMIT_DATE = #{sys_date},
+		`STATUS`='2',
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+	
+	<select id="getInfoById" resultType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
+		SELECT
+		T1.CONTENT_ID AS contentId,
+		T1.CHANNEL_ID AS channelId,
+		T1.`STATUS` AS status,
+		T1.SAVE_DATE AS saveTime,
+		T1.SUBMIT_DATE AS submitTime,
+		T1.CHECK_DATE AS checkTime,
+		T5.USER_NAME AS checkUser,
+		T1.COMMENT_STATE AS commentState,
+		T1.VIEW AS view,
+		T4.USER_NAME AS author,
+		T2.SUMMARY AS summary,
+		T2.TITLE AS title,
+		T2.CONTENT_TEXT AS contentText,
+		T3.CHANNEL_NAME AS channelName,
+		T3.CHANNEL_PATH AS channelPath
+		FROM
+		portal_content T1
+		LEFT JOIN sys_user T4
+		ON T1.USER_ID = T4.USER_ID
+		LEFT JOIN sys_user T5
+		ON T1.CHECK_USER = T5.USER_ID,
+		portal_content_txt T2,
+		portal_channel T3
+		WHERE
+		T1.CONTENT_ID = #{contentId}
+		AND T1.CONTENT_ID = T2.CONTENT_ID
+		AND
+		T1.CHANNEL_ID = T3.CHANNEL_ID
+	</select>
+	
+	<update id="deleteRow" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
+		UPDATE
+		portal_content
+		SET
+		`STATUS` = '5',
+		UPDATE_USER_ID=#{sys_user},
+		UPDATE_TIME =
+		#{sys_date,jdbcType=TIMESTAMP},
+		VERSION = VERSION + 1
+		WHERE
+		CONTENT_ID = #{contentId}
+	</update>
+</mapper>

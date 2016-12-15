@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.demo.QuartzDao">
+	<!-- 分页查询 -->
+	<sql id="selectdata">
+		select 
+		T1.SCHED_NAME AS schedName,
+		T1.TRIGGER_NAME AS triggerName,
+		T1.TRIGGER_GROUP AS triggerGroup,
+		T1.JOB_NAME AS jobName,
+		T1.JOB_GROUP AS jobGroup,
+		T1.DESCRIPTION AS description,
+		from_unixtime(T1.NEXT_FIRE_TIME/1000,'%Y-%m-%d %H:%i:%S') AS nextFireTime,
+		from_unixtime(T1.PREV_FIRE_TIME/1000,'%Y-%m-%d %H:%i:%S') AS prevFireTime,
+		T1.PRIORITY AS priority,
+		T1.TRIGGER_STATE AS triggerState,
+		T1.TRIGGER_TYPE AS triggerType,
+		from_unixtime(T1.START_TIME/1000,'%Y-%m-%d %H:%i:%S') AS startTime,
+		CASE WHEN T1.END_TIME = 0 THEN T1.END_TIME
+		ELSE from_unixtime(T1.END_TIME,'%Y-%m-%d %H:%i:%S')
+		END endTime
+		from QRTZ_TRIGGERS T1 order by start_time
+	</sql>
+	<select id="getPageList" resultType="com.june.dto.back.demo.QuartzTriggerDto" parameterType="com.june.dto.back.demo.QuartzTriggerDto">
+       	  <include refid="selectdata"/>
+          <include refid="pagelimit"/>
+	</select>
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.demo.LeaveDto">
+		select count(*) from
+		( <include refid="selectdata"/> ) temp
+	</select>
+	
+	<select id="getAllJobName" resultType="com.june.dto.back.demo.QuartzTriggerDto">
+		SELECT
+		T1.JOB_NAME AS jobName
+		FROM
+		qrtz_job_details T1
+	</select>
+</mapper>

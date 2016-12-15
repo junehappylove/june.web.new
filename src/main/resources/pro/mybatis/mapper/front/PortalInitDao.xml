@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.front.portalinit.PortalInitDao">
+	<select id="getArtical" parameterType="com.june.dto.front.portalinit.ArticleDto" resultType="com.june.dto.front.portalinit.ArticleDto">
+		SELECT
+		T1.CONTENT_ID AS contentId,
+		T1.CHANNEL_ID AS channelId,
+		T1.CHECK_USER AS checkUser,
+		T1.CHECK_DATE AS checkTime,
+		T1.COMMENT_STATE AS commentState,
+		T1.COMMENT_COUNT AS commentCount,
+		T1.CONTENT_TYPE AS contentType,
+		T2.CONTENT_TEXT AS contentText,
+		T2.TITLE AS title,
+		T2.SUMMARY AS summary,
+		T3.USER_NAME AS author
+		FROM
+		portal_content T1,
+		portal_content_txt T2,
+		sys_user T3
+		WHERE
+		T1.CONTENT_ID = T2.CONTENT_ID
+		AND T1.USER_ID = T3.USER_ID
+		AND T1.STATUS = '3'
+		ORDER BY CAST(T1.CONTENT_ID AS SIGNED)
+	</select>
+</mapper>

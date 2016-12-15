@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.shiro.dao.ShiroUserDao">
+	
+	<select id="getUserByUsername" parameterType="String" resultType="com.june.shiro.dto.User">
+		SELECT
+			T1.USER_ID AS userId,
+			T1.USER_PASSWORD AS userPassword,
+			T1.USER_NAME AS userName,
+			T1.ORG_ID AS orgId,
+			T1.USER_EMAIL AS userEmail,
+			T1.USER_BITTHDAY AS userBirthday,
+			T1.USER_ADDRESS AS userAddress,
+			T1.USER_TEL AS userTel,
+			T1.USER_MOBILE AS userMobile,
+			T1.USER_LOCKED AS userLock,
+			T1.ATTEMTP AS attempt,
+			T1.LAST_LOGIN_TIME AS lastLoginTime
+		FROM
+			sys_user T1
+		WHERE
+			T1.USER_ID = #{username}
+	</select>
+	<select id="getRoleMenus" parameterType="String" resultType="com.june.shiro.dto.Resource">
+		SELECT
+			t1.ROLE_ID AS roleId,
+			t1.ROLE_NAME AS roleName,
+			t2.MENU_ID AS menuId,
+			t3.MENU_URL AS menuUrl
+		FROM
+			sys_role t1,
+			sys_role_menu t2,
+			sys_menu t3
+		WHERE
+			t1.ROLE_ID = t2.ROLE_ID
+			AND t1.ROLE_ID = #{roleId}
+			AND t2.MENU_ID = t3.MENU_ID
+	</select>
+	<select id="getMenubyRoleIdMenuId" parameterType="com.june.shiro.dto.Resource" resultType="com.june.shiro.dto.Resource">
+		SELECT
+			T1.ROLE_ID AS roleId,
+			T1.MENU_ID as menuId
+		FROM
+			sys_role_menu T1
+		WHERE
+			T1.ROLE_ID = #{roleId}
+			AND T1.MENU_ID = #{menuId}
+	</select>
+	
+	<select id="getRoleButtons" parameterType="String" resultType="com.june.shiro.dto.Resource">
+		SELECT
+			T2.BUTTON_ID AS menuId,
+			T2.BUTTON_URL AS menuUrl
+		FROM
+			sys_role T1,
+			sys_function T2,
+			sys_role_function T3
+		WHERE
+			T1.ROLE_ID = #{roleId}
+			AND T1.ROLE_ID = T3.ROLE_ID
+			AND T3.BUTTON_ID = T2.BUTTON_ID
+	</select>
+</mapper>

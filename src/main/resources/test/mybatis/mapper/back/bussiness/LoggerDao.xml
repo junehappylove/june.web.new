@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.bussiness.logger.LoggerDao">
+	<!-- 查询列表SQL -->
+	<sql id="selectData">
+		SELECT v.LOG_ID       	AS loggerId,
+		       v.USER_ID     	AS userId,
+		       v.OPERATE_TYPE   AS operateType,
+		       v.FUN_MODULE   	AS operateModule,
+		       v.OPERATE_REMARK AS operateRemark,
+		       v.OPERATE_METHOD AS operateMethod,
+		       v.OPETATE_PARAMS	AS operateParams,
+		       v.OPERATE_TIME 	AS operateTime,
+		       u.USER_NAME 		AS userName
+		 FROM LOG_OPERATE_SERVER v
+		 LEFT JOIN SYS_USER u ON u.USER_ID = v.USER_ID
+		 WHERE 1 = 1
+		<if test="operateModule != null and operateModule != ''">
+			AND v.FUN_MODULE LIKE CONCAT(CONCAT('%', #{operateModule}), '%')
+		</if>
+		<if test="userId != null and userId != ''">
+			AND v.USER_ID = #{userId}
+		</if>
+		<if test="operateType != null and operateType != ''">
+			AND v.OPERATE_TYPE = #{operateType}
+		</if>
+	</sql>
+	<!-- 查询服务端日志列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.bussiness.logger.LoggerDto"
+		parameterType="com.june.dto.back.bussiness.logger.LoggerDto">
+		<include refid="pagetop" />
+		<include refid="selectData" />
+			ORDER BY v.OPERATE_TIME DESC
+		<include refid="pageend" />
+	</select>
+	<sql id="pagetop">
+		<![CDATA[SELECT * FROM (SELECT ROWNUM AS PNUM, TNUM.* FROM ( ]]>
+	</sql>
+	<sql id="pageend">
+		<![CDATA[) TNUM WHERE ROWNUM <= #{startadd} + #{pageSize}) TPAGE WHERE TPAGE.PNUM > #{start}]]>
+	</sql>
+
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(1) FROM ( <include refid="selectData" /> ) T
+	</select>
+
+	<!-- 查询所有服务端日志列表 -->
+	<select id="getList" resultType="com.june.dto.back.bussiness.logger.LoggerDto" 
+		parameterType="com.june.dto.back.bussiness.logger.LoggerDto">
+		<include refid="selectData" />
+	</select>
+	
+	<!-- 根据服务端日志id 获取一条记录 -->
+	<select id="get" parameterType="com.june.dto.back.bussiness.logger.LoggerDto" 
+		resultType="com.june.dto.back.bussiness.logger.LoggerDto">
+		SELECT v.LOG_ID       	AS loggerId,
+		       v.USER_ID     	AS userId,
+		       v.OPERATE_TYPE   AS operateType,
+		       v.FUN_MODULE   	AS operateModule,
+		       v.OPERATE_REMARK AS operateRemark,
+		       v.OPERATE_METHOD AS operateMethod,
+		       v.OPETATE_PARAMS	AS operateParams,
+		       v.OPERATE_TIME 	AS operateTime,
+		       u.USER_NAME 		AS userName
+		 FROM LOG_OPERATE_SERVER v
+		 LEFT JOIN SYS_USER u ON u.USER_ID = v.USER_ID
+		 WHERE v.LOG_ID = #{loggerId}
+	</select>
+	
+	<!-- 添加服务端日志信息 -->
+	<insert id="add" parameterType="com.june.dto.back.bussiness.logger.LoggerDto">
+		<selectKey keyProperty="errorId" resultType="java.lang.String" order="BEFORE">
+			SELECT LOG_SERVER_SEQ.NEXTVAL AS LOG_ID FROM DUAL 
+		</selectKey>
+		<![CDATA[ INSERT INTO LOG_OPERATE_SERVER (
+		  	LOG_ID    		,
+			USER_ID      	,
+			OPERATE_TYPE    ,
+			FUN_MODULE    	,
+			OPERATE_REMARK 	,
+			OPERATE_METHOD  ,
+			OPETATE_PARAMS 	,
+			OPERATE_TIME    ) ]]>
+		VALUES
+		  (#{loggerId} 		,
+		   #{userId} 		,
+		   #{operateType} 	,
+		   #{operateModule} ,
+		   #{operateRemark} ,
+		   #{operateMethod} ,
+		   #{operateParams} ,
+		   SYSDATE )
+	</insert>
+
+	<!-- 编辑服务端日志信息 -->
+	<update id="update" parameterType="com.june.dto.back.bussiness.logger.LoggerDto">
+		UPDATE LOG_OPERATE_SERVER
+		   SET USER_ID     		= #{userId},
+		       OPERATE_TYPE     = #{operateType},
+		       FUN_MODULE     	= #{operateModule},
+		       OPERATE_REMARK 	= #{operateRemark},
+		       OPERATE_METHOD 	= #{operateMethod},
+		       OPETATE_PARAMS 	= #{operateParams},
+		       OPERATE_TIME   	= SYSDATE
+		 WHERE LOG_ID 			= #{loggerId}
+	</update>
+
+	<!-- 删除服务端日志 -->
+	<delete id="delete" parameterType="com.june.dto.back.bussiness.logger.LoggerDto">
+	  DELETE FROM LOG_OPERATE_SERVER WHERE LOG_ID = #{loggerId}
+	</delete>
+	<!-- 删除服务端日志 -->
+	<delete id="clear">
+	  DELETE FROM LOG_OPERATE_SERVER WHERE 1=1 
+	</delete>
+</mapper>

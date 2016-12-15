@@ -713,8 +713,78 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/fastdfs_client.jar</systemPath>
 		</dependency> -->
 	</dependencies>
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+	<!-- 配置文件 -->
+	<profiles>
+		<profile>
+			<!-- 研发环境下 -->
+			<id>development</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+				<!-- Tomcat7的部署url是manager/text Tomcat6没有/text -->
+				<deploy.url>http://localhost:8090/manager/text</deploy.url>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 测试环境下 -->
+			<id>test</id>
+			<properties>
+				<profiles.active>test</profiles.active>
+				<!-- Tomcat7的部署url是manager/text Tomcat6没有/text -->
+				<deploy.url>http://10.50.200.38:8090/manager/text</deploy.url>
+			</properties>
+		</profile>
+		<profile>
+			<!-- 生产环境 (出于安全考虑，一般生产环境不能自动部署，也不会开放端口，需要人工处理，这里的配置用来打包) -->
+			<id>production</id>
+			<properties>
+				<profiles.active>pro</profiles.active>
+				<!-- Tomcat7的部署url是manager/text Tomcat6没有/text -->
+				<deploy.url>http://www.junehappylove.com:8090/manager/text</deploy.url>
+			</properties>
+		</profile>
+	</profiles>
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+	
 	<!-- build -->
 	<build>
+		<finalName>june_web_new</finalName>
+		<!-- 打包配置文件管理 -->
+		<resources>
+			<!-- 代码生成器配置文件过滤 -->
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<excludes>
+					<exclude>../generatorConfig.xml</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+			<!-- 所有环境配置文件过滤 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>test/*</exclude>
+					<exclude>pro/*</exclude>
+					<exclude>dev/*</exclude>
+				</excludes>	
+			</resource>
+			<!-- 指定环境配置文件导入 -->
+			<resource>
+				<directory>src/main/resources/${profiles.active}</directory>
+			</resource>
+		</resources>
+		
 		<plugins>
 			<!-- 用来解决循环依赖的问题 -->
 			<plugin>
@@ -724,6 +794,7 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			<!-- 跳过单元测试，若skip设置为false，则需要进行单元测试 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -745,13 +816,19 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
-				<!-- <configuration>
-					<warSourceDirectory>webapp</warSourceDirectory>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration> -->
+				<!-- <configuration>  
+                    <webResources>  
+                        <resource>  
+                            <directory>webapp</directory>  
+                        </resource>  
+                    </webResources>  
+                </configuration> -->
 			</plugin>
-			<!-- 实现web项目在tomcat7下的自动部署 -->
-			<plugin>
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- 实现web项目在tomcat7下的自动部署 方法1 测试通过 -->
+			<!-- 启动命令:mvn tomcat:run -->
+			<!-- <plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<configuration>
@@ -761,10 +838,36 @@
 					<password>admin</password>
 					<path>/${finalName}</path>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<!-- maven 自动部署到tomcat下，需要设置 修改$TOMCAT_HOME/conf/context.xml -->
 			<!-- 为: <Context antiJARLocking="true" antiResourceLocking="true"> -->
 			<!-- 其次，如果在pom中有引入 servlet-api 的jar包，则必须给次限定范围<scope>provided</scope> -->
+			<!-- 在mvn按装好后，启动tomcat服务器，cd切换的项目跟目录，执行：mvn clean tomcat7:redeploy -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- ============================================================== -->
+			<!-- 实现web项目在tomcat7下的自动部署 方法2-->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.1.3</version>
+				<configuration>
+					<wait>true</wait>
+					<container>
+						<containerId>tomcat7x</containerId>
+						<type>remote</type>
+					</container>
+					<configuration>
+						<type>runtime</type>
+						<properties>
+							<cargo.remote.uri>${deploy.url}</cargo.remote.uri>
+							<!-- Tomcat配置的用户名密码， 见Tomcat自动部署支持章节 -->
+							<cargo.remote.username>admin</cargo.remote.username>
+							<cargo.remote.password>admin</cargo.remote.password>
+						</properties>
+					</configuration>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

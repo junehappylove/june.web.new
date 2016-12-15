@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.archive.ArchiveDao">
+	<sql id="selectData">
+		SELECT
+		t1.ID AS id,
+		t1.ARCHIVE_NAME AS archiveName,
+		t1.OPERATE_USER_ID AS operateUserId,
+		t1.OPERATE_TIME AS operateTime,
+		t2.USER_NAME AS operateUserName
+		FROM
+		archive t1,
+		sys_user t2
+		WHERE
+		t1.OPERATE_USER_ID = t2.USER_ID
+	</sql>
+
+
+	<!-- 根据schem查询用户列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.archive.ArchiveDto">
+		<include refid="selectData" />
+		<include refid="pagelimit" />
+	</select>
+
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		(
+		<include refid="selectData" />
+		) temp
+	</select>
+	
+	<insert id="saveArchiveInfo" parameterType="com.june.dto.back.archive.ArchiveDto"
+	useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO
+		archive
+		(
+			ARCHIVE_NAME,
+			OPERATE_USER_ID,
+			OPERATE_TIME
+		)
+		VALUES
+		(
+			#{archiveName},
+			#{sys_user},
+			#{sys_date}
+		)
+	</insert>
+	<insert id="saveArchivePic" parameterType="com.june.dto.back.archive.ArchiveDto">
+		INSERT
+		INTO
+		picture
+		(
+			ID,
+			ARCHIVE_ID,
+			PICTURE_NAME
+		)
+		VALUES
+		(
+			NULL,
+			#{id},
+			#{pictureName}
+			
+		)
+	</insert>
+	
+	<select id="getPicList" parameterType="String" resultType="com.june.dto.back.archive.ArchiveDto">
+		SELECT
+		T2.PICTURE_NAME AS pictureName
+		FROM
+		archive T1
+		LEFT JOIN
+		picture T2
+		ON
+		T1.ID = T2.ARCHIVE_ID
+		WHERE
+		T1.ID = #{id}
+	</select>
+</mapper>
