@@ -20,6 +20,17 @@ import com.june.utility.MessageUtil;
  * @date 2016年12月8日 下午4:36:33
  */
 public class Constants {
+	/** 项目平台环境：dev,test,pro */
+	public final static String ENVIRONMENT = MessageUtil.$KEY("project.environment");
+	public final static String ERROR_CODE_WRONG = MessageUtil.$KEY("error_code_wrong");
+	public final static String ERROR_CODE_EMPTY = MessageUtil.$KEY("error_code_empty");
+	public final static String USER_NOT_EXIT = MessageUtil.$KEY("user_not_exist");
+	public final static String USER_LOCKED = MessageUtil.$KEY("user_locked");
+	public final static String SYS_ERROR = MessageUtil.$KEY("sys_error");
+	public final static String NO_AVALIABLE_TRACKER = MessageUtil.$KEY("no_avaliable_tracker");
+	public final static String REMOTE_ADDRESS_ERROR = MessageUtil.$KEY("remotefile_address_error");
+	public final static String REMOTE_FILE_NO_EXIST = MessageUtil.$KEY("remotefile_not_exist");
+	
 	/** 空 "" */
 	public final static String EMPTY = "";
 	public final static int COMMIT_NUM = 1000;//最多一次性提交1000条
@@ -71,7 +82,7 @@ public class Constants {
 	public static final String REGISTER_EMAIL_CODE = "验证码已发送至您的邮箱，请验证";
 	public static final String EMAIL_ERROR = "邮箱发送失败，请重试";
 	
-	public static final String FINDPASSWORD_EMAIL_SUBJECT = "激活你的智慧环卫平台帐号";
+	public static final String FINDPASSWORD_EMAIL_SUBJECT = "激活你的XXXXXX平台帐号";
 	public static final String RESETPASSWORD_ERROR = "密码重置失败，请重试";
 	
 	/**  操作类型，用于操作日志时存储  Add 添加操作 */
@@ -92,7 +103,7 @@ public class Constants {
 	public static final String OPERATE_TYPE_OTHER = "Other";
 	
 	/**  是否记录日志操作 */
-	public static final boolean IF_LOG = Boolean.parseBoolean(MessageUtil.getResourceValue("log"));//21;
+	public static final boolean IF_LOG = Boolean.parseBoolean(MessageUtil.$KEY("log"));//21;
 	
 	/**
 	 * 消息类型
@@ -126,11 +137,11 @@ public class Constants {
 	 */
 	public static final int DEFAULT_ROW_DATA = 30;
 
-	public static final String FTP_ROOT_DIR = MessageUtil.getResourceValue("ftp.host");//"192.168.100.5";
-	public static final String FTP_USER = MessageUtil.getResourceValue("ftp.user");//"nfschina";
-	public static final String FTP_PASSWORD = MessageUtil.getResourceValue("ftp.password");//"nfschina";
-	public static final String FTP_LOCATION = MessageUtil.getResourceValue("ftp.location");//"FTP";
-	public static final int FTP_PORT = Integer.parseInt(MessageUtil.getResourceValue("ftp.port"));//21;
+	public static final String FTP_ROOT_DIR = MessageUtil.$KEY("ftp.host");//"192.168.100.5";
+	public static final String FTP_USER = MessageUtil.$KEY("ftp.user");//"nfschina";
+	public static final String FTP_PASSWORD = MessageUtil.$KEY("ftp.password");//"nfschina";
+	public static final String FTP_LOCATION = MessageUtil.$KEY("ftp.location");//"FTP";
+	public static final int FTP_PORT = Integer.parseInt(MessageUtil.$KEY("ftp.port"));//21;
 	
 	public static final String FTP_ROOT_DIR_ = "192.168.100.5";
 	public static final String FTP_USER_ = "nfschina";
@@ -170,7 +181,7 @@ public class Constants {
 	/** 本地保存文件路径 */
 	public static final String DIRECTORY_LOCAL_DOWNLOAD_ = "C:/MSOCache/temp/";
 	/** 本地下载文件路径 */
-	public static final String DIRECTORY_LOCAL_DOWNLOAD = MessageUtil.getResourceValue("file.downloadpath");
+	public static final String DIRECTORY_LOCAL_DOWNLOAD = MessageUtil.$KEY("file.downloadpath");
 
 	/**
 	 * 目录集合

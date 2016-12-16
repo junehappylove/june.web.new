@@ -111,14 +111,14 @@ public class UploadEditorPicController{
 			} else {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.formatMessage("error_image_file") + "');");
+						+ MessageUtil.$VALUE("error_image_file") + "');");
 				out.println("</script>");
 				return null;
 			}
 			if (upload.getSize() > 6000 * 1024) {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.formatMessage("error_file_size", new String[] { "6M" }) + "');");
+						+ MessageUtil.$VALUE("error_file_size", new String[] { "6M" }) + "');");
 				out.println("</script>");
 				return null;
 			}

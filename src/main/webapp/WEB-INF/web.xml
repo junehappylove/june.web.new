@@ -4,20 +4,32 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 	<display-name>june_web_new</display-name>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<listener>
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
+	<!-- 读取spring的配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:spring/spring-mvc.xml</param-value>
 	</context-param>
+	<!-- 日志记录配置文件 -->
 	<context-param>
 		<param-name>logbackConfigLocation</param-name>
 		<param-value>classpath*:logback.xml</param-value>
 	</context-param>
+	<!-- 此监听器主要用于解决java.beans.Introspector导致的内存泄漏的问题 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- 启动Web容器时,自动装配ApplicationContext的配置信息 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 在整合spring容器时使用ContextLoaderListener,它实现了ServletContextListener监听器接口, 
+		ServletContextListener只负责监听web容器启动和关闭的事件. 而RequestContextListener实现ServletRequestListener监听器接口, 
+		该监听器监听HTTP请求事件,web服务器接收的每一次请求都会通知该监听器. spring容器启动和关闭操作由web容器的启动和关闭事件触发, 但如果spring容器中的Bean需要request,session,globalsession作用域的支持, 
+		spring容器本身就必须获得web容器的HTTP请求事件,以HTTP请求的事件"驱动"Bean作用域的控制逻辑. -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<!-- 设置字符编码，将所有的字符编码同意设置为utf-8 -->
 	<filter>
 		<filter-name>characterEncoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -34,6 +46,7 @@
 		<filter-name>characterEncoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -108,6 +121,7 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
+	<!-- 将所有*.do的请求交给springMVC的DispatcherServlet来处理 -->
 	<servlet>
 		<servlet-name>bootstrap</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -168,8 +182,9 @@
 	<welcome-file-list>
 		<welcome-file>/</welcome-file>
 	</welcome-file-list>
+	<!-- 设置session过期的时间 min -->
 	<session-config>
-		<session-timeout>90</session-timeout>
+		<session-timeout>30</session-timeout>
 	</session-config>
 	<error-page>
 		<exception-type>org.springframework.transaction.CannotCreateTransactionException</exception-type>

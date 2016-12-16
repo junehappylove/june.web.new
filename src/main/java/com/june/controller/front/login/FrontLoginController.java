@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
+import com.june.common.Constants;
 import com.june.dto.front.login.UserInfoDto;
 import com.june.service.front.login.FrontLoginService;
-import com.june.utility.MessageUtil;
 
 @Controller
 @RequestMapping("/frontLogin")
@@ -44,14 +44,14 @@ public class FrontLoginController extends BaseController<UserInfoDto>{
 			  //用户不存在
 	    	  result = new ModelAndView("front/login");
             //用户不存在，去出错误信息返回
-            String error = MessageUtil.formatMessage("user_not_exist");
+            String error = Constants.USER_NOT_EXIT;//MessageUtil.$VALUE("user_not_exist");
             result.addObject("error", error);
             return result;
 	      }else if (userInfoDto.getUserLock().equals("1")) {
 	    	//用户被锁定
 	    	  result = new ModelAndView("front/login");
 	    	//用户被锁定，取出错误信息返回
-            String error = MessageUtil.formatMessage("user_locked");
+            String error = Constants.USER_LOCKED;// MessageUtil.$VALUE("user_locked");
             result.addObject("error", error);
             return result;
 	      }else{

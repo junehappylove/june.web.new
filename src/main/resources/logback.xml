@@ -64,7 +64,7 @@
     </appender> -->
     
 	<!-- DEBUG  INFO  ERROR -->
-	<root level="DEBUG">
+	<root level="INFO">
         <appender-ref ref="STDOUT" />  
         <!-- 对日志的双向记录 -->
 		<appender-ref ref="FILE" />

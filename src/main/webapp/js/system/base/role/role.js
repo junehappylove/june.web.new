@@ -281,7 +281,7 @@ function assignMenu()
 	var ids = "";
 	for(var i=0;i<nodes.length;i++)
 	{
-		ids = ids +　nodes[i].id + ","
+		ids = ids + nodes[i].id + ",";
 	}
 	var data={
 		authorityMenusId:ids,
@@ -357,7 +357,7 @@ function assignUser()
 	{
 		if(nodes[i].id != '-1')
 		{
-			ids = ids +　nodes[i].id + ","
+			ids = ids + nodes[i].id + ",";
 		}
 		
 	}

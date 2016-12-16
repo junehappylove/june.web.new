@@ -83,7 +83,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.saveContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.formatMessage("content_save_success"));
+	        errList.add(MessageUtil.$VALUE("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -92,7 +92,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.updateContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.formatMessage("content_save_success"));
+	        errList.add(MessageUtil.$VALUE("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -131,7 +131,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.submitNoDirect(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.formatMessage("content_submit_success"));
+	        errList.add(MessageUtil.$VALUE("content_submit_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end

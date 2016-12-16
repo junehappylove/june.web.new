@@ -43,17 +43,6 @@ public class MessageUtil {
 		return messageValue;
 	}
 
-	
-//	public static String getFormatMessage(String msgId, String[] messageParam) {
-//		try {
-//			String message = getMessage(msgId);
-//			message = StringUtil.isNotBlank(message) ? message : msgId;
-//			return setMessageByParam(message, messageParam);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 	/**
 	 * 根据消息id获取配置文件中的消息内容
 	 * 
@@ -61,9 +50,9 @@ public class MessageUtil {
 	 * @param param
 	 *            消息内容中替换的参数
 	 * @throws Exception
-	 * @return: String
+	 * @return: String 获取不到原路返回msgId
 	 */
-	public static String formatMessage(String msgId, String... param) {
+	public static String $VALUE(String msgId, String... param) {
 		try {
 			String message = getMessage(msgId);
 			message = StringUtil.isNotBlank(message) ? message : msgId;
@@ -75,12 +64,12 @@ public class MessageUtil {
 	}
 	
 	/**
-	 * 获取资源文件(config.properties)中的属性
+	 * 获取资源文件(config.properties)中的属性值
 	 * 
 	 * @param key
 	 * @return: String
 	 */
-	public static String getResourceValue(String key) {
+	public static String $KEY(String key) {
 		return getMessage(key);
 	}
 }

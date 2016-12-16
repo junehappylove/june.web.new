@@ -1,42 +1,36 @@
 //点击图片，更换验证码
  $(function(){
      $('#kaptchaImage').click(function () {//生成验证码
-     	$(this).hide().attr('src', contextPath + '/getKaptchaImage?' + Math.floor(Math.random()*100) ).fadeIn();
+     	$(this).hide().attr('src', contextPath + '/getKaptchaImage?' + june.timestamp()).fadeIn();
  	    event.cancelBubble=true;
      });
  });
 
  //点击链接，更换验证码
  function changeCode() {
- 	$('#kaptchaImage').hide().attr('src', contextPath + '/getKaptchaImage?' + Math.floor(Math.random()*100) ).fadeIn();
+ 	$('#kaptchaImage').hide().attr('src', contextPath + '/getKaptchaImage?' + june.timestamp()).fadeIn();
  	event.cancelBubble=true;
  }
 
-
-
- function sureClick()
- {
+ function sureClick() {
 	 $('#roleForm').attr('action', contextPath + '/login/main');
 	 $("#roleName").val($("#roleId").find("option:selected").text());
 	 $("#roleForm").submit();
  }
  
  //角色选择画面退出按钮压下
- function logoutClick()
- {
+ function logoutClick() {
 	 $('#roleForm').attr('action', contextPath + '/logout');
 	 $("#roleForm").submit();
  }
  
-function loginCheck()
-{
+function loginCheck(){
 	 //Encrypt("password");
 	 $('#defaultForm').attr('action', contextPath + '/logincheck');
 	 $("#defaultForm").submit();
 }
 
 $(document).ready(function() {
-
     $('#defaultForm').bootstrapValidator({
 //        live: 'disabled',
         feedbackIcons: {
@@ -76,7 +70,6 @@ $(document).ready(function() {
 
 
 //将密码用md5加密
-function EncryptPassword()
-{
+function EncryptPassword(){
 	Encrypt("password");
 }

@@ -1,9 +1,11 @@
+<%@page import="com.june.common.Constants"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="fun" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib uri="http://ckeditor.com" prefix="ckeditor" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="env" value="<%=Constants.ENVIRONMENT %>" />
 
 <link href="${ctx}/jslib/bootstrap/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
 <link href="${ctx}/jslib/bootstrap/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">

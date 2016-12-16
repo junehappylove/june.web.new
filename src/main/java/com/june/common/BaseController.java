@@ -17,9 +17,9 @@ import java.lang.reflect.Method;
 import java.net.SocketException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -104,8 +104,8 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	@Autowired
 	protected CommonService commonService;
 	 /** 配置文件名称，早config.properties文件中定义，区分不同打包指令后各环境的配置文件内容    */
-	@Value("${propertiesName}")
-	protected String propertiesName;
+	@Value("${project.environment}")//表示运行环境 dev test pro
+	protected String environment;
 
 	//=====================================================================================
 	//=====================================================================================
@@ -503,34 +503,28 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 					messageDto.setErrList(errList);
 					messageDto.setErrType("error");
 				}
-			}
-
-			else {
+			} else {
 				// 添加自己的异常处理逻辑，如日志记录
 				ArrayList<String> errList = new ArrayList<String>();
 				try {
 					logger.error("Exception:" + e + ":" + e.getMessage());
-					errList.add(MessageUtil.formatMessage("sys_error"));
+					errList.add(Constants.SYS_ERROR);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 				messageDto.setErrList(errList);
 				messageDto.setErrType("error");
 			}
-			JSONObject jsonObject = JSONObject.fromObject(messageDto);
-			ConvetDtoToJson(response, jsonObject);
+			toJson(messageDto, response);
 			// 页面不跳转
 			return null;
 		} else {
 			if (e instanceof FastDFSException) {
 				ArrayList<String> errList = new ArrayList<String>();
 				logger.error("Exception:" + e + ":" + e.getMessage());
-				errList.add(MessageUtil.formatMessage("noavaliablearacker"));
+				errList.add(Constants.NO_AVALIABLE_TRACKER);
 				messageDto.setErrList(errList);
 				messageDto.setErrType("error");
-				// throw new
-				// FastDFSException(MessageUtil.getFormatMessage("noavaliablearacker",
-				// null));
 				toJson(messageDto, response);
 				// 页面不跳转
 				return null;
@@ -598,19 +592,21 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected MessageDto getValidateError(BindingResult bindingResult) throws Exception {
 		MessageDto messageDto = new MessageDto();
 		ArrayList<String> errList = new ArrayList<String>();
+		List<String> stooges = null;
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> messageList = bindingResult.getAllErrors();
 			for (ObjectError list : messageList) {
 				if (list.getDefaultMessage().contains(";")) {
 					String[] messageArray = list.getDefaultMessage().split(";");
 					String message = messageArray[0];
-					String messageParam = "";
-					for (int i = 1; i < messageArray.length; i++) {
-						messageParam = messageParam + messageArray[i] + ",";
+					stooges = Arrays.asList(messageArray);
+					String[] params = null;
+					if(stooges.size()>1){
+						stooges.remove(0);
+						params = (String[]) stooges.toArray();
 					}
-					if (messageParam.contains(",")) {
-						errList.add(setMessageByParam(message, messageParam.split(",")));
-					}
+					stooges.clear();
+					errList.add(MessageUtil.$VALUE(message, params));
 				} else {
 					errList.add(list.getDefaultMessage());
 				}
@@ -619,23 +615,6 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 			messageDto.setErrType(MESSAGE_ERRO);
 		}
 		return messageDto;
-	}
-
-	/**
-	 * 设定message
-	 * 
-	 * @param message
-	 *            MessagesDTO
-	 * @param messageParam
-	 *            String[]
-	 * @return String
-	 * @throws SpaceParameterException
-	 *             异常信息
-	 */
-	private static String setMessageByParam(String message, String[] messageParam) throws Exception {
-		MessageFormat messageFormat = new MessageFormat(message);
-		String messageValue = messageFormat.format(messageParam);
-		return messageValue;
 	}
 
 	/**
@@ -818,8 +797,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	public void message(HttpServletResponse response,String messages, String type, String... params) throws Exception {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
-		// message.setErrList(null);
-		errList.add(MessageUtil.formatMessage(messages,params));
+		errList.add(MessageUtil.$VALUE(messages,params));
 		message.setErrList(errList);
 		message.setErrType(type);
 		// 返回消息 end

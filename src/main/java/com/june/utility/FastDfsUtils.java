@@ -21,6 +21,7 @@ import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
+import com.june.common.Constants;
 import com.june.utility.exception.CustomException;
 import com.june.utility.exception.FastDFSException;
 
@@ -54,7 +55,7 @@ public class FastDfsUtils {
 			groupName = url.split(":")[0];
 			fileName = url.split(":")[1];
 		} else {
-			throw new FastDFSException(MessageUtil.formatMessage("remotefile_address_error"));
+			throw new FastDFSException(Constants.REMOTE_ADDRESS_ERROR);
 		}
 
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
@@ -70,18 +71,17 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
+			throw new FastDFSException(Constants.NO_AVALIABLE_TRACKER);
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
 
 		String group_name = groupName;
 		String remote_filename = fileName;
-		// FileInfo fi = storageClient.get_file_info(group_name,
-		// remote_filename);
+		// FileInfo fi = storageClient.get_file_info(group_name, remote_filename);
 		byte[] buffer = storageClient.download_file(group_name, remote_filename);
 		if (buffer == null) {
-			throw new FastDFSException(MessageUtil.formatMessage("remotefile_not_exist"));
+			throw new FastDFSException(Constants.REMOTE_FILE_NO_EXIST);
 		}
 		return buffer;
 	}
@@ -120,7 +120,7 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
+			throw new FastDFSException(Constants.NO_AVALIABLE_TRACKER);
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);
@@ -199,7 +199,7 @@ public class FastDfsUtils {
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
-			throw new FastDFSException(MessageUtil.formatMessage("noavaliablearacker"));
+			throw new FastDFSException(Constants.NO_AVALIABLE_TRACKER);
 		}
 		StorageServer storageServer = null;
 		StorageClient storageClient = new StorageClient(trackerServer, storageServer);

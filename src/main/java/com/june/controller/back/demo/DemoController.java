@@ -284,12 +284,12 @@ public class DemoController extends BaseController<MenuDto> {
 		String[] attrs = { "no", "name", "dept", "title", "date", "onTime", "offTime", "address", "getDate", "carNo",
 				"status" };
 		ExportImportExcel.exportExcelToFolder(list, titles, attrs, "test",
-				MessageUtil.getResourceValue("file.downloadpath"), "aaa");
+				MessageUtil.$KEY("file.downloadpath"), "aaa");
 
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.formatMessage("export_success"));
+		errList.add(MessageUtil.$VALUE("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
@@ -339,7 +339,7 @@ public class DemoController extends BaseController<MenuDto> {
 		MessageDto messageDto = new MessageDto();
 
 		// 获取文件保存的路径，路径在配置文件config.properties文件中保存
-		String realPath = MessageUtil.getResourceValue("savePicUrl");
+		String realPath = MessageUtil.$KEY("savePicUrl");
 		String message = FileUpLoadDownload.uploadSingleFile(myfiles[0], request, response,
 				realPath, null);
 		ArrayList<String> errList = new ArrayList<String>();
@@ -358,7 +358,7 @@ public class DemoController extends BaseController<MenuDto> {
 	// 获取图片
 	@RequestMapping("/getImage")
 	public void getImage(HttpServletRequest request, HttpServletResponse response) {
-		String realPath = MessageUtil.getResourceValue("savePicUrl");
+		String realPath = MessageUtil.$KEY("savePicUrl");
 		String filePath = realPath + "22.png";
 		returnImage(response, filePath);
 	}
@@ -529,7 +529,7 @@ public class DemoController extends BaseController<MenuDto> {
 
 			Map.Entry<String, MultipartFile> entry = entries.next();
 			multipartFile = entry.getValue();
-			String realPath = MessageUtil.getResourceValue("savePicUrl");
+			String realPath = MessageUtil.$KEY("savePicUrl");
 			// 上传文件到指定文件夹
 			String message = FileUpLoadDownload.uploadSingleFile(multipartFile, request, response,
 					realPath, null);
@@ -699,7 +699,7 @@ public class DemoController extends BaseController<MenuDto> {
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.formatMessage("export_success"));
+		errList.add(MessageUtil.$VALUE("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 endlist

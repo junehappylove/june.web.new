@@ -42,7 +42,7 @@ $(function(){
 
 //点击链接，更换验证码
 function changeCode() {
-	$('#kaptchaImage').hide().attr('src', contextPath + '/getKaptchaImage?' + Math.floor(Math.random()*100) ).fadeIn();
+	$('#kaptchaImage').hide().attr('src', contextPath + '/getKaptchaImage?' + Math.floor(Math.random()*100)).fadeIn();
 	event.cancelBubble=true;
 }
 

@@ -24,7 +24,7 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>[bootstrap]</h1>
+                        <h1>june_web_new</h1>
                     </div>
                     <div class="m-b"></div>
                     <h4>欢迎使用 <strong>bootstrap后台主题UI框架</strong></h4>
@@ -35,30 +35,56 @@
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势四</li>
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势五</li>
                     </ul>
-                    <strong>还没有账号？ <a href="#">立即注册&raquo;</a></strong>
+                    <strong>还没有账号? <a href="#">立即注册&raquo;</a></strong>
                 </div>
             </div>
             <div class="col-sm-5">
                 <form id="defaultForm" method="post" >
                     <h4 class="no-margins">登录：</h4>
                     <p class="m-t-md">登录到后台主题UI框架</p>
-                    <input type="text" name="username" id="username" class="form-control uname" placeholder="用户名"/>
-                    <input type="password" class="form-control pword m-b" name="password" id="password" placeholder="密码" />
-                     <div class="clearfix"></div>
-
-                         <c:if test="${not empty errormsg}">
-			                    <div class="alert alert-danger">
-			                    	<button type="button" class="close" data-dismiss="alert">&times;</button>
-			                    <strong>${errormsg}</strong>
-			                    </div>
-			                  </c:if>
-			                  <c:if test="${not empty logout}">
-			                    <div class="alert alert-success">
-			                    	<button type="button" class="close" data-dismiss="alert">&times;</button>
-			                    <strong>${logout}</strong>
-			                    </div>
-			                  </c:if>	
-                    <a href="">忘记密码了？</a>
+                    <div class="form-group">
+                    	<lable class="sr-only" for="username">用户名</lable>
+                    	<input type="text" name="username" id="username" class="form-control uname" placeholder="用户名"/>
+                    </div>
+                    <div class="form-group">
+                    	<lable class="sr-only" for="password">密码</lable>
+                    	<input type="password" name="password" id="password" class="form-control pword m-b" placeholder="密码" />
+                    </div>
+                    <c:if test="${env != 'dev' }">
+                    <div class="row" style="padding-bottom: 15px;">
+                    	<div class="col-xs-5">
+                    		<input type="text" name="kaptcha" id="kaptcha" class="form-control" maxlength="4" placeholder="验证码"/>
+                    	</div>
+                  		<div class="col-xs-*" style="padding: 0px;height: 32px;">
+							<img src="${ctx }/getKaptchaImage.do?javascript:june.timestamp();" id="kaptchaImage" /> 
+                    	</div>
+                    </div>
+                    </c:if>
+                    <div class="row">
+                    	<div class="clearfix"></div>
+                    </div>
+					<c:if test="${not empty errormsg}">
+						<div class="alert alert-danger">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>${errormsg}</strong>
+						</div>
+					</c:if>
+					<c:if test="${not empty logout}">
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>${logout}</strong>
+						</div>
+					</c:if>
+					<div class="row">
+						<div class="col-xs-5" align="left">
+							<a href="#">忘记密码了?</a>
+						</div>
+                    	<c:if test="${env != 'dev' }">
+						<div class="col-xs-6" align="right">
+							<a href="#" onclick="changeCode()" class="text-right">看不清?换一张</a>
+						</div>
+						</c:if>
+					</div>
                     <button type="submit" class="btn btn-success btn-block">登录</button>
                 </form>
             </div>

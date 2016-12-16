@@ -101,6 +101,9 @@ june={
 				max = 10;
 			return Math.round(Math.random()*(max-min) + min);
 		},
+		timestamp:function(){
+			return new Date().getTime();
+		},
 		checkImageType:function(type){
 			if(type==""){
 				return false;

@@ -108,9 +108,9 @@ public class QurartzController extends BaseController<QuartzTriggerDto> {
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
 		if (result) {
-			errList.add(MessageUtil.formatMessage("quartz_delete_success"));
+			errList.add(MessageUtil.$VALUE("quartz_delete_success"));
 		} else {
-			errList.add(MessageUtil.formatMessage("quartz_delete_error"));
+			errList.add(MessageUtil.$VALUE("quartz_delete_error"));
 		}
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");

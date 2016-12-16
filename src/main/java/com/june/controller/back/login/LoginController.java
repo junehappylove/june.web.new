@@ -37,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.code.kaptcha.Producer;
 import com.june.common.BaseController;
+import com.june.common.Constants;
 import com.june.common.MessageDto;
 import com.june.dto.back.login.MenuDto;
 import com.june.dto.back.system.base.UserInfoDto;
@@ -67,8 +68,8 @@ public class LoginController extends BaseController<UserInfoDto>{
 	@Autowired
 	private Producer captchaProducer = null;
 	
-//	@Autowired
-//	private ShardedJedisPool shardedJedisPool; 
+	//@Autowired
+	//private ShardedJedisPool shardedJedisPool; 
 
 	/**
 	 * @Description: 进入登录页面
@@ -111,47 +112,56 @@ public class LoginController extends BaseController<UserInfoDto>{
 			HttpServletResponse response,RedirectAttributes redirectAttributes) throws Exception{
 		String username = request.getParameter("username");
 	    String password = request.getParameter("password");
-	    //String kaptchaFormjsp = request.getParameter("kaptcha");//获取页面传过来的额验证码
-	    //String kaptchaExpected = (String) request.getSession().getAttribute("kaptcha");//获取session中的验证码
+	    String kaptchaFormjsp = request.getParameter("kaptcha");//获取页面传过来的验证码
+	    String kaptchaExpected = (String) request.getSession().getAttribute("kaptcha");//获取session中的验证码
+	    //TODO 开发环境下无需设置验证码 dev test pro
+	    if(!environment.equalsIgnoreCase("dev")){
+		    if(kaptchaFormjsp.isEmpty()){
+				redirectAttributes.addFlashAttribute("errormsg", Constants.ERROR_CODE_EMPTY);
+		    	return "redirect:/login/";
+		    }
+		    if(!kaptchaFormjsp.equals(kaptchaExpected)){
+				redirectAttributes.addFlashAttribute("errormsg", Constants.ERROR_CODE_WRONG);
+		    	return "redirect:/login/";
+		    }
+	    }
 	    Subject subject = SecurityUtils.getSubject();
 	    UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		token.setRememberMe(false);
 		UserInfoDto userInfoDto = new UserInfoDto();
-		 try {
-			  subject.login(token);
-			  
-		    }catch (UnknownAccountException e) {
-		      token.clear();
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_not_exist"));
-			  return  "redirect:/login/"; 
-		    }catch (LockedAccountException e) {
-		      token.clear();
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_locked"));
-			  return  "redirect:/login/"; 
-		    }catch (IncorrectCredentialsException e) {
-		      token.clear();
-		      userInfoDto.setUserId(username);
-		      loginService.updateFailLoginAttempt(userInfoDto);
-		      redirectAttributes.addFlashAttribute("errormsg", MessageUtil.formatMessage("user_not_exist"));
-			  return  "redirect:/login/"; 
-			}catch (LoginAttemptException e) {
-				token.clear();
-			    redirectAttributes.addFlashAttribute("errormsg", e.getMessage());
-				return  "redirect:/login/"; 
-			}
-	     userInfoDto.setUserId(username);
-		 loginService.updateSuccessLoginAttempt(userInfoDto);
-		 request.getSession().setAttribute("username",username);
-		 //限制只能一个用户登录 start
-//		 String sessionId = shardedJedisPool.getResource().get(username);
-//		 if (sessionId != null) {
+		try {
+			subject.login(token);
+		} catch (UnknownAccountException e) {
+			token.clear();
+			redirectAttributes.addFlashAttribute("errormsg", Constants.USER_NOT_EXIT);
+			return "redirect:/login/";
+		} catch (LockedAccountException e) {
+			token.clear();
+			redirectAttributes.addFlashAttribute("errormsg", Constants.USER_LOCKED);
+			return "redirect:/login/";
+		} catch (IncorrectCredentialsException e) {
+			token.clear();
+			userInfoDto.setUserId(username);
+			loginService.updateFailLoginAttempt(userInfoDto);
+			redirectAttributes.addFlashAttribute("errormsg", Constants.USER_NOT_EXIT);
+			return "redirect:/login/";
+		} catch (LoginAttemptException e) {
+			token.clear();
+			redirectAttributes.addFlashAttribute("errormsg", e.getMessage());
+			return "redirect:/login/";
+		}
+		userInfoDto.setUserId(username);
+		loginService.updateSuccessLoginAttempt(userInfoDto);
+		request.getSession().setAttribute("username", username);
+		//TODO 限制只能一个用户登录 start
+//		String sessionId = shardedJedisPool.getResource().get(username);
+//		if (sessionId != null) {
 //			//如果该sessionId已经存在，则删除该sessionid
-//			 shardedJedisPool.getResource().del("shiro_redis_session:" + sessionId);
-//		 }
-//		 shardedJedisPool.getResource().set(username,request.getSession().getId());
+//			shardedJedisPool.getResource().del("shiro_redis_session:" + sessionId);
+//		}
+//		shardedJedisPool.getResource().set(username,request.getSession().getId());
 		//限制只能一个用户登录 end
-		 return "redirect:/login/main"; 
-	    
+		return "redirect:/login/main"; 
 	}
 	
 	
@@ -269,7 +279,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 		ModelAndView result = null;
 		
 		result = new ModelAndView("error/403");
-		String msg = MessageUtil.formatMessage("access_denied");
+		String msg = MessageUtil.$VALUE("access_denied");
 		// 将错误信息返回到页面
 		result.addObject("error", msg);
 		return result;
@@ -379,11 +389,11 @@ public class LoginController extends BaseController<UserInfoDto>{
 	public ModelAndView getKaptchaImage1(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
-		// String code = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		//String code = (String)session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
+		//System.out.println("VerfiyCode:"+code);
 		response.setDateHeader("Expires", 0);
 		// Set standard HTTP/1.1 no-cache headers.
-		response.setHeader("Cache-Control",
-				"no-store, no-cache, must-revalidate");
+		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		// Set IE extended HTTP/1.1 no-cache headers (use addHeader).
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 		// Set standard HTTP/1.0 no-cache header.
@@ -418,8 +428,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 	public void isKaptchaRight(HttpServletRequest request,
 			HttpServletResponse response) {
 		String kaptcha = (String) request.getParameter("kaptcha");
-		String capText = (String) request.getSession().getAttribute(
-				"kaptcha");// 获取session里的验证码
+		String capText = (String) request.getSession().getAttribute("kaptcha");// 获取session里的验证码
 
 		MessageDto messageDto = new MessageDto();
 		if (kaptcha.equalsIgnoreCase(capText) || kaptcha.equals(capText)

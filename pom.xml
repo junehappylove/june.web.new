@@ -9,7 +9,6 @@
 	<description>june_web_new</description>
 	<!-- 项目属性 -->
 	<properties>
-		<finalName>june_web_new</finalName>
 		<!-- jar 版本设置 -->
 		<spring.version>4.2.5.RELEASE</spring.version>
 		<shiro.version>1.2.4</shiro.version>
