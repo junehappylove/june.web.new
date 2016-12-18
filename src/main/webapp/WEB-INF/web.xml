@@ -14,13 +14,13 @@
 		<param-name>logbackConfigLocation</param-name>
 		<param-value>classpath*:logback.xml</param-value>
 	</context-param>
-	<!-- 此监听器主要用于解决java.beans.Introspector导致的内存泄漏的问题 -->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
 	<!-- 启动Web容器时,自动装配ApplicationContext的配置信息 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 此监听器主要用于解决java.beans.Introspector导致的内存泄漏的问题 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<!-- 在整合spring容器时使用ContextLoaderListener,它实现了ServletContextListener监听器接口, 
 		ServletContextListener只负责监听web容器启动和关闭的事件. 而RequestContextListener实现ServletRequestListener监听器接口, 
@@ -46,7 +46,9 @@
 		<filter-name>characterEncoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+	<!-- 配置安全过滤器链  start -->
+	<!-- spring的DelegatingFilterProxy提供了在 web.xml和application context之间的联系 -->
+	<!-- GenericFilterBean的作用主要是可以把Filter的初始化参数自动地set到继承于GenericFilterBean类的Filter中去 -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -55,6 +57,7 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!-- 配置安全过滤器链 end -->
 	<!-- Druid Monitor 监控 -->
 	<filter>
 		<filter-name>DruidWebStatFilter</filter-name>
@@ -98,16 +101,11 @@
 			<param-value>192.168.1.118</param-value>
 		</init-param>
 		<!-- 在StatViewSerlvet输出的html页面中，有一个功能是Reset All，执行这个操作之后，会导致所有计数器清零，重新计数 -->
-		<!-- <span style="white-space:pre"> </span> -->
 		<init-param>
-			<!-- <span style="white-space:pre"> </span> -->
 			<param-name>resetEnable</param-name>
-			<!-- <span style="white-space:pre"> </span> -->
 			<param-value>false</param-value>
-			<!-- <span style="white-space:pre"> </span> -->
 		</init-param>
-		<!-- <span style="white-space:pre"> </span> --><!-- 用户名和密码 -->
-		<!-- <span style="white-space:pre"> </span> -->
+		<!-- 用户名和密码 -->
 		<init-param>
 			<param-name>loginUsername</param-name>
 			<param-value>druid</param-value>
@@ -121,9 +119,10 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
+	
 	<!-- 将所有*.do的请求交给springMVC的DispatcherServlet来处理 -->
 	<servlet>
-		<servlet-name>bootstrap</servlet-name>
+		<servlet-name>june_web_new</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -132,7 +131,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>bootstrap</servlet-name>
+		<servlet-name>june_web_new</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -204,7 +203,7 @@
 	</error-page>
 	<error-page>
 		<exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
-		<location>/WEB-INF/view/error/InvalidSessionError.jsp</location>
+		<location>/WEB-INF/view/error/invalid-session-error.jsp</location>
 	</error-page>
 	<!-- JavaMelody 监控配置 -->
 	<filter>
@@ -222,18 +221,4 @@
 	<listener>
 		<listener-class>net.bull.javamelody.SessionListener</listener-class>
 	</listener>
-	<!-- 配置websocket -->
-	<!-- <servlet>
-		<servlet-name>spring-websocket</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:spring/spring-mvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>spring-websocket</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping> -->
 </web-app>

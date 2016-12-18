@@ -26,6 +26,14 @@ import com.june.dto.back.login.ButtonDto;
 import com.june.shiro.dao.ResourceDao;
 import com.june.shiro.dto.Resource;
 
+/**
+ * 
+ * ChainDefinitionSectionMetaSource <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月18日 下午7:54:11
+ */
 public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section>{  
 	 
     @Autowired  
@@ -51,7 +59,6 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Ini.Section
         //循环Resource的url,逐个添加到section中。section就是filterChainDefinitionMap,  
         //里面的键就是链接URL,值就是存在什么条件才能访问该链接  
         for (Iterator<Resource> it = list.iterator(); it.hasNext();) {  
- 
             Resource resource = it.next();  
             //如果不为空值添加到section中  
             if(StringUtils.isNotEmpty(resource.getMenuUrl()) ) {  

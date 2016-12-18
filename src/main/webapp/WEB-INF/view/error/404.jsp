@@ -17,7 +17,7 @@
     </div>
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.5"></script>
-    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=49184759" charset="UTF-8"></script>
 </body>
 
 </html>

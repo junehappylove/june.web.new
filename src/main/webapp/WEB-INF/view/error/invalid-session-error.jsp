@@ -3,16 +3,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>500</title>
+<title>SessionError</title>
 <%@include file="../common/import.jsp"%>
 </head>
 <body class="gray-bg">
     <div class="middle-box text-center animated fadeInDown">
-        <h1>500</h1>
+        <h1>Session Error</h1>
         <h3 class="font-bold">系统异常！</h3>
-
         <div class="error-desc">
-            抱歉，系统出现异常，请联系管理员吧~
+           	 抱歉，系统Session非法，请联系管理员吧~
         </div>
     </div>
     <script src="js/jquery.min.js?v=2.1.4"></script>

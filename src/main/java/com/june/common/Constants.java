@@ -35,55 +35,44 @@ public class Constants {
 	public final static String EMPTY = "";
 	public final static int COMMIT_NUM = 1000;//最多一次性提交1000条
 	
-	/**
-	 * 删除标志
-	 */
+	/** 删除标志 */
 	public final static String DEL_SIGN_NODEL = "0";// 未删除
 	public final static String DEL_SIGN_DEL = "1";// 已删除
 
-	/**
-	 * 行政区划级别
-	 */
+	/** 行政区划级别  */
 	public final static String DISTRICT_LEVEL_SHENG = "2";// 省级
 	public final static String DISTRICT_LEVEL_SHI = "3";// 市
 	public final static String DISTRICT_LEVEL_XIAN = "4";// 区、县
 	public final static String DISTRICT_LEVEL_ZHEN = "5";// 镇
 
 
-	/**
-	 * 图片上传判断
-	 */
-	public final static String UPLOAD_SUCC = "图片上传成功";
-	public final static String UPLOAD_FAIL = "图片上传失败";
+	/** 图片上传判断 */
+	public final static String UPLOAD_SUCC = MessageUtil.$KEY("upload_success");
+	public final static String UPLOAD_FAIL = MessageUtil.$KEY("upload_fail");
 
-	/**
-	 * 用户
-	 */
+	/** 用户 */
 	public final static String DEFAULT_PASSWORD = "111111";  //新增用户默认密码
-	public final static String FLAG_YES = "1";  //是
-	public final static String FLAG_NO = "0";   //否
+	public final static String FLAG_YES = "Y";  //是
+	public final static String FLAG_NO = "N";   //否
+	public final static String FLAG_YES_1 = "1";  //是
+	public final static String FLAG_NO_0 = "0";   //否
+	public final static String FLAG_TRUE = "T";  //是
+	public final static String FLAG_FALSE = "F";   //否
 	
-	/**
-	 * properties文件加密密钥
-	 */
-	public static final String KEY_STRING = "chinaws_database";//生成密钥的字符串  
+	/** properties文件加密密钥  */
+	public static final String KEY_STRING = "june_web_new_DataBase";//生成密钥的字符串  
 	
 	
-	/**
-	 * per_event表，用户越界事件
-	 */
-	public static final String PERSON_EVENT_OUTOFBOUNDS = "用户脱离工作区域";  //用户出界报警提示信息
+	/** per_event表，用户越界事件 */
+	public static final String PERSON_EVENT_OUTOFBOUNDS = MessageUtil.$KEY("person_event_out");  //用户出界报警提示信息
 	public static final String PERSON_EVENT_OUTOFBOUNDSTYPE = "05";  //出界的事件类型，与sys_code表中关联
 	
-	/**
-	 * 用户用邮箱注册时，给用户发送邮件的标题
-	 */
-	public static final String REGISTER_EMAIL_SUBJECT = "欢迎注册XXXXXX平台";
-	public static final String REGISTER_EMAIL_CODE = "验证码已发送至您的邮箱，请验证";
-	public static final String EMAIL_ERROR = "邮箱发送失败，请重试";
-	
-	public static final String FINDPASSWORD_EMAIL_SUBJECT = "激活你的XXXXXX平台帐号";
-	public static final String RESETPASSWORD_ERROR = "密码重置失败，请重试";
+	/** 用户用邮箱注册时，给用户发送邮件的标题 */
+	public static final String REGISTER_EMAIL_SUBJECT = MessageUtil.$KEY("register_email_subject");
+	public static final String REGISTER_EMAIL_CODE = MessageUtil.$KEY("register_email_code");
+	public static final String EMAIL_ERROR = MessageUtil.$KEY("email_error");
+	public static final String FINDPASSWORD_EMAIL_SUBJECT = MessageUtil.$KEY("find_password_email_subject");
+	public static final String RESETPASSWORD_ERROR = MessageUtil.$KEY("reset_password_error");
 	
 	/**  操作类型，用于操作日志时存储  Add 添加操作 */
 	public static final String OPERATE_TYPE_ADD = "Add";

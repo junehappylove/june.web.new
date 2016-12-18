@@ -45,6 +45,14 @@ import com.june.utility.DateUtil;
 import com.june.utility.MessageUtil;
 import com.june.utility.exception.LoginAttemptException;
 
+/**
+ * 实现MyRealm：继承AuthorizingRealm，并重写认证授权方法 
+ * ShiroDbRealm <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月18日 下午7:52:26
+ */
 public class ShiroDbRealm extends AuthorizingRealm{  
 	 
     @Autowired  
@@ -66,11 +74,9 @@ public class ShiroDbRealm extends AuthorizingRealm{
             SecurityUtils.getSubject().logout();
             return null;
         }
-    	
         if (principals == null) {  
-            throw new AuthorizationException("Principal对象不能为空");  
+            throw new AuthorizationException(MessageUtil.$KEY("principal_not_null"));  
         }  
- 
         ServletRequest request = ((WebSubject)SecurityUtils.getSubject()).getServletRequest();  
         //获取访问的url
 		String url =  ((HttpServletRequest)request).getServletPath().toString();
@@ -138,23 +144,17 @@ public class ShiroDbRealm extends AuthorizingRealm{
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {  
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;  
- 
         String username = usernamePasswordToken.getUsername();  
- 
         if (username == null) {  
-            throw new AccountException("用户名不能为空");  
+            throw new AccountException(MessageUtil.$KEY("user_name_not_null"));  
         }  
- 
         User user = shiroUserDao.getUserByUsername(username);  
- 
         if (user == null) {  
-            throw new UnknownAccountException("用户不存在");  
+            throw new UnknownAccountException(MessageUtil.$VALUE("user_info_not_exist", username));  
         }  
-		
 		if(user.getUserLock().equals("1")){
-			throw new  LockedAccountException("用户帐号已被锁定，请联系系统管理员！");
+			throw new  LockedAccountException(MessageUtil.$KEY("user_info_locked"));
 		}
-		
 		String lastLoginTime = user.getLastLoginTime();
 		Date lastLoginTimeDate = DateUtil.convert2Date(lastLoginTime);//上一次登录时间
 		Date now = DateUtil.convert2Date(DateUtil.convert2String(new Date()));

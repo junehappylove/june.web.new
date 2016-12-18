@@ -54,35 +54,36 @@
 	
 	<bean id="clientAuthenticationFilter" class="com.june.shiro.service.ClientAuthenticationFilter"/>
 	
-<!-- 安全退出filter  --> 
-<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-     <property name="redirectUrl" value="/login/" />
-</bean>
+	<!-- 安全退出filter  --> 
+	<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+	     <property name="redirectUrl" value="/login/" />
+	</bean>
 	<!-- shiro redisManager -->
-<!-- <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
-    <property name="host" value="192.168.80.128"/>
-    <property name="port" value="6379"/>
-    <property name="expire" value="5400"/>
-</bean>
+	<!-- <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+	    <property name="host" value="192.168.80.128"/>
+	    <property name="port" value="6379"/>
+	    <property name="expire" value="5400"/>
+	</bean> -->
 
-redisSessionDAO
-<bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
-    <property name="redisManager" ref="redisManager" />
-</bean>
+	<!-- redisSessionDAO -->
+	<!-- <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+	    <property name="redisManager" ref="redisManager" />
+	</bean> -->
 
-sessionManager
-<bean id="sessionManager" class="com.june.shiro.service.SessionManager">
-    <property name="sessionDAO" ref="redisSessionDAO" />
-    <property name="globalSessionTimeout" value="5400000"/>  
-    <property name="deleteInvalidSessions" value="true"/>  
-    <property name="sessionValidationSchedulerEnabled" value="true"/>  
-    <property name="sessionValidationInterval" value="5400000"/>  
-    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
-</bean>
+	<!-- sessionManager -->
+	<!-- <bean id="sessionManager" class="com.june.shiro.service.SessionManager">
+	    <property name="sessionDAO" ref="redisSessionDAO" />
+	    <property name="globalSessionTimeout" value="5400000"/>  
+	    <property name="deleteInvalidSessions" value="true"/>  
+	    <property name="sessionValidationSchedulerEnabled" value="true"/>  
+	    <property name="sessionValidationInterval" value="5400000"/>  
+	    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+	</bean> -->
 
-<bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
-    <constructor-arg value="sid"/>
-    <property name="httpOnly" value="true"/> 
-</bean>  -->
-<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<!-- <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
+	    <constructor-arg value="sid"/>
+	    <property name="httpOnly" value="true"/> 
+	</bean>  -->
+	
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 </beans>
