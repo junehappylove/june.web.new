@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.file.FileDao">
+	<sql id="selectData">
+		SELECT
+			t1.file_code,
+			t1.file_md5,
+			t1.file_name,
+			t1.file_classic
+			t1.file_type,
+			t1.file_text,
+			t1.file_delete,
+			t1.file_common,
+			t1.add_user_id,
+			t1.add_time,
+			t1.upd_user_id,
+			t1.upd_time,
+			t1.version
+		FROM
+			sys_file t1
+		WHERE 1=1
+		<if test="file_name != null and file_name != ''"> 
+			AND t1.file_name like '%${file_name}%' 
+		</if> 
+		<if test="file_text != null and file_text != ''"> 
+			AND t1.file_text like '%${file_text}%' 
+		</if> 
+		<if test="file_type != null and file_type != ''"> 
+			AND t1.file_type = #{file_type}  
+		</if> 
+		<if test="file_classic != null and file_classic != ''"> 
+			<![CDATA[ AND t1.file_classic = #{file_classic} ]]>
+		</if> 
+		<if test="file_common != null and file_common != ''"> 
+			<![CDATA[ AND t1.file_common = #{file_common}  ]]>
+		</if> 
+		<if test="file_delete != null and file_delete != ''"> 
+			<![CDATA[ AND t1.file_delete = #{file_delete}  ]]>
+		</if> 
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.file.FileDTO"
+		parameterType="com.june.dto.back.system.file.FileDTO">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	<!-- 分页现在条件 -->
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.file.FileDTO">
+		select count(1) from ( <include refid="selectData"/> ) temp
+	</select>
+	<!-- 添加一条 -->
+	<insert id="add" parameterType="com.june.dto.back.system.file.FileDTO">
+		INSERT INTO sys_file (
+			file_code,
+			file_md5,
+			file_name,
+			file_classic,
+			file_type,
+			file_text,
+			file_delete,
+			file_common,
+			add_user_id,
+			add_time,
+			upd_user_id,
+			upd_time,
+			version
+		) VALUES (
+			#{file_code},
+			#{file_md5},
+			#{file_name},
+			#{file_classic},
+			#{file_type},
+			#{file_text},
+			#{file_delete},
+			#{file_common},
+			#{sys_user},
+			NOW(),
+			#{sys_user},
+			NOW(),
+			0
+		)
+	</insert>
+	<!-- 批量添加 -->
+	<insert id="addList" parameterType="java.util.List">
+		<![CDATA[ INSERT INTO sys_file (
+			file_code,
+			file_md5,
+			file_name,
+			file_classic,
+			file_type,
+			file_text,
+			file_delete,
+			file_common,
+			add_user_id,
+			add_time,
+			upd_user_id,
+			upd_time,
+			version
+		) VALUES ]]>
+		<foreach collection="list" item="item" index= "index" separator =",">
+			<![CDATA[ ( 
+				#{item.file_code},
+				#{item.file_md5},
+				#{item.file_name},
+				#{item.file_classic},
+				#{item.file_type},
+				#{item.file_text},
+				#{item.file_delete},
+				#{item.file_common},
+				#{sys_user},
+				NOW(),
+				#{sys_user},
+				NOW(),
+				0
+			) ]]>
+		</foreach>
+	</insert>
+			
+	<select id="get" parameterType="com.june.dto.back.system.file.FileDTO" 
+		resultType="com.june.dto.back.system.file.FileDTO">
+		SELECT
+			t1.file_code
+			t1.file_md5,
+			t1.file_name,
+			t1.file_classic,
+			t1.file_type,
+			t1.file_text,
+			t1.file_delete,
+			t1.file_common,
+			t1.add_user_id,
+			t1.add_time,
+			t1.upd_user_id,
+			t1.upd_time,
+			t1.version
+		FROM
+			sys_file t1
+		WHERE
+			t1.file_code = #{file_code} 
+	</select>
+		
+	<update id="update" parameterType="com.june.dto.back.system.file.FileDTO">
+		UPDATE sys_file
+		SET
+			file_md5 = #{file_md5},
+			file_name = #{file_name},
+			file_classic = #{file_classic},
+			file_type = #{file_type},
+			file_text = #{file_text},
+			file_delete = #{file_delete},
+			file_common = #{file_common},
+			upd_user_id = #{sys_user},
+			upd_time = NOW(),
+			version = #{version}+1
+		WHERE
+			file_code=#{file_code}
+	</update>
+		
+	<delete id="delete" parameterType="com.june.dto.back.system.file.FileDTO">
+		DELETE FROM sys_file WHERE file_code=#{file_code}
+	</delete>
+	
+</mapper>

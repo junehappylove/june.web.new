@@ -70,6 +70,16 @@ public class UserInfoDto extends PageDTO<UserInfoDto> implements Serializable {
 	private String verifyCode; // 加密的验证码
 
 	private String isDefaultPassword;// 是否默认密码
+	
+	private String userImage;//用户头像id
+
+	public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
 
 	/**
 	 * 

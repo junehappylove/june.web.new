@@ -23,61 +23,61 @@
 			<ul class="nav" id="side-menu">
 				<li class="nav-header">
 					<div class="dropdown profile-element">
-						<span><img alt="image" class="img-circle"
-							src="${ctx}/jslib/bootstrap/img/profile_small.jpg" /></span>
-						<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
-							class="clear"> <span class="block m-t-xs"><strong
-									class="font-bold">${userInfo.userName}</strong></span> <span
-								class="text-muted text-xs block">${userInfo.roleName}<b
-									class="caret"></b></span>
-						</span>
+						<span><img alt="image" class="img-circle" src="${ctx}/jslib/bootstrap/img/profile_small.jpg"/></span>
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
+							<span class="clear"> 
+								<span class="block m-t-xs">
+									<strong class="font-bold">${userInfo.userName}</strong>
+								</span> 
+								<span class="text-muted text-xs block">${userInfo.roleName}
+									<b class="caret"></b>
+								</span>
+							</span>
 						</a>
 						<ul class="dropdown-menu animated fadeInRight m-t-xs">
-							<li><a class="J_menuItem" href="form_avatar.html">修改头像</a></li>
+							<!-- <li><a class="J_menuItem" href="form_avatar.html">修改头像</a></li> -->
+							<li><a class="J_menuItem" href="${ctx }/system/file/user/head">修改头像</a></li>
 							<li><a class="J_menuItem" href="profile.html">个人资料</a></li>
 							<li><a class="J_menuItem" href="contacts.html">联系我们</a></li>
 							<li><a class="J_menuItem" href="mailbox.html">信箱</a></li>
 							<li class="divider"></li>
-							<li><a href="${ctx}/logout">安全退出</a>
-							</li>
+							<li><a href="${ctx}/logout">安全退出</a></li>
 						</ul>
 					</div>
-					<div class="logo-element">B+</div>
+					<div class="logo-element">J+</div>
 				</li>
 				<c:forEach items="${firstMenu}" var="menu">
 					<!-- 只有一级菜单的情况 -->
 					<c:if test="${fun:length(menu.menus) == 0}">
-						<li><a class="J_menuItem"
-							href="${ctx}${menu.url}"><i
-								class="fa fa-columns"></i><span class="nav-label">${menu.menuName}</span></a>
+						<li>
+							<a class="J_menuItem" href="${ctx}${menu.url}">
+								<i class="fa fa-columns"></i><span class="nav-label">${menu.menuName}</span>
+							</a>
 						</li>
 					</c:if>
 					<!-- 一级菜单下有二级菜单 -->
 					<c:if test="${fun:length(menu.menus) > 0}">
 						<li>
-							<!-- 显示一级菜单 --> <a href="#"> <i class="fa fa fa-bar-chart-o"></i>
-								<span class="nav-label">${menu.menuName}</span> <span
-								class="fa arrow"></span>
-						</a> <!-- 循环显示二级菜单 -->
+							<!-- 显示一级菜单 --> 
+							<a href="#"> <i class="fa fa fa-bar-chart-o"></i>
+								<span class="nav-label">${menu.menuName}</span> <span class="fa arrow"></span>
+							</a> 
+							<!-- 循环显示二级菜单 -->
 							<ul class="nav nav-second-level">
 								<!-- 二级菜单下无三级菜单 -->
 								<c:forEach items="${menu.menus}" var="menu2">
 									<c:if test="${fun:length(menu2.menus) == 0}">
-										<li><a class="J_menuItem"
-											href="${ctx}${menu2.url}">${menu2.menuName}</a>
-										</li>
+										<li><a class="J_menuItem" href="${ctx}${menu2.url}">${menu2.menuName}</a></li>
 									</c:if>
 									<!-- 二级菜单下有三级菜单 -->
 									<c:if test="${fun:length(menu2.menus) > 0}">
-										<li><a href="#">${menu2.menuName} <span
-												class="fa arrow"></span></a>
+										<li><a href="#">${menu2.menuName} <span class="fa arrow"></span></a>
 											<ul class="nav nav-third-level">
 												<c:forEach items="${menu2.menus}" var="menu3">
-													<li><a class="J_menuItem"
-														href="${ctx}${menu3.url}">${menu3.menuName}</a>
-													</li>
+													<li><a class="J_menuItem" href="${ctx}${menu3.url}">${menu3.menuName}</a></li>
 												</c:forEach>
-											</ul></li>
+											</ul>
+										</li>
 									</c:if>
 								</c:forEach>
 							</ul>
@@ -91,29 +91,26 @@
 		<!--右侧部分开始-->
 		<div id="page-wrapper" class="gray-bg dashbard-1">
 			<div class="row border-bottom">
-				<nav class="navbar navbar-static-top" role="navigation"
-					style="margin-bottom: 0">
+				<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
 				<div class="navbar-header">
-					<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
-						href="#"><i class="fa fa-bars"></i> </a>
-					<form role="search" class="navbar-form-custom" method="post"
-						action="search_results.html">
+					<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+					<form role="search" class="navbar-form-custom" method="post" action="search_results.html">
 						<div class="form-group">
-							<input type="text" placeholder="请输入您需要查找的内容 …"
-								class="form-control" name="top-search" id="top-search">
+							<input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
 						</div>
 					</form>
 				</div>
 				<ul class="nav navbar-top-links navbar-right">
-					<li class="dropdown"><a class="dropdown-toggle count-info"
-						data-toggle="dropdown" href="#"> <i class="fa fa-envelope"></i>
+					<li class="dropdown">
+						<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> 
+							<i class="fa fa-envelope"></i>
 							<span class="label label-warning">16</span>
-					</a>
+						</a>
 						<ul class="dropdown-menu dropdown-messages">
 							<li class="m-t-xs">
 								<div class="dropdown-messages-box">
-									<a href="profile.html" class="pull-left"> <img alt="image"
-										class="img-circle" src="img/a7.jpg">
+									<a href="profile.html" class="pull-left"> 
+										<img alt="image" class="img-circle" src="img/a7.jpg">
 									</a>
 									<div class="media-body">
 										<small class="pull-right">46小时前</small> <strong>小四</strong>

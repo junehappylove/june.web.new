@@ -29,6 +29,10 @@ public abstract class BaseDTO extends AbstractDTO {
 	private String appid;	//表示表中的id字段，主键定义为appid，禁止随意命名
 	private String updUserId;//
 	private Timestamp updTime;//
+	private String add_user_id;
+	private Timestamp add_time;
+	private String upd_user_id;
+	private Timestamp upd_time;
 
 	private String lastName;	//上一次的修改名称，针对FTP修改目录名称而设置的
 	
@@ -37,6 +41,38 @@ public abstract class BaseDTO extends AbstractDTO {
 	private String currVehicle;//当前车型ID
 	private String currVehicleName;//当前车型名称
 	
+	public String getAdd_user_id() {
+		return add_user_id;
+	}
+
+	public void setAdd_user_id(String add_user_id) {
+		this.add_user_id = add_user_id;
+	}
+
+	public Timestamp getAdd_time() {
+		return add_time;
+	}
+
+	public void setAdd_time(Timestamp add_time) {
+		this.add_time = add_time;
+	}
+
+	public String getUpd_user_id() {
+		return upd_user_id;
+	}
+
+	public void setUpd_user_id(String upd_user_id) {
+		this.upd_user_id = upd_user_id;
+	}
+
+	public Timestamp getUpd_time() {
+		return upd_time;
+	}
+
+	public void setUpd_time(Timestamp upd_time) {
+		this.upd_time = upd_time;
+	}
+
 	public Timestamp getUpdTime() {
 		return updTime;
 	}

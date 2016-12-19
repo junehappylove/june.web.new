@@ -83,7 +83,6 @@
 <script src="${ctx}/jslib/ajaxfileupload.js"></script>
 <script src="${ctx}/jslib/jquery.form.js"></script>
 <script src="${ctx}/jslib/websocket/sockjs.min.js"></script>
-
 <!-- 富文本编辑器 -->
 <script src="${ctx}/jslib/ckeditor/ckeditor.js"></script>
 <!-- ckfinder 整合 ckeditor -->
@@ -94,3 +93,6 @@
 <!-- 动态资源加载 -->
 <script type="text/javascript" src="${ctx }/jslib/june_util.1.0.js"></script>
 <script>var contextPath = '${ctx}';</script>
+<!-- 富头像上传编辑器 -->
+<script src="${ctx}/jslib/avatar/swfobject.js"></script>
+<script src="${ctx}/jslib/avatar/fullAvatarEditor.js"></script>

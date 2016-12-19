@@ -71,7 +71,7 @@
     <mvc:default-servlet-handler />  
   
     <!-- 配置处理静态资源的请求 -->  
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />  
+    <!-- <mvc:resources mapping="/resources/**" location="/crossdomain.xml" />   -->
 
 	<!-- 配置jsp视图解析器 start -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

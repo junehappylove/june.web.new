@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.file.FileAppDao">
+	<sql id="selectData">
+		SELECT
+			t1.app_code,
+			t1.file_code,
+			t1.module_code,
+			t1.column_1
+			t1.column_2,
+			t1.column_3
+		FROM
+			sys_file_app t1
+		WHERE 1=1
+		<if test="app_code != null and app_code != ''"> 
+			AND t1.app_code = #{app_code}  
+		</if> 
+		<if test="file_code != null and file_code != ''"> 
+			<![CDATA[ AND t1.file_code = #{file_code} ]]>
+		</if> 
+		<if test="module_code != null and module_code != ''"> 
+			<![CDATA[ AND t1.module_code = #{module_code}  ]]>
+		</if> 
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.file.FileAppDTO"
+		parameterType="com.june.dto.back.system.file.FileAppDTO">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	<!-- 分页现在条件 -->
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.file.FileAppDTO">
+		select count(1) from ( <include refid="selectData"/> ) temp
+	</select>
+	<!-- 添加一条 -->
+	<insert id="add" parameterType="com.june.dto.back.system.file.FileAppDTO">
+		INSERT INTO sys_file_app (
+			file_code,
+			app_code,
+			module_code,
+			column_1,
+			column_2,
+			column_3
+		) VALUES (
+			#{file_code},
+			#{app_code},
+			#{module_code},
+			#{column_1},
+			#{column_2},
+			#{column_3}
+		)
+	</insert>
+	<!-- 批量添加 -->
+	<insert id="addList" parameterType="java.util.List">
+		<![CDATA[ INSERT INTO sys_file_app (
+			file_code,
+			app_code,
+			module_code,
+			column_1,
+			column_2,
+			column_3
+		) VALUES ]]>
+		<foreach collection="list" item="item" index= "index" separator =",">
+			<![CDATA[ ( 
+				#{item.file_code},
+				#{item.app_code},
+				#{item.module_code},
+				#{item.column_1},
+				#{item.column_2},
+				#{item.column_3}
+			) ]]>
+		</foreach>
+	</insert>
+			
+	<select id="get" parameterType="com.june.dto.back.system.file.FileAppDTO" 
+		resultType="com.june.dto.back.system.file.FileAppDTO">
+		SELECT
+			t1.file_code,
+			t1.app_code,
+			t1.module_code,
+			t1.column_1,
+			t1.column_2,
+			t1.column_3
+		FROM
+			sys_file_app t1
+		WHERE
+			t1.file_code = #{file_code} 
+		AND t1.app_code = #{app_code}
+	</select>
+		
+	<update id="update" parameterType="com.june.dto.back.system.file.FileAppDTO">
+		UPDATE sys_file_app
+		SET
+			file_code = #{file_code},
+			app_code = #{app_code},
+			module_code = #{module_code},
+			column_1 = #{column_1},
+			column_2 = #{column_2},
+			column_3 = #{column_3}
+		WHERE
+			file_code=#{file_code}
+		AND app_code = #{app_code}
+	</update>
+		
+	<delete id="delete" parameterType="com.june.dto.back.system.file.FileAppDTO">
+		DELETE FROM sys_file_app t1
+		WHERE 1=1
+		<if test="file_code != null and file_code != ''"> 
+		AND t1.file_code = #{file_code}
+		</if>
+		<if test="app_code != null and app_code != ''"> 
+		AND t1.app_code = #{app_code}
+		</if>
+		<if test="module_code != null and module_code != ''"> 
+		AND t1.module_code = #{module_code}
+		</if>
+	</delete>
+	
+</mapper>

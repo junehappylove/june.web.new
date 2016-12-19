@@ -23,7 +23,8 @@ Thinks a lot for all the open source code lovers!
  > 5. 2016-12-15 解决后台期类型传递到前台总是展示成[Object obj](http://www.cnblogs.com/aquriushu/p/5777844.html)对象类型问题；代码大量优化
  > 6. 2016-12-15 加入maven自动打包发布功能
  > 7. 2016-12-17 大量代码优化；加入用户登录验证码功能；注意验证码在开发(dev)模式下无效，界面中也不会展示，仅在测试(test)和生产(pro)环境下启用
- 
+ > 8. 2016-12-20 设计文件上传表、引入富头像编辑器，实现用户头像修改；[SpringMVC文件上传](http://www.cnblogs.com/fjsnail/p/3491033.html)、[小文件MD5计算](http://blog.csdn.net/wangqiuyun/article/details/22941433)、[过G文件的MD5计算](http://www.cnblogs.com/yaowukonga/p/3523668.html)
+ <br>![Image text](https://github.com/junehappylove/img_lib/blob/master/june_web_new/richimage.png) <br>
  
  
  

@@ -51,7 +51,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	 */
 	@RequestMapping("/")
 	@MethodLog(module = "权限设计", remark = "权限设计信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
-	public ModelAndView InitUserManagement(HttpServletRequest request) {
+	public ModelAndView init(HttpServletRequest request) {
 		return initPage(request,"system/base/role/qxsj");
 	}
 	

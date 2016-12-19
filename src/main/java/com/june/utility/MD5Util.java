@@ -1,7 +1,13 @@
 package com.june.utility;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -39,6 +45,29 @@ public class MD5Util {
 		// 获得密文
         byte[] md = messagedigest.digest();
 		return bufferToHex(md);
+	}
+	
+	public static String smallFileMD5(File smallFile) throws IOException {
+		String value = null;
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(smallFile);
+			MappedByteBuffer byteBuffer = in.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, smallFile.length());
+			// MessageDigest md5 = MessageDigest.getInstance("MD5");
+			messagedigest.update(byteBuffer);
+			BigInteger bi = new BigInteger(1, messagedigest.digest());
+			value = bi.toString(16);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (null != in) {
+				in.close();
+			}
+		}
+
+		return value;
 	}
 	
 	/**

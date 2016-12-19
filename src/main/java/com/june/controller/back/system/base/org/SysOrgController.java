@@ -51,7 +51,7 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 	 */
 	@RequestMapping("/")
 	@MethodLog(module = "组织管理", remark = "组织信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
-	public ModelAndView InitUserManagement(HttpServletRequest request) {
+	public ModelAndView init(HttpServletRequest request) {
 		return initPage(request,"system/base/org/orginfo");
 	}
 	
