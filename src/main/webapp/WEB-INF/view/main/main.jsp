@@ -22,8 +22,8 @@
 		<div class="sidebar-collapse">
 			<ul class="nav" id="side-menu">
 				<li class="nav-header">
-					<div class="dropdown profile-element">
-						<span><img alt="image" class="img-circle" src="${ctx}/jslib/bootstrap/img/profile_small.jpg"/></span>
+					<div class="dropdown profile-element"><!-- /upload/profile_small.jpg -->
+						<span><img alt="image" class="img-circle" src="${ctx}${userInfo.userImage}"/></span>
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#"> 
 							<span class="clear"> 
 								<span class="block m-t-xs">

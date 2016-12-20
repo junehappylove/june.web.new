@@ -7,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */ 
-
 package com.june.controller.back.login;
 
 import java.awt.image.BufferedImage;
@@ -49,6 +48,15 @@ import com.june.utility.exception.LoginAttemptException;
 
 import net.sf.json.JSONObject;
 
+/**
+ * 用户登录控制器
+ * LoginController <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午7:32:57
+ * @version 1.0.0
+ */
 @Controller
 public class LoginController extends BaseController<UserInfoDto>{
 	
@@ -177,24 +185,30 @@ public class LoginController extends BaseController<UserInfoDto>{
 	@RequestMapping("/login/main")
 	public ModelAndView loginto(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String username = (String) request.getSession().getAttribute("username");
+		String userid = (String) request.getSession().getAttribute("username");
+		logger.debug("login user id:"+userid);
 		String roleId = request.getParameter("roleId");// 获取角色选择页面的roleId
 		String roleName = request.getParameter("roleName");// 获取角色选择页面的roleName
 		// 根据用户id获取用户的角色
 		UserInfoDto userInfoDto1 = new UserInfoDto();
-		userInfoDto1.setUserId(username);
+		userInfoDto1.setUserId(userid);
 		// 获取用户角色
 		List<UserInfoDto> list = loginService.getRoleInfoByUserId(userInfoDto1);
 		ModelAndView result = null;
 		if (roleId == null && list != null && list.size() > 1) {
 			// 进入角色选择画面
 			result = new ModelAndView("main/selectRole");
-			result.addObject("username", username);
+			result.addObject("username", userid);
 			result.addObject("roleList", list);
 			// return result;
 		} else if ((list != null && list.size() == 1) || roleId != null) {
 			UserInfoDto userInfoDto = new UserInfoDto();
-			userInfoDto = loginService.getUserInfoById(username);
+			userInfoDto = loginService.getUserInfoById(userid);//获取登录用户的信息
+			// 用户头像
+			String imageCode = userInfoDto.getUserImage();
+			String userImage = Constants.USER_HEAD;
+			userImage = getRemoteFilePath(imageCode, userImage);
+			userInfoDto.setUserImage(userImage);
 			List<UserRoleDto> roles = null;//用户的角色信息
 			if (roleId != null) {
 				roles = userInfoService.getRolesById(userInfoDto);
@@ -255,7 +269,6 @@ public class LoginController extends BaseController<UserInfoDto>{
 	 * @writer wjw.happy.love@163.com
 	 */
 	private List<MenuDto> getMenus(List<MenuDto> firstMenu) {
-
 		for (int i = 0; i < firstMenu.size(); i++) {
 			firstMenu.get(i).setMenus(loginService.GetSecondMenu(firstMenu.get(i)));
 			getMenus(firstMenu.get(i).getMenus());

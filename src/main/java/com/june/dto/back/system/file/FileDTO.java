@@ -19,7 +19,7 @@ public class FileDTO extends PageDTO<FileDTO> {
 	private static final long serialVersionUID = 3L;
 	
 	private String file_code;
-	private String file_md5;
+	private String file_md5;//关联与表sys_file_base的file_md5字段
 	private String file_name;
 	private String file_classic;
 	private String file_type;
@@ -28,6 +28,22 @@ public class FileDTO extends PageDTO<FileDTO> {
 	private String file_common;
 	private BaseFile baseFile;
 	
+	/**
+	 * @param file_code
+	 */
+	public FileDTO(String file_code) {
+		super();
+		this.file_code = file_code;
+	}
+
+	/**
+	 * 
+	 */
+	public FileDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getFile_md5() {
 		return file_md5;
 	}

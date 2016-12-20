@@ -30,6 +30,7 @@ public class Constants {
 	public final static String NO_AVALIABLE_TRACKER = MessageUtil.$KEY("no_avaliable_tracker");
 	public final static String REMOTE_ADDRESS_ERROR = MessageUtil.$KEY("remotefile_address_error");
 	public final static String REMOTE_FILE_NO_EXIST = MessageUtil.$KEY("remotefile_not_exist");
+	public final static String USER_HEAD = MessageUtil.$KEY("user.head");
 	
 	/** 空 "" */
 	public final static String EMPTY = "";

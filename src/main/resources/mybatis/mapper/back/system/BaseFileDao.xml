@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			t1.file_name,
 			t1.file_loc,
 			t1.file_type,
+			t1.file_filter,
 			t1.file_size,
 			t1.file_width,
 			t1.file_height,
@@ -21,6 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if> 
 		<if test="file_type != null and file_type != ''"> 
 			AND t1.file_type = #{file_type}  
+		</if> 
+		<if test="file_filter != null and file_filter != ''"> 
+			AND t1.file_filter = #{file_filter}  
 		</if> 
 		<if test="param.file_size_start != null and param.file_size_start != ''"> 
 			<![CDATA[ AND t1.file_size >= #{param.file_size_start} ]]>
@@ -45,6 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.file.BaseFile">
 		select count(1) from ( <include refid="selectData"/> ) temp
 	</select>
+	<!-- 不分页查询数据 -->
+	<select id="getList" resultType="com.june.dto.back.system.file.BaseFile"
+		parameterType="com.june.dto.back.system.file.BaseFile">
+		<include refid="selectData" />
+	</select>
+	
 	<!-- 添加一条 -->
 	<insert id="add" parameterType="com.june.dto.back.system.file.BaseFile">
 		INSERT INTO sys_file_base (
@@ -52,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			file_name,
 			file_loc,
 			file_type,
+			file_filter,
 			file_size,
 			file_width,
 			file_height,
@@ -61,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{file_name},
 			#{file_loc},
 			#{file_type},
+			#{file_filter},
 			#{file_size},
 			#{file_width},
 			#{file_height},
@@ -74,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			file_name,
 			file_loc,
 			file_type,
+			file_filter,
 			file_size,
 			file_width,
 			file_height,
@@ -85,6 +98,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{item.file_name},
 				#{item.file_loc},
 				#{item.file_type},
+				#{item.file_filter},
 				#{item.file_size},
 				#{item.file_width},
 				#{item.file_height},
@@ -100,6 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			t1.file_name,
 			t1.file_loc,
 			t1.file_type,
+			t1.file_filter,
 			t1.file_size,
 			t1.file_width,
 			t1.file_height,
@@ -116,6 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			file_name = #{file_name},
 			file_loc = #{file_loc},
 			file_type = #{file_type},
+			file_filter = #{file_filter},
 			file_size = #{file_size},
 			file_width = #{file_width},
 			file_height = #{file_height},
@@ -129,24 +145,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			UPDATE sys_file_base
 			<set>
 				file_name=${item.file_name}
-			</set>
-			<set>
-				file_name=${item.file_loc}
-			</set>
-			<set>
-				file_name=${item.file_type}
-			</set>
-			<set>
-				file_name=${item.file_size}
-			</set>
-			<set>
-				file_name=${item.file_width}
-			</set>
-			<set>
-				file_name=${item.file_height}
-			</set>
-			<set>
-				file_name=${item.file_time}
+				file_loc=${item.file_loc}
+				file_type=${item.file_type}
+				file_filter=${item.file_filter}
+				file_size=${item.file_size}
+				file_width=${item.file_width}
+				file_height=${item.file_height}
+				file_time=${item.file_time}
 			</set>
 			WHERE
 				file_md5=#{file_md5}
@@ -154,7 +159,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="delete" parameterType="com.june.dto.back.system.file.BaseFile">
-		DELETE FROM sys_file_base WHERE file_md5=#{file_md5}
+		DELETE FROM sys_file_base 
+		WHERE 1=1 
+		<if test="file_md5 != null and file_md5 != ''"> 
+			AND file_md5=#{file_md5}
+		</if>
+		<if test="file_filter != null and file_filter != ''"> 
+			AND file_filter=#{file_filter}
+		</if>
 	</delete>
 	
 </mapper>

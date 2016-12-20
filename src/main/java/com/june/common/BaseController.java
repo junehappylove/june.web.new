@@ -64,10 +64,15 @@ import com.june.dto.back.bussiness.guide.Step;
 import com.june.dto.back.bussiness.vehicle.VehicleDto;
 import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.system.base.UserInfoDto;
+import com.june.dto.back.system.file.BaseFile;
+import com.june.dto.back.system.file.FileDTO;
 import com.june.service.back.bussiness.ftp.FtpService;
 import com.june.service.back.bussiness.vehicle.VehicleService;
 import com.june.service.back.common.CommonService;
 import com.june.service.back.system.base.user.UserInfoService;
+import com.june.service.back.system.file.BaseFileService;
+import com.june.service.back.system.file.FileAppService;
+import com.june.service.back.system.file.FileService;
 import com.june.utility.DateUtil;
 import com.june.utility.MessageUtil;
 import com.june.utility.SendMail;
@@ -78,21 +83,31 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+/**
+ * 基类控制器
+ * BaseController <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午7:45:54
+ * @version 1.0.0
+ * @param <DTO>
+ */
 @Transactional
 public abstract class BaseController<DTO extends PageDTO<DTO>> {
-	//public abstract class BaseController<S extends BaseService<DAO,DTO>,DAO extends BaseDao<DTO>,DTO extends PageDTO<DTO>> {
+	// 打印log
+	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
+	
 	private static final JsonConfig JSON_CONFIG = new JsonConfig();
 	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	static{
 		JSON_CONFIG.registerJsonValueProcessor(java.sql.Timestamp.class, new DateJsonValueProcessor(DATE_FORMAT));
 		JSON_CONFIG.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor(DATE_FORMAT));
 	}
-	// 打印log
-	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	protected static String article_template_path = "template/cmstemplate/article.html";
 	protected static String commentlist_template_path = "template/cmstemplate/comment_list.html";
 	@Autowired
-	public SendMail sendMail;
+	protected SendMail sendMail;
 	@Autowired
 	protected UserInfoService userInfoService;
 	@Autowired
@@ -103,6 +118,16 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected VehicleService vehicleService;
 	@Autowired
 	protected CommonService commonService;
+	//=====================================================================================
+	//===================== 文件服务相关注册 =================================================
+	//=====================================================================================
+	@Autowired
+	protected FileAppService fileAppService;
+	@Autowired
+	protected BaseFileService baseFileService;
+	@Autowired
+	protected FileService fileService;
+	
 	 /** 配置文件名称，早config.properties文件中定义，区分不同打包指令后各环境的配置文件内容    */
 	@Value("${project.environment}")//表示运行环境 dev test pro
 	protected String environment;
@@ -124,7 +149,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @writer junehappylove
 	 */
 	@ModelAttribute
-	public DTO validateForm(HttpServletRequest request, HttpServletResponse response,DTO dto)
+	protected DTO validateForm(HttpServletRequest request, HttpServletResponse response,DTO dto)
 			throws Exception {
 		// 将参数映射到对应的业务dto中并返回
 		fillRequestDto(request, dto);
@@ -187,7 +212,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @return Map <String,Object>
 	 */
-	public void beantoMap(Map<String, Object> returnMap, DTO bean) {
+	protected void beantoMap(Map<String, Object> returnMap, DTO bean) {
 		BeanInfo beanInfo = null;
 		try {
 			beanInfo = Introspector.getBeanInfo(bean.getClass());
@@ -545,7 +570,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2015年12月16日 上午10:50:14
 	 * @writer wjw.happy.love@163.com
 	 */
-	public boolean isAjaxCall(HttpServletRequest request) {
+	protected boolean isAjaxCall(HttpServletRequest request) {
 		return ("XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
 	}
 
@@ -623,7 +648,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param request
 	 * @return
 	 */
-	public UserInfoDto loginUser(HttpServletRequest request) {
+	protected UserInfoDto loginUser(HttpServletRequest request) {
 		UserInfoDto userInfoDto = (UserInfoDto) request.getSession().getAttribute("userInfo");
 		return userInfoDto;
 	}
@@ -633,7 +658,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * 
 	 * @return UserInfoDto
 	 */
-	public UserInfoDto loginUser() {
+	protected UserInfoDto loginUser() {
 		UserInfoDto userInfoDto = (UserInfoDto) request.getSession().getAttribute("userInfo");
 		return userInfoDto;
 	}
@@ -645,7 +670,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @param request
 	 */
-	public void setCreater(DTO bean, HttpServletRequest request) {
+	protected void setCreater(DTO bean, HttpServletRequest request) {
 		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setAddUserId(userId);// 设置操作人id
@@ -666,7 +691,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @param request
 	 */
-	public void setUpdater(DTO bean, HttpServletRequest request) {
+	protected void setUpdater(DTO bean, HttpServletRequest request) {
 		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setUpdateUserId(userId);// 设置操作人id
@@ -686,7 +711,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param page
 	 * @param request
 	 */
-	public void htmlPageInit(ModelAndView page, HttpServletRequest request) {
+	protected void htmlPageInit(ModelAndView page, HttpServletRequest request) {
 		UserInfoDto user = this.loginUser(request);
 		String userId = user.getUserId();
 		String username = user.getUserName();
@@ -704,7 +729,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param page
 	 * @param bean
 	 */
-	public void htmlEditInit(ModelAndView page, DTO bean) {
+	protected void htmlEditInit(ModelAndView page, DTO bean) {
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(bean.getUpdateUserId()));
 		page.addObject("updateUserName", user != null ? user.getUserName() : "未知用户");
 		// TODO 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
@@ -727,7 +752,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2015年12月16日 下午3:02:39
 	 * @writer wjw.happy.love@163.com
 	 */
-	public void setOtherInfo(ModelAndView page, Object bean, String name) {
+	protected void setOtherInfo(ModelAndView page, Object bean, String name) {
 		page.addObject(name, bean);//
 	}
 
@@ -738,7 +763,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @throws Exception
 	 * @datetime 2015年12月8日 下午1:08:32
 	 */
-	public void messageSaveSuccess(HttpServletResponse response) throws Exception {
+	protected void messageSaveSuccess(HttpServletResponse response) throws Exception {
 		String messages = "save_success";
 		String type = MESSAGE_INFO;
 		message(response,messages, type);
@@ -751,7 +776,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @throws Exception
 	 * @datetime 2015年12月8日 下午1:08:45
 	 */
-	public void messageSendSuccess(HttpServletResponse response) throws Exception {
+	protected void messageSendSuccess(HttpServletResponse response) throws Exception {
 		String messages = "send_success";
 		String type = MESSAGE_INFO;
 		message(response,messages, type);
@@ -764,7 +789,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @throws Exception
 	 * @datetime 2015年12月8日 下午1:09:00
 	 */
-	public void messageDeleteSuccess(HttpServletResponse response) throws Exception {
+	protected void messageDeleteSuccess(HttpServletResponse response) throws Exception {
 		String messages = "delete_success";
 		String type = MESSAGE_INFO;
 		message(response,messages, type);
@@ -778,7 +803,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2015年12月30日 下午2:09:37
 	 * @writer wjw
 	 */
-	public void messageUpdateSuccess(HttpServletResponse response) throws Exception {
+	protected void messageUpdateSuccess(HttpServletResponse response) throws Exception {
 		String messages = "update_success";
 		String type = MESSAGE_INFO;
 		message(response,messages, type);
@@ -794,7 +819,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年12月14日 下午11:56:32
 	 * @writer junehappylove
 	 */
-	public void message(HttpServletResponse response,String messages, String type, String... params) throws Exception {
+	protected void message(HttpServletResponse response,String messages, String type, String... params) throws Exception {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
 		errList.add(MessageUtil.$VALUE(messages,params));
@@ -821,7 +846,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param clazz
 	 * @return
 	 */
-	public List<?> data2List(String data, Class<?> clazz) {
+	protected List<?> data2List(String data, Class<?> clazz) {
 		data = "[" + data + "]";
 		JSONArray jas = JSONArray.fromObject(data);
 		@SuppressWarnings("deprecation")
@@ -829,19 +854,19 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		return list;
 	}
 
-	public void messageErrorExist(HttpServletResponse response) throws Exception {
+	protected void messageErrorExist(HttpServletResponse response) throws Exception {
 		String messages = "error_exist";
 		String type = MESSAGE_ERRO;
 		message(response,messages, type);
 	}
 
-	public void messageErrorNotExist(HttpServletResponse response) throws Exception {
+	protected void messageErrorNotExist(HttpServletResponse response) throws Exception {
 		String messages = "error_not_exist";
 		String type = MESSAGE_ERRO;
 		message(response,messages, type);
 	}
 
-	public ModelAndView initPage(HttpServletRequest request, String page) {
+	protected ModelAndView initPage(HttpServletRequest request, String page) {
 		ModelAndView result = null;
 		result = new ModelAndView(page);
 		// 获取用户信息
@@ -859,7 +884,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		return result;
 	}
 
-	public void initDto(AbstractDTO dto) {
+	protected void initDto(AbstractDTO dto) {
 		dto.setAddTime(new Timestamp(System.currentTimeMillis()));
 		dto.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		dto.setAddUserId(this.loginUser().getUserId());
@@ -874,7 +899,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年6月28日 下午2:23:13
 	 * @writer wjw.happy.love@163.com
 	 */
-	public boolean can(String type) {
+	protected boolean can(String type) {
 		String[] types = { ".jpg", ".gif", ".png", ".bmp", ".mp4", ".swf" };
 		type = type.toLowerCase();
 		boolean result = false;
@@ -898,7 +923,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年6月29日 下午6:50:54
 	 * @writer wjw.happy.love@163.com
 	 */
-	public void download(String filePath, HttpServletResponse response) throws IOException {
+	protected void download(String filePath, HttpServletResponse response) throws IOException {
 		OutputStream out = null;
 		InputStream in = null;
 		try {
@@ -926,7 +951,55 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		} // */
 	}
 	
-	public String getVehiclePath(String vehicleId) {
+	/**
+	 * 根据业务的id获取此业务对应文件的远程访问地址
+	 * @param appid
+	 * @param defaultReturn 如果找不到，返回的默认地址
+	 * @return
+	 * @date 2016年12月20日 下午7:58:52
+	 * @writer junehappylove
+	 */
+	protected String getRemoteFilePath(String appid, String defaultReturn) {
+		String remote_path = null;
+		if (StringUtils.isNotEmpty(appid)) {
+			String md5_code = fileService.getDtoById(new FileDTO(appid)).getFile_md5();
+			BaseFile temp = baseFileService.getDtoById(new BaseFile(md5_code));
+			if (temp != null) {
+				remote_path = temp.getFile_loc() + temp.getFile_name() + temp.getFile_type();
+				//判断是否确实存在
+				String path = getRealPath()+remote_path.replace("/", "\\");
+				File file = new File(path);
+				if(!file.exists()){
+					remote_path = null;
+				}
+			}
+		}
+		
+		return remote_path == null ? defaultReturn : remote_path;
+	}
+	
+	/**
+	 * 得到项目的实际物理路径
+	 * @return
+	 * @date 2016年12月20日 下午8:33:07
+	 * @writer junehappylove
+	 */
+	protected String getRealPath(){
+		return request.getSession().getServletContext().getRealPath("/");
+	}
+	
+	/**
+	 * 得到项目的实际物理路径
+	 * @param request
+	 * @return
+	 * @date 2016年12月20日 下午8:34:01
+	 * @writer junehappylove
+	 */
+	protected String getRealPath(HttpServletRequest request){
+		return request.getSession().getServletContext().getRealPath("/");
+	}
+	
+	protected String getVehiclePath(String vehicleId) {
 		VehicleDto vd = vehicleService.getDtoById(new VehicleDto(vehicleId));
 		return vd != null ? vd.getFtpPath() : "";
 	}
@@ -938,7 +1011,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年7月4日 下午10:35:29
 	 * @writer wjw.happy.love@163.com
 	 */
-	public InputStream bean2Stream(ImageXML xml){
+	protected InputStream bean2Stream(ImageXML xml){
 		if (xml != null && xml.getStep().size() > 0) {
 			String name = String.valueOf(System.currentTimeMillis()) + ".xml";
 			// TODO 这个文件的定义 : "xml.xml" 固定文件名，多用户同时操作可能会有错误
@@ -968,7 +1041,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年7月4日 下午10:35:52
 	 * @writer wjw.happy.love@163.com
 	 */
-	public ImageXML xml2Bean(InputStream content){
+	protected ImageXML xml2Bean(InputStream content){
 		ImageXML xml = null;
 		try {  
             JAXBContext context = JAXBContext.newInstance(ImageXML.class);  
@@ -987,7 +1060,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年7月4日 下午10:36:20
 	 * @writer wjw.happy.love@163.com
 	 */
-	public ImageXML xml2Bean(String content){
+	protected ImageXML xml2Bean(String content){
 		ImageXML xml = null;
 		try {  
             JAXBContext context = JAXBContext.newInstance(ImageXML.class);  
@@ -1008,7 +1081,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年7月6日 下午3:33:28
 	 * @writer wjw.happy.love@163.com
 	 */
-	public String $dir(String ftpPath) {
+	protected String $dir(String ftpPath) {
 		if(StringUtils.isNotEmpty(ftpPath)){
 			ftpPath = ftpPath.replaceAll("//", "/");
 			if(ftpPath.charAt(0) != '/'){
@@ -1031,7 +1104,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @date 2016年7月6日 下午9:57:03
 	 * @writer wjw.happy.love@163.com
 	 */
-	public ImageXML getImageXmlFromPath(String path) throws SocketException, IOException {
+	protected ImageXML getImageXmlFromPath(String path) throws SocketException, IOException {
 		String xmlName = Constants.FILE_STEP;// xml路径以及名称
 		FtpDto ftp = new FtpDto();
 		ftp.setFtpPath($dir(path));
@@ -1044,4 +1117,6 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		}
 		return imageXml;
 	}
+	
+	
 }

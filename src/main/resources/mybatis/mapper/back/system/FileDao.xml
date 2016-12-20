@@ -127,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="com.june.dto.back.system.file.FileDTO" 
 		resultType="com.june.dto.back.system.file.FileDTO">
 		SELECT
-			t1.file_code
+			t1.file_code,
 			t1.file_md5,
 			t1.file_name,
 			t1.file_classic,

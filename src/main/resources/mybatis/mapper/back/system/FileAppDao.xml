@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			t1.app_code,
 			t1.file_code,
 			t1.module_code,
+			t1.file_history,
 			t1.column_1
 			t1.column_2,
 			t1.column_3
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			file_code,
 			app_code,
 			module_code,
+			file_history,
 			column_1,
 			column_2,
 			column_3
@@ -53,6 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{file_code},
 			#{app_code},
 			#{module_code},
+			#{file_history},
 			#{column_1},
 			#{column_2},
 			#{column_3}
@@ -64,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			file_code,
 			app_code,
 			module_code,
+			file_history,
 			column_1,
 			column_2,
 			column_3
@@ -73,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{item.file_code},
 				#{item.app_code},
 				#{item.module_code},
+				#{item.file_history},
 				#{item.column_1},
 				#{item.column_2},
 				#{item.column_3}
@@ -80,12 +85,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 			
+	<!-- 获取文件与业务关联信息 -->
 	<select id="get" parameterType="com.june.dto.back.system.file.FileAppDTO" 
 		resultType="com.june.dto.back.system.file.FileAppDTO">
 		SELECT
 			t1.file_code,
 			t1.app_code,
 			t1.module_code,
+			t1.file_history,
 			t1.column_1,
 			t1.column_2,
 			t1.column_3
@@ -94,20 +101,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 			t1.file_code = #{file_code} 
 		AND t1.app_code = #{app_code}
+		AND t1.module_code = #{module_code}
 	</select>
-		
+	<!-- 保留，不需要做跟新操作 -->
 	<update id="update" parameterType="com.june.dto.back.system.file.FileAppDTO">
 		UPDATE sys_file_app
 		SET
+			<if test="file_code != null and file_code != ''"> 
 			file_code = #{file_code},
+			</if>
+			<if test="app_code != null and app_code != ''"> 
 			app_code = #{app_code},
+			</if>
+			<if test="module_code != null and module_code != ''"> 
 			module_code = #{module_code},
+			</if>
+			file_history = #{file_history},
 			column_1 = #{column_1},
 			column_2 = #{column_2},
 			column_3 = #{column_3}
-		WHERE
-			file_code=#{file_code}
-		AND app_code = #{app_code}
+		WHERE 1=1
+		<if test="file_code != null and file_code != ''"> 
+			AND	file_code = #{file_code}
+		</if>
+		<if test="app_code != null and app_code != ''"> 
+			AND app_code = #{app_code}
+		</if>
+		<if test="module_code != null and module_code != ''"> 
+			AND module_code = #{module_code}
+		</if>
 	</update>
 		
 	<delete id="delete" parameterType="com.june.dto.back.system.file.FileAppDTO">
@@ -121,6 +143,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		<if test="module_code != null and module_code != ''"> 
 		AND t1.module_code = #{module_code}
+		</if>
+		<if test="file_history != null and file_history != ''"> <!-- 一遍情况下只删除是历史记录的数据 T -->
+		AND t1.file_history = #{file_history}
 		</if>
 	</delete>
 	

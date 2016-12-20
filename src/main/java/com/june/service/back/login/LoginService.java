@@ -7,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */
-
 package com.june.service.back.login;
 
 import java.util.List;
@@ -22,14 +21,15 @@ import com.june.dto.back.login.MenuDto;
 import com.june.dto.back.system.base.UserInfoDto;
 
 /**
- * @Description: 登录用service
- * @author caiyang
- * @date 2015年9月11日 下午2:32:14
- * @version V1.0
+ * 登录用service LoginService <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午8:16:12
+ * @version 1.0.0
  */
 @Service
 public class LoginService extends BaseService<LoginDao, UserInfoDto> {
-
 	/**
 	 * 登录用dao注入
 	 */
@@ -39,20 +39,22 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	/**
 	 * 人员service
 	 */
-	//@Autowired
-	//protected PersonInfoService personInfoService;
+	// @Autowired
+	// protected PersonInfoService personInfoService;
 
 	/**
 	 * 围栏service
 	 */
-	//@Autowired
-	//protected FenceSetService fenceSetService;
+	// @Autowired
+	// protected FenceSetService fenceSetService;
 
 	/**
-	 * @Description: 登录用户check
-	 * @param @param userInfoDto
-	 * @return UserInfoDto
-	 * @throws
+	 * 登录用户check
+	 * 
+	 * @param userInfoDto
+	 * @return
+	 * @date 2016年12月20日 下午8:15:49
+	 * @writer junehappylove
 	 */
 	public UserInfoDto loginCheck(UserInfoDto userInfoDto) {
 		userInfoDto = loginDao.loginCheck(userInfoDto);
@@ -60,10 +62,12 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	}
 
 	/**
-	 * @Description: 获取一级菜单
-	 * @param menuDto
-	 * @return List<MenuDto>
-	 * @throws
+	 * 获取一级菜单
+	 * 
+	 * @param userInfoDto
+	 * @return
+	 * @date 2016年12月20日 下午8:15:42
+	 * @writer junehappylove
 	 */
 	public List<MenuDto> getFristMenu(UserInfoDto userInfoDto) {
 		List<MenuDto> list = loginDao.getFristMenu(userInfoDto);
@@ -71,21 +75,25 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	}
 
 	/**
-	 * @Description: 获取二级以及三级菜单
-	 * @param @param menuDto
-	 * @return List<MenuDto>
-	 * @throws
+	 * 获取二级以及三级菜单
+	 * 
+	 * @param menuDto
+	 * @return
+	 * @date 2016年12月20日 下午8:15:35
+	 * @writer junehappylove
 	 */
-	//@Cacheable(value = "CustomerCache")
+	// @Cacheable(value = "CustomerCache")
 	public List<MenuDto> GetSecondMenu(MenuDto menuDto) {
 		return loginDao.getSecondMenu(menuDto);
 	}
 
 	/**
-	 * @Description: 根据menuId获取菜单信息
-	 * @param @param menuDto
-	 * @return MenuDto
-	 * @throws
+	 * 根据menuId获取菜单信息
+	 * 
+	 * @param menuDto
+	 * @return
+	 * @date 2016年12月20日 下午8:15:28
+	 * @writer junehappylove
 	 */
 	public MenuDto getMenuById(MenuDto menuDto) {
 		menuDto = loginDao.getMenuById(menuDto);
@@ -93,62 +101,60 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	}
 
 	/**
-	 * @Description: 根据userId获取用户信息
-	 * @author caiyang
-	 * @param: @return
-	 * @return: UserInfoDto
-	 * @throws
+	 * 根据userId获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 * @date 2016年12月20日 下午8:14:39
+	 * @writer junehappylove
 	 */
 	public UserInfoDto getUserInfoById(String userId) {
 		return loginDao.getUserInfoById(userId);
 	}
 
 	/**
-	 * @Description: 根据用户id到，用户对应的schema下获取对应的角色信息
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return
-	 * @return: UserInfoDto
-	 * @throws
+	 * 根据用户id到，用户对应的schema下获取对应的角色信息
+	 * 
+	 * @param userInfoDto
+	 * @return
+	 * @date 2016年12月20日 下午8:14:50
+	 * @writer junehappylove
 	 */
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto) {
 		return loginDao.getRoleInfoByUserId(userInfoDto);
 	}
-	
-	/**   
-	 * @Description: 获取角色对应的有权限的按钮
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: ButtonDto      
-	 * @throws   
+
+	/**
+	 * 获取角色对应的有权限的按钮
+	 * 
+	 * @param userInfoDto
+	 * @return
+	 * @date 2016年12月20日 下午8:14:59
+	 * @writer junehappylove
 	 */
-	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto)
-	{
+	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto) {
 		return loginDao.getRoleButton(userInfoDto);
 	}
-	
-	/**   
-	 * @Description: 登录失败时更新登录尝试次数
-	 * @author caiyang
-	 * @param:       
-	 * @return: void      
-	 * @throws   
+
+	/**
+	 * 登录失败时更新登录尝试次数
+	 * 
+	 * @param userInfoDto
+	 * @date 2016年12月20日 下午8:15:07
+	 * @writer junehappylove
 	 */
-	public void updateFailLoginAttempt(UserInfoDto userInfoDto)
-	{
+	public void updateFailLoginAttempt(UserInfoDto userInfoDto) {
 		loginDao.updateFailLoginAttempt(userInfoDto);
 	}
-	
-	/**   
-	 * @Description: 登录成功时更新登录尝试次数
-	 * @author caiyang
-	 * @param:       
-	 * @return: void      
-	 * @throws   
+
+	/**
+	 * 登录成功时更新登录尝试次数
+	 * 
+	 * @param userInfoDto
+	 * @date 2016年12月20日 下午8:15:16
+	 * @writer junehappylove
 	 */
-	public void updateSuccessLoginAttempt(UserInfoDto userInfoDto)
-	{
+	public void updateSuccessLoginAttempt(UserInfoDto userInfoDto) {
 		loginDao.updateSuccessLoginAttempt(userInfoDto);
 	}
 }

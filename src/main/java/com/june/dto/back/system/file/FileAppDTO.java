@@ -23,6 +23,7 @@ public class FileAppDTO extends PageDTO<FileAppDTO> {
 	private String app_code;
 	private String file_code;
 	private String module_code;
+	private String file_history;
 	private String column_1;
 	private String column_2;
 	private String column_3;
@@ -44,16 +45,6 @@ public class FileAppDTO extends PageDTO<FileAppDTO> {
 		this.app_code = app_code;
 		this.file_code = file_code;
 		this.module_code = module_code;
-	}
-
-	/**
-	 * @param app_code
-	 * @param file_code
-	 */
-	public FileAppDTO(String app_code, String file_code) {
-		super();
-		this.app_code = app_code;
-		this.file_code = file_code;
 	}
 
 	public String getApp_code() {
@@ -78,6 +69,14 @@ public class FileAppDTO extends PageDTO<FileAppDTO> {
 
 	public void setModule_code(String module_code) {
 		this.module_code = module_code;
+	}
+
+	public String getFile_history() {
+		return file_history;
+	}
+
+	public void setFile_history(String file_history) {
+		this.file_history = file_history;
 	}
 
 	public String getColumn_1() {

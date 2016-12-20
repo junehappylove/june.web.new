@@ -15,7 +15,7 @@ import com.june.common.PageDTO;
  * @author 王俊伟 wjw.happy.love@163.com
  * @blog https://www.github.com/junehappylove
  * @date 2016年12月18日 下午9:14:53
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class BaseFile extends PageDTO<BaseFile> {
 
@@ -24,14 +24,30 @@ public class BaseFile extends PageDTO<BaseFile> {
 	 */
 	private static final long serialVersionUID = 2L;
 	
-	private String file_md5;
+	private String file_md5;	//主键
 	private String file_name;
 	private String file_loc;
 	private String file_type;
+	private String file_filter;//文件关系过滤
 	private BigDecimal file_size;
 	private double file_width;
 	private double file_height;
 	private double file_time;
+
+	/**
+	 * @param file_md5
+	 */
+	public BaseFile(String file_md5) {
+		super();
+		this.file_md5 = file_md5;
+	}
+
+	/**
+	 * 
+	 */
+	public BaseFile() {
+		super();
+	}
 
 	public String getFile_md5() {
 		return file_md5;
@@ -63,6 +79,14 @@ public class BaseFile extends PageDTO<BaseFile> {
 
 	public void setFile_type(String file_type) {
 		this.file_type = file_type;
+	}
+
+	public String getFile_filter() {
+		return file_filter;
+	}
+
+	public void setFile_filter(String file_filter) {
+		this.file_filter = file_filter;
 	}
 
 	public BigDecimal getFile_size() {
