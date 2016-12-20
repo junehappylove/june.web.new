@@ -6,6 +6,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 系统分页类
+ * PageDTO <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午9:21:51
+ * @version 1.0.0
+ * @param <T>
+ */
 public abstract class PageDTO<T extends BaseDTO> extends BaseDTO {
 	protected static final Logger logger = LoggerFactory.getLogger(PageDTO.class);
 	private static final long serialVersionUID = 103L;

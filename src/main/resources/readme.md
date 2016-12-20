@@ -1,8 +1,8 @@
 ## 关于配置文件的说明
 > 1. 总共有四分配置文件；一份直接在src/main/resources下，是为了在eclipse下发布web应用到tomcat下方便设置的；
-> 2. 剩余三份在文件夹dev、prp和test中 --> 分别代表开发、生成和测试环境下的系统应用配置文件；
-> 3. 只有conf/config.properties文件中的属性propertiesName是不一样的，其他内容全部一样；
-> 4. 注意配置文件修改需要修改四处位置；
+> 2. 剩余三份在文件夹dev、pro和test中 --> 分别代表开发、生成和测试环境下的系统应用配置文件；
+> 3. 只有conf/config.properties文件中的属性 project.environment 是不一样的，其他内容全部一样；
+> 4. 注意配置文件修改需要修改四处位置,可以直接将src/main/resources下的所有配置文件(dev/test/pro文件除外)全部复制，分别粘贴到dev/test/pro/目录里面，然后修改config.properties中的project.environment属性值，分别为 dev test pro 即可。
 > 5. maven 发布注意：如果有些包并不是在公共仓库中，那么就需要搭建mvaen库然后再User Setting 中配置好maven的配置文件
 > 6. [参考这个帖子有很大价值](http://blog.csdn.net/chwshuang/article/details/52923268)	
 

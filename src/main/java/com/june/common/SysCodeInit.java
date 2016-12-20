@@ -29,8 +29,6 @@ public class SysCodeInit implements ApplicationListener<ContextRefreshedEvent> {
 	private final transient Logger logger = Logger.getLogger(SysCodeInit.class);
 	private static Map<String, Object> sysCodeMap = new HashMap<String, Object>();
 	
-	
-	
 	public static Map<String, Object> getSysCodeMap() {
 		return sysCodeMap;
 	}

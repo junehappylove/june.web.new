@@ -6,6 +6,16 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.june.dto.back.common.TreeDto;
 
+/**
+ * 
+ * AbstractDao <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午9:23:38
+ * @version 1.0.0
+ * @param <T>
+ */
 public abstract interface AbstractDao<T extends AbstractDTO> {
 	
 	/**

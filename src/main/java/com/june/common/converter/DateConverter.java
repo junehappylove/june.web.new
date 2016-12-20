@@ -11,10 +11,12 @@ import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.Converter;
 
 /**
- * TODO <br>
+ * DateConverter <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
- * @date 2016年11月22日 下午1:34:53
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午9:24:21
+ * @version 1.0.0
  */
 public class DateConverter implements Converter {
 

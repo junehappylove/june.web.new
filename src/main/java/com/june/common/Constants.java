@@ -60,8 +60,10 @@ public class Constants {
 	public final static String FLAG_TRUE = "T";  //是
 	public final static String FLAG_FALSE = "F";   //否
 	
-	/** properties文件加密密钥  */
-	public static final String KEY_STRING = "june_web_new_DataBase";//生成密钥的字符串  
+	/** properties文件加密密钥 --请尊重原作者的标识  */
+	public static final String KEY_STRING = "june_web_new@junehappylove";//生成密钥的字符串  
+	public static final byte[] KEY_BYTE = { 106, 117, 110, 101, 95, 119, 101, 98, 95, 110, 101, 119, 64, 106, 117, 110,
+			101, 104, 97, 112, 112, 121, 108, 111, 118, 101 };
 	
 	
 	/** per_event表，用户越界事件 */

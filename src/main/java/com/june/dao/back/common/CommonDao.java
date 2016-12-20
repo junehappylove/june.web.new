@@ -17,10 +17,13 @@ import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.login.ButtonDto;
 
 /**
- * @Description: 共通业务dao
- * @author caiyang
- * @date 2016年3月7日 下午2:45:57
- * @version V1.0
+ * 共通业务dao
+ * CommonDao <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月20日 下午9:25:31
+ * @version 1.0.0
  */
 public interface CommonDao extends BaseDao<TreeDto> {
 

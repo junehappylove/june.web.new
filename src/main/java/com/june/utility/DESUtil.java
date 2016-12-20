@@ -17,8 +17,6 @@ import javax.crypto.KeyGenerator;
 
 import org.apache.commons.codec.binary.Base64;
 
-//import sun.misc.BASE64Decoder;
-//import sun.misc.BASE64Encoder;
 /**
  * 
  * DES算法工具类 <br>
@@ -27,18 +25,35 @@ import org.apache.commons.codec.binary.Base64;
  * @date 2016年8月31日 下午5:54:20
  */
 public class DESUtil {
-	 String KEY_STRING = Const.KEY_STRING;
+	 static byte[] KEY_BYTE = Const.KEY_BYTE;
      static Key key;       
        
      /**    
       * 根据参数生成KEY    
       *     
       * @param strKey    
-      */      
-     private static void getKey(String strKey) {       
+      */
+//     private static void getKey(String strKey) {       
+//         try {       
+//             KeyGenerator _generator = KeyGenerator.getInstance("DES");       
+//             _generator.init(new SecureRandom(strKey.getBytes()));       
+//             key = _generator.generateKey();     
+//             _generator = null;       
+//         } catch (Exception e) {       
+//             e.printStackTrace();       
+//         }       
+//     }
+     
+     /**
+      * 根据参数生成KEY 
+      * @param strKey
+      * @date 2016年12月20日 下午9:15:23
+      * @writer junehappylove
+      */
+     private static void getKey(byte[] strKey) {       
          try {       
              KeyGenerator _generator = KeyGenerator.getInstance("DES");       
-             _generator.init(new SecureRandom(strKey.getBytes()));       
+             _generator.init(new SecureRandom(strKey));       
              key = _generator.generateKey();     
              _generator = null;       
          } catch (Exception e) {       
@@ -53,20 +68,17 @@ public class DESUtil {
       * @return    
       */      
      public static String getEncString(String strMing) {    
-         DESUtil.getKey(Const.KEY_STRING);// 生成密匙       
+         DESUtil.getKey(KEY_BYTE);// 生成密匙       
          byte[] byteMi = null;       
          byte[] byteMing = null;       
          String strMi = "";
-         //BASE64Encoder base64en = new BASE64Encoder();       
          try {       
              byteMing = strMing.getBytes("UTF-8");       
              byteMi = getEncCode(byteMing);       
-             //strMi = base64en.encode(byteMi);
              strMi = Base64.encodeBase64String(byteMi);
          } catch (Exception e) {       
              e.printStackTrace();       
          } finally {       
-             //base64en = null;       
              byteMing = null;       
              byteMi = null;       
          }       
@@ -80,20 +92,17 @@ public class DESUtil {
       * @return    
       */      
      public static String getDesString(String strMi) {   
-         DESUtil.getKey(Const.KEY_STRING);// 生成密匙       
-         //BASE64Decoder base64De = new BASE64Decoder();       
+         DESUtil.getKey(KEY_BYTE);// 生成密匙       
          byte[] byteMing = null;       
          byte[] byteMi = null;       
          String strMing = "";       
          try {       
-             //byteMi = base64De.decodeBuffer(strMi);
         	 byteMi = Base64.decodeBase64(strMi);
              byteMing = getDesCode(byteMi);       
              strMing = new String(byteMing, "UTF-8");       
          } catch (Exception e) {       
              e.printStackTrace();       
          } finally {       
-             //base64De = null;       
              byteMing = null;       
              byteMi = null;       
          }       
@@ -143,11 +152,12 @@ public class DESUtil {
      }       
        
      public static void main(String[] args) {
+    	 // 请尊重原作者的标识
     	 String key = "jdbc:mysql://localhost:3306/june_web_new?useUnicode=yes&amp;characterEncoding=UTF-8";
     	 String strEnc = DESUtil.getEncString(key);// 加密字符串,返回String的密文       
          System.out.println(strEnc);
          String decode = "edPGEaedFAU6W3vfL5QCuEJiYfxsN51RiIUPLbuY7MYJBbOGYi/d29aBNMe9jmeu7HgnWQVvctMieS1XKAhQoIpS5oNaFUcnPKO7Od38hXHsnLQB58j/AA==";
          String strDes = DESUtil.getDesString(decode);// 把String 类型的密文解密        
-         System.out.println(strDes);       
+         System.out.println(strDes); 
      }
 }
