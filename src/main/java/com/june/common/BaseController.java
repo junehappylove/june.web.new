@@ -961,18 +961,24 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 */
 	protected String getRemoteFilePath(String appid, String defaultReturn) {
 		String remote_path = null;
-		if (StringUtils.isNotEmpty(appid)) {
-			String md5_code = fileService.getDtoById(new FileDTO(appid)).getFile_md5();
-			BaseFile temp = baseFileService.getDtoById(new BaseFile(md5_code));
-			if (temp != null) {
-				remote_path = temp.getFile_loc() + temp.getFile_name() + temp.getFile_type();
-				//判断是否确实存在
-				String path = getRealPath()+remote_path.replace("/", "\\");
-				File file = new File(path);
-				if(!file.exists()){
-					remote_path = null;
+		try{
+			if (StringUtils.isNotEmpty(appid)) {
+				String md5_code = fileService.getDtoById(new FileDTO(appid)).getFile_md5();
+				BaseFile temp = baseFileService.getDtoById(new BaseFile(md5_code));
+				if (temp != null) {
+					remote_path = temp.getFile_loc() + temp.getFile_name() + temp.getFile_type();
+					logger.debug("待查找的用户头像:"+remote_path);
+					//判断是否确实存在
+					String path = getRealPath()+remote_path.replace("/", "\\");
+					File file = new File(path);
+					if(!file.exists()){
+						remote_path = null;
+					}
 				}
 			}
+		}catch (Exception e){
+			logger.debug("error in find user head image!");
+			remote_path = defaultReturn;
 		}
 		
 		return remote_path == null ? defaultReturn : remote_path;

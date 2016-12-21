@@ -61,6 +61,9 @@ import com.june.utility.MessageUtil;
 @Controller
 @RequestMapping("/system/file")
 public class FileController extends BaseController<FileDTO> {
+	
+	public static final String TYPE = Constants.USER_HEAD_TYPE;
+	public static final String PAHT = Constants.USER_HEAD_PATH;
 
 	@RequestMapping("/")
 	@MethodLog(module = "系统文件管理", remark = "页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
@@ -133,10 +136,10 @@ public class FileController extends BaseController<FileDTO> {
 				//(默认的头像域名称：__avatar1,2,3...，可在插件配置参数中自定义，参数名：avatar_field_names)  
 				else if(isSourcePic || fieldName.startsWith("__avatar")){
 					String file_name = "jsp_avatar" + avatarNumber + "_" + fileName;
-					String virtualPath = "/upload/" + file_name + ".jpg";
+					String virtualPath = PAHT + file_name + TYPE;
 					// 原始图片（默认的 file域的名称是__source，可在插件配置参数中自定义。参数名：src_field_name）
 					if (isSourcePic) {
-						result.sourceUrl = virtualPath = "/upload/jsp_source_" + fileName + ".jpg";//注意这句的写法
+						result.sourceUrl = virtualPath = PAHT+"jsp_source_" + fileName + TYPE;//注意这句的写法
 						file_name = "jsp_source_" + fileName;
 					}else{// 头像图片（默认的 file 域的名称：__avatar1,2,3...，可在插件配置参数中自定义，参数名：avatar_field_names）
 						result.avatarUrls.add(virtualPath);
@@ -145,7 +148,8 @@ public class FileController extends BaseController<FileDTO> {
 					
 					if (file != null) {
 						String path = getRealPath(request) + virtualPath.replace("/", "\\");
-						//file.transferTo(image);
+						logger.debug("上传的图片:"+path);
+						// file.transferTo(image);
 						file.getInputStream();
 						//保存一张图片后就要向数据库中添加一条文件记录
 						String file_md5 = MD5Util.getFileMD5String(file.getInputStream());
@@ -158,18 +162,19 @@ public class FileController extends BaseController<FileDTO> {
 							// SpringMVC 上传这张图片
 							File image = new File(path);
 							file.transferTo(image);
+							
 							BufferedImage bufferedImage = ImageIO.read(image); 
 							int file_height = bufferedImage.getWidth();
 							int file_width = bufferedImage.getHeight();
 							long file_size = file.getSize();
 							baseFile.setFile_height(file_height);
-							baseFile.setFile_loc("/upload/");
+							baseFile.setFile_loc(PAHT);//用户头像的固定目录
 							baseFile.setFile_md5(file_md5);
 							baseFile.setFile_filter(file_filter);//文件过滤设置
 							baseFile.setFile_name(file_name);
 							baseFile.setFile_size(BigDecimal.valueOf(file_size));
 							baseFile.setFile_time(0d);
-							baseFile.setFile_type(".jpg");
+							baseFile.setFile_type(TYPE);
 							baseFile.setFile_width(file_width);
 							
 							baseFileService.addDto(baseFile);
@@ -177,6 +182,14 @@ public class FileController extends BaseController<FileDTO> {
 								baseFileTemp = baseFile;
 							}
 						}else{
+							// TODO 进入这里说明已经图片记录是有了，但是还有判断实际物理路径下是否有这个图片
+							// 如果没有，还是需要将图片保存下来的
+							String imgtemp = getRealPath(request)+temp.getFile_loc()+temp.getFile_name()+temp.getFile_type();
+							logger.debug("物理图片:"+imgtemp);
+							File tempimg = new File(imgtemp);
+							if(!tempimg.exists()){
+								file.transferTo(tempimg);
+							}
 							//数据存在的话不需要操作了(也不需要去更新)，业务中关注的去更新sys_file表数据即可
 							logger.debug(MessageUtil.$VALUE("image_exist", file_name,file_md5));
 							if(temp.getFile_height()==64&&temp.getFile_width()==64&&temp.getFile_name().contains("avatar")){
@@ -185,7 +198,7 @@ public class FileController extends BaseController<FileDTO> {
 								//这个file_name是当前用户操作的文件名，可能跟sys_file_base表中的文件名不一样
 								//因为同一个文件的md5值是一样的，但是可以对同一个文件命名不同
 								baseFileTemp.setFile_name(file_name);
-								baseFileTemp.setFile_type(".jpg");//这里都默认为jpg图片文件了
+								baseFileTemp.setFile_type(TYPE);//这里都默认为jpg图片文件了
 							}
 							// 根据MD5判断已经存在这个图片了，就不需要再去上传了
 						}

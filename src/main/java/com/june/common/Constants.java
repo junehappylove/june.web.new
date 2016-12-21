@@ -31,6 +31,8 @@ public class Constants {
 	public final static String REMOTE_ADDRESS_ERROR = MessageUtil.$KEY("remotefile_address_error");
 	public final static String REMOTE_FILE_NO_EXIST = MessageUtil.$KEY("remotefile_not_exist");
 	public final static String USER_HEAD = MessageUtil.$KEY("user.head");
+	public final static String USER_HEAD_PATH = "/upload/";//用户头像保存目录
+	public final static String USER_HEAD_TYPE = ".jpg";//用户头像保存格式类型
 	
 	/** 空 "" */
 	public final static String EMPTY = "";

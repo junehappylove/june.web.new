@@ -5,7 +5,7 @@ Thinks a lot for all the Open Source Code lovers!
 
  > 9. 2016-12-20 完成用户头像的处理；优化BaseController代码
  > 8. 2016-12-20 设计文件上传表、引入富头像编辑器，实现用户头像修改；[SpringMVC文件上传](http://www.cnblogs.com/fjsnail/p/3491033.html)、[小文件MD5计算](http://blog.csdn.net/wangqiuyun/article/details/22941433)、[过G文件的MD5计算](http://www.cnblogs.com/yaowukonga/p/3523668.html)
- <br>![Image text](https://github.com/junehappylove/img_lib/blob/master/june_web_new/richimage1.png) <br>
+ <br>![用户头像上传](https://github.com/junehappylove/img_lib/blob/master/june_web_new/richimage1.png) <br>
  > 7. 2016-12-17 大量代码优化；加入用户登录验证码功能；注意验证码在开发(dev)模式下无效，界面中也不会展示，仅在测试(test)和生产(pro)环境下启用
  	<br>![开发环境登录](https://github.com/junehappylove/img_lib/blob/master/june_web_new/user_login_dev.png)
  		![生成环境或测试环境登录](https://github.com/junehappylove/img_lib/blob/master/june_web_new/user_login_pro_test.png)

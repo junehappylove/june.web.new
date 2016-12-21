@@ -108,13 +108,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE sys_file_app
 		SET
 			<if test="file_code != null and file_code != ''"> 
-			file_code = #{file_code},
+				file_code = #{file_code},
 			</if>
 			<if test="app_code != null and app_code != ''"> 
-			app_code = #{app_code},
+				app_code = #{app_code},
 			</if>
 			<if test="module_code != null and module_code != ''"> 
-			module_code = #{module_code},
+				module_code = #{module_code},
 			</if>
 			file_history = #{file_history},
 			column_1 = #{column_1},
