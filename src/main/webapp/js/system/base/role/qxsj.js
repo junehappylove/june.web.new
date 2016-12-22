@@ -132,7 +132,7 @@ $(function() {
 							searchInfo();
 						},
 						formatNoMatches : function() {
-							return '无符合条件的记录';
+							return NOT_FOUND_DATAS;
 						}
 					});
 });
@@ -143,7 +143,7 @@ $(function() {
 
 function saveSuccess(response) {
 	var errType = response.errType;
-	if (errType != "error") {
+	if (errType != ERROR) {
 		closemodal();
 		searchInfo();
 	} else {
@@ -172,10 +172,10 @@ function deleteRow() {
 		var data = {
 			qxsj_code : qxsj_codes
 		}
-		showConfirm(sureDelete, "是否要删除选中的行？", "post", api_delete, data,
+		showConfirm(sureDelete, IF_DELETE_INFO, "post", api_delete, data,
 				searchUserInfo);
 	} else {
-		showOnlyMessage("error",
+		showOnlyMessage(ERROR,
 				getMessageFromList("ErrorSelectNoDelete", null));
 	}
 
@@ -189,9 +189,9 @@ function sureDelete(type, url, data, success) {
 function editRow() {
 	var selectRows = GetDataGridRows("qxsjInfoTable");
 	if (selectRows == 0) {
-		showOnlyMessage("error", getMessageFromList("ErrorNoSelectEdit", null));
+		showOnlyMessage(ERROR, getMessageFromList("ErrorNoSelectEdit", null));
 	} else if (selectRows > 1) {
-		showOnlyMessage("error", getMessageFromList("ErrorSelectMultiEdit", null));
+		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectMultiEdit", null));
 	} else {
 		var row = GetSelectedRowsObj("qxsjInfoTable");
 		$("#isNew").val('0');

@@ -34,6 +34,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import com.june.dto.back.common.TreeDto;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
@@ -665,8 +666,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 
 	/**
 	 * 设置当前操作人
-	 * 
-	 * @param view
+	 *
 	 * @param bean
 	 * @param request
 	 */
@@ -686,8 +686,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 
 	/**
 	 * 设置当前修改人
-	 * 
-	 * @param view
+	 *
 	 * @param bean
 	 * @param request
 	 */
@@ -703,6 +702,27 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		if (bean.getAddUserId() == null) {
 			bean.setAddUserId(userId);
 		}
+	}
+
+	/**
+	 * 初始化用户角色树数据
+	 * @param request
+	 * @param response
+	 */
+	protected void initRoleTree(HttpServletRequest request, HttpServletResponse response) {
+		TreeDto treeDto = new TreeDto();
+		fillRequestDto(request, treeDto);
+		String[] roleIds = treeDto.getId().split(",");
+		List<TreeDto> list = commonService.getRole();
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < roleIds.length; j++) {
+				if (list.get(i).getId().equals(roleIds[j])) {
+					list.get(i).setChecked(true);
+					break;
+				}
+			}
+		}
+		toJson(list, response);
 	}
 
 	/**
@@ -867,8 +887,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	}
 
 	protected ModelAndView initPage(HttpServletRequest request, String page) {
-		ModelAndView result = null;
-		result = new ModelAndView(page);
+		ModelAndView result = new ModelAndView(page);
 		// 获取用户信息
 		UserInfoDto userInfoDto = loginUser(request);
 		ButtonDto buttonDto = new ButtonDto();

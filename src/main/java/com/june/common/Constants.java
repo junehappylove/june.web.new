@@ -91,9 +91,9 @@ public class Constants {
 	public static final String OPERATE_TYPE_SEARCH = "Search";
 	/**  操作类型，用于操作日志时存储  Login 登录操作 */
 	public static final String OPERATE_TYPE_LOGIN = "Login";
-	/**  操作类型，用于操作日志时存储  Init 登录操作 */
+	/**  操作类型，用于操作日志时存储  Init 初始化操作 */
 	public static final String OPERATE_TYPE_INIT = "Init";
-	/**  操作类型，用于操作日志时存储  Other 登录操作 */
+	/**  操作类型，用于操作日志时存储  Other 其他操作 */
 	public static final String OPERATE_TYPE_OTHER = "Other";
 	
 	/**  是否记录日志操作 */

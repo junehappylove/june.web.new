@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY CAST(T1.CONTENT_ID AS SIGNED)
 	</sql>
 	
-	<select id="getPageList" resultType="com.june.dto.back.portal.ReleaseInfoDto" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<select id="getPageList" resultType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
        	  <include refid="getCheckInfo"/>
           <include refid="pagelimit"/>
 	</select>
@@ -52,12 +52,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	<!-- 查询总条数 -->
-	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		select count(*) from
 		( <include refid="getCheckInfo"/> ) temp
 	</select>
 	
-	<update id="checkPass" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="checkPass" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content
 		SET
@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CONTENT_ID = #{contentId}
 	</update>
 	
-	<update id="checkBack" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="checkBack" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content
 		SET

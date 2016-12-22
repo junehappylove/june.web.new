@@ -66,7 +66,7 @@ $(function() {
 			search();
 		},
 		formatNoMatches : function() {
-			return '无符合条件的记录';
+			return NOT_FOUND_DATAS;
 		}
 	});
 

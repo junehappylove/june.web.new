@@ -180,11 +180,11 @@ function batchSubmit()
 			}
 			doAjax("post",contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null));
+			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
 		
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null));
+		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
 	}
 }
 
@@ -210,10 +210,10 @@ function batchDel()
 			};
 			doAjax("post",contextPath + "/portal/MyInfo/batchDel",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage("error",getMessageFromList("SelectSubmitRow",null));
+			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
 		
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null));
+		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
 	}
 }

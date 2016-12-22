@@ -25,7 +25,7 @@ function existcallback(response)
 		$("#userEmail_ErrorMsg").css("color","red");
 		$("#userEmail_ErrorMsg").html("邮箱号不存在");
 		isExistFlag = false;
-	}else if(response.errType == "error" ){
+	}else if(response.errType == ERROR ){
 		$("#userEmail_ErrorMsg").css("color","green");
 		$("#userEmail_ErrorMsg").html("邮箱号填写正确");
 		isExistFlag = true;
@@ -64,7 +64,7 @@ function kaptchacallback(response) {
 		$("#kaptcha_ErrorMsg").css("color","green");
 		$("#kaptcha_ErrorMsg").html("验证码填写正确");
 		isRightFlag = true;
-	}else if(errType == "error") {
+	}else if(errType == ERROR) {
 		$("#kaptcha_ErrorMsg").css("color","red");
 		$("#kaptcha_ErrorMsg").html("验证码不正确");
 		isRightFlag = false;

@@ -13,7 +13,7 @@ package com.june.dao.back.portal.releaseinfo;
 import java.util.List;
 
 import com.june.common.BaseDao;
-import com.june.dto.back.portal.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 
 /**  
 * @Description: 发布咨询用dao

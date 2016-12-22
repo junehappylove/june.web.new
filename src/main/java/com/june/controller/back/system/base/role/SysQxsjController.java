@@ -59,7 +59,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	@MethodLog(module = "权限设计", remark = "权限设计信息查看页面", operateType = Constants.OPERATE_TYPE_VIEW)
 	public ModelAndView view(HttpServletRequest request,HttpServletResponse response,@PathVariable String id) {
 		ModelAndView result = null;
-		result = new ModelAndView("system/base/role/view");
+		result = new ModelAndView("system/base/role/view_qxsj");
 		SysQxsjDto qxsj = new SysQxsjDto();
 		qxsj.setQxsj_code(id);
 		qxsj = qxsjService.getDtoById(qxsj);
@@ -77,7 +77,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	 */
 	@RequestMapping("/getPagedList")
 	@MethodLog(module = "权限设计", remark = "分页获取权限设计信息", operateType = Constants.OPERATE_TYPE_SEARCH)
-	public void getSysOrgs(HttpServletRequest request, HttpServletResponse response) {
+	public void getPagedList(HttpServletRequest request, HttpServletResponse response) {
 		SysQxsjDto sysQxsjDto = new SysQxsjDto();
 		fillRequestDto(request, sysQxsjDto);
 		sysQxsjDto = qxsjService.getPagedDtos(sysQxsjDto);
@@ -120,20 +120,11 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	@RequestMapping("/viewDetail")
 	@MethodLog(module = "权限设计", remark = "权限设计信息查看", operateType = Constants.OPERATE_TYPE_VIEW)
 	public void viewDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SysQxsjDto sysQxsjDto = new SysQxsjDto();
-		fillRequestDto(request, sysQxsjDto);
-		String name = sysQxsjDto.getDtoName();
-		sysQxsjDto = qxsjService.getDtoById(sysQxsjDto);
-		// 判断权限设计信息是否为空
-		if (sysQxsjDto == null) {
-			message(response,"info_not_exist", MESSAGE_ERRO, name);
-		} else {
-			toJson(sysQxsjDto, response);
-		}
+		this.checkDetail(request,response);
 	}
 
 	/**
-	 * 权限设计树初始化
+	 * 组织树初始化
 	 * 
 	 * @param request
 	 * @param response
@@ -141,7 +132,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/initOrgTree")
-	@MethodLog(module = "权限设计", remark = "初始化权限设计树", operateType = Constants.OPERATE_TYPE_SEARCH)
+	@MethodLog(module = "权限设计", remark = "初始化组织树", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void initOrgTree(HttpServletRequest request, HttpServletResponse response) {
 		List<TreeDto> list = commonService.getOrgTree();
 		toJson(list, response);
@@ -155,22 +146,11 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	 * @date 2016年5月10日 下午3:37:27
 	 * @writer wjw.happy.love@163.com
 	 */
+	@Override
 	@RequestMapping("/initRoleTree")
 	@MethodLog(module = "权限设计", remark = "初始化角色树", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void initRoleTree(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		fillRequestDto(request, treeDto);
-		String[] roleIds = treeDto.getId().split(",");
-		List<TreeDto> list = commonService.getRole();
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < roleIds.length; j++) {
-				if (list.get(i).getId().equals(roleIds[j])) {
-					list.get(i).setChecked(true);
-					break;
-				}
-			}
-		}
-		toJson(list, response);
+		super.initRoleTree(request,response);
 	}
 
 	/**

@@ -18,7 +18,7 @@ function existcallback(response)
 		$("#userEmail_ErrorMsg").css("color","green");
 		$("#userEmail_ErrorMsg").html("邮箱号填写正确");
 		isExistFlag = true;
-	}else if(response.errType == "error" ){
+	}else if(response.errType == ERROR ){
 		$("#userEmail_ErrorMsg").css("color","red");
 		$("#userEmail_ErrorMsg").html("该邮箱号已注册，请点击右侧登录按钮");
 		isExistFlag = false;

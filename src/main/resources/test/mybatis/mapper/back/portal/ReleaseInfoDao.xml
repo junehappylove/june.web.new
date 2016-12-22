@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.june.dao.back.portal.releaseinfo.ReleaseInfoDao">
 
 	<!-- 获取咨询类型 -->
-	<select id="getChannels" resultType="com.june.dto.back.portal.ReleaseInfoDto">
+	<select id="getChannels" resultType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		SELECT
 		T1.CHANNEL_ID AS channelId,
 		T1.CHANNEL_NAME AS channelName,
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 保存操作content表插入数据 -->
-	<insert id="insertContent" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<insert id="insertContent" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		INSERT
 		INTO
 		portal_content
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 保存操作content_txt表插入数据 -->
 	
-	<insert id="insertContentText" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<insert id="insertContentText" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		INSERT
 		INTO
 		portal_content_txt
@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	<!-- 修改操作content表更新 -->
-	<update id="updateContent" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="updateContent" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content
 		SET
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CONTENT_ID = #{contentId}
 	</update>
 	<!-- 修改操作content_txt表更新 -->
-	<update id="updateContentTxt" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="updateContentTxt" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content_txt
 		SET
@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 未保存直接提交操作 content表插入 -->
-	<insert id="insertSubmitContent" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<insert id="insertSubmitContent" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		INSERT
 		INTO
 		portal_content
@@ -130,7 +130,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 直接提交操作content_txt表插入数据 -->
-	<insert id="insertSubmitContentText" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<insert id="insertSubmitContentText" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		INSERT
 		INTO
 		portal_content_txt
@@ -148,7 +148,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	<!-- 先进行保存或者修改操作，在进行提交操作content表操作 -->
-	<update id="updateSubmitContent" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="updateSubmitContent" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content
 		SET
@@ -166,7 +166,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		CONTENT_ID = #{contentId}
 	</update>
 	<!-- 先进行保存或者修改操作，在进行提交操作content_txt表操作 -->
-	<update id="updateSubmitContentTxt" parameterType="com.june.dto.back.portal.ReleaseInfoDto">
+	<update id="updateSubmitContentTxt" parameterType="com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto">
 		UPDATE
 		portal_content_txt
 		SET

@@ -31,7 +31,7 @@ $(function() {
 						striped : true,
 						pagination : true,
 						toolbar : '#toolbar',
-						pageSize : 5,
+						pageSize : 10,
 						pageNumber : 1,
 						pageList : [ 5, 10, 20 ],
 						clickToSelect : true,
@@ -81,7 +81,7 @@ $(function() {
 							searchList();
 						},
 						formatNoMatches : function() {
-							return '无符合条件的记录';
+							return NOT_FOUND_DATAS;
 						}
 					});
 	initUploadControl();

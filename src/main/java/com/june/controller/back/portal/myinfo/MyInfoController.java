@@ -7,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */
-
 package com.june.controller.back.portal.myinfo;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.portal.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
 import com.june.utility.MessageUtil;
@@ -52,8 +51,10 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	private ReleaseInfoService releaseInfoService;
 
 	/**
-	 * @Description: 我的资讯页面初始化 @author caiyang @param: @return @return:
-	 * ModelAndView @throws
+	 * 我的资讯页面初始化
+	 * @return
+	 * @date 2016年12月22日 下午8:38:07
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/MyInfo")
 	public ModelAndView initMyInfo() {
@@ -64,8 +65,11 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 表格数据初始化 @author caiyang @param: @param
-	 * request @param: @param response @return: void @throws
+	 * 表格数据初始化
+	 * @param request
+	 * @param response
+	 * @date 2016年12月22日 下午8:38:14
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/search")
 	@MethodLog(module = "我的资讯", remark = "查询当前登录用户发布的资讯", operateType = Constants.OPERATE_TYPE_SEARCH)
@@ -108,9 +112,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @throws Exception @Description: 修改资讯pop画面保存操作 @author
-	 * caiyang @param: @param request @param: @param response @return:
-	 * void @throws
+	 * 修改资讯pop画面保存操作
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:38:22
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/saveContent")
 	@MethodLog(module = "我的资讯", remark = "保存修改资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
@@ -137,9 +144,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @throws Exception @Description: 修改资讯pop画面提交操作 @author
-	 * caiyang @param: @param request @param: @param response @return:
-	 * void @throws
+	 * 修改资讯pop画面提交操作
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:38:29
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/submitContent")
 	@MethodLog(module = "我的资讯", remark = "提交修改资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
@@ -163,9 +173,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 点击行预览触发的操作 @author caiyang @param: @param
-	 * request @param: @param response @param: @return @return:
-	 * ModelAndView @throws
+	 * 点击行预览触发的操作
+	 * @param request
+	 * @param response
+	 * @return
+	 * @date 2016年12月22日 下午8:38:35
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/checkRow")
 	public ModelAndView checkRow(HttpServletRequest request, HttpServletResponse response) {
@@ -180,8 +193,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @throws Exception @Description: 删除未提交的资讯 @author caiyang @param: @param
-	 * request @param: @param response @return: void @throws
+	 * 删除未提交的资讯
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:38:41
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/deleteRow")
 	@MethodLog(module = "我的资讯", remark = "删除资讯", operateType = Constants.OPERATE_TYPE_DELETE)
@@ -200,8 +217,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @throws Exception @Description: 批量提交资讯 @author caiyang @param: @param
-	 * request @param: @param response @return: void @throws
+	 * 批量提交资讯
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:38:47
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/batchSubmit")
 	@MethodLog(module = "我的资讯", remark = "批量提交资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
@@ -223,9 +244,12 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 批量删除资讯 @author caiyang @param: @param
-	 * request @param: @param response @param: @throws Exception @return:
-	 * void @throws
+	 * 批量删除资讯
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:38:53
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/batchDel")
 	@MethodLog(module = "我的资讯", remark = "批量删除资讯", operateType = Constants.OPERATE_TYPE_DELETE)

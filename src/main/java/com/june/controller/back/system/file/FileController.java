@@ -66,7 +66,7 @@ public class FileController extends BaseController<FileDTO> {
 	public static final String PAHT = Constants.USER_HEAD_PATH;
 
 	@RequestMapping("/")
-	@MethodLog(module = "系统文件管理", remark = "页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
+	@MethodLog(module = "系统文件管理", remark = "页面初始化", operateType = Constants.OPERATE_TYPE_INIT)
 	public ModelAndView init(HttpServletRequest request) {
 		return initPage(request,"system/file/file");
 	}
@@ -79,7 +79,7 @@ public class FileController extends BaseController<FileDTO> {
 	 * @writer junehappylove
 	 */
 	@RequestMapping("/user/head")
-	@MethodLog(module = "系统文件管理", remark = "修改头像页面", operateType = Constants.OPERATE_TYPE_SEARCH)
+	@MethodLog(module = "系统文件管理", remark = "修改头像页面", operateType = Constants.OPERATE_TYPE_INIT)
 	public ModelAndView head(HttpServletRequest request) {
 		return initPage(request,"system/file/head");
 	}
@@ -94,6 +94,7 @@ public class FileController extends BaseController<FileDTO> {
 	 * @writer junehappylove
 	 */
 	@RequestMapping("/user/upload.do")
+	@MethodLog(module = "系统文件管理", remark = "上传用户头像", operateType = Constants.OPERATE_TYPE_ADD)
 	public void upload(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
 		Result result = new Result();
 		result.avatarUrls = new ArrayList<>();

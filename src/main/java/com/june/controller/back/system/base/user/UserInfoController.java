@@ -1,19 +1,5 @@
 package com.june.controller.back.system.base.user;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
@@ -23,6 +9,18 @@ import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.bussiness.vehicle.VehicleUserService;
 import com.june.service.back.system.base.user.UserInfoService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 
@@ -121,16 +119,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	@RequestMapping("/viewDetail")
 	@MethodLog(module = "用户管理", remark = "用户信息查看", operateType = Constants.OPERATE_TYPE_VIEW)
 	public void viewDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UserInfoDto userInfoDto = new UserInfoDto();
-		fillRequestDto(request, userInfoDto);
-		String name = userInfoDto.getDtoName();
-		userInfoDto = userInfoService.getDtoById(userInfoDto);
-		// 判断用户信息是否为空
-		if (userInfoDto == null) {
-			message(response,"info_not_exist", MESSAGE_ERRO, name);
-		} else {
-			toJson(userInfoDto, response);
-		}
+		this.checkDetail(request,response);
 	}
 
 	/**
@@ -156,22 +145,11 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	 * @date 2016年5月10日 下午3:37:27
 	 * @writer wjw.happy.love@163.com
 	 */
+	@Override
 	@RequestMapping("/initRoleTree")
 	@MethodLog(module = "用户管理", remark = "初始化角色树", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void initRoleTree(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		fillRequestDto(request, treeDto);
-		String[] roleIds = treeDto.getId().split(",");
-		List<TreeDto> list = commonService.getRole();
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < roleIds.length; j++) {
-				if (list.get(i).getId().equals(roleIds[j])) {
-					list.get(i).setChecked(true);
-					break;
-				}
-			}
-		}
-		toJson(list, response);
+		super.initRoleTree(request,response);
 	}
 
 	/**

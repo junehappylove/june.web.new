@@ -7,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */ 
-
 package com.june.controller.back.portal.releaseinfo;
 
 import java.util.ArrayList;
@@ -24,12 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.portal.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
 import com.june.utility.MessageUtil;
 
 @Controller
-@RequestMapping("/portal/ReleaseInfoDto/")
+@RequestMapping("/portal/ReleaseInfo/")
 public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 
 	/**
@@ -38,14 +37,13 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 	@Autowired
 	private ReleaseInfoService releaseInfoService;
 	
-	/**   
-	 * @Description: 发布咨询页面初始化
-	 * @author caiyang
-	 * @param: @return      
-	 * @return: ModelAndView      
-	 * @throws   
+	/**
+	 * 发布咨询页面初始化
+	 * @return
+	 * @date 2016年12月22日 下午8:39:35
+	 * @writer junehappylove
 	 */
-	@RequestMapping("/ReleaseInfoDto/")
+	@RequestMapping("/ReleaseInfo/")
 	public ModelAndView releaseInfoInit()
 	{
 		ModelAndView result = new ModelAndView("portal/releaseInfo/releaseInfo");
@@ -54,14 +52,13 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 		return result;
 	}
 	
-	/**   
-	 * @Description: 保存资讯操作
-	 * @author	caiyang
-	 * @param: @param request
-	 * @param: @param response
-	 * @param: @throws Exception      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 保存资讯操作
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:39:19
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/saveContent")
 	@MethodLog(module="发布资讯",remark="保存资讯",operateType=Constants.OPERATE_TYPE_ADD)
@@ -101,13 +98,12 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 	}
 	
 	/**
-	 * @throws Exception    
-	 * @Description: 提交资讯操作
-	 * @author caiyang
-	 * @param: @param request
-	 * @param: @param response      
-	 * @return: void      
-	 * @throws   
+	 * 提交资讯操作
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:39:09
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/submitContent")
 	@MethodLog(module="发布资讯",remark="提交资讯",operateType=Constants.OPERATE_TYPE_ADD)

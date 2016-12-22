@@ -128,7 +128,7 @@ $(function() {
 							searchInfo();
 						},
 						formatNoMatches : function() {
-							return '无符合条件的记录';
+							return NOT_FOUND_DATAS;
 						}
 					});
 });
@@ -140,7 +140,7 @@ $(function() {
 function saveSuccess(response)
 {
 	var errType = response.errType;
-	if(errType != "error")
+	if(errType != ERROR)
 	{
 		closemodal();
 		searchInfo();
@@ -173,10 +173,10 @@ function deleteRow() {
 		      orgId:rowIds       
 		 }
 
-		showConfirm(sureDelete, "是否要删除选中的行？", "post", contextPath
+		showConfirm(sureDelete, IF_DELETE_INFO, "post", contextPath
 				+ "/system/org/deleteSelected", data, searchUserInfo);
 	} else {
-		showOnlyMessage("error", getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
 	}
 
 }
@@ -191,10 +191,10 @@ function editRow() {
     var selectRows = GetDataGridRows("orgInfoTable");
     if (selectRows == 0)
     {
-    	showOnlyMessage("error",getMessageFromList("ErrorNoSelectEdit",null));
+    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectEdit",null));
     }else if(selectRows > 1)
     {
-    	showOnlyMessage("error",getMessageFromList("ErrorSelectMultiEdit",null));
+    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiEdit",null));
     }
     else{
     	var row = GetSelectedRowsObj("orgInfoTable");

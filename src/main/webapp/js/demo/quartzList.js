@@ -114,7 +114,7 @@ $(function(){
 		
 		},
 		formatNoMatches : function() {
-			return '无符合条件的记录';
+			return NOT_FOUND_DATAS;
 		}
 	});
 	
@@ -279,7 +279,7 @@ function callback()
 function resume(name,group,state)
 {
 	if(state=='ACQUIRED'){
-		showOnlyMessage("error", "该Trigger已经启动！");
+		showOnlyMessage(ERROR, "该Trigger已经启动！");
 		return;
 	}
 	var data = {

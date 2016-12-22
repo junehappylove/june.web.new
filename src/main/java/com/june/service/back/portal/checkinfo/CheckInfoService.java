@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
 import com.june.dao.back.portal.checkinfo.CheckInfoDao;
-import com.june.dto.back.portal.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 
 @Service
 public class CheckInfoService extends BaseService<CheckInfoDao, ReleaseInfoDto> {

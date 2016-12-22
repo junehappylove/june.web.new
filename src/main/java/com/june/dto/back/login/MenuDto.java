@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.june.common.AbstractDTO;
 
+/**
+ * 系统菜单
+ */
 public class MenuDto extends AbstractDTO implements Serializable{
 
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = 1797576506000676225L;
 	// 用户id
 	private String userId;
@@ -32,7 +32,7 @@ public class MenuDto extends AbstractDTO implements Serializable{
 	
 	private Integer infoNum;// 信息数目
 	
-	private List<MenuDto> menus;
+	private List<MenuDto> menus;	//子菜单
 	
 	private String clazz;// 设置tab属性是否是选中状态
 
@@ -152,7 +152,7 @@ public class MenuDto extends AbstractDTO implements Serializable{
 	}
 
 	/**
-	 * @param ord
+	 * @param orderNum
 	 *            the ord to set
 	 */
 	public void setOrderNum(Integer orderNum) {

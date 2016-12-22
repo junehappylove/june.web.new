@@ -62,5 +62,5 @@ function check()
 	checkFckEditor("content_text","资讯内容");
 	maxLength("title",255,"标题","255");
 	maxLength("summary",255,"摘要","255");
-	return showMessage("error");
+	return showMessage(ERROR);
 }

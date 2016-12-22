@@ -28,7 +28,6 @@ import com.june.dto.back.bussiness.mvb.MVBDto;
 import com.june.dto.back.bussiness.vehicle.VehicleDto;
 import com.june.dto.back.bussiness.vehicle.VehicleUser;
 import com.june.dto.back.common.TreeDto;
-import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.service.back.bussiness.errorCode.ErrorCodeService;
 import com.june.service.back.bussiness.mvb.MVBService;
@@ -78,21 +77,7 @@ public class VehicleController extends BaseController<VehicleDto> {
 	@RequestMapping("/search/")
 	@MethodLog(module = "车型管理", remark = "车型管理页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public ModelAndView init(HttpServletRequest request) {
-		ModelAndView result = null;
-		result = new ModelAndView("business/vehicle/vehicle");
-		// 获取用户信息
-		UserInfoDto userInfoDto = loginUser(request);
-		ButtonDto buttonDto = new ButtonDto();
-		if (userInfoDto != null) {
-			buttonDto.setRoleId(userInfoDto.getRoleId());
-			buttonDto.setMenuUrl(request.getServletPath());
-			// 根据车型角色和初始化的页面获取该页面有权限的操作
-			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
-			for (int i = 0; i < list.size(); i++) {
-				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
-			}
-		}
-		return result;
+		return initPage(request,"business/vehicle/vehicle");
 	}
 	
 	@RequestMapping("/view/{id}")
@@ -115,41 +100,13 @@ public class VehicleController extends BaseController<VehicleDto> {
 	@RequestMapping("/add/")
 	@MethodLog(module = "车型管理", remark = "添加车型信息", operateType = Constants.OPERATE_TYPE_ADD)
 	public ModelAndView add(HttpServletRequest request) {
-		ModelAndView result = null;
-		result = new ModelAndView("business/vehicle/add");
-		// 获取用户信息
-		UserInfoDto userInfoDto = loginUser(request);
-		ButtonDto buttonDto = new ButtonDto();
-		if (userInfoDto != null) {
-			buttonDto.setRoleId(userInfoDto.getRoleId());
-			buttonDto.setMenuUrl(request.getServletPath());
-			// 根据车型角色和初始化的页面获取该页面有权限的操作
-			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
-			for (int i = 0; i < list.size(); i++) {
-				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
-			}
-		}
-		return result;
+		return initPage(request,"business/vehicle/add");
 	}
 
 	@RequestMapping("/users/")
 	@MethodLog(module = "车型管理", remark = "车型用户管理信息", operateType = Constants.OPERATE_TYPE_INIT)
 	public ModelAndView users(HttpServletRequest request) {
-		ModelAndView result = null;
-		result = new ModelAndView("business/vehicle/users");
-		// 获取用户信息
-		UserInfoDto userInfoDto = loginUser(request);
-		ButtonDto buttonDto = new ButtonDto();
-		if (userInfoDto != null) {
-			buttonDto.setRoleId(userInfoDto.getRoleId());
-			buttonDto.setMenuUrl(request.getServletPath());
-			// 根据车型角色和初始化的页面获取该页面有权限的操作
-			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
-			for (int i = 0; i < list.size(); i++) {
-				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
-			}
-		}
-		return result;
+		return initPage(request,"business/vehicle/users");
 	}
 
 	/**
@@ -451,21 +408,10 @@ public class VehicleController extends BaseController<VehicleDto> {
 	 * @param response
 	 * @return void
 	 */
+	@Override
 	@RequestMapping("/initRoleTree")
 	public void initRoleTree(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		fillRequestDto(request, treeDto);
-		String[] roleIds = treeDto.getId().split(",");
-		List<TreeDto> list = commonService.getRole();
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < roleIds.length; j++) {
-				if (list.get(i).getId().equals(roleIds[j])) {
-					list.get(i).setChecked(true);
-					break;
-				}
-			}
-		}
-		toJson(list, response);
+		super.initRoleTree(request,response);
 	}
 
 	/**

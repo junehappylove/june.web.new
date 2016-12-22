@@ -3,6 +3,9 @@ package com.june.dto.back.login;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 菜单列表
+ */
 public class MenuListDto implements Serializable{
 	/**
 	 * long serialVersionUID

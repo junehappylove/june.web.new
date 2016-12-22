@@ -63,7 +63,7 @@
 						searchRoleInfo();
 					},
 					formatNoMatches : function() {
-						return '无符合条件的记录';
+						return NOT_FOUND_DATAS;
 					}
 				});
 				// modalform校验
@@ -148,10 +148,10 @@ function editRow() {
     var selectRows = GetDataGridRows("roleInfoTable");
     if (selectRows == 0)
     {
-    	showOnlyMessage("error",getMessageFromList("ErrorNoSelectEdit",null));
+    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectEdit",null));
     }else if(selectRows > 1)
     {
-    	showOnlyMessage("error",getMessageFromList("ErrorSelectMultiEdit",null));
+    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiEdit",null));
     }
     else{
     	var row = GetSelectedRowsObj("roleInfoTable");
@@ -172,7 +172,7 @@ function checkDetail(roleId) {
 function checkDetailSuccess(response)
 {
 	var errType = response.errType;
-	if(errType != "error")
+	if(errType != ERROR)
 	{
 		$("#modalForm #roleId").val(response.roleId);
 		$("#modalForm #roleName").val(response.roleName);
@@ -200,10 +200,10 @@ function deleteRow() {
 		      roleId:rowIds       
 		 };
 
-		showConfirm(sureDelete, "是否要删除选中的行？", "post", contextPath
+		showConfirm(sureDelete, IF_DELETE_INFO, "post", contextPath
 				+ "/system/base/role/delRole", data, searchRoleInfo);
 	} else {
-		showOnlyMessage("error", getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
 	}
 
 }
@@ -226,7 +226,7 @@ function closemodal() {
 function saveSuccess(response)
 {
 	var errType = response.errType;
-	if(errType != "error")
+	if(errType != ERROR)
 	{
 		closemodal();
 		searchRoleInfo();
@@ -240,9 +240,9 @@ function saveSuccess(response)
 function initMenu(){
 	 var selectRows = GetDataGridRows("roleInfoTable");
 	    if (selectRows == 0)	    {
-	    	showOnlyMessage("error",getMessageFromList("ErrorNoSelectAssign",null));
+	    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectAssign",null));
 	    }else if(selectRows > 1)	    {
-	    	showOnlyMessage("error",getMessageFromList("ErrorSelectMultiAssign",null));
+	    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiAssign",null));
 	    } else{
 	    	var row = GetSelectedRowsObj("roleInfoTable");
 	    	//initMenu(row[0].roleId);
@@ -307,10 +307,10 @@ function initUser()
 	 var selectRows = GetDataGridRows("roleInfoTable");
 	    if (selectRows == 0)
 	    {
-	    	showOnlyMessage("error",getMessageFromList("ErrorNoSelectAssign",null));
+	    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectAssign",null));
 	    }else if(selectRows > 1)
 	    {
-	    	showOnlyMessage("error",getMessageFromList("ErrorSelectMultiAssign",null));
+	    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiAssign",null));
 	    }
 	    else{
 	    	

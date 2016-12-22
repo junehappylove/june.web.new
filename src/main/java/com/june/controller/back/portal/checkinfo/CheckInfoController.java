@@ -1,5 +1,4 @@
 /*   
-
  * Copyright (c) 2010-2020 JUNE. All Rights Reserved.   
  *   
  * This software is the confidential and proprietary information of   
@@ -8,7 +7,6 @@
  * you entered into with JUNE.   
  *   
  */
-
 package com.june.controller.back.portal.checkinfo;
 
 import java.util.ArrayList;
@@ -25,17 +23,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.portal.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.checkinfo.CheckInfoService;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
 import com.june.utility.MessageUtil;
 
 /**
- * @Description: 审核资讯用controller
- * @author caiyang
- * @date 2015年11月3日 下午1:50:19
- * @version V1.0
+ * 审核资讯用controller
+ * CheckInfoController <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月22日 下午8:37:03
+ * @version 1.0.0
  */
 @Controller
 @RequestMapping("/portal/CheckInfo")
@@ -60,9 +61,12 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	private ReleaseInfoService releaseInfoService;
 
 	/**
-	 * @Description: 审核资讯页面初始化 @author caiyang @param: @param
-	 *               request @param: @param
-	 *               response @return: void @throws
+	 * 审核资讯页面初始化
+	 * @param request
+	 * @param response
+	 * @return
+	 * @date 2016年12月22日 下午8:37:13
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/CheckInfo")
 	public ModelAndView init(HttpServletRequest request, HttpServletResponse response) {
@@ -73,9 +77,11 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 页面表格数据初始化 @author caiyang @param: @param
-	 *               request @param: @param
-	 *               response @return: void @throws
+	 * 页面表格数据初始化
+	 * @param request
+	 * @param response
+	 * @date 2016年12月22日 下午8:37:20
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/search")
 	@MethodLog(module = "审核资讯", remark = "查询待审核资讯", operateType = Constants.OPERATE_TYPE_SEARCH)
@@ -88,10 +94,12 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
+	 * 审核通过操作
+	 * @param request
+	 * @param response
 	 * @throws Exception
-	 * 			@Description: 审核通过操作 @author caiyang @param: @param
-	 *             request @param: @param
-	 *             response @return: void @throws
+	 * @date 2016年12月22日 下午8:37:28
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/checkPass")
 	@MethodLog(module = "审核资讯", remark = "通过待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
@@ -126,10 +134,12 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 预览资讯操作 @author caiyang @param: @param
-	 *               request @param: @param
-	 *               response @param: @return @return:
-	 *               ModelAndView @throws
+	 * 预览资讯操作 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @date 2016年12月22日 下午8:37:38
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/checkView")
 	public ModelAndView checkView(HttpServletRequest request, HttpServletResponse response) {
@@ -144,10 +154,12 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
-	 * @Description: 批量通过审核操作 @author caiyang @param: @param
-	 *               request @param: @param
-	 *               response @param: @throws Exception @return:
-	 *               void @throws
+	 * 批量通过审核操作
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 * @date 2016年12月22日 下午8:37:44
+	 * @writer junehappylove
 	 */
 	@RequestMapping("/batchCheckPass")
 	@MethodLog(module = "审核资讯", remark = "批量通过待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)
@@ -170,10 +182,12 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 	}
 
 	/**
+	 * 批量驳回资讯操作
+	 * @param request
+	 * @param response
 	 * @throws Exception
-	 * 			@Description: 批量驳回资讯操作 @author caiyang @param: @param
-	 *             request @param: @param
-	 *             response @return: void @throws
+	 * @date 2016年12月22日 下午8:37:51
+	 * @writer junehappylove
 	 */
 	@RequestMapping("batchCheckBack")
 	@MethodLog(module = "审核资讯", remark = "批量驳回待审核资讯", operateType = Constants.OPERATE_TYPE_UPDATE)

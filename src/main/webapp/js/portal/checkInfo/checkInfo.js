@@ -119,7 +119,7 @@ function batchCheckPass()
 		}
 		doAjax("post",contextPath + "/portal/CheckInfo/batchCheckPass",data,"checkPassSuccess",null,false);
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null))
+		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
 	}
 }
 
@@ -139,7 +139,7 @@ function batchCheckBack()
 		}
 		doAjax("post",contextPath + "/portal/CheckInfo/batchCheckBack",data,"checkPassSuccess",null,false);
 	}else{
-		showOnlyMessage("error",getMessageFromList("SelectRow",null))
+		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
 	}
 }
 

@@ -118,16 +118,7 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 	@RequestMapping("/viewDetail")
 	@MethodLog(module = "组织管理", remark = "组织信息查看", operateType = Constants.OPERATE_TYPE_VIEW)
 	public void viewDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SysOrgDto sysOrgDto = new SysOrgDto();
-		fillRequestDto(request, sysOrgDto);
-		String name = sysOrgDto.getDtoName();
-		sysOrgDto = sysOrgService.getDtoById(sysOrgDto);
-		// 判断组织信息是否为空
-		if (sysOrgDto == null) {
-			message(response,"info_not_exist", MESSAGE_ERRO, name);
-		} else {
-			toJson(sysOrgDto, response);
-		}
+		this.checkDetail(request,response);
 	}
 
 	/**
@@ -153,22 +144,11 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 	 * @date 2016年5月10日 下午3:37:27
 	 * @writer wjw.happy.love@163.com
 	 */
+	@Override
 	@RequestMapping("/initRoleTree")
 	@MethodLog(module = "组织管理", remark = "初始化角色树", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void initRoleTree(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		fillRequestDto(request, treeDto);
-		String[] roleIds = treeDto.getId().split(",");
-		List<TreeDto> list = commonService.getRole();
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < roleIds.length; j++) {
-				if (list.get(i).getId().equals(roleIds[j])) {
-					list.get(i).setChecked(true);
-					break;
-				}
-			}
-		}
-		toJson(list, response);
+		super.initRoleTree(request,response);
 	}
 
 	/**
