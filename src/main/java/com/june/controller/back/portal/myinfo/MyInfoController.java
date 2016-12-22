@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfoDto;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
 import com.june.utility.MessageUtil;

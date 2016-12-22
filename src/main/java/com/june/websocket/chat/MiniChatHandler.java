@@ -13,6 +13,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.june.utility.StringUtil;
+
 /**
  * 新建一个自己的HandShakeInterceptor类
  * HandShakeInterceptor是websocket握手拦截器，用于拦截websocket初始化连接的请求 <br>
@@ -31,7 +33,8 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		String clientMessage = message.getPayload();
 		log.debug("接受客户端ID[" + session.getId() + "]-内容为:" + clientMessage);
 		// TODO 这里进行高级信息处理业务
-		TextMessage returnMessage = new TextMessage("服务端处理后内容：" + clientMessage);
+		clientMessage = StringUtil.randomCode(clientMessage.length());
+		TextMessage returnMessage = new TextMessage("" + clientMessage);
 		// 将处理后的返回给客户端
 		session.sendMessage(returnMessage);
 	}
@@ -45,7 +48,7 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		log.debug("getTextMessageSizeLimit:" + session.getTextMessageSizeLimit());
 		log.debug("getUri:" + session.getUri().toString());
 		log.debug("getPrincipal:" + session.getPrincipal());
-		session.sendMessage(new TextMessage("您好，欢迎光临".getBytes()));
+		session.sendMessage(new TextMessage(("您好,"+session.getPrincipal()).getBytes()));
 	}
 
 	@Override

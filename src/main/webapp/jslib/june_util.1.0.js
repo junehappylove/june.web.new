@@ -1,43 +1,11 @@
-/**
+/*
  * JUNE软件有限公司<br>
  * jslib.june_util.1.0.js
  * 日期：2015年12月8日
  */
-
-/**
- * 动态加载定义<br>
- * 可以动态的加载css文件，和js文件<br>
- * 调用方法:<br><blockquote>
- * //动态加载CSS<br>
- * DynamicLoading.css("../css/blue.css");<br>
- * //动态加载JS,默认以utf-8编码<br>
- * DynamicLoading.js("../js/moment.js", "GBK");<br>
- * DynamicLoading.js("../js/moment.js", "UTF-8");<br>
- * //调用被加载的资源文件中的方法<br></blockquote>
- */
-DynamicLoading = {
-	css : function(path) { // 动态加载CSS
-		if (!path || path.length === 0) {
-			throw new Error('CSS "path" is required !');
-		}
-		var head = document.getElementsByTagName('head')[0];
-		$(head).append("<link type='text/css' rel='stylesheet' href='" + path + "' />");
-	},
-	js : function(path, charset) { // 动态加载JS
-		var code = charset;
-		if (!path || path.length === 0) {
-			throw new Error('JS "path" is required !');
-		}
-		var head = document.getElementsByTagName('head')[0];
-		if(charset==undefined||!charset ||charset.length === 0){
-			code = "UTF-8";
-		}
-		$(head).append("<script type='text/javascript' language='javascript' src='" + path + "' charset='" + code + "' /></script>");
-	}
-};
 // ////////////////////////////////////////////
 // ////////////////////////////////////////////
-// ///////////// 举例 ///////////////////
+// ///////////// 举例 //////////////////////////
 // ////////////////////////////////////////////
 // ////////////////////////////////////////////
 // 调用方法:
@@ -47,13 +15,22 @@ DynamicLoading = {
 // DynamicLoading.js("../js/moment.js", "GBK");
 // DynamicLoading.js("../js/moment.js", "UTF-8");
 // 调用被加载的资源文件中的方法
-
 /////////////////////////////////////////////////////
 // 调用方法：june.info("hello world!");
 // ///////////////////////////////////////////////////
 var INFO = "info", ERROR = "error", WARN = "warning", QUESTION = "question";
 var GET = "get", POST = "post", JSON = "json";
 var FLAG = "WANG_JUN_WEI";
+/**
+ * 动态加载
+ * 可以动态的加载css文件，和js文件<br>
+ * <b>调用方法:</b><br>
+ * 动态加载CSS<br>
+ * june.css("../css/blue.css");<br>
+ * 动态加载JS,默认以utf-8编码<br>
+ * june.js("../js/moment.js", "UTF-8");<br>
+ * 调用被加载的资源文件中的方法<br>
+ */
 june={
 		info:function(info){
 			$.messager.alert("提示",info,"info");
@@ -104,6 +81,12 @@ june={
 		timestamp:function(){
 			return new Date().getTime();
 		},
+		date:function(){
+			return new Date().toLocaleDateString();
+		},
+		time:function(){
+			return new Date().toLocaleTimeString();
+		},
 		checkImageType:function(type){
 			if(type==""){
 				return false;
@@ -153,6 +136,13 @@ june={
 				}
 			}
 			return true;
+		},
+		style:function(css){
+			if (!css || css.length === 0) {
+				throw new Error('CSS style is required !');
+			}
+			var head = document.getElementsByTagName('head')[0];
+			$(head).append("<style type='text/css'>"+css+"</style>");
 		},
 		css : function(path) { // 动态加载CSS
 			if (!path || path.length === 0) {

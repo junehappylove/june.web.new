@@ -1,30 +1,21 @@
-/*   
- * Copyright (c) 2010-2020 JUNE. All Rights Reserved.   
- *   
- * This software is the confidential and proprietary information of   
- * JUNE. You shall not disclose such Confidential Information   
- * and shall use it only in accordance with the terms of the agreements   
- * you entered into with JUNE.   
- *   
- */ 
-
-package com.june.dto.back.portal.ReleaseInfo;
-
-import java.io.Serializable;
+/**
+ * 中科方德软件有限公司<br>
+ * june_web_new:com.june.dto.back.portal.java
+ * 日期:2016年12月22日
+ */
+package com.june.dto.back.portal;
 
 import com.june.common.PageDTO;
 
 /**
- * 
- * 发布咨询用dto <br>
+ * ReleaseInfoDto <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
- * @date 2016年5月10日 下午1:19:43
+ * @blog https://www.github.com/junehappylove
+ * @date 2016年12月22日 下午3:12:00
+ * @version 1.0.0
  */
-public class ReleaseInfoDto extends PageDTO<ReleaseInfoDto> implements Serializable{
-	/**
-	 * long serialVersionUID
-	 */
+public class ReleaseInfoDto extends PageDTO<ReleaseInfoDto>{
 	private static final long serialVersionUID = -8871412038284785504L;
 	private String channelId;//咨询类型id
 	private String channelName;//咨询类型名称

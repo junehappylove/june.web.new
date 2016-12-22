@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.june.common.BaseService;
 import com.june.dao.back.portal.releaseinfo.ReleaseInfoDao;
-import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfoDto;
 
 /**  
 * @Description: 发布咨询用service

@@ -11,7 +11,7 @@
 package com.june.dao.back.portal.checkinfo;
 
 import com.june.common.BaseDao;
-import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfoDto;
 
 /**  
 * @Description: 审核资讯用dao

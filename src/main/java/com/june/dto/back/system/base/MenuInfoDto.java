@@ -20,10 +20,6 @@ import com.june.common.PageDTO;
  * @date 2016年5月20日 下午12:16:45
  */
 public class MenuInfoDto extends PageDTO<MenuInfoDto> {
-
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = 1000L;
 	private String id;// 菜单id
 	private String text;// 菜单名
@@ -31,6 +27,7 @@ public class MenuInfoDto extends PageDTO<MenuInfoDto> {
 	private String authorityMenusId;// 页面上传过来的需要赋权限的id
 	private String roleName;// 角色名
 	private String buttonId;// 按钮id
+	
 	/**
 	 * 一级菜单id.
 	 */
@@ -94,56 +91,26 @@ public class MenuInfoDto extends PageDTO<MenuInfoDto> {
 		this.buttonId = buttonId;
 	}
 
-	/**
-	 * 得到firstMenuId.
-	 * 
-	 * @return firstMenuId.
-	 */
 	public String getFirstMenuId() {
 		return firstMenuId;
 	}
 
-	/**
-	 * 设置firstMenuId.
-	 * 
-	 * @param firstMenuId.
-	 */
 	public void setFirstMenuId(String firstMenuId) {
 		this.firstMenuId = firstMenuId;
 	}
 
-	/**
-	 * 得到secondMenuId.
-	 * 
-	 * @return secondMenuId.
-	 */
 	public String getSecondMenuId() {
 		return secondMenuId;
 	}
 
-	/**
-	 * 设置secondMenuId.
-	 * 
-	 * @param secondMenuId.
-	 */
 	public void setSecondMenuId(String secondMenuId) {
 		this.secondMenuId = secondMenuId;
 	}
 
-	/**
-	 * 得到thirdMenuId.
-	 * 
-	 * @return thirdMenuId.
-	 */
 	public String getThirdMenuId() {
 		return thirdMenuId;
 	}
 
-	/**
-	 * 设置thirdMenuId.
-	 * 
-	 * @param thirdMenuId.
-	 */
 	public void setThirdMenuId(String thirdMenuId) {
 		this.thirdMenuId = thirdMenuId;
 	}

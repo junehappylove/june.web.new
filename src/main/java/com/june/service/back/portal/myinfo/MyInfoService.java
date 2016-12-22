@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
 import com.june.dao.back.portal.myinfo.MyInfoDao;
-import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
+import com.june.dto.back.portal.ReleaseInfoDto;
 
 /**  
 * @Description: 我的资讯用service

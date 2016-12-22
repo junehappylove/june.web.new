@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +48,7 @@ import com.june.dto.back.system.file.FileAppDTO;
 import com.june.dto.back.system.file.FileDTO;
 import com.june.utility.MD5Util;
 import com.june.utility.MessageUtil;
+import com.june.utility.StringUtil;
 
 /**
  * FileController <br>
@@ -368,11 +368,7 @@ public class FileController extends BaseController<FileDTO> {
 	private String getFileName() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssS");
 		String fileName = simpleDateFormat.format(new Date());
-		Random random = new Random();
-		String randomCode = "";
-		for (int i = 0; i < 8; i++) {
-			randomCode += Integer.toString(random.nextInt(36), 36);
-		}
+		String randomCode = StringUtil.randomCode(8);
 		fileName = fileName + randomCode;
 		return fileName;
 	}

@@ -79,8 +79,7 @@
 		<property name="prefix" value="/WEB-INF/view/"></property>
 		<!-- 视图后缀 -->
 		<property name="suffix" value=".jsp"></property>
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
 		<property name="order" value="1" />
 	</bean>
 	<!-- 配置jsp视图解析器 end -->
