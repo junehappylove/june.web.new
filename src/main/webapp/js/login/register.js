@@ -6,7 +6,7 @@ function isUserExist() {
 	var userEmail = $("#userEmail").val();
 	if(isValid) {
 		var data = {userEmail:userEmail};
-		doAjax("post",contextPath + "/register/isUserExist",data,"existcallback",false);
+		doAjax(POST,contextPath + "/register/isUserExist",data,"existcallback",false);
 	}
 }
 
@@ -14,7 +14,7 @@ function isUserExist() {
 var isExistFlag = false;
 function existcallback(response)
 {
-	if(response.errType == "info") {
+	if(response.errType == INFO) {
 		$("#userEmail_ErrorMsg").css("color","green");
 		$("#userEmail_ErrorMsg").html("邮箱号填写正确");
 		isExistFlag = true;
@@ -45,7 +45,7 @@ function sendEmail() {
 	     InterValObj = window.setInterval(SetRemainTime, 1000); // 启动计时器，1秒执行一次
 	     // 向后台发送处理数据
 	     var data = {userEmail:userEmail};
-	     doAjax("post",contextPath + "/register/sendmail",data,"sendcallback",false);
+	     doAjax(POST,contextPath + "/register/sendmail",data,"sendcallback",false);
      }else{
  		$("#registerForm").form("validate");
  	}
@@ -128,7 +128,7 @@ function sureRegisterBtn() {
 		if(isExistFlag && isRight && isTimeout){
 			var data = getFormJson("registerForm");
 			data.userId = data.userEmail;   // 如果用邮箱注册，用户id设置为邮箱号
-			doAjax("post",contextPath + "/register/sureRegister",data,"registerCallBack",false);
+			doAjax(POST,contextPath + "/register/sureRegister",data,"registerCallBack",false);
 		}
 	}
 }
@@ -137,7 +137,7 @@ function sureRegisterBtn() {
 function registerCallBack(response) {
 	//返回的消息类型
 	var errType = response.errType;
-	if(errType == "info") {
+	if(errType == INFO) {
 		 $('#popToLogin').dialog({
 		  	    title: '跳回首页',
 		  	    width: 800,

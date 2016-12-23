@@ -11,7 +11,7 @@ function saveInfo()
 //		var fckeditor = FCKeditorAPI.GetInstance('content_text');
 //		var str = fckeditor.GetHTML(); //这就是内容
 //		data.contentText= str;
-//		doAjax("post",contextPath + "/portal/ReleaseInfo/saveContent",data,"savesuccess",null,false);
+//		doAjax(POST,contextPath + "/portal/ReleaseInfo/saveContent",data,"savesuccess",null,false);
 //	}
 }
 
@@ -29,7 +29,7 @@ function submitInfo()
 		var data = getFormJson("releaseInfo");
 		var value = getFckContent('content_text');
 		data.contentText= value;
-		doAjax("post",contextPath + "/portal/ReleaseInfo/submitContent",data,"submitsuccess",null,false);
+		doAjax(POST,contextPath + "/portal/ReleaseInfo/submitContent",data,"submitsuccess",null,false);
 	
 }
 

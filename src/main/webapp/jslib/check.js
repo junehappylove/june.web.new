@@ -25,7 +25,7 @@ function showErrMsg(type) {
 		});
 	}
 	//消息提示
-	else if (type == "info") {
+	else if (type == INFO) {
 		$.notify({
 			icon: 'glyphicon glyphicon-ok-sign',
 			title: '<strong>Info:</strong>',
@@ -89,7 +89,7 @@ function showErrMsgLayer(type,formid) {
 		});
 	}
 	//消息提示
-	else if (type == "info") {
+	else if (type == INFO) {
 		$.notify({
 			icon: 'glyphicon glyphicon-ok-sign',
 			title: '<strong>Info:</strong>',
@@ -150,7 +150,7 @@ function showParamMessage(type,message)
 		});
 	}
 	//消息提示
-	else if (type == "info") {
+	else if (type == INFO) {
 		$.notify({
 			icon: 'glyphicon glyphicon-ok-sign',
 			title: '<strong>Info:</strong>',

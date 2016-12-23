@@ -264,18 +264,13 @@
 					</div>
 					<div>
 					<form enctype="multipart/form-data"  id="uploadForm">
-
-					<label>提交有file的form表单</label>
+						<label>提交有file的form表单</label>
 						<input id="uploadInput" name="myfiles" type="file" multiple class="file-loading">
-						<div class="col-lg-3">
-								<input type="text" class="form-control" id="startDate" name="startDate" placeholder="YYYY-MM-DD">
-						</div>
 					</form>
 					</div>
 					</br>
 					<div>
 					<form enctype="multipart/form-data"  id="uploadForm1">
-										</br>
 						<label>单独提交file</label>
 						<input id="uploadInput1" name="myfiles" type="file" multiple class="file-loading">
 						<button type="submit" class="btn btn-primary">上传</button>

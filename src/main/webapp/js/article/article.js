@@ -55,7 +55,7 @@ function newadd()
 		summary:"summary",
 		content:"content"
 	}
-	doAjax("post",contextPath + "/gnxw/add",data,"addsuccess",false);
+	doAjax(POST,contextPath + "/gnxw/add",data,"addsuccess",false);
 }
 
 function addsuccess()

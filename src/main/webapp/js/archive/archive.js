@@ -21,7 +21,7 @@ $(function() {
 	}).on('success.form.bv', function(e) {
 		// 校验成功后执行以下方法
 	    e.preventDefault();
-	    doFileFormAjax("uploadForm","post",contextPath + "/archive/addNew",success);    
+	    doFileFormAjax("uploadForm",POST,contextPath + "/archive/addNew",success);    
 	});
 	// 表格初始化
 	$('#archiveTable')

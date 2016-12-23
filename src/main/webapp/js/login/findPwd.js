@@ -13,7 +13,7 @@ function isEmailExist() {
 	var userEmail = $("#userEmail").val();
 	if(isValid) {
 		var data = {userEmail:userEmail};
-		doAjax("post",contextPath + "/register/isUserExist",data,"existcallback",false);
+		doAjax(POST,contextPath + "/register/isUserExist",data,"existcallback",false);
 	}
 }
 
@@ -21,7 +21,7 @@ function isEmailExist() {
 var isExistFlag = false;
 function existcallback(response)
 {
-	if(response.errType == "info") {
+	if(response.errType == INFO) {
 		$("#userEmail_ErrorMsg").css("color","red");
 		$("#userEmail_ErrorMsg").html("邮箱号不存在");
 		isExistFlag = false;
@@ -52,7 +52,7 @@ function isKaptchaRight() {
 	var kaptcha = $("#kaptcha").val();
 	if(isValid) {
 		var data = {kaptcha:kaptcha};
-		doAjax("post",contextPath + "/isKaptchaRight",data,"kaptchacallback",false);
+		doAjax(POST,contextPath + "/isKaptchaRight",data,"kaptchacallback",false);
 	}
 }
 
@@ -60,7 +60,7 @@ var isRightFlag = false;
 function kaptchacallback(response) {
 	//返回的消息类型
 	var errType = response.errType;
-	if(errType == "info") {
+	if(errType == INFO) {
 		$("#kaptcha_ErrorMsg").css("color","green");
 		$("#kaptcha_ErrorMsg").html("验证码填写正确");
 		isRightFlag = true;
@@ -90,7 +90,7 @@ function surefindPwdByEmailBtn() {
 		
 		if(isExistFlag && isRightFlag){
 			var data = getFormJson("findPwdByEmailForm");
-			doAjax("post",contextPath + "/findPassword/surefindPwdByEmail",data,findPwdCallBack,false);
+			doAjax(POST,contextPath + "/findPassword/surefindPwdByEmail",data,findPwdCallBack,false);
 		}
 	}
 }
@@ -98,7 +98,7 @@ function surefindPwdByEmailBtn() {
 function findPwdCallBack(response) {
 	//返回的消息类型
 	var errType = response.errType;
-	if(errType == "info") {
+	if(errType == INFO) {
 		location = contextPath + "/findPassword/findPwdSendEmail";
 	}
 }
@@ -111,7 +111,7 @@ function checkResetValidate() {
 function sureResetPwdBtn() {
 	if(checkResetValidate()) {//验证通过
 		var data = getFormJson("resetPwdForm");
-		doAjax("post",contextPath + "/findPassword/resetPassword",data,resetPwdCallBack,false);
+		doAjax(POST,contextPath + "/findPassword/resetPassword",data,resetPwdCallBack,false);
 	}
 }
 
@@ -119,7 +119,7 @@ function sureResetPwdBtn() {
 function resetPwdCallBack(response) {
 	//返回的消息类型
 	var errType = response.errType;
-	if(errType == "info") {
+	if(errType == INFO) {
 		 $('#popForwarLogin').dialog({
 		  	    title: '跳回首页',
 		  	    width: 800,

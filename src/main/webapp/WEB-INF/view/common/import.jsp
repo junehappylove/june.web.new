@@ -7,27 +7,29 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <c:set var="env" value="<%=Constants.ENVIRONMENT %>" />
 
-<link href="${ctx}/jslib/bootstrap/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
-<link href="${ctx}/jslib/bootstrap/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-<link href="${ctx}/jslib/bootstrap/css/animate.min.css" rel="stylesheet">
-<link href="${ctx}/jslib/bootstrap/css/style.min.css?v=4.0.0" rel="stylesheet">
-<link href='${ctx}/jslib/bootstrap-table/bootstrap-table.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="${ctx}/jslib/bootstrapValivator/dist/css/bootstrapValidator.css"/>
-<link rel="stylesheet" href="${ctx}/jslib/bootstrap/bower_components/bootstrap-select/css/bootstrap-select.min.css"/>
-<link href="${ctx}/jslib/bootstrap/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrap/css/bootstrap.min.css?v=3.3.5" type="text/css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrap/css/font-awesome.min.css?v=4.4.0" type="text/css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrap/css/animate.min.css" type="text/css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrap/css/style.min.css?v=4.0.0" type="text/css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrap-table/bootstrap-table.min.css" type="text/css" rel="stylesheet">
+<link href="${ctx}/jslib/bootstrapValivator/dist/css/bootstrapValidator.css" type="text/css" rel="stylesheet"/>
+<link href="${ctx}/jslib/bootstrap/bower_components/bootstrap-select/css/bootstrap-select.min.css" type="text/css" rel="stylesheet"/>
+<link href="${ctx}/jslib/bootstrap/css/plugins/iCheck/custom.css" type="text/css" rel="stylesheet">
   
-<link rel="stylesheet" href="${ctx}/jslib/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-
-<link type="text/css" rel="stylesheet" href="${ctx}/jslib/daterangepicker/daterangepicker.css" />
-<link type="text/css" rel="stylesheet" href="${ctx}/jslib/bootstrap-fileinput/css/fileinput.min.css" />
-<!-- jQuery -->
-<script src="${ctx}/jslib/jquery.min.js"></script>
+<link rel="stylesheet" href="${ctx}/jslib/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+<!-- 日期时间选择器 -->
+<link href="${ctx}/jslib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/jslib/daterangepicker/daterangepicker.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/jslib/bootstrap-fileinput/css/fileinput.min.css" type="text/css" rel="stylesheet" />
+<!-- 引入jQuery库 -->
+<script src="${ctx}/jslib/jquery.min.js?v=1.11.3"></script>
 
 <!-- external javascript -->
 <script src="${ctx}/jslib/bootstrap/js/bootstrap.min.js?v=3.3.5"></script>
 <script src="${ctx}/jslib/bootstrap/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="${ctx}/jslib/bootstrap/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="${ctx}/jslib/bootstrap/js/plugins/layer/layer.min.js"></script>
+<script src="${ctx}/jslib/bootstrap/js/plugins/layer/laydate/laydate.js"></script>
 <script src="${ctx}/jslib/bootstrap/js/hplus.min.js?v=4.0.0"></script>
 <script src="${ctx}/jslib/bootstrap/js/contabs.min.js"></script>
 <script src="${ctx}/jslib/bootstrap/js/plugins/pace/pace.min.js"></script>
@@ -62,8 +64,10 @@
 <script src="${ctx}/jslib/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="${ctx}/jslib/bootstrap-table/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/bootstrapValivator/dist/js/bootstrapValidator.js"></script>
-<%-- <script type="text/javascript" src="${ctx}/jslib/datetimePicker/src/DateTimePicker.js"></script>
-<script type="text/javascript" src="${ctx}/jslib/datetimePicker/src/i18n/DatetimePicker-i18n-zh-CN.js"></script> --%>
+<!-- 日期时间选择器 -->
+<script type="text/javascript" src="${ctx}/jslib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="${ctx}/jslib/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
 <script type="text/javascript" src="${ctx}/jslib/bootstrap/bower_components/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script src="${ctx}/jslib/bootstrap-notify/dist/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/zTree/js/jquery.ztree.core.js"></script>
@@ -72,14 +76,16 @@
 <script type="text/javascript" src="${ctx}/jslib/menu/jquery.smartmenus.min.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/daterangepicker/moment.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/daterangepicker/daterangepicker.js"></script>
+
 <script type="text/javascript" src="${ctx}/jslib/md5.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script type="text/javascript" src="${ctx}/jslib/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
-
+<!-- 自定义插件 -->
 <script src="${ctx}/jslib/bootbox/bootbox.min.js"></script>
 <script src="${ctx}/jslib/common.js"></script>
 <script src="${ctx}/jslib/check.js"></script>
 <script src="${ctx}/jslib/message.js"></script>
+
 <script src="${ctx}/jslib/ajaxfileupload.js"></script>
 <script src="${ctx}/jslib/jquery.form.js"></script>
 <script src="${ctx}/jslib/websocket/sockjs.min.js"></script>

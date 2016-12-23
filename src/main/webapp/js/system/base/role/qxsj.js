@@ -51,10 +51,10 @@ $(function() {
 		var bv = $form.data('bootstrapValidator');
 		if ($("#isNew").val() == 0) {
 			// 编辑保存
-			doAjax("post", api_saveEdit, $form.serialize(), saveSuccess);
+			doAjax(POST, api_saveEdit, $form.serialize(), saveSuccess);
 		} else if ($("#isNew").val() == 1) {
 			// 新增保存
-			doAjax("post", api_saveNew, $form.serialize(), saveSuccess);
+			doAjax(POST, api_saveNew, $form.serialize(), saveSuccess);
 		}
 	});
 
@@ -172,7 +172,7 @@ function deleteRow() {
 		var data = {
 			qxsj_code : qxsj_codes
 		}
-		showConfirm(sureDelete, IF_DELETE_INFO, "post", api_delete, data,
+		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data,
 				searchUserInfo);
 	} else {
 		showOnlyMessage(ERROR,
@@ -182,7 +182,7 @@ function deleteRow() {
 }
 
 function sureDelete(type, url, data, success) {
-	doAjax("post", url, data, success);
+	doAjax(POST, url, data, success);
 }
 
 // 点击编辑按钮向后台请求要查询的数据
@@ -217,7 +217,7 @@ function checkDetail(qxsj_code) {
 	var data = {
 			qxsj_code : qxsj_code
 	};
-	doAjax("post", api_check, data, checkDetailSuccess);
+	doAjax(POST, api_check, data, checkDetailSuccess);
 }
 
 function checkDetailSuccess(response) {
@@ -257,7 +257,7 @@ function closeTreemodal() {
 
 // 权限树初始化
 function loadOrgTree() {
-	doAjax("post", api_initOrgTree, null, orgtreeCallback);
+	doAjax(POST, api_initOrgTree, null, orgtreeCallback);
 }
 // 回调函数中加载权限树
 function orgtreeCallback(response) {
@@ -302,7 +302,7 @@ function loadRoleTree() {
 	var data = {
 		id : $("#qxsj_code").val()
 	}
-	doAjax("post", api_initRoleTree, data, roleTreeCallback);
+	doAjax(POST, api_initRoleTree, data, roleTreeCallback);
 }
 
 function roleTreeCallback(response) {

@@ -33,16 +33,16 @@ var FLAG = "WANG_JUN_WEI";
  */
 june={
 		info:function(info){
-			$.messager.alert("提示",info,"info");
+			$.messager.alert("提示",info,INFO);
 		},
 		error:function(info){
-			$.messager.alert("错误",info,"error");
+			$.messager.alert("错误",info,ERROR);
 		},
 		warning:function(info){
-			$.messager.alert("警告",info,"warning");
+			$.messager.alert("警告",info,WARN);
 		},
 		question:function(info){
-			$.messager.alert("疑问",info,"question");
+			$.messager.alert("疑问",info,QUESTION);
 		},
 		log:function(info){
 			if(console){
@@ -176,21 +176,36 @@ win={
 			window.close();    
 		}
 };
-divWin = {
-		win : function showDialog(divid,title,id,url){
-			var html =  '<div class="modal fade" id="'+id+
+modal = {
+		/**
+		 * 打开一个modal
+		 * @param modalid
+		 * @param title
+		 * @param url
+		 */
+		open : function(modalid,title,content,url){
+			// bs-example-modal-sm  modal-sm
+			var html =  '<div class="modal fade" id="'+modalid+
 				'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
-						'<div class="modal-diolog"><div class="modal-content"><div class="modal-header">'+
+						'<div class="modal-diolog" style="height:auto;">'+
+						'<div class="modal-content">'+
+						'<div class="modal-header">'+
 						'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>'+
 						'<h3 id="myModalLabel">'+title+'</h3>'+
-						'<div class="modal-body">aaaaa</div>'+
+						'<div class="modal-body">'+content+'</div>'+
 						'<div class="modal-footer"></div>'+
 						'</div></div></div></div>';
-			$("#"+divid).append(html);
-			$("#"+id).modal({show : true, backdrop : 'static', keyboard : false, remote:url});
+			var body = document.getElementsByTagName("body")[0];
+			$(body).append(html);
+			$("#"+modalid).modal({show : true, backdrop : 'static', keyboard : false, remote:url});
 		},
-		close:function(id){
-			$('#'+id).modal('hide');
+		/**
+		 * 关闭一个modal
+		 * @param modalid
+		 */
+		close:function(modalid){
+			$('#'+modalid).modal('hide');
+			$('#'+modalid).remove();
 		}
 };
 
@@ -215,4 +230,12 @@ function $date(dateid, bool){
 		minView : 2,
 		forceParse : 0
 	});
+}
+
+/**
+ * 生日控件设置
+ * @param id
+ */
+function birthday(id){
+	$date(id);
 }

@@ -72,7 +72,7 @@ function checkPass(contentId)
 	var data={
 	    contentId:contentId
 	}
-	doAjax("post",contextPath + "/portal/CheckInfo/checkPass",data,"checkPassSuccess",null,false);
+	doAjax(POST,contextPath + "/portal/CheckInfo/checkPass",data,"checkPassSuccess",null,false);
 }
 
 function checkPassSuccess()
@@ -86,7 +86,7 @@ function checkBack(contentId)
 	var data={
 	    contentId:contentId
 	}
-	doAjax("post",contextPath + "/portal/CheckInfo/checkBack",data,"checkPassSuccess",null,false);
+	doAjax(POST,contextPath + "/portal/CheckInfo/checkBack",data,"checkPassSuccess",null,false);
 }
 
 //预览
@@ -117,7 +117,7 @@ function batchCheckPass()
 		var data={
 			contentId:contentId
 		}
-		doAjax("post",contextPath + "/portal/CheckInfo/batchCheckPass",data,"checkPassSuccess",null,false);
+		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckPass",data,"checkPassSuccess",null,false);
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
 	}
@@ -137,7 +137,7 @@ function batchCheckBack()
 		var data={
 			contentId:contentId
 		}
-		doAjax("post",contextPath + "/portal/CheckInfo/batchCheckBack",data,"checkPassSuccess",null,false);
+		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckBack",data,"checkPassSuccess",null,false);
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
 	}

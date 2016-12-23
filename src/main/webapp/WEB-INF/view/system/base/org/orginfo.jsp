@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>JUNE_WEB_NEW</title>
 <%@include file="../../../common/import.jsp"%>
-<script type="text/javascript"
-	src="${ctx}/js/system/base/org/orgInfo.js"></script>
+<script type="text/javascript" src="${ctx}/js/system/base/org/orginfo.js"></script>
 </head>
 <body>
 	<div class="ibox-content">

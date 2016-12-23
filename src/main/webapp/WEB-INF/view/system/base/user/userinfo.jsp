@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>JUNE_WEB_NEW</title>
 <%@include file="../../../common/import.jsp"%>
-<script type="text/javascript"
-	src="${ctx}/js/system/base/user/userInfo.js"></script>
+<script type="text/javascript" src="${ctx}/js/system/base/user/userinfo.js"></script>
 </head>
 <body>
 	 <div class="ibox-content">
@@ -63,12 +62,9 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog" style="height: 1000px;">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="closemodal()">×</button>
@@ -82,46 +78,44 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="userId">用户ID</label> <input type="text"
-										name="userId" class="form-control" id="userId">
+									<label for="userId">用户ID</label> 
+									<input type="text" name="userId" class="form-control" id="userId">
 								</div>
 								<div class="form-group">
-									<label for="orgName">所属机构</label> <input type="text"
-										name="orgName" class="form-control" id="orgName"
-										onfocus="initOrg()"> <input type="hidden" name="orgId"
-										class="form-control" id="orgId">
+									<label for="orgName">所属机构</label> 
+									<input type="text" name="orgName" class="form-control" id="orgName" onfocus="initOrg()"> 
+									<input type="hidden" name="orgId" class="form-control" id="orgId">
 								</div>
 								<div class="form-group">
-									<label for="userAddress">地址</label> <input type="text"
-										name="userAddress" class="form-control" id="userAddress">
+									<label for="userAddress">地址</label> 
+									<input type="text" name="userAddress" class="form-control" id="userAddress">
 								</div>
 								<div class="form-group">
-									<label for="userTel">座机</label> <input type="text"
-										name="userTel" class="form-control" id="userTel">
+									<label for="userTel">座机</label> 
+									<input type="text" name="userTel" class="form-control" id="userTel">
 								</div>
 								<div class="form-group">
-									<label for="userBirthday">用户生日</label> <input type="text"
-										name="userBirthday" class="form-control" id="userBirthday">
+									<label for="userBirthday">用户生日</label> 
+									<input type="text" name="userBirthday" class="form-control" id="userBirthday" data-date-format="yyyy-mm-dd" readonly placeholder="YYYY-MM-DD">
 								</div>
-
 							</div>
 							<div class="col-md-6">
-							<div class="form-group" id="passWord">
-									<label for="userPassword">密码</label> <input type="password"
-										name="userPassword" class="form-control" id="userPassword" onblur="EncryptPassword()">
+								<div class="form-group" id="passWord">
+									<label for="userPassword">密码</label> 
+									<input type="password" name="userPassword" class="form-control" id="userPassword" onblur="EncryptPassword()">
 								</div>
 								<div class="form-group">
-									<label for="userName">用户名</label> <input type="text"
-										name="userName" class="form-control" id="userName">
+									<label for="userName">用户名</label> 
+									<input type="text" name="userName" class="form-control" id="userName">
 								</div>
 
 								<div class="form-group">
-									<label for="userEmail">邮箱</label> <input type="text"
-										name="userEmail" class="form-control" id="userEmail">
+									<label for="userEmail">邮箱</label> 
+									<input type="text" name="userEmail" class="form-control" id="userEmail">
 								</div>
 								<div class="form-group">
-									<label for="userMobile">手机</label> <input type="text"
-										name="userMobile" class="form-control" id="userMobile">
+									<label for="userMobile">手机</label> 
+									<input type="text" name="userMobile" class="form-control" id="userMobile">
 								</div>
 								<div class="form-group">
 									<label for="roleName">用户角色</label> <input type="text"
@@ -154,10 +148,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="treeModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog" style="height: 1000px;">
+	<div id="modal_june_web_new"></div>
+	<div class="modal fade bs-example-modal-sm" id="treeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="closeTreemodal()">×</button>
@@ -167,7 +160,7 @@
 				<div class="modal-body">
 					<div class="row">
 						<div>
-							<div class="zTreeDemoBackground" style="width: 150px;">
+							<div class="zTreeDemoBackground" style="width: 100%; height: 260px; overflow: auto;">
 								<ul id="orgTree" class="ztree"></ul>
 							</div>
 						</div>
@@ -177,14 +170,11 @@
 					<button type="button" class="btn btn-primary"
 						onclick="closeTreemodal()">取消</button>
 				</div>
-
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="roleModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog" style="height: 1000px;">
+	<div class="modal fade bs-example-modal-sm" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" onclick="closerolemodal()">×</button>
@@ -194,7 +184,7 @@
 				<div class="modal-body">
 					<div class="row">
 						<div>
-							<div class="zTreeDemoBackground" style="width: 150px;">
+							<div class="zTreeDemoBackground" style="width: 100%; height: 260px; overflow: auto;">
 								<ul id="roleTree" class="ztree"></ul>
 							</div>
 						</div>
@@ -205,7 +195,6 @@
 						onclick="closerolemodal()">取消</button>
 					<button type="button" class="btn btn-primary" onclick="roleSureClick()">确定</button>
 				</div>
-
 			</div>
 		</div>
 	</div>

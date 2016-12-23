@@ -27,7 +27,7 @@ public class UserInfoDto extends PageDTO<UserInfoDto> implements Serializable {
 
 	@NotNull(message = "{mustinput_error};用户名")
 	@NotEmpty(message = "{mustinput_error};用户名")
-	@Size(min = 5, max = 16, message = "{inputlength_range_error};用户名;5;16")
+	@Size(min = 2, max = 16, message = "{inputlength_range_error};用户名;2;16")
 	private String userName;// 用户名
 
 	@NotNull(message = "{mustinput_error};密码")

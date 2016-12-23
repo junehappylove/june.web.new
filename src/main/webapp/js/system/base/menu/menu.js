@@ -77,7 +77,6 @@ $(function() {
 								{ field : "order_num", title : "排序", align : "center", valign : "middle" },
 								{ field : "opration", title : "操作", align : "center", valign : "middle",
 									formatter : function(value, row, index) {
-										june.log(value+" "+row.menu_id);
 										return showDetailHtml(row.menu_id);
 									}
 								} ],
@@ -100,7 +99,6 @@ function saveSuccess(response) {
 		closemodal();
 		searchInfo();
 	} else {
-		// $('#modalForm').bootstrapValidator('validate');
 		$("#saveBtn").removeAttr("disabled");
 	}
 

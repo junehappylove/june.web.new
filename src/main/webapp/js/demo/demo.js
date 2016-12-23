@@ -124,7 +124,7 @@ $('#defaultForm').bootstrapValidator({
     var $form = $(e.target);
     var bv = $form.data('bootstrapValidator');
     // form表单提交时提示信息，确认执行回调函数submitForm进行ajax form提交，success函数是submitForm的回调函数
-    showConfirm(submitForm,"确认提交？","post",$form.attr('action'), $form.serialize(),success);
+    showConfirm(submitForm,"确认提交？",POST,$form.attr('action'), $form.serialize(),success);
 }); 
 
  $("#meeting").bind("change",function(){
@@ -241,18 +241,18 @@ function initUploadControl()
 	 $("#uploadForm").submit(function(event) {
 			event.preventDefault(); //阻止当前提交事件，自行实现，否则会跳转
 			//调用上传文件的共通方法
-			//ajaxFileUpload("post",contextPath + "/demo/uploadpicture","uploadInput",uploadSuccess);
+			//ajaxFileUpload(POST,contextPath + "/demo/uploadpicture","uploadInput",uploadSuccess);
 			//ajax提交form表单并且表单中有file的调用以下共通方法
-			doFileFormAjax("uploadForm","post",contextPath + "/demo/uploadpicture",success);      
+			doFileFormAjax("uploadForm",POST,contextPath + "/demo/uploadpicture",success);      
 	 });
 	 
 	  //上传初始化
 	 $("#uploadForm1").submit(function(event) {
 			event.preventDefault(); //阻止当前提交事件，自行实现，否则会跳转
 			//调用上传文件的共通方法
-			ajaxFileUpload("post",contextPath + "/demo/uploadpicture","uploadInput1",uploadSuccess);
+			ajaxFileUpload(POST,contextPath + "/demo/uploadpicture","uploadInput1",uploadSuccess);
 			//ajax提交form表单并且表单中有file的调用以下共通方法
-			//doFileFormAjax("uploadForm","post",contextPath + "/demo/uploadpicture",success);      
+			//doFileFormAjax("uploadForm",POST,contextPath + "/demo/uploadpicture",success);      
 	 });
 	}
 function uploadSuccess(response)
@@ -355,7 +355,7 @@ function success()
 function selectChange(s) 
 { 
 	// 调用级联select共通的ajax请求
-  doAjax("post",contextPath+"/demo/selectChange",null,changeSuccess);
+  doAjax(POST,contextPath+"/demo/selectChange",null,changeSuccess);
 }
 
 // 级联select请求成功回调函数
@@ -378,7 +378,7 @@ function showModal()
 // 树初始化
 function loadTree()
 {
-	doAjax("post",contextPath+"/demo/initTree",null,treeCallback)
+	doAjax(POST,contextPath+"/demo/initTree",null,treeCallback)
 }
 
 function treeCallback(response)
@@ -405,7 +405,7 @@ function clickNode(event, treeId, treeNode,clickFlag)
 function loadajaxtree()
 {
 	// 获取一级节点
-	doAjax("post",contextPath+"/demo/initAjaxTree",null,ajaxtreeCallback)
+	doAjax(POST,contextPath+"/demo/initAjaxTree",null,ajaxtreeCallback)
 }
 
 function ajaxtreeCallback(response)
@@ -426,7 +426,7 @@ function ajaxtreeCallback(response)
 // 树初始化
 function loadComboTree()
 {
-	doAjax("post",contextPath+"/demo/initTree",null,combotreeCallback)
+	doAjax(POST,contextPath+"/demo/initTree",null,combotreeCallback)
 }
 
 function combotreeCallback(response)
@@ -451,7 +451,7 @@ function combotreeCallback(response)
 function loadajaxcombotree()
 {
 	// 获取一级节点
-	doAjax("post",contextPath+"/demo/initAjaxTree",null,ajaxcombotreeCallback)
+	doAjax(POST,contextPath+"/demo/initAjaxTree",null,ajaxcombotreeCallback)
 }
 function ajaxcombotreeCallback(response)
 {

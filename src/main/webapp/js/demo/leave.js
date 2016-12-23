@@ -151,7 +151,7 @@ $(function() {
 						var $form = $(e.target);
 						
 							doAjax(
-									"post",
+									POST,
 									contextPath
 											+ "/leave/saveleave",
 											data, saveSuccess);

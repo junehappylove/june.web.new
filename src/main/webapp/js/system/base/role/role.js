@@ -109,12 +109,12 @@
 						if($("#isNew").val()== 0)
 						{
 							//编辑保存
-							doAjax("post",contextPath + "/system/base/role/saveEditRole",$form.serialize(),saveSuccess);
+							doAjax(POST,contextPath + "/system/base/role/saveEditRole",$form.serialize(),saveSuccess);
 						}
 						else if($("#isNew").val() == 1)
 						{
 							//新增保存
-							doAjax("post",contextPath + "/system/base/role/saveAddRole",$form.serialize(),saveSuccess);
+							doAjax(POST,contextPath + "/system/base/role/saveAddRole",$form.serialize(),saveSuccess);
 						}
 					
 				});
@@ -166,7 +166,7 @@ function checkDetail(roleId) {
 	var data={
 		roleId:roleId
 	};
-	doAjax("post",contextPath + "/system/base/role/checkDetail",data,checkDetailSuccess);
+	doAjax(POST,contextPath + "/system/base/role/checkDetail",data,checkDetailSuccess);
 }
 
 function checkDetailSuccess(response)
@@ -200,7 +200,7 @@ function deleteRow() {
 		      roleId:rowIds       
 		 };
 
-		showConfirm(sureDelete, IF_DELETE_INFO, "post", contextPath
+		showConfirm(sureDelete, IF_DELETE_INFO, POST, contextPath
 				+ "/system/base/role/delRole", data, searchRoleInfo);
 	} else {
 		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
@@ -209,7 +209,7 @@ function deleteRow() {
 }
 
 function sureDelete(type, url, data, success) {
-	doAjax("post", url, data, success);
+	doAjax(POST, url, data, success);
 }
 
 // 关闭modal画面
@@ -254,7 +254,7 @@ function initMenu(){
 
 //加载菜单树
 function loadMenuTree(roleId){
-	doAjax("post",contextPath+"/system/base/role/initMenuTree",{roleId:roleId},menuTreeCallback);
+	doAjax(POST,contextPath+"/system/base/role/initMenuTree",{roleId:roleId},menuTreeCallback);
 }
 
 function menuTreeCallback(response){
@@ -287,7 +287,7 @@ function assignMenu()
 		authorityMenusId:ids,
 		roleId:row[0].roleId
 	}
-	doAjax("post",contextPath + "/system/base/role/authorityMenus",data,authorityMenuSuccess);
+	doAjax(POST,contextPath + "/system/base/role/authorityMenus",data,authorityMenuSuccess);
 }
 
 function authorityMenuSuccess()
@@ -323,7 +323,7 @@ function initUser()
 //加载用户树
 function loadUserTree(roleId)
 {
-	doAjax("post",contextPath+"/system/base/role/initUserTree",{roleId:roleId},userTreeCallback);
+	doAjax(POST,contextPath+"/system/base/role/initUserTree",{roleId:roleId},userTreeCallback);
 }
 
 function userTreeCallback(response)
@@ -365,7 +365,7 @@ function assignUser()
 		authorityMenusId:ids,
 		roleId:row[0].roleId
 	}
-	doAjax("post",contextPath + "/system/base/role/assginUsers",data,authorityUserSuccess);
+	doAjax(POST,contextPath + "/system/base/role/assginUsers",data,authorityUserSuccess);
 }
 
 function authorityUserSuccess()

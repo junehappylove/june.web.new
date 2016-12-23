@@ -193,7 +193,7 @@ $(function(){
 						var $form = $(e.target);
 						var data = getFormJson("modalForm");
 						data.jobName = $('#jobName option:selected').val();
-						doAjax("post",contextPath+ "/quatrz/addsimpletrigger",data, addsimplesuccess);
+						doAjax(POST,contextPath+ "/quatrz/addsimpletrigger",data, addsimplesuccess);
 				});
 				$('#cronModalForm')
 				.bootstrapValidator(
@@ -231,7 +231,7 @@ $(function(){
 							var $form = $(e.target);
 							var data = getFormJson("cronModalForm");
 							data.jobName = $('#cronModalForm #jobName option:selected').val();
-							doAjax("post",contextPath+ "/quatrz/addcrontrigger",data, addcronsuccess);
+							doAjax(POST,contextPath+ "/quatrz/addcrontrigger",data, addcronsuccess);
 					});
 
 });
@@ -261,14 +261,14 @@ function search()
 function pause(name,group,state)
 {
 	if(state=='PAUSED'){
-		showOnlyMessage("info", "该Trigger己经暂停！");
+		showOnlyMessage(INFO, "该Trigger己经暂停！");
 		return;
 	}
 	var data = {
 		triggerName:name,
 		triggerGroup:group
 	}
-	doAjax("post",contextPath+ "/quatrz/pause",data, callback);
+	doAjax(POST,contextPath+ "/quatrz/pause",data, callback);
 }
 
 function callback()
@@ -286,7 +286,7 @@ function resume(name,group,state)
 		triggerName:name,
 		triggerGroup:group
 	}
-	doAjax("post",contextPath+ "/quatrz/resume",data, callback);
+	doAjax(POST,contextPath+ "/quatrz/resume",data, callback);
 }
 
 function removeTrigger(name,group,state)
@@ -295,12 +295,12 @@ function removeTrigger(name,group,state)
 		triggerName:name,
 		triggerGroup:group
 	}
-	doAjax("post",contextPath+ "/quatrz/remove",data, callback);
+	doAjax(POST,contextPath+ "/quatrz/remove",data, callback);
 }
 
 function addsimple()
 {
-	doAjax("post",contextPath+ "/quatrz/getinitdata",{}, initcallback);
+	doAjax(POST,contextPath+ "/quatrz/getinitdata",{}, initcallback);
 	
 }
 function initcallback(response)
@@ -400,7 +400,7 @@ function initDate()
 
 function addcron()
 {
-	doAjax("post",contextPath+ "/quatrz/getinitdata",{}, croncallback);
+	doAjax(POST,contextPath+ "/quatrz/getinitdata",{}, croncallback);
 }
 
 function closecronmodal()
@@ -433,7 +433,7 @@ function runTrigger(jobName,jobGroup)
 	    jobGroup:jobGroup
 	}
 	//runTrigger
-	doAjax("post",contextPath+ "/quatrz/runTrigger",data, runtriggersuccess);
+	doAjax(POST,contextPath+ "/quatrz/runTrigger",data, runtriggersuccess);
 }
 function runtriggersuccess(response)
 {

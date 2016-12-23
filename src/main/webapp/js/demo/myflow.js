@@ -29,7 +29,7 @@ $(function(){
 						data.note = $("#leaveNote").val();
 						data.id = $("#taskId").val();
 						data.outcome = $("#agree").text();
-						doAjax("post",contextPath+ "/myflow/doprocess",data, doprocessSuccess);});
+						doAjax(POST,contextPath+ "/myflow/doprocess",data, doprocessSuccess);});
 	//datagrid初始化
 	$('#myFlow').bootstrapTable({
 		cache : false,
@@ -124,7 +124,7 @@ function doprocessinit(id)
 	var data={
 		taskId:id
 	};
-	doAjax("post",contextPath + "/myflow/doprocessinit",data,initSuccess);
+	doAjax(POST,contextPath + "/myflow/doprocessinit",data,initSuccess);
 	//查询历史
 	commonGetrowdatas("history",data,contextPath + "/myflow/gethistory","commonCallback",true);
 }
@@ -181,7 +181,7 @@ function doreject()
 		data.note = $("#leaveNote").val();
 		data.id = $("#taskId").val();
 		data.outcome = $("#disagree").text();
-		doAjax("post",contextPath+ "/myflow/doprocess",data, doprocessSuccess);
+		doAjax(POST,contextPath+ "/myflow/doprocess",data, doprocessSuccess);
 	}
 }
 

@@ -102,7 +102,7 @@ function submitRow(contentId)
 	var data={
 	    contentId:contentId
 	}
-	doAjax("post",contextPath + "/portal/MyInfo/submitRow",data,"submitRowSuccess",null,false);
+	doAjax(POST,contextPath + "/portal/MyInfo/submitRow",data,"submitRowSuccess",null,false);
 }
 
 function submitRowSuccess()
@@ -141,7 +141,7 @@ function deleteRow(contentId)
 	var data={
 	    contentId:contentId
 	}
-	doAjax("post",contextPath + "/portal/MyInfo/deleteRow",data,"submitRowSuccess",null,false);
+	doAjax(POST,contextPath + "/portal/MyInfo/deleteRow",data,"submitRowSuccess",null,false);
 }
 
 
@@ -178,7 +178,7 @@ function batchSubmit()
 			var data={
 				contentId:contentId
 			}
-			doAjax("post",contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
+			doAjax(POST,contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
 		}else{
 			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
@@ -208,7 +208,7 @@ function batchDel()
 			var data={
 				contentId:contentId
 			};
-			doAjax("post",contextPath + "/portal/MyInfo/batchDel",data,"submitRowSuccess",null,false);
+			doAjax(POST,contextPath + "/portal/MyInfo/batchDel",data,"submitRowSuccess",null,false);
 		}else{
 			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
