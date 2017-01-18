@@ -13,6 +13,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.june.robot.qas.QasAnswerImpl;
 import com.june.utility.StringUtil;
 
 /**
@@ -34,6 +35,7 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		log.debug("接受客户端ID[" + session.getId() + "]-内容为:" + clientMessage);
 		// TODO 这里进行高级信息处理业务
 		clientMessage = StringUtil.randomCode(clientMessage.length());
+		clientMessage = QasAnswerImpl.instance().getAnswer("王俊伟是谁？").getContent();
 		TextMessage returnMessage = new TextMessage("" + clientMessage);
 		// 将处理后的返回给客户端
 		session.sendMessage(returnMessage);

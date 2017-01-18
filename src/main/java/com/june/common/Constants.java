@@ -21,6 +21,7 @@ import com.june.utility.MessageUtil;
  */
 public class Constants {
 	/** 项目平台环境：dev,test,pro */
+	public final static String QAS_API = MessageUtil.$KEY("june.qas");
 	public final static String ENVIRONMENT = MessageUtil.$KEY("project.environment");
 	public final static String ERROR_CODE_WRONG = MessageUtil.$KEY("error_code_wrong");
 	public final static String ERROR_CODE_EMPTY = MessageUtil.$KEY("error_code_empty");
