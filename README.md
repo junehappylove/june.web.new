@@ -5,7 +5,9 @@
 ===
 Thinks a lot for all the Open Source Code lovers!
 > 12. 2017-01-20 对工具类的大量修改与完善；完成简单的人名、地名、年代的人机对话,有待训练，还很不"智能"
-	![人机对话](https://github.com/junehappylove/img_lib/blob/master/june_web_new/image2.png "人机对话")
+	![人机对话1](https://github.com/junehappylove/img_lib/blob/master/june_web_new/image2.png "人机对话1")
+	![人机对话2](https://github.com/junehappylove/img_lib/blob/master/june_web_new/image3.png "人机对话2")
+	![人机对话3](https://github.com/junehappylove/img_lib/blob/master/june_web_new/image4.png "人机对话3")
 > 11. 2017-01-18 提供对智能问答的接口，并给出一个QAS的实现(还需要完善)
 > 10. 2016-12-23 移除旧的datetimepicker引入时间日期选择器（bootstrap-datetimepicker）参考[bootstrap-datetimepicker](http://www.bootcss.com/p/bootstrap-datetimepicker/index.htm)；移除大部分的语音包简化js库
 > 9. 2016-12-20 完成用户头像的处理；优化BaseController代码
