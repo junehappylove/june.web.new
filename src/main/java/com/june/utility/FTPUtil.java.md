@@ -1,3 +1,4 @@
+```java
 /**
  * JUNE软件有限公司<br>
  * com.june.utility.FTPUtil.java
@@ -162,3 +163,4 @@ public class FTPUtil {
 		}
 	}
 }
+```

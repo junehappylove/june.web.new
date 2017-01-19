@@ -18,9 +18,12 @@ import java.security.NoSuchAlgorithmException;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * 常用加密算法工具类
+ * 常用加密算法工具类 EncryptUtils <br>
  * 
- * @author cq
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午7:51:16
+ * @version 1.0.0
  */
 public class EncryptUtils {
 
@@ -63,7 +66,7 @@ public class EncryptUtils {
 	 * @param str
 	 *            需要解密的字符串
 	 * @return base64解密后的结果
-	 * @throws IOException
+	 * @throws IOException 异常
 	 */
 	public static String decodeBase64String(String str) throws IOException {
 		return new String(Base64.decodeBase64(str));
@@ -83,7 +86,7 @@ public class EncryptUtils {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String user = "wjw.happy.love@163.com";//1bac3fb3461156b864028dd09ffec698
+		String user = "wjw.happy.love@163.com";// 1bac3fb3461156b864028dd09ffec698
 		System.out.println("MD5加密 " + encodeMD5String(user));
 	}
 }

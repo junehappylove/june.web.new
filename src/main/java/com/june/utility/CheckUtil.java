@@ -16,10 +16,12 @@ import java.util.ArrayList;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @Description: 校验类
- * @author caiyang
- * @date 2015年9月23日 上午9:59:02
- * @version V1.0
+ * 校验类： CheckUtil <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午8:10:20
+ * @version 1.0.0
  */
 public final class CheckUtil {
 
@@ -29,6 +31,14 @@ public final class CheckUtil {
 	private CheckUtil() {
 	}
 
+	/**
+	 * 判断字符串是否是空值
+	 * 
+	 * @param itemValue 字符串
+	 * @return boolean
+	 * @date 2017年1月19日 下午8:10:33
+	 * @writer junehappylove
+	 */
 	public static boolean isEmpty(String itemValue) {
 		if (StringUtils.isEmpty(itemValue)) {
 			return true;
@@ -245,8 +255,8 @@ public final class CheckUtil {
 	 * @throws Exception
 	 *             异常
 	 */
-	public static void checkDate(String itemValue, String itemName, String format, String index, ArrayList<String> errList)
-			throws Exception {
+	public static void checkDate(String itemValue, String itemName, String format, String index,
+			ArrayList<String> errList) throws Exception {
 		if (!isDate(itemValue, format)) {
 			errList.add(MessageUtil.$VALUE("excel_type_error", new String[] { index, itemName }));
 		}
@@ -266,7 +276,8 @@ public final class CheckUtil {
 	 * @throws Exception
 	 *             异常
 	 */
-	public static void checkTel(String itemValue, String itemName, String index, ArrayList<String> errList) throws Exception {
+	public static void checkTel(String itemValue, String itemName, String index, ArrayList<String> errList)
+			throws Exception {
 		if (!isTel(itemValue)) {
 			errList.add(MessageUtil.$VALUE("excel_type_error", new String[] { index, itemName }));
 		}
@@ -286,7 +297,8 @@ public final class CheckUtil {
 	 * @throws Exception
 	 *             异常
 	 */
-	public static void checkMail(String itemValue, String itemName, String index, ArrayList<String> errList) throws Exception {
+	public static void checkMail(String itemValue, String itemName, String index, ArrayList<String> errList)
+			throws Exception {
 		if (!isMail(itemValue)) {
 			errList.add(MessageUtil.$VALUE("excel_type_error", new String[] { index, itemName }));
 		}

@@ -33,12 +33,19 @@ public class ExportImportExcel {
 
 	/**
 	 * 将查询出来的数据导出到excel中并在页面进行下载
+	 * 
 	 * @param datasource
+	 *            数据源
 	 * @param titles
+	 *            标题
 	 * @param attrs
+	 *            属性
 	 * @param response
+	 *            HttpServletResponse
 	 * @param sheetname
+	 *            项名
 	 * @param filename
+	 *            文件名
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
@@ -111,6 +118,7 @@ public class ExportImportExcel {
 
 	/**
 	 * 将查询出来的数据导出到excel中并存放到指定文件夹中
+	 * 
 	 * @param datasource
 	 * @param titles
 	 * @param attrs
@@ -178,7 +186,8 @@ public class ExportImportExcel {
 	}
 
 	/**
-	 *  读取excel中的数据
+	 * 读取excel中的数据
+	 * 
 	 * @param startRomNum
 	 * @param is
 	 * @param abstractDTO
@@ -237,6 +246,7 @@ public class ExportImportExcel {
 
 	/**
 	 * 直接读取前台传过来的excel文件中的数据
+	 * 
 	 * @param startRomNum
 	 * @param myfiles
 	 * @param abstractDTO
@@ -296,6 +306,7 @@ public class ExportImportExcel {
 
 	/**
 	 * 根据单元格的数据类型返回值
+	 * 
 	 * @param cell
 	 * @return
 	 * @date 2016年6月27日 下午1:49:50

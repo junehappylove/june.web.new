@@ -10,6 +10,15 @@
 
 package com.june.utility.exception;
 
+/**
+ * 
+ * FastDFSException <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午8:09:22
+ * @version 1.0.0
+ */
 public class FastDFSException extends RuntimeException {
 	/**
 	 * long serialVersionUID
@@ -17,8 +26,9 @@ public class FastDFSException extends RuntimeException {
 	private static final long serialVersionUID = -7940543048941866246L;
 
 	/**
-	 * @Description: 自定义fastdfs异常 @author caiyang @param: @param
-	 * message @param: @return @return: NoAvaliableTrackerException @throws
+	 * 自定义fastdfs异常
+	 * 
+	 * @param message 异常信息
 	 */
 	public FastDFSException(String message) {
 		super(message);

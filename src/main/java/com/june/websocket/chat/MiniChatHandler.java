@@ -13,8 +13,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.june.robot.Answer;
 import com.june.robot.qas.QasAnswerImpl;
-import com.june.utility.StringUtil;
 
 /**
  * 新建一个自己的HandShakeInterceptor类
@@ -34,9 +34,10 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		String clientMessage = message.getPayload();
 		log.debug("接受客户端ID[" + session.getId() + "]-内容为:" + clientMessage);
 		// TODO 这里进行高级信息处理业务
-		clientMessage = StringUtil.randomCode(clientMessage.length());
-		clientMessage = QasAnswerImpl.instance().getAnswer("王俊伟是谁？").getContent();
-		TextMessage returnMessage = new TextMessage("" + clientMessage);
+		//clientMessage = StringUtil.randomCode(clientMessage.length());
+		Answer answer = QasAnswerImpl.instance();
+		clientMessage = answer.getAnswer(clientMessage).getAnswer();
+		TextMessage returnMessage = new TextMessage(clientMessage);
 		// 将处理后的返回给客户端
 		session.sendMessage(returnMessage);
 	}
@@ -50,7 +51,10 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		log.debug("getTextMessageSizeLimit:" + session.getTextMessageSizeLimit());
 		log.debug("getUri:" + session.getUri().toString());
 		log.debug("getPrincipal:" + session.getPrincipal());
-		session.sendMessage(new TextMessage(("您好,"+session.getPrincipal()).getBytes()));
+		String ret ="您好,"+session.getPrincipal()+"<br>"
+				+"目前只支持人名、地名问答，如：<br>"
+				+"王俊伟是谁？";
+		session.sendMessage(new TextMessage(ret.getBytes()));
 	}
 
 	@Override

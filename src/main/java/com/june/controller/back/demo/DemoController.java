@@ -56,7 +56,7 @@ import com.june.dto.back.demo.TreeDto;
 import com.june.dto.back.demo.TreeGridDto;
 import com.june.service.back.demo.DemoService;
 import com.june.utility.CheckUtil;
-import com.june.utility.DbUtil;
+import com.june.utility.DBUtil;
 import com.june.utility.ExportImportExcel;
 import com.june.utility.FastDfsUtils;
 import com.june.utility.FileUpLoadDownload;
@@ -623,7 +623,7 @@ public class DemoController extends BaseController<MenuDto> {
 		map.put("sql", "CREATE DATABASE chinaws_kaifa5");
 		demoService.createDatabase(map);
 		// 执行sql脚本（脚本的位置在工程目录resources/chinaws.sql）
-		DbUtil.runSqlScript("chinaws_kaifa5");
+		DBUtil.runSqlScript("chinaws_kaifa5");
 	}
 
 	// 验证码生成

@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
  * @version 1.0.0
  */
 public class StringUtil extends StringUtils {
+
 	public static String getInvokeString(Object bean, String method) {
 		try {
 			return BeanUtils.getProperty(bean, method);
@@ -40,22 +41,25 @@ public class StringUtil extends StringUtils {
 
 	/**
 	 * 返回一个8位的随机码
-	 * @return
+	 * 
+	 * @return 8位长度随机码
 	 * @date 2016年12月21日 下午6:21:03
 	 * @writer junehappylove
 	 */
-	public static String randomCode(){
+	public static String randomCode() {
 		return randomCode(8);
 	}
-	
+
 	/**
 	 * 返回一个指定长度的随机码数据
+	 * 
 	 * @param length
-	 * @return
+	 *            长度
+	 * @return 随机码
 	 * @date 2016年12月21日 下午6:21:40
 	 * @writer junehappylove
 	 */
-	public static String randomCode(int length){
+	public static String randomCode(int length) {
 		Random random = new Random();
 		String randomCode = "";
 		for (int i = 0; i < length; i++) {

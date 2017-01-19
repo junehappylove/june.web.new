@@ -36,6 +36,7 @@ public class FastDfsUtils {
 
 	/**
 	 * 根据路径获取文件
+	 * 
 	 * @param url
 	 * @return
 	 * @throws Exception
@@ -60,7 +61,7 @@ public class FastDfsUtils {
 
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
 		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
-		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
+		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 		ClientGlobal.init(configFilePath);
 		TrackerServer trackerServer = null;
 		TrackerClient trackerClient = new TrackerClient();
@@ -78,7 +79,8 @@ public class FastDfsUtils {
 
 		String group_name = groupName;
 		String remote_filename = fileName;
-		// FileInfo fi = storageClient.get_file_info(group_name, remote_filename);
+		// FileInfo fi = storageClient.get_file_info(group_name,
+		// remote_filename);
 		byte[] buffer = storageClient.download_file(group_name, remote_filename);
 		if (buffer == null) {
 			throw new FastDFSException(Constants.REMOTE_FILE_NO_EXIST);
@@ -87,10 +89,14 @@ public class FastDfsUtils {
 	}
 
 	/**
-	 * 上传文件 
-	 * @param inputstream 上传的文件流
-	 * @param uploadFileName 上传的文件名字
-	 * @param author 上传人
+	 * 上传文件
+	 * 
+	 * @param inputstream
+	 *            上传的文件流
+	 * @param uploadFileName
+	 *            上传的文件名字
+	 * @param author
+	 *            上传人
 	 * @return String 存储路径形式:group:地址 文件存放的group和路径
 	 * @throws Exception
 	 * @date 2016年6月27日 下午1:54:06
@@ -107,7 +113,7 @@ public class FastDfsUtils {
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
 		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
-		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
+		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);
 		// 连接服务器
@@ -166,9 +172,13 @@ public class FastDfsUtils {
 
 	/**
 	 * ckeditor上传文件用
-	 * @param inputstream 上传的文件流
-	 * @param uploadFileName 上传的文件名字
-	 * @param author 上传人 
+	 * 
+	 * @param inputstream
+	 *            上传的文件流
+	 * @param uploadFileName
+	 *            上传的文件名字
+	 * @param author
+	 *            上传人
 	 * @return String 存储路径形式:group:地址
 	 * @throws Exception
 	 * @date 2016年6月27日 下午1:55:25
@@ -186,7 +196,7 @@ public class FastDfsUtils {
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
 		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
-		String configFilePath = classPath + File.separator + "conf"+ File.separator + "fdfs_client.properties";
+		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);
 		// 连接服务器

@@ -16,18 +16,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MD5验证工具
+ * MD5验证工具： MD5Util <br>
  * 
- * @author victor
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午7:58:55
+ * @version 1.0.0
  */
 public class MD5Util {
 
 	protected static Logger logger = LoggerFactory.getLogger(MD5Util.class);
-	
+
 	/**
 	 * 默认的密码字符串组合，用来将字节转换成 16 进制表示的字符,apache校验下载的文件的正确性用的就是默认的这个组合
 	 */
-	protected static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e','f' };
+	protected static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+			'f' };
 	protected static MessageDigest messagedigest = null;
 
 	static {
@@ -40,25 +44,30 @@ public class MD5Util {
 
 	/**
 	 * 对字符串md5
+	 * 
 	 * @param str
-	 * @return
+	 *            字符串
+	 * @return md5值
 	 * @date 2016年6月28日 下午1:25:17
 	 * @writer wjw.happy.love@163.com
 	 */
-	public static String getMD5(String str){
+	public static String getMD5(String str) {
 		byte[] buffer = str.getBytes();
 		// 使用指定的字节更新摘要
 		messagedigest.update(buffer);
 		// 获得密文
-        byte[] md = messagedigest.digest();
+		byte[] md = messagedigest.digest();
 		return bufferToHex(md);
 	}
-	
+
 	/**
 	 * 小文件的md5计算
+	 * 
 	 * @param smallFile
-	 * @return
+	 *            小文件File对象
+	 * @return 文件的md5值
 	 * @throws IOException
+	 *             异常
 	 * @date 2016年12月20日 上午8:17:22
 	 * @writer junehappylove
 	 */
@@ -83,63 +92,74 @@ public class MD5Util {
 
 		return value;
 	}
-	
+
 	/**
 	 * 小文件的md5计算
+	 * 
 	 * @param smallFileName
-	 * @return
+	 *            小文件名称
+	 * @return 文件的md5值
 	 * @throws IOException
+	 *             异常
 	 * @date 2016年12月20日 上午8:40:49
 	 * @writer junehappylove
 	 */
 	public static String smallFileMD5(String smallFileName) throws IOException {
-		//File smallFile = new File(smallFileName);
+		// File smallFile = new File(smallFileName);
 		return smallFileMD5(new File(smallFileName));
 	}
-	
-	
+
 	/**
 	 * 获取大文的MD5计算值
+	 * 
 	 * @param bigFileName
-	 * @return
+	 *            大文件名
+	 * @return 文件的md5值
 	 * @throws IOException
+	 *             异常
 	 * @date 2016年12月20日 上午8:27:09
 	 * @writer junehappylove
 	 */
-	public static String bigFileMD5(String bigFileName) throws IOException{
+	public static String bigFileMD5(String bigFileName) throws IOException {
 		File f = new File(bigFileName);
 		return bigFileMD5(f);
 	}
-	
+
 	/**
 	 * 获取大文的MD5计算值
+	 * 
 	 * @param bigFile
-	 * @return
+	 *            大文件File对象
+	 * @return md5值
 	 * @throws IOException
+	 *             异常
 	 * @date 2016年12月20日 上午8:40:35
 	 * @writer junehappylove
 	 */
-	public static String bigFileMD5(File bigFile) throws IOException{
-		logger.debug("|当前文件名称:"+bigFile.getName());
-		logger.debug("|当前文件大小:"+(bigFile.length()/1024/1024)+"MB");
-		logger.debug("|当前文件路径[绝对]:"+bigFile.getAbsolutePath());
-		logger.debug("|当前文件路径[---]:"+bigFile.getCanonicalPath());
+	public static String bigFileMD5(File bigFile) throws IOException {
+		logger.debug("|当前文件名称:" + bigFile.getName());
+		logger.debug("|当前文件大小:" + (bigFile.length() / 1024 / 1024) + "MB");
+		logger.debug("|当前文件路径[绝对]:" + bigFile.getAbsolutePath());
+		logger.debug("|当前文件路径[---]:" + bigFile.getCanonicalPath());
 		InputStream ins = new FileInputStream(bigFile);
 		return bigFileMD5(ins);
 	}
-	
+
 	/**
 	 * 获取大文的MD5计算值
+	 * 
 	 * @param bigFile
-	 * @return
+	 *            大文件流
+	 * @return md5
 	 * @throws IOException
+	 *             异常
 	 * @date 2016年12月20日 上午8:30:54
 	 * @writer junehappylove
 	 */
-	public static String bigFileMD5(InputStream bigFileStream) throws IOException{
+	public static String bigFileMD5(InputStream bigFileStream) throws IOException {
 		byte[] buffer = new byte[8192];
 		int len;
-		while((len=bigFileStream.read(buffer))!=-1){
+		while ((len = bigFileStream.read(buffer)) != -1) {
 			messagedigest.update(buffer, 0, len);
 		}
 		bigFileStream.close();
@@ -147,13 +167,14 @@ public class MD5Util {
 		// 也可用自己写的
 		// return bufferToHex(messagedigest.digest());
 	}
-	
+
 	/**
-	 * 获取文件的md5
-	 * 请参考apache的方法org.apache.commons.codec.digest.DigestUtils<br>
+	 * 获取文件的md5 请参考apache的方法org.apache.commons.codec.digest.DigestUtils<br>
 	 * 如果是过G的大文件推荐使用 {@link #bigFileMD5(InputStream)}方法去获取md5值
+	 * 
 	 * @param fis
-	 * @return
+	 *            文件流
+	 * @return md5
 	 * @throws IOException
 	 * @date 2016年12月20日 上午8:27:51
 	 * @writer junehappylove
@@ -173,23 +194,22 @@ public class MD5Util {
 	}
 
 	private static String bufferToHex(byte bytes[], int k, int j) {
-		char[] str = new char[j*2];
-		for(int i=0;i<j;i++){
+		char[] str = new char[j * 2];
+		for (int i = 0; i < j; i++) {
 			byte bt = bytes[i];
-			str[k++] = hexDigits[bt>>>4&0xf];
-			str[k++] = hexDigits[bt&0xf];
+			str[k++] = hexDigits[bt >>> 4 & 0xf];
+			str[k++] = hexDigits[bt & 0xf];
 		}
 		return new String(str);
 	}
 
-
 	public static void main(String[] args) throws Exception {
-		//MultipartFile myfile = null;
-		//InputStream inputStream = FileUpLoadDownload.getFileStream(myfile);
-		//String md5 = getFileMD5String(inputStream);
-		//System.out.println("md5:" + md5);
-		System.out.println(MD5Util.getMD5("a"));//d41d8cd98f00b204e9800998ecf8427e
-		System.out.println(MD5Util.getMD5("b"));//d41d8cd98f00b204e9800998ecf8427e
+		// MultipartFile myfile = null;
+		// InputStream inputStream = FileUpLoadDownload.getFileStream(myfile);
+		// String md5 = getFileMD5String(inputStream);
+		// System.out.println("md5:" + md5);
+		System.out.println(MD5Util.getMD5("a"));// d41d8cd98f00b204e9800998ecf8427e
+		System.out.println(MD5Util.getMD5("b"));// d41d8cd98f00b204e9800998ecf8427e
 
 		System.out.println(MD5Util.getMD5("wjw.happy.love@163.com"));
 	}

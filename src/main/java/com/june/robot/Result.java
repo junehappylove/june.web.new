@@ -20,22 +20,28 @@ public class Result implements Serializable{
 	 * long serialVersionUID
 	 */
 	private static final long serialVersionUID = 20170118L;
-	private String content;
+	private String answer;
 	private double score;
+	
+	static Result noAnswer(){
+		String answer = "I don`t know";
+		double score = 0.5d;
+		return new Result(answer, score);
+	}
 	
 	public Result() {
 	}
 
 	public Result(String answer, double score) {
-		this.content = answer;
+		this.answer = answer;
 		this.score = score;
 	}
 	
-	public String getContent() {
-		return content;
+	public String getAnswer() {
+		return answer;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 	public double getScore() {
 		return score;

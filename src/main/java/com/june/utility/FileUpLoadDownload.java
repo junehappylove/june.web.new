@@ -19,27 +19,31 @@ import org.springframework.web.multipart.MultipartFile;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
 
+/**
+ * 文件上传下载类: FileUpLoadDownload <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午7:54:10
+ * @version 1.0.0
+ */
 public class FileUpLoadDownload {
 
 	/**
-	 * @Description: 上传多个文件
-	 * @author caiyang
+	 * 上传多个文件
 	 * @param myfiles
 	 * @param request
 	 * @param response
 	 * @param path
 	 * @param fileName
 	 * @return
-	 * @return: MessageDto
-	 * @throws
+	 * @date 2017年1月19日 下午7:54:30
+	 * @writer junehappylove
 	 */
-	@SuppressWarnings("unchecked")
-	public static MessageDto upload(MultipartFile[] myfiles,
-			HttpServletRequest request, HttpServletResponse response,
+	public static MessageDto upload(MultipartFile[] myfiles, HttpServletRequest request, HttpServletResponse response,
 			String path, String fileName) {
 		MessageDto messageDto = new MessageDto();
-		@SuppressWarnings("rawtypes")
-		ArrayList errList = new ArrayList();
+		ArrayList<String> errList = new ArrayList<String>();
 		// 这里实现文件上传操作用的是commons.io.FileUtils类,它会自动判断/upload是否存在,不存在会自动创建
 		String realPath = path;
 		// 上传文件的原名(即上传前的文件名字)
@@ -63,11 +67,9 @@ public class FileUpLoadDownload {
 					// 这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
 					// 此处也可以使用Spring提供的MultipartFile.transferTo(File
 					// dest)方法实现文件的上
-					FileUtils.copyInputStreamToFile(myfile.getInputStream(),
-							new File(realPath, originalFilename));
+					FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, originalFilename));
 					errList.add("文件上传成功");
 				} catch (IOException e) {
-
 					errList.add("文件上传失败");
 					messageDto.setErrList(errList);
 				}
@@ -79,6 +81,7 @@ public class FileUpLoadDownload {
 
 	/**
 	 * 以文件流的形式下载文件
+	 * 
 	 * @param request
 	 * @param response
 	 * @param filePath
@@ -92,7 +95,8 @@ public class FileUpLoadDownload {
 		response.reset();
 		// 设置response的Header
 		try {
-			response.addHeader("Content-Disposition", "attachment;filename=" + new String(file.getName().getBytes("gbk"), "iso-8859-1"));
+			response.addHeader("Content-Disposition",
+					"attachment;filename=" + new String(file.getName().getBytes("gbk"), "iso-8859-1"));
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		} // 转码之后下载的文件不会出现中文乱码
@@ -115,13 +119,12 @@ public class FileUpLoadDownload {
 	}
 
 	/**
-	 * @Description: 获取上传文件的名字
-	 * @author caiyang
-	 * @param myfiles
+	 * 获取上传文件的名字
+	 * @param myfile
 	 * @param name
 	 * @return
-	 * @return: String
-	 * @throws
+	 * @date 2017年1月19日 下午7:54:45
+	 * @writer junehappylove
 	 */
 	public static String getFileName(MultipartFile myfile, String name) {
 		String originalFilename = null;
@@ -136,16 +139,14 @@ public class FileUpLoadDownload {
 	}
 
 	/**
-	 * @Description: 获取文件流
-	 * @author caiyang
-	 * @param myfiles
+	 * 获取文件流
+	 * @param myfile
 	 * @return
 	 * @throws Exception
-	 * @return: InputStream
-	 * @throws
+	 * @date 2017年1月19日 下午7:54:52
+	 * @writer junehappylove
 	 */
-	public static InputStream getFileStream(MultipartFile myfile)
-			throws Exception {
+	public static InputStream getFileStream(MultipartFile myfile) throws Exception {
 		InputStream inputStream = null;
 		// 获取文件流
 		inputStream = myfile.getInputStream();
@@ -153,21 +154,19 @@ public class FileUpLoadDownload {
 	}
 
 	/**
-	 * @throws IOException
-	 * @Description: 上传一个文件
-	 * @author caiyang
+	 * 上传一个文件
 	 * @param myfile
 	 * @param request
 	 * @param response
 	 * @param path
 	 * @param fileName
 	 * @return
-	 * @return: String 返回上传结果
-	 * @throws
+	 * @throws IOException
+	 * @date 2017年1月19日 下午7:54:58
+	 * @writer junehappylove
 	 */
-	public static String uploadSingleFile(MultipartFile myfile,
-			HttpServletRequest request, HttpServletResponse response,
-			String path, String fileName) throws IOException {
+	public static String uploadSingleFile(MultipartFile myfile, HttpServletRequest request,
+			HttpServletResponse response, String path, String fileName) throws IOException {
 		// 这里实现文件上传操作用的是commons.io.FileUtils类,它会自动判断/upload是否存在,不存在会自动创建
 		String realPath = path;
 
@@ -190,10 +189,9 @@ public class FileUpLoadDownload {
 			try {
 				// 这里不必处理IO流关闭的问题,因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉
 				// 此处也可以使用Spring提供的MultipartFile.transferTo(File dest)方法实现文件的上
-				FileUtils.copyInputStreamToFile(myfile.getInputStream(),
-						new File(realPath, originalFilename));
+				FileUtils.copyInputStreamToFile(myfile.getInputStream(), new File(realPath, originalFilename));
 
-				return "";  //上传成功不需要弹出框
+				return ""; // 上传成功不需要弹出框
 			} catch (IOException e) {
 				return Constants.UPLOAD_FAIL;
 			}

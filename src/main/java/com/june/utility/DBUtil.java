@@ -25,14 +25,14 @@ import com.mysql.jdbc.Connection;
  * @author 王俊伟 wjw.happy.love@163.com
  * @date 2016年8月31日 下午5:51:18
  */
-public class DbUtil {
+public class DBUtil {
 
 	/**
 	 * 执行sql脚本文件
 	 * 
 	 * @param newSchemaName
 	 *            一个新的schema名称
-	 * @throws Exception
+	 * @throws Exception 异常
 	 * @date 2016年8月31日 下午5:50:18
 	 * @writer wjw.happy.love@163.com
 	 */

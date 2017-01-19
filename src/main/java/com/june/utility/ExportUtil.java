@@ -23,11 +23,6 @@ public class ExportUtil {
 
     private XSSFSheet sheet = null;
 
-    /**
-     * 
-     * @param wb
-     * @param sheet
-     */
     public ExportUtil(XSSFWorkbook wb, XSSFSheet sheet) {
         this.wb = wb;
         this.sheet = sheet;

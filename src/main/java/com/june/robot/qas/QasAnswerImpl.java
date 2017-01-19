@@ -5,13 +5,13 @@
  */
 package com.june.robot.qas;
 
-import java.util.ArrayList;
+import java.text.MessageFormat;
 import java.util.List;
 
 import com.june.common.Constants;
-import com.june.robot.Answer;
+import com.june.robot.BaseAnswer;
 import com.june.robot.Result;
-import com.june.utility.MessageUtil;
+import com.june.utility.NetUtil;
 
 /**
  * QasAnswerImpl <br>
@@ -21,7 +21,7 @@ import com.june.utility.MessageUtil;
  * @date 2017年1月18日 下午11:13:31
  * @version 1.0.0
  */
-public class QasAnswerImpl implements Answer {
+public class QasAnswerImpl extends BaseAnswer {
 
 	private static QasAnswerImpl instance = new QasAnswerImpl();
 
@@ -33,24 +33,12 @@ public class QasAnswerImpl implements Answer {
 	}
 
 	@Override
-	public Result getAnswer(String ask) {
-		return getAnswers(ask, 1).get(0);
-	}
-
-	@Override
 	public List<Result> getAnswers(String ask, int num) {
 		List<Result> list = null;
-		// TODO 外接june.qas.qa来回去答案信息
-		String url = MessageUtil.$VALUE(Constants.QAS_API, ask, num + "");
-		System.out.println(url);
-		Result r = new Result(url,1.0d);
-		list = new ArrayList<>();
-		list.add(r);
+		// 外接june.qas.qa来回去答案信息
+		String api = MessageFormat.format(Constants.QAS_API, NetUtil.$(ask), num);
+		list = NetUtil.callApi(api, Result.class);
 		return list;
-	}
-
-	public List<Result> getAnswers(String ask) {
-		return getAnswers(ask, Answer.DEFALUT_ANSWER_NUM);
 	}
 
 }

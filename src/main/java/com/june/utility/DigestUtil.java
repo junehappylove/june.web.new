@@ -15,6 +15,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+/**
+ * 
+ * DigestUtil <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月19日 下午7:50:43
+ * @version 1.0.0
+ */
 public class DigestUtil {
 
 	private static String encodingCharset = "UTF-8";

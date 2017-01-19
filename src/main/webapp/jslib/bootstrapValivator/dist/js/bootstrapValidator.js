@@ -4019,7 +4019,7 @@
                 /* falls through */
                 default:
                     valid   = ipv4Regex.test(value) && ipv6Regex.test(value);
-                    message = options.message || $.fn.bootstrapValidator.i18n.ip.default;
+                    message = options.message || $.fn.bootstrapValidator.i18n.ip['default'];//FIXME:  $.fn.bootstrapValidator.i18n.ip.default
                     break;
             }
 

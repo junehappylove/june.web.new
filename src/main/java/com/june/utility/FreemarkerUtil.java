@@ -122,10 +122,21 @@ public class FreemarkerUtil {
 		}
 	}
 
+	/**
+	 * 创建html文件
+	 * @param ftl
+	 * @param htmlName
+	 * @param map
+	 * @param realPath
+	 * @param request
+	 * @param response
+	 * @throws TemplateException
+	 * @date 2017年1月19日 下午7:56:23
+	 * @writer junehappylove
+	 */
 	public static void creteHtml(String ftl, String htmlName, Map<String, Object> map, String realPath,
 			HttpServletRequest request, HttpServletResponse response) throws TemplateException {
-		// Configuration config = new
-		// Configuration(Configuration.VERSION_2_3_23);
+		// Configuration config = new Configuration(Configuration.VERSION_2_3_23);
 		// 设置要解析的模板所在的目录，并加载模板文件
 		try {
 			config.setServletContextForTemplateLoading(request.getServletContext(), PATH_SEPARATOR);
@@ -165,8 +176,7 @@ public class FreemarkerUtil {
 	 *            数据Map
 	 * @return
 	 */
-	public static String printString(String templatePaht, Map<String, Object> root,
-			HttpServletRequest request) {
+	public static String printString(String templatePaht, Map<String, Object> root, HttpServletRequest request) {
 		// Configuration config = new
 		// Configuration(Configuration.VERSION_2_3_23);
 		StringWriter out = new StringWriter();

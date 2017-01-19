@@ -29,12 +29,12 @@ import org.apache.commons.net.ftp.FTPFile;
  * @date 2016年6月14日 上午11:12:55
  */
 public class ApacheFTP {
-	
+
 	private static final ApacheFTP ins = new ApacheFTP();
 	private FTPClient ftpClient;
 	public static final int BINARY_FILE_TYPE = FTP.BINARY_FILE_TYPE;
 	public static final int ASCII_FILE_TYPE = FTP.ASCII_FILE_TYPE;
-	
+
 	public final List<FtpTree> tree = new ArrayList<FtpTree>();
 
 	private ApacheFTP() {
@@ -47,11 +47,16 @@ public class ApacheFTP {
 	/**
 	 * 使用详细信息进行服务器连接
 	 * 
-	 * @param server：服务器地址名称
-	 * @param port：端口号
-	 * @param user：用户名
-	 * @param password：用户密码
-	 * @param path：转移到FTP服务器目录
+	 * @param server
+	 *            服务器地址名称
+	 * @param port
+	 *            端口号
+	 * @param user
+	 *            用户名
+	 * @param password
+	 *            用户密码
+	 * @param path
+	 *            转移到FTP服务器目录
 	 * @throws SocketException
 	 * @throws IOException
 	 */
@@ -74,7 +79,7 @@ public class ApacheFTP {
 	/**
 	 * 设置传输文件类型:FTP.BINARY_FILE_TYPE | FTP.ASCII_FILE_TYPE 二进制文件或文本文件
 	 * 
-	 * @param fileType
+	 * @param fileType 类型
 	 * @throws IOException
 	 */
 	public void setFileType(int fileType) throws IOException {
@@ -96,8 +101,8 @@ public class ApacheFTP {
 	/**
 	 * 转移到FTP服务器工作目录
 	 * 
-	 * @param path
-	 * @return
+	 * @param path 目录
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean changeDirectory(String path) throws IOException {
@@ -105,21 +110,19 @@ public class ApacheFTP {
 	}
 
 	/**
-	 * 在服务器上创建目录
-	 * 如果目录不存在，创建成功返回true;
-	 * 如果目录存在，则返回fasle;
+	 * 在服务器上创建目录 如果目录不存在，创建成功返回true; 如果目录存在，则返回fasle;
 	 * 
-	 * @param pathName
-	 * @return
+	 * @param pathName 路径
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean createDirectory(String pathName) throws IOException {
 		pathName = pathName.replace("/", "/");
 		pathName = pathName.replace("\\", "/");
 		/*
-		if(StringUtil.isNotEmpty(pathName) && pathName.charAt(0)=='/'){
-			pathName = pathName.replaceFirst("/", "");
-		}//*/
+		 * if(StringUtil.isNotEmpty(pathName) && pathName.charAt(0)=='/'){
+		 * pathName = pathName.replaceFirst("/", ""); }//
+		 */
 		String[] dirs = pathName.split("/");
 		StringBuffer path = new StringBuffer();
 		boolean ret = false;
@@ -133,8 +136,8 @@ public class ApacheFTP {
 	/**
 	 * 在服务器上删除目录
 	 * 
-	 * @param path
-	 * @return
+	 * @param path 路径
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean removeDirectory(String path) throws IOException {
@@ -145,10 +148,10 @@ public class ApacheFTP {
 	/**
 	 * 删除所有文件和目录
 	 * 
-	 * @param path
+	 * @param path 路径
 	 * @param isAll
 	 *            true:删除所有文件和目录
-	 * @return
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean removeDirectory(String path, boolean isAll) throws IOException {
@@ -179,9 +182,9 @@ public class ApacheFTP {
 	/**
 	 * 检查目录在服务器上是否存在 true：存在 false：不存在
 	 * 
-	 * @deprecated 以经过时
-	 * @param path
-	 * @return
+	 * @deprecated 已经过时
+	 * @param path 路径
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean existDirectory(String path) throws IOException {
@@ -201,18 +204,11 @@ public class ApacheFTP {
 	 * 得到文件列表,listFiles返回包含目录和文件，它返回的是一个FTPFile数组 listNames()：只包含目录的字符串数组
 	 * String[] fileNameArr = ftpClient.listNames(path);
 	 * 
-	 * @param path:服务器上的文件目录:/FTP
+	 * @param path 服务器上的文件目录:/FTP
 	 */
 	public List<String> getFileList(String path) throws IOException {
 		path = $zh(path);
 		FTPFile[] ftpFiles = ftpClient.listFiles(path);
-		// 通过FTPFileFilter遍历只获得文件
-		/*
-		 * FTPFile[] ftpFiles2= ftpClient.listFiles(path,new FTPFileFilter() {
-		 * 
-		 * @Override public boolean accept(FTPFile ftpFile) { return
-		 * ftpFile.isFile(); } });
-		 */
 		List<String> retList = new ArrayList<String>();
 		if (ftpFiles == null || ftpFiles.length == 0) {
 			return retList;
@@ -227,13 +223,14 @@ public class ApacheFTP {
 
 	/**
 	 * 获取一个目录下的文件和目录
-	 * @param path
-	 * @return
+	 * 
+	 * @param path 路径
+	 * @return boolean
 	 * @throws IOException
 	 * @date 2016年6月27日 下午6:39:49
 	 * @writer wjw.happy.love@163.com
 	 */
-	public List<FtpTree> trees(String path) throws IOException{
+	public List<FtpTree> trees(String path) throws IOException {
 		FtpTree ftp = null;
 		String path2 = $zh(path);
 		String name = null;
@@ -245,12 +242,12 @@ public class ApacheFTP {
 			ftp.setName(name);
 			ftp.setPath(path);
 			// TODO 下载的时候用这个文件名称
-			ftp.setPath_(MD5Util.getMD5(path+name)+getFileType(name));
+			ftp.setPath_(MD5Util.getMD5(path + name) + getFileType(name));
 			ftp.setId(name);
 			ftp.setPid(path);
 			if (file.isFile()) {
 				ftp.setFile(true);
-				//ftp.setUrl(path + "/" + file.getName());
+				// ftp.setUrl(path + "/" + file.getName());
 				ftp.setUrl(null);
 			} else {
 				ftp.setFile(false);
@@ -260,9 +257,8 @@ public class ApacheFTP {
 		}
 		return tree;
 	}
-	
-	
-	public String getFileType(String str){
+
+	public String getFileType(String str) {
 		String type = null;
 		int size = str.lastIndexOf(".");
 		if (size > 0) {
@@ -270,23 +266,25 @@ public class ApacheFTP {
 		}
 		return type;
 	}
-	
+
 	/**
 	 * 获取一个目录下的所有目录和文件，递归实现
-	 * @param root
-	 * @return
+	 * 
+	 * @param root 根目录
+	 * @return 
 	 * @throws IOException
 	 * @date 2016年6月27日 下午6:39:13
 	 * @writer wjw.happy.love@163.com
 	 */
-	public List<FtpTree> getFtpTree(String root) throws IOException{
+	public List<FtpTree> getFtpTree(String root) throws IOException {
 		List<FtpTree> tree = trees(root);
 		tree = treeSecond(tree);
 		return tree;
 	}
-	
+
 	/**
 	 * 递归实现获取二级目录和文件
+	 * 
 	 * @param first
 	 * @return
 	 * @throws IOException
@@ -308,7 +306,7 @@ public class ApacheFTP {
 		}
 		return first;
 	}
-	
+
 	/**
 	 * 删除服务器上的文件
 	 * 
@@ -396,7 +394,7 @@ public class ApacheFTP {
 	 */
 	public boolean download(String remoteFileName, String localFileName) throws IOException {
 		remoteFileName = $zh(remoteFileName);
-		//localFileName = $zh(localFileName); //本地文件名不需要编码
+		// localFileName = $zh(localFileName); //本地文件名不需要编码
 		boolean flag = false;
 		File outfile = new File(localFileName);
 		OutputStream oStream = null;
@@ -427,70 +425,72 @@ public class ApacheFTP {
 		return ftpClient.retrieveFileStream(sourceFileName);
 	}
 
-	/** 
-	 * 复制文件夹. 
-	 *  
-	 * @param sourceDir 
-	 * @param targetDir 
-	 * @throws IOException 
-	 */  
-	public void copyDirectiory(String sourceDir, String targetDir) throws IOException {  
-	    // 新建目标目录  
-        createDirectory(targetDir);
-	    if (!existDirectory(targetDir)) {  
-	        createDirectory(targetDir);  
-	    }  
-	    // 获取源文件夹当前下的文件或目录  
-	    FTPFile[] ftpFiles = ftpClient.listFiles($zh(sourceDir));  
-	    for (int i = 0; i < ftpFiles.length; i++) {  
-	        if (ftpFiles[i].isFile()) {  
-	            copyFile(ftpFiles[i].getName(), sourceDir, targetDir);  
-	        } else if (ftpFiles[i].isDirectory()) {  
-	            copyDirectiory(sourceDir + File.separator + ftpFiles[i].getName(), targetDir + File.separator + ftpFiles[i].getName());  
-	        }  
-	    }  
+	/**
+	 * 复制文件夹.
+	 * 
+	 * @param sourceDir
+	 * @param targetDir
+	 * @throws IOException
+	 */
+	public void copyDirectiory(String sourceDir, String targetDir) throws IOException {
+		// 新建目标目录
+		createDirectory(targetDir);
+		if (!existDirectory(targetDir)) {
+			createDirectory(targetDir);
+		}
+		// 获取源文件夹当前下的文件或目录
+		FTPFile[] ftpFiles = ftpClient.listFiles($zh(sourceDir));
+		for (int i = 0; i < ftpFiles.length; i++) {
+			if (ftpFiles[i].isFile()) {
+				copyFile(ftpFiles[i].getName(), sourceDir, targetDir);
+			} else if (ftpFiles[i].isDirectory()) {
+				copyDirectiory(sourceDir + File.separator + ftpFiles[i].getName(),
+						targetDir + File.separator + ftpFiles[i].getName());
+			}
+		}
 	}
-	
-	/** 
-	 * 复制文件. 
-	 *  
-	 * @param sourceFileName 
-	 * @param targetFile 
-	 * @throws IOException 
-	 */  
-	public void copyFile(String sourceFileName, String sourceDir, String targetDir) throws IOException {  
-	    ByteArrayInputStream in = null;  
-	    ByteArrayOutputStream fos = new ByteArrayOutputStream();  
-	    try {  
-            createDirectory(targetDir);
-	        if (!existDirectory(targetDir)) {
-	            createDirectory(targetDir);
-	        }
-	        ftpClient.setBufferSize(1024 * 2);  
-	        // 变更工作路径  
-	        ftpClient.changeWorkingDirectory($zh(sourceDir));  
-	        // 设置以二进制流的方式传输  
-	        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);  
-	        // 将文件读到内存中  
-	        ftpClient.retrieveFile($zh(sourceFileName), fos);  
-	        in = new ByteArrayInputStream(fos.toByteArray());  
-	        if (in != null) {  
-	            ftpClient.changeWorkingDirectory($zh(targetDir));  
-	            ftpClient.storeFile($zh(sourceFileName), in);  
-	        }  
-	    } finally {  
-	        // 关闭流  
-	        if (in != null) {  
-	            in.close();  
-	        }  
-	        if (fos != null) {  
-	            fos.close();  
-	        }  
-	    }  
+
+	/**
+	 * 复制文件.
+	 * 
+	 * @param sourceFileName
+	 * @param targetFile
+	 * @throws IOException
+	 */
+	public void copyFile(String sourceFileName, String sourceDir, String targetDir) throws IOException {
+		ByteArrayInputStream in = null;
+		ByteArrayOutputStream fos = new ByteArrayOutputStream();
+		try {
+			createDirectory(targetDir);
+			if (!existDirectory(targetDir)) {
+				createDirectory(targetDir);
+			}
+			ftpClient.setBufferSize(1024 * 2);
+			// 变更工作路径
+			ftpClient.changeWorkingDirectory($zh(sourceDir));
+			// 设置以二进制流的方式传输
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			// 将文件读到内存中
+			ftpClient.retrieveFile($zh(sourceFileName), fos);
+			in = new ByteArrayInputStream(fos.toByteArray());
+			if (in != null) {
+				ftpClient.changeWorkingDirectory($zh(targetDir));
+				ftpClient.storeFile($zh(sourceFileName), in);
+			}
+		} finally {
+			// 关闭流
+			if (in != null) {
+				in.close();
+			}
+			if (fos != null) {
+				fos.close();
+			}
+		}
 	}
-	
+
 	/**
 	 * ftp文件操作，更改编码
+	 * 
 	 * @param str
 	 * @return
 	 * @throws UnsupportedEncodingException
@@ -501,7 +501,7 @@ public class ApacheFTP {
 		str = new String(str.getBytes("GBK"), "iso-8859-1");
 		return str;
 	}
-	
+
 	public static void main(String[] args) throws SocketException, IOException {
 		ApacheFTP ftpUtil = new ApacheFTP();
 		ftpUtil.connectServer("192.168.100.5", FTPClient.DEFAULT_PORT, "nfschina", "nfschina", null);
@@ -509,14 +509,14 @@ public class ApacheFTP {
 		List<String> list = ftpUtil.getFileList("");
 		System.out.println("文件名称列表为:" + list);
 		// 上传本地D盘文件aaa.txt到服务器，服务器上名称为bbb.txt
-		//ftpUtil.uploadFile("d:" + File.separator + "aaa.txt", "eee.txt");
+		// ftpUtil.uploadFile("d:" + File.separator + "aaa.txt", "eee.txt");
 		// 从服务器上下载文件bbb.txt到本地d盘名称为ccc.txt
-		//ftpUtil.download("eee.txt", "d:" + File.separator + "fff.txt");
+		// ftpUtil.download("eee.txt", "d:" + File.separator + "fff.txt");
 		// 删除ftp服务器上文件:bbb.txt
 		// ftpUtil.deleteFile("bbb.txt");
-		//ftpUtil.createDirectory("/12啊啊啊");
-		//ftpUtil.removeDirectory("/12啊", true);
-		//ftpUtil.getFtpTree("/车型A1");
+		// ftpUtil.createDirectory("/12啊啊啊");
+		// ftpUtil.removeDirectory("/12啊", true);
+		// ftpUtil.getFtpTree("/车型A1");
 		System.out.println(ftpUtil.getFileType("adfsad.dsaadf.exe"));
 	}
 }
