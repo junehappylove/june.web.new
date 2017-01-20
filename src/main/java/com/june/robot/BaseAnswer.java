@@ -20,7 +20,13 @@ public abstract class BaseAnswer implements Answer {
 	@Override
 	public Result getAnswer(String ask) {
 		List<Result> list = getAnswers(ask, 1);
-		return list == null || list.size() == 0 ? Result.noAnswer() : list.get(0);
+		if (list == null) {
+			return Result.connectErrorAnswer();
+		} else if (list.size() == 0) {
+			return Result.noAnswer();
+		} else {
+			return list.get(0);
+		}
 	}
 
 	public List<Result> getAnswers(String ask) {

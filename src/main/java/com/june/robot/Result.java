@@ -29,6 +29,12 @@ public class Result implements Serializable{
 		return new Result(answer, score);
 	}
 	
+	static Result connectErrorAnswer(){
+		String answer = "Network broken";
+		double score = 0.5d;
+		return new Result(answer, score);
+	}
+	
 	public Result() {
 	}
 

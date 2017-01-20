@@ -28,6 +28,7 @@ public class NetUtil {
 	final static String GBK = "gbk";
 	private final static String NEW_LINE = "\n";
 	private final static int TIME_OUT = 5000;// 链接超时时间
+	private final static int TRY_TIMES = 5;// 链接超时时间
 
 	/**
 	 * 回调api直接反转成java对象返回 <br>
@@ -107,9 +108,56 @@ public class NetUtil {
 		}
 		return sb.toString();
 	}
-	
+
+	/**
+	 * 判断地址是否链接成功
+	 * 
+	 * @param urlstr
+	 *            地址
+	 * @return 成功true，否则false
+	 */
+	public static boolean canConnect(String urlstr) {
+		URL url = checkURL(urlstr);
+		if (url == null) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 判断url是否可达
+	 * 
+	 * @param urlstr
+	 * @return 可达返回URL，否则返回null
+	 */
+	public static synchronized URL checkURL(String urlstr) {
+		URL url = null;
+		HttpURLConnection con = null;
+		int state;
+		int counts = 0;
+		if (urlstr == null || urlstr.length() <= 0) {
+			return null;
+		}
+		while (counts < TRY_TIMES) {
+			try {
+				url = new URL(urlstr);
+				con = (HttpURLConnection) url.openConnection();
+				state = con.getResponseCode();
+				if (state == 200) {
+					break;
+				}
+			} catch (Exception ex) {
+				counts++;
+				url = null;
+				continue;
+			}
+		}
+		return url;
+	}
+
 	/**
 	 * URL地址中的中文编码
+	 * 
 	 * @param url
 	 * @return
 	 * @throws UnsupportedEncodingException
@@ -117,12 +165,12 @@ public class NetUtil {
 	 * @writer junehappylove
 	 */
 	public static String $(String content) {
-		try{
+		try {
 			content = URLEncoder.encode(content, "UTF-8");
-			content = content.replaceAll("\\+", "%20");	//url中将空格转换成%20
-		}catch(UnsupportedEncodingException e){
+			content = content.replaceAll("\\+", "%20"); // url中将空格转换成%20
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-        return content;
+		return content;
 	}
 }

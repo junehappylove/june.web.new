@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import com.june.common.Constants;
+import com.june.robot.Answer;
 import com.june.robot.BaseAnswer;
 import com.june.robot.Result;
 import com.june.utility.NetUtil;
@@ -21,7 +22,7 @@ import com.june.utility.NetUtil;
  * @date 2017年1月18日 下午11:13:31
  * @version 1.0.0
  */
-public class QasAnswerImpl extends BaseAnswer {
+public class QasAnswerImpl extends BaseAnswer implements Answer {
 
 	private static QasAnswerImpl instance = new QasAnswerImpl();
 
@@ -35,7 +36,9 @@ public class QasAnswerImpl extends BaseAnswer {
 	@Override
 	public List<Result> getAnswers(String ask, int num) {
 		List<Result> list = null;
-		// 外接june.qas.qa来回去答案信息
+		if (!NetUtil.canConnect(Constants.QAS_API_)) {
+			return null;
+		}
 		String api = MessageFormat.format(Constants.QAS_API, NetUtil.$(ask), num);
 		list = NetUtil.callApi(api, Result.class);
 		return list;
