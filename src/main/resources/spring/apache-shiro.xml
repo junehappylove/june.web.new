@@ -29,12 +29,14 @@
         </property>
 	</bean>
 
+ 	<!-- 自定义对 shiro的连接约束,结合shiroSecurityFilter实现动态获取资源 --> 
 	<bean id="chainDefinitionSectionMetaSource" class="com.june.shiro.service.ChainDefinitionSectionMetaSource"> 
 	    <property name="filterChainDefinitions"> 
 	        <value> 
 	            /logout = logout
 	            /app/logout = authc
 	            /login/main = authc
+	            /swagger/** = anon<!-- 解除对swagger静态资源的过滤 -->
 	        </value> 
 	    </property> 
 	</bean>

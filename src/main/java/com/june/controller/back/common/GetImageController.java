@@ -20,12 +20,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.june.utility.FastDfsUtils;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 
 @Controller
+@Api(description="取图片",value="测试")
 public class GetImageController {
 
 	@RequestMapping("/test/{date}/{url}/")
-	public void getImage(@PathVariable(value = "url") String url, HttpServletRequest request,
+	@ApiOperation(value="取图片",httpMethod="POST")
+	public void getImage(@ApiParam(value="图片地址",name="url",required=true)
+			@PathVariable(value = "url") String url, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		byte[] buffer = FastDfsUtils.getFile("group1-M00-00-00-wKhIgFaM0QSAeLiPAAS4VPEmAjY095.jpg");
 		returnImageByBuffer(response, buffer);

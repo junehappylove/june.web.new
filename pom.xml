@@ -21,6 +21,8 @@
 		<activiti.version>5.21.0</activiti.version>
 		<activemq.version>5.13.2</activemq.version>
 		<ckeditor.version>3.5.3</ckeditor.version>
+		<swagger.version>1.0.2</swagger.version>
+		<jackson.version>2.4.4</jackson.version>
 		<jedis.version>2.9.0</jedis.version>
 		<junit.version>4.12</junit.version>
 		<joda.version>2.9.4</joda.version>
@@ -436,6 +438,21 @@
         </dependency>
 		<!-- ################### json解释 ################ -->
 		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-lgpl</artifactId>
 			<version>1.9.6</version>
@@ -455,12 +472,13 @@
 			<artifactId>jackson-mapper-lgpl</artifactId>
 			<version>1.9.6</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.1.4</version>
-		</dependency>
 		<!-- ############################################## -->
+		<!-- 集成Swagger -->
+		<dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
 		<!-- javax提供的annotation -->
 		<dependency>
 			<groupId>javax.inject</groupId>

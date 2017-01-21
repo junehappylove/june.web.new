@@ -68,10 +68,17 @@
 	<context:component-scan base-package="com.june.*"></context:component-scan>
 
 	<!-- 映射静态资源 -->  
+	<!-- 在spring-mvc.xml中配置<mvc:default-servlet-handler />后，
+		会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
+		它会像一个检查员，对进入DispatcherServlet的URL进行筛查，
+		如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，
+		如果不是静态资源的请求，才由DispatcherServlet继续处理  -->
     <mvc:default-servlet-handler />  
   
     <!-- 配置处理静态资源的请求 -->  
-    <!-- <mvc:resources mapping="/resources/**" location="/crossdomain.xml" />   -->
+    <!-- <mvc:resources mapping="/resources/**" location="/crossdomain.xml" />-->
+	<!-- 下面不需要这样定义了，因为在web.xml中已经定义好了哪些静态资源不拦截 -->
+    <!-- <mvc:resources mapping="/swagger/**" location="/WEB-INF/view/swagger/"/> -->
 
 	<!-- 配置jsp视图解析器 start -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -178,6 +185,12 @@
 	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
 	<!-- 引入websocket消息处理 -->
 	<import resource="classpath*:spring/spring-websocket.xml" />
+	
+	<!-- 丝袜哥（Swagger）配置 -->
+	<!-- <bean class="com.june.common.conf.SwaggerConfig"/> -->
+	<!-- 在com.june.common.conf.SwaggerConfig中由@Autowire自动注入 -->
+	<!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /> -->
+	
 	<!-- 引入Shiro配置 -->
 	<import resource="classpath*:spring/apache-shiro.xml" />
 </beans>
