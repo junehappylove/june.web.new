@@ -50,8 +50,6 @@ public class ExportImportExcel {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 * @throws IOException
-	 * @date 2016年6月27日 下午1:50:26
-	 * @writer wjw.happy.love@163.com
 	 */
 	public static void exportExcelForDownload(List<?> datasource, String[] titles, String[] attrs,
 			HttpServletResponse response, String sheetname, String filename)
@@ -129,8 +127,6 @@ public class ExportImportExcel {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 * @throws IOException
-	 * @date 2016年6月27日 下午1:49:22
-	 * @writer wjw.happy.love@163.com
 	 */
 	public static void exportExcelToFolder(List<?> datasource, String[] titles, String[] attrs, String sheetname,
 			String folderpath, String filename)
@@ -199,8 +195,6 @@ public class ExportImportExcel {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 * @throws InstantiationException
-	 * @date 2016年6月27日 下午1:49:32
-	 * @writer wjw.happy.love@163.com
 	 */
 	public static List<?> readXls(int startRomNum, InputStream is, AbstractDTO abstractDTO, int[] colomns,
 			String[] attrs) throws IOException, IllegalAccessException, IllegalArgumentException,
@@ -258,8 +252,6 @@ public class ExportImportExcel {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 * @throws InstantiationException
-	 * @date 2016年6月27日 下午1:49:40
-	 * @writer wjw.happy.love@163.com
 	 */
 	public static List<?> readpassXls(int startRomNum, MultipartFile[] myfiles, AbstractDTO abstractDTO, int[] colomns,
 			String[] attrs) throws IOException, IllegalAccessException, IllegalArgumentException,
@@ -309,8 +301,6 @@ public class ExportImportExcel {
 	 * 
 	 * @param cell
 	 * @return
-	 * @date 2016年6月27日 下午1:49:50
-	 * @writer wjw.happy.love@163.com
 	 */
 	private static String getValue(XSSFCell cell) {
 		// 返回值

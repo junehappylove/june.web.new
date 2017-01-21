@@ -20,7 +20,6 @@ import com.june.common.MessageDto;
 import com.june.dto.back.bussiness.logger.LoggerDto;
 import com.june.dto.back.common.TreeDto;
 import com.june.service.back.bussiness.logger.LoggerService;
-import com.june.service.back.bussiness.vehicle.VehicleService;
 
 /**
  * 
@@ -35,8 +34,6 @@ public class LoggerController extends BaseController<LoggerDto> {
 
 	@Autowired
 	protected LoggerService loggerService;
-	@Autowired
-	protected VehicleService vehicleService;
 
 	/**
 	 * form表单后台验证
@@ -65,8 +62,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 		ModelAndView result = initPage(request, page);
 		List<TreeDto> list = commonService.getErrorLevel();
 		result.addObject("errorLevelDrops", list);
-		list = vehicleService.getDrops(null);
-		result.addObject("impactVehicleDrops", list);
+		result.addObject("impactVehicleDrops", null);//FIXME 需要前台删掉
 		return result;
 	}
 
@@ -76,8 +72,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 		ModelAndView result = initPage(request, page);
 		List<TreeDto> list = commonService.getErrorLevel();
 		result.addObject("errorLevelDrops", list);
-		list = vehicleService.getDrops(null);
-		result.addObject("impactVehicleDrops", list);
+		result.addObject("impactVehicleDrops", null);//FIXME 需要前台删掉
 		return result;
 	}
 

@@ -5,15 +5,10 @@
  */
 package com.june.common;
 
-import java.io.IOException;
-import java.net.SocketException;
 import java.sql.Timestamp;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.june.dto.back.bussiness.ftp.FtpFile;
 
 /**
  * 业务基础DTO <br>
@@ -35,9 +30,7 @@ public abstract class BaseDTO extends AbstractDTO {
 	private Timestamp upd_time;
 
 	private String lastName;	//上一次的修改名称，针对FTP修改目录名称而设置的
-	
-	private List<FtpFile> files;//FTP目录下的文件信息
-	
+		
 	private String currVehicle;//当前车型ID
 	private String currVehicleName;//当前车型名称
 	
@@ -103,14 +96,6 @@ public abstract class BaseDTO extends AbstractDTO {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public List<FtpFile> getFiles() throws SocketException, IOException {
-		return files;
-	}
-
-	public void setFiles(List<FtpFile> files) {
-		this.files = files;
 	}
 
 	public String getCurrVehicle() {

@@ -6,15 +6,12 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.SocketException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,18 +20,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
-import com.june.dto.back.common.TreeDto;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
@@ -58,17 +49,11 @@ import org.springframework.web.util.WebUtils;
 import com.june.common.converter.DateConverter;
 import com.june.common.converter.DateJsonValueProcessor;
 import com.june.common.converter.TimestampConverter;
-import com.june.dto.back.bussiness.ftp.FtpDto;
-import com.june.dto.back.bussiness.guide.ImageXML;
-import com.june.dto.back.bussiness.guide.ImageXML_;
-import com.june.dto.back.bussiness.guide.Step;
-import com.june.dto.back.bussiness.vehicle.VehicleDto;
+import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.file.BaseFile;
 import com.june.dto.back.system.file.FileDTO;
-import com.june.service.back.bussiness.ftp.FtpService;
-import com.june.service.back.bussiness.vehicle.VehicleService;
 import com.june.service.back.common.CommonService;
 import com.june.service.back.system.base.user.UserInfoService;
 import com.june.service.back.system.file.BaseFileService;
@@ -112,11 +97,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	@Autowired
 	protected UserInfoService userInfoService;
 	@Autowired
-	protected FtpService ftpService;
-	@Autowired
 	private HttpServletRequest request;
-	@Autowired
-	protected VehicleService vehicleService;
 	@Autowired
 	protected CommonService commonService;
 	//=====================================================================================
@@ -342,35 +323,6 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		}
 	}
 	
-	protected void toJson(ImageXML bean, HttpServletResponse response) {
-		PrintWriter out = null;
-		JSONObject jsonObject = null;
-		try {
-			TreeSet<Step> set = bean.getStep();
-			// TODO Step类有点特别，重写了equal方法
-			if(set != null && set.size() == 1){
-				Step step = set.first();
-				List<Step> list = new ArrayList<>();
-				list.add(step);
-				ImageXML_ image = new ImageXML_();
-				image.setPath(bean.getPath());
-				image.setSize(bean.getSize());
-				image.setStep(list);
-				jsonObject = JSONObject.fromObject(image,JSON_CONFIG);
-			}else{
-				jsonObject = JSONObject.fromObject(bean,JSON_CONFIG);
-			}
-			response.setContentType("text/Xml;charset=gbk");
-			out = response.getWriter();
-			//logger.debug(jsonObject.toString());
-			out.println(jsonObject.toString());
-		} catch (IOException ex1) {
-			ex1.printStackTrace();
-		} finally {
-			out.close();
-		}
-	}
-
 	/**
 	 * 发送字符串到前台页面
 	 * 
@@ -1023,79 +975,6 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	protected String getRealPath(HttpServletRequest request){
 		return request.getSession().getServletContext().getRealPath("/");
 	}
-	
-	protected String getVehiclePath(String vehicleId) {
-		VehicleDto vd = vehicleService.getDtoById(new VehicleDto(vehicleId));
-		return vd != null ? vd.getFtpPath() : "";
-	}
-	
-	/**
-	 * 将ImageXML文件对象转换成流
-	 * @param xml
-	 * @return
-	 * @date 2016年7月4日 下午10:35:29
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected InputStream bean2Stream(ImageXML xml){
-		if (xml != null && xml.getStep().size() > 0) {
-			String name = String.valueOf(System.currentTimeMillis()) + ".xml";
-			// TODO 这个文件的定义 : "xml.xml" 固定文件名，多用户同时操作可能会有错误
-			File file = new File(Constants.DIRECTORY_LOCAL_DOWNLOAD + File.separator + name);
-			InputStream inputStream = null;
-			try {
-				JAXBContext context = JAXBContext.newInstance(ImageXML.class);
-				Marshaller marshaller = context.createMarshaller();
-				// marshaller.marshal(xml, System.out);
-				marshaller.marshal(xml, file);
-				inputStream = new FileInputStream(file);
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			return inputStream;
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * 将流数据转换成ImageXML文件对象
-	 * @param content
-	 * @return
-	 * @date 2016年7月4日 下午10:35:52
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected ImageXML xml2Bean(InputStream content){
-		ImageXML xml = null;
-		try {  
-            JAXBContext context = JAXBContext.newInstance(ImageXML.class);  
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            xml = (ImageXML)unmarshaller.unmarshal(content);
-        } catch (JAXBException e) {  
-            e.printStackTrace();  
-        }
-		return xml;
-	}
-	
-	/**
-	 * 将xml内容转换成对象
-	 * @param content
-	 * @return
-	 * @date 2016年7月4日 下午10:36:20
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected ImageXML xml2Bean(String content){
-		ImageXML xml = null;
-		try {  
-            JAXBContext context = JAXBContext.newInstance(ImageXML.class);  
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            xml = (ImageXML)unmarshaller.unmarshal(new StringReader(content));
-        } catch (JAXBException e) {  
-            e.printStackTrace();  
-        }
-		return xml;
-	}
 
 	/**
 	 * 整理一个目录地址形式<br>
@@ -1119,29 +998,5 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 		}else
 			return "";
 	}
-	
-	/**
-	 * 获取操作步骤
-	 * @param path
-	 * @return
-	 * @throws SocketException
-	 * @throws IOException
-	 * @date 2016年7月6日 下午9:57:03
-	 * @writer wjw.happy.love@163.com
-	 */
-	protected ImageXML getImageXmlFromPath(String path) throws SocketException, IOException {
-		String xmlName = Constants.FILE_STEP;// xml路径以及名称
-		FtpDto ftp = new FtpDto();
-		ftp.setFtpPath($dir(path));
-		ftp.setFtpFileName(xmlName);//
-		InputStream is = ftpService.fileStream(ftp);
-		ImageXML imageXml = null;
-		if (is != null) {
-			// 如果原始信息存在
-			imageXml = this.xml2Bean(is);
-		}
-		return imageXml;
-	}
-	
-	
+		
 }

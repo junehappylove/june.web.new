@@ -4,10 +4,8 @@ import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.bussiness.vehicle.VehicleUser;
 import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.UserInfoDto;
-import com.june.service.back.bussiness.vehicle.VehicleUserService;
 import com.june.service.back.system.base.user.UserInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +37,6 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	 */
 	@Autowired
 	protected UserInfoService userInfoService;
-	@Autowired
-	protected VehicleUserService vehicleUserService;
 
 	/**
 	 * 用户信息页面初始化
@@ -229,21 +225,6 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 			}
 		}
 		message(response,"user_delete_success", MESSAGE_INFO);
-	}
-	
-	/**
-	 * 用户跟车型关联列表
-	 * @param request
-	 * @param response
-	 * @date 2016年7月3日 下午1:59:09
-	 * @writer wjw.happy.love@163.com
-	 */
-	@RequestMapping("/userVehicle")
-	public void userVehicle(HttpServletRequest request, HttpServletResponse response) {
-		VehicleUser vehicleUser = new VehicleUser();
-		fillRequestDto(request, vehicleUser);
-		vehicleUser = vehicleUserService.noPagedDtos(vehicleUser);
-		toJson(vehicleUser, response);
 	}
 
 }
