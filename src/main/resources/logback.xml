@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="1800 seconds" debug="false">
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="USER_HOME" value="D://logs/june_web_new" /><!-- 日志存放目录 -->
+	<property name="USER_HOME" value="D://logs//june_web_new" /><!-- 日志存放目录 -->
 	<property scope="context" name="FILE_NAME" value="june_web_new" />
 	<timestamp key="byDay" datePattern="yyyy-MM-dd" />
 	<!-- 控制台输出 --> 
@@ -18,11 +18,11 @@
 			<fileNamePattern>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}-%i.log.zip
 			</fileNamePattern>
 			<minIndex>1</minIndex>
-			<maxIndex>10</maxIndex>
+			<maxIndex>1000</maxIndex>
 		</rollingPolicy>
 
 		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-			<maxFileSize>5MB</maxFileSize>
+			<maxFileSize>20MB</maxFileSize>
 		</triggeringPolicy>
 		<encoder>
 			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n </pattern>

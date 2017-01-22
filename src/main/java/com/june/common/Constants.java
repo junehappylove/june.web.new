@@ -21,6 +21,8 @@ import com.june.utility.MessageUtil;
  */
 public class Constants {
 	/* 项目平台环境：dev,test,pro */
+	public final static String JDBC_PROPERTIES = MessageUtil.$KEY("jdbc.properties");
+	public final static String SQL_SCRIPT_FILE = MessageUtil.$KEY("sql.script");
 	public final static String QAS_API = MessageUtil.$KEY("june.qas");
 	public final static String QAS_API_ = MessageUtil.$KEY("june.qas_");
 	public final static String ENVIRONMENT = MessageUtil.$KEY("project.environment");

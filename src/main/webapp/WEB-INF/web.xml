@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
 	<display-name>june_web_new</display-name>
 	<!-- 读取spring的配置文件 -->
 	<context-param>
@@ -135,6 +135,15 @@
 		<servlet-name>spring_mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<!-- 对swagger2 -->
+<!-- 	<servlet-mapping>
+		<servlet-name>spring_mvc</servlet-name>
+		<url-pattern>/v2/api-docs</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>spring_mvc</servlet-name>
+		<url-pattern>/swagger-resources</url-pattern>
+	</servlet-mapping> -->
 	<!-- 如下定义哪些静态资源是不拦截的 -->
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>

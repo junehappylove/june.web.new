@@ -6,7 +6,7 @@
  * and shall use it only in accordance with the terms of the agreements   
  * you entered into with JUNE.   
  *   
- */ 
+ */
 
 package com.june.controller.back.common;
 
@@ -27,56 +27,61 @@ import com.june.utility.FastDfsUtils;
 import com.june.utility.FileUpLoadDownload;
 import com.june.utility.MessageUtil;
 
-
-/**  
-* @Description: kindeditor图片上传到服务器
-* @author caiyang
-* @date 2016年6月7日17:55:36
-* @version V1.0  
+/**
+ * kindeditor图片上传到服务器 UploadEditorPicController <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年1月21日 下午8:37:37
+ * @version 1.0.0
  */
 @Controller
 @RequestMapping("/uploadEditorPic")
-public class UploadEditorPicController{
+public class UploadEditorPicController {
 
-	
-	/**  
-	* @Description: kindeditor图片上传到服务器
-	* @author caiyang
-	* @date 2016年6月7日17:55:36
-	* @version V1.0  
-	 * @throws IOException 
+	/**
+	 * kindeditor图片上传到服务器
+	 * 
+	 * @param imgFile
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @date 2017年1月21日 下午8:36:07
+	 * @writer junehappylove
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/uploadPic")
-	public void uploadPic(@RequestParam MultipartFile imgFile,HttpServletRequest request,HttpServletResponse response) throws IOException
-	{
+	public void uploadPic(@RequestParam MultipartFile imgFile, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		String ctp = request.getServletContext().getRealPath("/") + "kindeditor\\";
-		String filename = FileUpLoadDownload.getFileName(imgFile,null);
+		String filename = FileUpLoadDownload.getFileName(imgFile, null);
 		PrintWriter out = response.getWriter();
-		JSONObject obj = new JSONObject(); 
+		JSONObject obj = new JSONObject();
 		try {
 			String result = FileUpLoadDownload.uploadSingleFile(imgFile, request, response, ctp, filename);
 			if (!result.equals("")) {
 				obj.put("error", 1);
 				obj.put("message", "图片" + filename + "上传异常");
 				out.print(obj.toJSONString());
-			}else{
+			} else {
 				String url = request.getContextPath() + "/kindeditor/" + filename;
-				 obj.put("error", 0); 
-				 obj.put("url", url); 
-				 out.print(obj.toJSONString()); 
+				obj.put("error", 0);
+				obj.put("url", url);
+				out.print(obj.toJSONString());
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			obj.put("error", 1);
 			obj.put("message", "图片" + filename + "上传异常");
 			out.print(obj.toJSONString());
 		}
-      
+
 	}
+
 	/**
 	 * 上传图片到服务器
+	 * 
 	 * @param upload
 	 * @param request
 	 * @param response
@@ -136,4 +141,3 @@ public class UploadEditorPicController{
 
 	}
 }
-

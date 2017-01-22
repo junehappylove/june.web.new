@@ -4,8 +4,9 @@
 
 ===
 Thinks a lot for all the Open Source Code lovers!
-
-> 13. 2017-01-21 系统中集成[swagger](http://swagger.io/ "swagger"),关于SpringMVC整合swagger，可以参考[Restful形式接口文档生成之Swagger与SpringMVC整合手记](http://blog.csdn.net/xyw591238/article/details/51385233 "")这篇文章，网上的整合很多，几乎都是千篇一律，这篇文章也不出所外，只是相对较好一点儿    
+> 14. 2017-01-22 系统采用swagger2+springfox2.5.0重新部署restful接口部分，解决上一版本中关于上传文件无法展示上传按钮问题
+	项目同时升级采用tomcat8部署
+> 13. 2017-01-21 系统中集成[swagger](http://swagger.io/ "swagger"),关于SpringMVC整合swagger，可以参考[Restful形式接口文档生成之Swagger与SpringMVC整合手记](http://blog.csdn.net/xyw591238/article/details/51385233 "Swagger与SpringMVC整合")、[Swagger简介](http://blog.csdn.net/wangnan9279/article/details/44541665 "Swagger简介")这两篇文章，网上的整合很多，几乎都是千篇一律，这2篇文章也不出所外，只是相对较好一点儿;推荐看后一篇，不错，没毛病！    
 	整合中还需要用到[swagger ui](https://github.com/swagger-api/swagger-ui/releases "swagger界面")
 
 > 12. 2017-01-20 对工具类的大量修改与完善；完成简单的人名、地名、年代的人机对话,有待训练，还很不"智能"
@@ -43,7 +44,7 @@ Thinks a lot for all the Open Source Code lovers!
  	将项目转成标准的maven web项目；
 	新增日志记录配置，用户可以定义是否需要记录操作日志；
 	日志记录中,针对每一个方法,进行执行耗时统计；
-	新增字典管理表：dic_info、dic_datas、dic_cache。
+	新增字典管理表：dic\_info、dic\_datas、dic_cache。
  
  
  
@@ -57,7 +58,7 @@ Thinks a lot for all the Open Source Code lovers!
  > 7. quartz
  > 8. javamelody
  > 9. MethodLog(Spring AOP 方法日志记录)
- > 10. ...
+ > 10. Swagger2
  
 ### if you like , contact me by QQ *980154978* .
 

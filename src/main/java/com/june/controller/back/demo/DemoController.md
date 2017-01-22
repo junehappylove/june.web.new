@@ -1,3 +1,4 @@
+```java
 /*   
  * Copyright (c) 2010-2020 JUNE. All Rights Reserved.   
  *   
@@ -71,7 +72,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Controller
 @RequestMapping("/demo")
-@Api(value = "demo-api")
+@Api(value = "demo-api", description = "有关demo的所有操作")
 public class DemoController extends BaseController<MenuDto> {
 
 	@Autowired
@@ -130,11 +131,10 @@ public class DemoController extends BaseController<MenuDto> {
 
 	}
 
-	//@ApiIgnore
 	@RequestMapping("/importData")
-	@ApiOperation(value="导入excel数据",notes="导入excel数据",httpMethod="POST",consumes=MediaType.APPLICATION_OCTET_STREAM_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(value = "导入数据", notes = "导入excel数据", httpMethod = "POST",consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void importData(// FIXME
-			@ApiParam(value="选择文件",name="myfiles",required=true) @RequestParam("myfiles") MultipartFile[] myfiles,
+			@ApiParam(value = "选择文件", required = true, allowMultiple = true, name = "myfiles") @RequestParam("myfiles") MultipartFile[] myfiles,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MessageDto messageDto = new MessageDto();
 		ArrayList<String> errList = new ArrayList<String>();
@@ -389,10 +389,10 @@ public class DemoController extends BaseController<MenuDto> {
 	 * @date 2017年1月21日 下午3:56:27
 	 * @writer junehappylove
 	 */
-	@ApiIgnore
+	@ApiOperation(value = "上传图片", notes = "上传图片到fastdfs服务器", httpMethod = "POST", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@RequestMapping("/uploadpicture")
 	public void uploadpicture(// FIXME 如何处理上传多文件的情况
-			@RequestParam MultipartFile[] myfiles,
+			@ApiParam(value = "文件", allowMultiple = true, required = true, name = "myfiles") @RequestParam MultipartFile[] myfiles,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 循环进行文件上传处理
 		for (int i = 0; i < myfiles.length; i++) {
@@ -419,7 +419,8 @@ public class DemoController extends BaseController<MenuDto> {
 	 * @writer junehappylove
 	 */
 	@RequestMapping("/getPicture")
-	@ApiIgnore
+	@ApiOperation(value = "取图片", httpMethod = "GET", notes = "取fastdfs上的图片", produces = "image/gif") // FIXME
+	// 取图片数据???
 	public void getPicture(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO 从db中获取图片路径
 		// 根据路径获取图片
@@ -530,6 +531,8 @@ public class DemoController extends BaseController<MenuDto> {
 
 	@RequestMapping("/appuploadfile")
 	@ApiIgnore()
+	@ApiOperation(value = "上传文件", notes = "上传文件", httpMethod = "POST", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) // FIXME
+	// 上传文件怎么定义???
 	public void appuploadfile(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// XXX 多文件上传的方法展示，使用Map<String, MultipartFile>来获取客户端上传的不定数量的文件
@@ -670,7 +673,8 @@ public class DemoController extends BaseController<MenuDto> {
 	 * @throws IOException
 	 */
 	@RequestMapping("/getKaptchaImage")
-	@ApiIgnore
+	@ApiOperation(value = "生成页面显示用验证码", notes = "生成页面显示用验证码", httpMethod = "GET", produces = "image/jpg") // FIXME
+	// 返回文件流的怎么定义api?????
 	public ModelAndView getKaptchaImage1(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		// String code =
@@ -779,3 +783,4 @@ public class DemoController extends BaseController<MenuDto> {
 	}
 
 }
+```

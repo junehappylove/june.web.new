@@ -8,15 +8,11 @@ package com.june.robot.qas;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.june.common.Constants;
 import com.june.robot.Answer;
 import com.june.robot.BaseAnswer;
 import com.june.robot.Result;
 import com.june.utility.NetUtil;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
 
 /**
  * QasAnswerImpl <br>
@@ -38,9 +34,7 @@ public class QasAnswerImpl extends BaseAnswer implements Answer {
 	}
 
 	@Override
-	@ApiOperation(value="问答接口",httpMethod="GET",response=Result.class,notes="根据问题返回答案")
-	public List<Result> getAnswers(@ApiParam(required=true,name="q",value="问题")@PathVariable(value="q")String q, 
-				@ApiParam(required=true,name="n",value="结果数目")@PathVariable(value="n")int n) {
+	public List<Result> getAnswers(String q, int n) {
 		List<Result> list = null;
 		if (!NetUtil.canConnect(Constants.QAS_API_)) {
 			return null;

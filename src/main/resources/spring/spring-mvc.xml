@@ -138,8 +138,7 @@
 	</bean>
 	
 	<!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="50000000" />
@@ -186,9 +185,10 @@
 	<!-- 引入websocket消息处理 -->
 	<import resource="classpath*:spring/spring-websocket.xml" />
 	
-	<!-- 丝袜哥（Swagger）配置 -->
+	<!-- 丝袜哥（Swagger）配置  这里所有的配置均使用注解方法写在了com.june.common.conf.SwaggerConfig类里面，所以下面就不需要配置了-->
 	<!-- <bean class="com.june.common.conf.SwaggerConfig"/> -->
-	<!-- 在com.june.common.conf.SwaggerConfig中由@Autowire自动注入 -->
+	
+	<!-- 在com.june.common.conf.SwaggerConfig中由@Autowire自动注入，不需要下面的配置，另外这是swagger-spingmvc的配置，旧了，现在都是用springfox了 -->
 	<!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /> -->
 	
 	<!-- 引入Shiro配置 -->
