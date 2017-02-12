@@ -41,7 +41,6 @@ public class FileDTO extends PageDTO<FileDTO> {
 	 */
 	public FileDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getFile_md5() {

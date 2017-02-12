@@ -268,7 +268,7 @@
 						<input id="uploadInput" name="myfiles" type="file" multiple class="file-loading">
 					</form>
 					</div>
-					</br>
+					<br>
 					<div>
 					<form enctype="multipart/form-data"  id="uploadForm1">
 						<label>单独提交file</label>

@@ -28,7 +28,7 @@ jQuery(function(){
 
 </div>
 <c:forEach items="${list}" var="article" >
-		 <a href="${ctx}/checkDetail/detail/${article.contentId}" target="_blank">${article.title}</a></br>
+		 <a href="${ctx}/checkDetail/detail/${article.contentId}" target="_blank">${article.title}</a><br>
 </c:forEach>
 
 

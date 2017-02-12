@@ -81,7 +81,6 @@ public class LoggerDto extends PageDTO<LoggerDto> implements Serializable {
 	}
 	@Override
 	protected String getDtoName() {
-		// TODO 
 		return "日志";
 	}
 	

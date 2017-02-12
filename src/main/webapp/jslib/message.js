@@ -46,7 +46,7 @@ $(document).ready(function() {
 	MSG_LIST["resetUserPasswordConfirm"] = "是否确认重置选中的用户的密码？";
 	MSG_LIST["IdCardIllegal"] = "身份证号不合法！";
 	MSG_LIST["DeleteMenuSelect"] = "请选择要删除的菜单！";
-	MSG_LIST["DeleteMenuConfirm"] = "是否确认删除选中的菜单？<br/>注意：删除时会将其连同其子菜单一并删除";
+	MSG_LIST["DeleteMenuConfirm"] = "是否确认删除选中的菜单？<br>注意：删除时会将其连同其子菜单一并删除";
 	MSG_LIST["assignMenumultiselectError"] = "分配菜单时只能选中一行！";
 	MSG_LIST["assignUsermultiselectError"] = "分配用户时只能选中一行！";
 	MSG_LIST["selectRoleError"] = "请选择要分配的角色！";

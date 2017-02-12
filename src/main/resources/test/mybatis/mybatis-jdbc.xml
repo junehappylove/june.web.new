@@ -121,7 +121,7 @@
                 <value>classpath*:mybatis/mapper/*/*/*.xml</value>
             </array>
         </property>
-		<property name="configLocation" value="classpath*:mybatis/mybatis-config.xml" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<property name="typeAliasesPackage" value="com.june.dao.*,com.june.shiro.dao.*,com.june.common.*"/>
 	</bean>
 

@@ -79,7 +79,7 @@
     404
 </p>
 
-<p class="not-found">Not<br/>Found</p>
+<p class="not-found">Not<br>Found</p>
 
 <div class="clear"></div>
 <div class="content">

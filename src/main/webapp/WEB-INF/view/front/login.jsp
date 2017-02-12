@@ -10,8 +10,8 @@
 </head>
 <body>
 <form action="${ctx}/frontLogin/main" method="post">
-用户名：<input type="text" name="username" value="admin" id="username"/> </br></br>
-密 &nbsp;&nbsp;&nbsp;码：<input type="password" value="admin" name="password" id="password"/> </br></br>
+用户名：<input type="text" name="username" value="admin" id="username"/> <br><br>
+密 &nbsp;&nbsp;&nbsp;码：<input type="password" value="admin" name="password" id="password"/> <br><br>
 <input type="submit" value="登陆" onclick = "return btnloginclick()"/>
 </form>
 

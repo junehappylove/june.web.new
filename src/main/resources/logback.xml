@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xml>
 <configuration scan="true" scanPeriod="1800 seconds" debug="false">
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
 	<property name="USER_HOME" value="D://logs//june_web_new" /><!-- 日志存放目录 -->

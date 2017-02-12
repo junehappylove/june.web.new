@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.file.BaseFileDao">
+	<sql id="selectData">
+		SELECT
+			t1.file_md5,
+			t1.file_name,
+			t1.file_loc,
+			t1.file_type,
+			t1.file_filter,
+			t1.file_size,
+			t1.file_width,
+			t1.file_height,
+			t1.file_time
+		FROM
+			sys_file_base t1
+		WHERE 1=1
+		<if test="file_name != null and file_name != ''"> 
+			AND t1.file_name like '%${file_name}%' 
+		</if> 
+		<if test="file_type != null and file_type != ''"> 
+			AND t1.file_type = #{file_type}  
+		</if> 
+		<if test="file_filter != null and file_filter != ''"> 
+			AND t1.file_filter = #{file_filter}  
+		</if> 
+		<if test="param.file_size_start != null and param.file_size_start != ''"> 
+			<![CDATA[ AND t1.file_size >= #{param.file_size_start} ]]>
+		</if> 
+		<if test="param.file_size_end != null and param.file_size_end != ''"> 
+			<![CDATA[ AND t1.file_size <= #{param.file_size_end}  ]]>
+		</if> 
+	</sql>
+
+	<!-- 查询列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.file.BaseFile"
+		parameterType="com.june.dto.back.system.file.BaseFile">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	<!-- 分页现在条件 -->
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.file.BaseFile">
+		select count(1) from ( <include refid="selectData"/> ) temp
+	</select>
+	<!-- 不分页查询数据 -->
+	<select id="getList" resultType="com.june.dto.back.system.file.BaseFile"
+		parameterType="com.june.dto.back.system.file.BaseFile">
+		<include refid="selectData" />
+	</select>
+	
+	<!-- 添加一条 -->
+	<insert id="add" parameterType="com.june.dto.back.system.file.BaseFile">
+		INSERT INTO sys_file_base (
+			file_md5,
+			file_name,
+			file_loc,
+			file_type,
+			file_filter,
+			file_size,
+			file_width,
+			file_height,
+			file_time
+		) VALUES (
+			#{file_md5},
+			#{file_name},
+			#{file_loc},
+			#{file_type},
+			#{file_filter},
+			#{file_size},
+			#{file_width},
+			#{file_height},
+			#{file_time}
+		)
+	</insert>
+	<!-- 批量添加 -->
+	<insert id="addList" parameterType="java.util.List">
+		<![CDATA[ INSERT INTO sys_file_base (
+			file_md5,
+			file_name,
+			file_loc,
+			file_type,
+			file_filter,
+			file_size,
+			file_width,
+			file_height,
+			file_time
+		) VALUES ]]>
+		<foreach collection="list" item="item" index= "index" separator =",">
+			<![CDATA[ ( 
+				#{item.file_md5},
+				#{item.file_name},
+				#{item.file_loc},
+				#{item.file_type},
+				#{item.file_filter},
+				#{item.file_size},
+				#{item.file_width},
+				#{item.file_height},
+				#{item.file_time}
+			) ]]>
+		</foreach>
+	</insert>
+			
+	<select id="get" parameterType="com.june.dto.back.system.file.BaseFile" 
+		resultType="com.june.dto.back.system.file.BaseFile">
+		SELECT
+			t1.file_md5,
+			t1.file_name,
+			t1.file_loc,
+			t1.file_type,
+			t1.file_filter,
+			t1.file_size,
+			t1.file_width,
+			t1.file_height,
+			t1.file_time
+		FROM
+			sys_file_base t1
+		WHERE
+			t1.file_md5 = #{file_md5} 
+	</select>
+		
+	<update id="update" parameterType="com.june.dto.back.system.file.BaseFile">
+		UPDATE sys_file_base
+		SET
+			file_name = #{file_name},
+			file_loc = #{file_loc},
+			file_type = #{file_type},
+			file_filter = #{file_filter},
+			file_size = #{file_size},
+			file_width = #{file_width},
+			file_height = #{file_height},
+			file_time = #{file_time}
+		WHERE
+			file_md5=#{file_md5}
+	</update>
+	<!-- TODO 批量更新需要测试 -->
+	<update id="updateList" parameterType="java.util.List">
+	 	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			UPDATE sys_file_base
+			<set>
+				file_name=${item.file_name}
+				file_loc=${item.file_loc}
+				file_type=${item.file_type}
+				file_filter=${item.file_filter}
+				file_size=${item.file_size}
+				file_width=${item.file_width}
+				file_height=${item.file_height}
+				file_time=${item.file_time}
+			</set>
+			WHERE
+				file_md5=#{file_md5}
+		 </foreach>
+	</update>
+	
+	<delete id="delete" parameterType="com.june.dto.back.system.file.BaseFile">
+		DELETE FROM sys_file_base 
+		WHERE 1=1 
+		<if test="file_md5 != null and file_md5 != ''"> 
+			AND file_md5=#{file_md5}
+		</if>
+		<if test="file_filter != null and file_filter != ''"> 
+			AND file_filter=#{file_filter}
+		</if>
+	</delete>
+	
+</mapper>

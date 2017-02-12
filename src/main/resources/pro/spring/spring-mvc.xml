@@ -68,10 +68,17 @@
 	<context:component-scan base-package="com.june.*"></context:component-scan>
 
 	<!-- 映射静态资源 -->  
+	<!-- 在spring-mvc.xml中配置<mvc:default-servlet-handler />后，
+		会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
+		它会像一个检查员，对进入DispatcherServlet的URL进行筛查，
+		如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，
+		如果不是静态资源的请求，才由DispatcherServlet继续处理  -->
     <mvc:default-servlet-handler />  
   
     <!-- 配置处理静态资源的请求 -->  
-    <mvc:resources mapping="/static/**" location="/WEB-INF/static/" />  
+    <!-- <mvc:resources mapping="/resources/**" location="/crossdomain.xml" />-->
+	<!-- 下面不需要这样定义了，因为在web.xml中已经定义好了哪些静态资源不拦截 -->
+    <!-- <mvc:resources mapping="/swagger/**" location="/WEB-INF/view/swagger/"/> -->
 
 	<!-- 配置jsp视图解析器 start -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -79,8 +86,7 @@
 		<property name="prefix" value="/WEB-INF/view/"></property>
 		<!-- 视图后缀 -->
 		<property name="suffix" value=".jsp"></property>
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
 		<property name="order" value="1" />
 	</bean>
 	<!-- 配置jsp视图解析器 end -->
@@ -119,7 +125,7 @@
 						<prop key="kaptcha.border">no</prop>
 						<prop key="kaptcha.border.color">105,179,90</prop>
 						<prop key="kaptcha.textproducer.font.color">red</prop>
-						<prop key="kaptcha.image.width">150</prop>
+						<prop key="kaptcha.image.width">125</prop>
 						<prop key="kaptcha.image.height">55</prop>
 						<prop key="kaptcha.textproducer.font.size">45</prop>
 						<prop key="kaptcha.session.key">code</prop>
@@ -132,8 +138,7 @@
 	</bean>
 	
 	<!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="maxUploadSize" value="50000000" />
@@ -179,6 +184,13 @@
 	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
 	<!-- 引入websocket消息处理 -->
 	<import resource="classpath*:spring/spring-websocket.xml" />
+	
+	<!-- 丝袜哥（Swagger）配置  这里所有的配置均使用注解方法写在了com.june.common.conf.SwaggerConfig类里面，所以下面就不需要配置了-->
+	<!-- <bean class="com.june.common.conf.SwaggerConfig"/> -->
+	
+	<!-- 在com.june.common.conf.SwaggerConfig中由@Autowire自动注入，不需要下面的配置，另外这是swagger-spingmvc的配置，旧了，现在都是用springfox了 -->
+	<!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" /> -->
+	
 	<!-- 引入Shiro配置 -->
 	<import resource="classpath*:spring/apache-shiro.xml" />
 </beans>

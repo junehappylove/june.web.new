@@ -33,10 +33,10 @@
         <setting name="defaultExecutorType" value="REUSE"/>
         <setting name="defaultStatementTimeout" value="25000"/>
     </settings>
-<plugins>
-     <!-- 分页插件配置 -->
-    <plugin interceptor="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
-       <property name="dialectType" value="mysql"/>
-    </plugin>
-</plugins>
+	<plugins>
+	     <!-- 分页插件配置 -->
+	    <plugin interceptor="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+	       <property name="dialectType" value="mysql"/>
+	    </plugin>
+	</plugins>
 </configuration>

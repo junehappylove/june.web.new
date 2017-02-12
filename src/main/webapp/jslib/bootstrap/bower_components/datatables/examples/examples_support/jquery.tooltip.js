@@ -158,7 +158,7 @@
 			helper.body.empty();
 			for(var i = 0, part; (part = parts[i]); i++) {
 				if(i > 0)
-					helper.body.append("<br/>");
+					helper.body.append("<br>");
 				helper.body.append(part);
 			}
 			helper.body.hideWhenEmpty();

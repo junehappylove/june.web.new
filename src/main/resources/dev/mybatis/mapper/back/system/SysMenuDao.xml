@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.base.menu.SysMenuDao">
+	<sql id="selectData">
+		SELECT
+			T1.MENU_ID 		AS menu_id,
+			T1.MENU_NAME 	AS menu_name,
+			T1.PARENT_MENU_ID AS parent_menu_id,
+			T1.MENU_URL 	AS menu_url,
+			T1.MENU_ICON 	AS menu_icon,
+			T1.ORDER_NUM 	AS order_num,
+			T1.MENU_NOTICE 	AS menu_notice,
+			T1.ADD_USER_ID 	AS addUserId,
+			T1.ADD_TIME 	AS addTime,
+			T1.UPDATE_USER_ID AS updateUserId,
+			T1.UPDATE_TIME 	AS updateTime,
+            T1.VERSION 		AS version
+		FROM
+			sys_menu T1
+		WHERE 1=1
+		<if test="menu_name != null and menu_name != ''">
+			AND T1.MENU_NAME LIKE '%${menu_name}%'
+		</if>
+		ORDER BY T1.PARENT_MENU_ID,T1.ORDER_NUM
+	</sql>
+
+	<!-- 根据列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.base.SysMenuDto"
+		parameterType="com.june.dto.back.system.base.SysMenuDto">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	<!-- 分页现在条件 -->
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.base.SysMenuDto">
+		SELECT COUNT(1) FROM (<include refid="selectData"/>) TEMP
+	</select>
+	<!-- 获取所有 -->
+	<select id="getList" resultType="com.june.dto.back.system.base.SysMenuDto"
+		parameterType="com.june.dto.back.system.base.SysMenuDto">
+		<include refid="selectData" />
+	</select>
+	<!-- 添加 -->
+	<insert id="add" parameterType="com.june.dto.back.system.base.SysMenuDto">
+		INSERT INTO sys_menu (
+			MENU_ID,
+			MENU_NAME,
+			PARENT_MENU_ID,
+			MENU_URL,
+			MENU_ICON,
+			ORDER_NUM,
+			MENU_NOTICE,
+			ADD_USER_ID,
+			ADD_TIME,
+			UPDATE_USER_ID,
+			UPDATE_TIME,
+			VERSION
+		) VALUES (
+			#{menu_id},
+			#{menu_name},
+			#{parent_menu_id},
+			#{menu_url},
+			#{menu_icon},
+			#{order_num},
+			#{menu_notice},
+			#{sys_user},
+			NOW(),
+			#{sys_user},
+			NOW(),
+			0
+		)
+	</insert>
+    <!-- 获取 -->
+	<select id="get" parameterType="com.june.dto.back.system.base.SysMenuDto"
+		resultType="com.june.dto.back.system.base.SysMenuDto">
+		SELECT
+			T1.MENU_ID AS menu_id,
+			T1.MENU_NAME AS menu_name,
+			T1.PARENT_MENU_ID AS parent_menu_id,
+			T1.MENU_URL AS menu_url,
+			T1.MENU_ICON AS menu_icon,
+			T1.ORDER_NUM AS order_num,
+			T1.MENU_NOTICE AS menu_notice,
+			T1.ADD_USER_ID AS addUserId,
+			T1.ADD_TIME AS addTime,
+			T1.UPDATE_USER_ID AS updateUserId,
+			T1.UPDATE_TIME AS updateTime,
+            T1.VERSION AS version
+		FROM
+			sys_menu T1
+		WHERE
+			T1.MENU_ID = #{menu_id}
+	</select>
+    <!-- 更新 -->
+	<update id="update" parameterType="com.june.dto.back.system.base.SysMenuDto">
+		UPDATE sys_menu
+		SET
+			MENU_NAME = #{menu_name},
+			PARENT_MENU_ID = #{parent_menu_id},
+			MENU_URL = #{menu_url},
+			MENU_ICON = #{menu_icon},
+			ORDER_NUM = #{order_num},
+			MENU_NOTICE = #{menu_notice},
+			UPD_USER_ID = #{sys_user},
+			UPD_TIME = NOW(),
+			VERSION = VERSION + 1
+		WHERE
+			MENU_ID = #{menu_id}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="com.june.dto.back.system.base.SysMenuDto">
+		DELETE FROM sys_menu WHERE 1 = 1
+		<if test="menu_id != null and menu_id != ''">
+            AND MENU_ID = #{menu_id}
+        </if>
+        <if test="parent_menu_id != null and parent_menu_id != ''">
+            AND PARENT_MENU_ID = #{parent_menu_id}
+        </if>
+	</delete>
+	
+</mapper>

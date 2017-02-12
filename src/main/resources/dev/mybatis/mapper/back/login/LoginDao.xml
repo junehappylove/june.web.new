@@ -102,6 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			T1.USER_ADDRESS AS userAddress,
 			T1.USER_TEL AS userTel,
 			T1.USER_MOBILE AS userMobile,
+			T1.USER_IMAGE AS userImage,
 			T1.USER_LOCKED AS userLock
 		FROM
 			sys_user T1

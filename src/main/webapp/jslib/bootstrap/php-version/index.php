@@ -260,7 +260,7 @@
                 </div>
 
                 <!--End mc_embed_signup-->
-                <br/>
+                <br>
 
                 <p>You may like my other open source work, check my profile on <a href="http://github.com/usmanhalalit"
                                                                                   target="_blank">GitHub</a>.</p>

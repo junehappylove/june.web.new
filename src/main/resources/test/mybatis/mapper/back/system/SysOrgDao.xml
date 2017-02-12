@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<insert id="add" parameterType="com.june.dto.back.system.base.SysOrgDto"
-		useGeneratedKeys="true" keyProperty="roleId">
+		useGeneratedKeys="true" keyProperty="orgId">
 		INSERT
 		INTO
 		sys_org

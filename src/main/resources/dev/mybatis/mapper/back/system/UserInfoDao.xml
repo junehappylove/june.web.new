@@ -81,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			su.USER_ADDRESS AS userAddress,
 			su.USER_TEL AS userTel,
 			su.USER_MOBILE AS userMobile,
+			su.USER_IMAGE AS userImage,
 			su.ADD_USER_ID AS addUserId,
 			su.ADD_TIME AS addTime,
 			su.UPDATE_USER_ID AS updateUserId,
@@ -115,6 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				USER_ADDRESS,
 				USER_TEL,
 				USER_MOBILE,
+				USER_IMAGE,
 				USER_LOCKED,
 				ADD_USER_ID,
 				ADD_TIME,
@@ -134,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{userAddress},
 			#{userTel},
 			#{userMobile},
+			#{userImage},
 			#{userLocked},
 			#{sys_user},
 			#{sys_date},
@@ -174,7 +177,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			USER_ADDRESS = #{userAddress},
 			USER_TEL = #{userTel},
-			USER_MOBILE= #{userMobile},
+			USER_MOBILE = #{userMobile},
+			USER_IMAGE = #{userImage},
 			USER_LOCKED = #{userLocked},
 			UPDATE_USER_ID= #{sys_user},
 			UPDATE_TIME = #{sys_date},
@@ -222,8 +226,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sr.ROLE_DESC AS roleDesc
 		FROM
 			sys_role sr
-		WHERE
-			1=1
+		WHERE 1=1
 		<if test="roleId != null and roleId != ''">
 			AND sr.ROLE_ID = #{roleId}
 		</if>
@@ -234,23 +237,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 添加用户角色信息 -->
 	<insert id="addUserRoleInfo" parameterType="com.june.dto.back.system.base.UserInfoDto">
-		INSERT INTO
-		sys_user_role
+		INSERT INTO sys_user_role
 		(
 			USER_ID,
 			ROLE_ID,
 			ADD_USER_ID,
 			ADD_TIME,
 			VERSION
-		)
-		VALUES
-		(
+		) VALUES (
 			#{userId},
 			#{roleId},
 			#{sys_user},
 			#{addTime,jdbcType=TIMESTAMP},
-			'0'
-		)
+			'0' )
 	</insert>
 
 	<!-- 删除用户角色信息 -->
@@ -261,8 +260,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			USER_ID = #{userId}
 	</delete>
 	<delete id="delete" parameterType="com.june.dto.back.system.base.UserInfoDto">
-	  DELETE FROM
-	  	sys_user
+	  DELETE FROM sys_user
 	  WHERE
 	  	USER_ID = #{userId}
 	</delete>
