@@ -61,7 +61,7 @@ $(function() {
 						striped : true,
 						pagination : true,
 						toolbar : '#toolbar',
-						pageSize : 5,
+						pageSize : 10,
 						pageNumber : 1,
 						pageList : [ 5, 10, 20 ],
 						clickToSelect : true,
@@ -116,8 +116,8 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("menuInfoTable");
 		var ids = "";
-		for (var i = 0; i < rows.length; i++) {
-			ids += rows[i].menu_id + ",";
+		for (var row in rows) {
+			ids += row.menu_id + ",";
 		}
 		var data = {
 			menu_id : ids

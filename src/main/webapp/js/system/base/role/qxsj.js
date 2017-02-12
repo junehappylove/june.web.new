@@ -166,14 +166,13 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("qxsjInfoTable");
 		var qxsj_codes = "";
-		for (var i = 0; i < rows.length; i++) {
-			qxsj_codes = qxsj_codes + rows[i].qxsj_code + ",";
+		for (var row in rows) {
+			qxsj_codes += row.qxsj_code + ",";
 		}
 		var data = {
 			qxsj_code : qxsj_codes
 		}
-		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data,
-				searchUserInfo);
+		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data, searchUserInfo);
 	} else {
 		showOnlyMessage(ERROR,
 				getMessageFromList("ErrorSelectNoDelete", null));

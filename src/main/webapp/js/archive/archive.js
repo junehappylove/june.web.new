@@ -90,8 +90,8 @@ $(function() {
 $(function() {
 	searchList();
 });
-function searchList()
-{
+
+function searchList(){
 	commonGetrowdatas("archiveTable", {}, contextPath
 			+ "/archive/searchInfo", "commonCallback", true);
 }
@@ -106,8 +106,7 @@ function addNew(){
 
 
 //初始化上传控件
-function initUploadControl()
-{
+function initUploadControl(){
 	$("#uploadInput").fileinput({
 		language: "zh",//语言设置
 	    maxFileCount: 5,//上传文件的最大个数
@@ -118,8 +117,7 @@ function initUploadControl()
         showUpload: false,//是否显示上传按钮，默认为true
         maxFileSize: 1000
 	});
-	
-	}
+}
 
 //关闭modal画面
 function closemodal() {
@@ -128,13 +126,11 @@ function closemodal() {
 	$('#myModal').modal('hide');
 }
 
-function success()
-{
+function success(){
 	closemodal();
 	searchList();
 }
 
-function checkPic()
-{
+function checkPic(){
 	
 }

@@ -1,8 +1,14 @@
+/*
+ * api定义
+ */
+//
 var api_getPagedList = contextPath + "/system/user/getPagedList";
 var api_saveEdit = contextPath + "/system/user/saveEdit";
 var api_newSave = contextPath + "/system/user/newSave";
 var api_deleteSelected = contextPath + "/system/user/deleteSelected";
-
+var api_detail = contextPath + "/system/user/checkDetail";
+var api_role_tree = contextPath+"/system/user/initRoleTree";
+var api_org_tree = contextPath+"/system/user/initOrgTree";
 /**
  * 用户信息js
  */
@@ -133,10 +139,12 @@ function saveSuccess(response){
 	}else{
 		$("#saveBtn").removeAttr("disabled");
 	}
-	
 }
 
-//input框绑定change事件，用于校验
+/**
+ * input框绑定change事件，用于校验
+ * @deprecated 
+ */
 function bindChange(){
 	//日期绑定改变时间进行check
 	$("#modalForm #userBirthday").bind("change",function(){
@@ -156,14 +164,12 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("userInfoTable");
 		var rowIds = "";
-		 for(var i=0;i<rows.length;i++)
-		 {
-			rowIds = rowIds + rows[i].userId + ",";
-		 }
-		 var data = {
-		      userId:rowIds       
-		 }
-
+		for(var row in rows){
+			rowIds += row.userId + ",";
+		}
+		var data = {
+			userId:rowIds       
+		}
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_deleteSelected, data, searchUserInfo);
 	} else {
 		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
@@ -208,7 +214,7 @@ function checkDetail(userId) {
 	var data={
 	    userId:userId
 	};
-	doAjax(POST,contextPath + "/system/user/checkDetail",data,checkDetailSuccess)
+	doAjax(POST, api_detail, data, checkDetailSuccess)
 }
 
 function checkDetailSuccess(response){
@@ -246,7 +252,7 @@ function closeTreemodal(){
 
 // 组织树初始化
 function loadOrgTree(){
-	doAjax(POST,contextPath+"/system/user/initOrgTree",null,orgtreeCallback)
+	doAjax(POST, api_org_tree, null, orgtreeCallback)
 }
 //回调函数中加载组织树
 function orgtreeCallback(response){
@@ -288,7 +294,7 @@ function loadRoleTree(){
 	var data={
 	    id:$("#roleId").val()
 	};
-	doAjax(POST,contextPath+"/system/user/initRoleTree",data,roleTreeCallback);
+	doAjax(POST, api_role_tree, data, roleTreeCallback);
 }
 
 function roleTreeCallback(response){
@@ -314,10 +320,8 @@ function roleSureClick(){
 	var nodes = treeObj.getCheckedNodes(true);
 	var nodeIds = "";
 	var nodeNames = "";
-	for(var i=0;i<nodes.length;i++)
-	{
-		if(i == nodes.length-1)
-		{
+	for(var i=0;i<nodes.length;i++){
+		if(i == nodes.length-1){
 			nodeIds = nodeIds + nodes[i].id;
 			nodeNames = nodeNames + nodes[i].name;
 		}else{
@@ -351,5 +355,4 @@ function addNew(){
 function EncryptPassword(){
 	Encrypt("userPassword");
 	Encrypt("userPassword");
-	//(Encrypt(Encrypt("userPassword")));
 }

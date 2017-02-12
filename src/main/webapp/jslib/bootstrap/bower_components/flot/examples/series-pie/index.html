@@ -771,31 +771,31 @@
 				<li><span style="color: red;">Warning:</span> There are some minor issues with using this functionality in conjuction with some of the other more advanced features (tilt and donut). When using a donut hole, the inner portion still triggers the events even though that portion of the pie is no longer visible. When tilted, the interactive portions still use the original, untilted version of the pie when determining mouse position (this is because the isPointInPath function apparently doesn't work with transformations), however hover and click both work this way, so the appropriate slice is still highlighted when clicking, and it isn't as noticable of a problem.</li>
 			</ul></li>
 			<li>Included a bug fix submitted by Xavi Ivars to fix array issues when other javascript libraries are included in addition to jQuery</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.4 - July 1st, 2009 - Brian Medendorp</i></li>
 			<li>Each series will now be shown in the legend, even if it's value is zero. The series will not get a positioned label because it will overlap with the other labels present and often makes them unreadable.</li>
 			<li>Data can now be passed in using the standard Flot method using an array of datapoints, the pie plugin will simply use the first y-value that it finds for each series in this case. The plugin uses this datastructure internally, but you can still use the old method of passing in a single numerical value for each series (the plugin will convert it as necessary). This should make it easier to transition from other types of graphs (such as a stacked bar graph) to a pie.</li>
 			<li>The pie can now be tilted at an angle with a new "tilt" option. Acceptable values range from 0-1, where 1 has no change (fully vertical) and 0 is completely flat (fully horizontal -- in which case nothing actually gets drawn). If the plugin determines that it will fit within the canvas, a drop shadow will be drawn under the tilted pie (this also requires a tilt value of 0.8 or less).</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.3.2 - June 25th, 2009 - Brian Medendorp</i></li>
 			<li>Fixed a bug that was causing the pie to be shifted too far left or right when the legend is showing in some cases.</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.3.1 - June 24th, 2009 - Brian Medendorp</i></li>
 			<li>Fixed a bug that was causing nothing to be drawn and generating a javascript error if any of the data values were set to zero.</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.3 - June 23rd, 2009 - Brian Medendorp</i></li>
 			<li>The legend now works without any modifications! Because of changes made to flot and the plugin system (thanks Ole Laursen!) I was able to simplify a number of things and am now able to use the legend without the direct access hack that was required in the previous version.</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.2 - June 22nd, 2009 - Brian Medendorp</i></li>
 			<li>The legend now works but only if you make the necessary changes to jquery.flot.js. Because of this, I changed the default values for pie.radius and pie.label.show to new 'auto' settings that change the default behavior of the size and labels depending on whether the legend functionality is available or not.</li>
-			<br>
+			
 			<li style="list-style: none;"><i>v0.1 - June 18th, 2009 - Brian Medendorp</i></li>
 			<li>Rewrote the entire pie code into a flot plugin (since that is now an option), so it should be much easier to use and the code is cleaned up a bit. However, the (standard flot) legend is no longer available because the only way to prevent the grid lines from being displayed also prevents the legend from being displayed. Hopefully this can be fixed at a later date.</li>
 			<li>Restructured and combined some of the options. It should be much easier to deal with now.</li>
 			<li>Added the ability to change the starting point of the pie (still defaults to the top).</li>
 			<li>Modified the default options to show the labels to compensate for the lack of a legend.</li>
 			<li>Modified this page to use a random dataset. <span style="color: red">Note: you may need to refresh the page to see the effects of some of the examples.</span></li>
-			<br>
+			
 			<li style="list-style: none;"><i>May 21st, 2009 - Brian Medendorp</i></li>
 			<li>Merged original pie modifications by Sergey Nosenko into the latest SVN version <i>(as of May 15th, 2009)</i> so that it will work with ie8.</li>
 			<li>Pie graph will now be centered in the canvas unless moved because of the legend or manually via the options. Additionally it prevents the pie from being moved beyond the edge of the canvas.</li>

@@ -84,35 +84,29 @@ $(function(){
 });
 
 //检索表格数据
-function searchMyInfo()
-{
-	
+function searchMyInfo(){
 	commonGetrowdatas("MyInfoGrid",getSearchData(),contextPath + "/portal/MyInfo/search","commonCallback",true);
 }
 
-function getSearchData()
-{
+function getSearchData(){
 	var data = getFormJson("searchInfo");
 	data.status=$("#status").combobox('getValue');
 	return data;
 }
 //点击行提交操作进行提交
-function submitRow(contentId)
-{
+function submitRow(contentId){
 	var data={
 	    contentId:contentId
-	}
+	};
 	doAjax(POST,contextPath + "/portal/MyInfo/submitRow",data,"submitRowSuccess",null,false);
 }
 
-function submitRowSuccess()
-{
+function submitRowSuccess(){
 	searchMyInfo();
 }
 
 //点击行修改，对行进行编辑，只有保存的才能进行修改，提交后无法进行修改
-function editRow(contentId)
-{
+function editRow(contentId){
 		top.$('#myDialog').dialog({
 		    title: '修改资讯',
 		    width: 900,
@@ -123,31 +117,27 @@ function editRow(contentId)
 		    modal: true
 		});
 }
-function saveChangeSuccess()
-{
-	top.$('#myDialog').dialog("close")
+function saveChangeSuccess(){
+	top.$('#myDialog').dialog("close");
 	searchMyInfo();
 }
 
-function submitChangeSuccess()
-{
-	top.$('#myDialog').dialog("close")
+function submitChangeSuccess(){
+	top.$('#myDialog').dialog("close");
 	searchMyInfo();
 }
 
 //删除资讯，只能是未提交的进行操作
-function deleteRow(contentId)
-{
+function deleteRow(contentId){
 	var data={
 	    contentId:contentId
-	}
+	};;
 	doAjax(POST,contextPath + "/portal/MyInfo/deleteRow",data,"submitRowSuccess",null,false);
 }
 
 
 //预览
-function checkRow(contentId)
-{
+function checkRow(contentId){
 	top.$('#myDialog').dialog({
 	    title: '预览资讯',
 	    width: 900,
@@ -159,52 +149,42 @@ function checkRow(contentId)
 	});
 }
 //批量提交资讯
-function batchSubmit()
-{
+function batchSubmit(){
 	var selectRows = GetDataGridRows("MyInfoGrid");
-	if(selectRows>0)
-	{
+	if(selectRows>0)	{
 		var rows = $('#MyInfoGrid').datagrid('getSelections');
 		var contentId="";
-		for(var i=0;i<rows.length;i++)
-		{
-			if(rows[i].status == '1' || rows[i].status == '4')
-			{
+		for(var i=0;i<rows.length;i++)		{
+			if(rows[i].status == '1' || rows[i].status == '4')			{
 				contentId=contentId + rows[i].contentId + ",";
 			}
 		}
-		if(contentId!="")
-		{
+		if(contentId!="")		{
 			var data={
 				contentId:contentId
-			}
+			};
 			doAjax(POST,contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
 		}else{
 			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
-		
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
 	}
 }
 
 //批量删除资讯
-function batchDel()
-{
+function batchDel(){
 	var selectRows = GetDataGridRows("MyInfoGrid");
-	if(selectRows>0)
-	{
+	if(selectRows>0)	{
 		var rows = $('#MyInfoGrid').datagrid('getSelections');
 		var contentId="";
-		for(var i=0;i<rows.length;i++)
-		{
+		for(var i=0;i<rows.length;i++)		{
 			if(rows[i].status == '1' || rows[i].status == '4')
 			{
 				contentId=contentId + rows[i].contentId + ",";
 			}
 		}
-		if(contentId!="")
-		{
+		if(contentId!="")		{
 			var data={
 				contentId:contentId
 			};
@@ -212,7 +192,6 @@ function batchDel()
 		}else{
 			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
 		}
-		
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
 	}

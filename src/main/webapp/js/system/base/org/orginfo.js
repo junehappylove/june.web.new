@@ -146,7 +146,6 @@ function saveSuccess(response)
 		searchInfo();
 	}else{
 		//$('#modalForm').bootstrapValidator('validate');
-		//return true;
 		$("#saveBtn").removeAttr("disabled");
 	}
 	
@@ -165,9 +164,9 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("orgInfoTable");
 		var rowIds = "";
-		 for(var i=0;i<rows.length;i++)
+		 for(var row in rows)
 		 {
-			rowIds = rowIds + rows[i].orgId + ",";
+			rowIds += row.orgId + ",";
 		 }
 		 var data = {
 		      orgId:rowIds       

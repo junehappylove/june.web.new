@@ -48,50 +48,43 @@
 		});
 	});
 	
-	
 //页面加载时初始化表格数据
 $(function(){
 	searchCheckInfo();
 });
 
 //检索表格数据
-function searchCheckInfo()
-{
+function searchCheckInfo(){
 	commonGetrowdatas("CheckInfoGrid",getSearchData(),contextPath + "/portal/CheckInfo/search","commonCallback",true);
 }
 
-function getSearchData()
-{
+function getSearchData(){
 	var data = getFormJson("searchInfo");
 	return data;
 }
 
 //审核通过
-function checkPass(contentId)
-{
+function checkPass(contentId){
 	var data={
 	    contentId:contentId
-	}
+	};
 	doAjax(POST,contextPath + "/portal/CheckInfo/checkPass",data,"checkPassSuccess",null,false);
 }
 
-function checkPassSuccess()
-{
+function checkPassSuccess(){
 	searchCheckInfo();
 }
 
 //驳回
-function checkBack(contentId)
-{
+function checkBack(contentId){
 	var data={
 	    contentId:contentId
-	}
+	};
 	doAjax(POST,contextPath + "/portal/CheckInfo/checkBack",data,"checkPassSuccess",null,false);
 }
 
 //预览
-function checkView(contentId)
-{
+function checkView(contentId){
 	top.$('#myDialog').dialog({
 	    title: '预览资讯',
 	    width: 900,
@@ -103,40 +96,34 @@ function checkView(contentId)
 	});
 }
 
-function batchCheckPass()
-{
+function batchCheckPass(){
 	var selectRows = GetDataGridRows("CheckInfoGrid");
-	if(selectRows>0)
-	{
+	if(selectRows>0)	{
 		var rows = $('#CheckInfoGrid').datagrid('getSelections');
 		var contentId="";
-		for(var i=0;i<rows.length;i++)
-		{
+		for(var i=0;i<rows.length;i++)		{
 			contentId=contentId + rows[i].contentId + ",";
 		}
 		var data={
 			contentId:contentId
-		}
+		};
 		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckPass",data,"checkPassSuccess",null,false);
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
 	}
 }
 
-function batchCheckBack()
-{
+function batchCheckBack(){
 	var selectRows = GetDataGridRows("CheckInfoGrid");
-	if(selectRows>0)
-	{
+	if(selectRows>0)	{
 		var rows = $('#CheckInfoGrid').datagrid('getSelections');
 		var contentId="";
-		for(var i=0;i<rows.length;i++)
-		{
+		for(var i=0;i<rows.length;i++)		{
 			contentId=contentId + rows[i].contentId + ",";
 		}
 		var data={
 			contentId:contentId
-		}
+		};
 		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckBack",data,"checkPassSuccess",null,false);
 	}else{
 		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))

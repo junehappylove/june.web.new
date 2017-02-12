@@ -1,9 +1,23 @@
 # june_web_new
 
-### JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quartz+javamelody+...
+## 项目介绍 
+JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quartz+javamelody+...
 
-===
-Thinks a lot for all the Open Source Code lovers!
+## 预告
+> 1. 缓存管理
+> 1. 技术文档
+> 1. 发送邮件 -- 搭建邮件服务器；实现邮件客户端
+> 1. 参考http://www.zi-han.net/developer/1031.html 中提到的相关工具和技术
+> 1. 引入图库
+> 1. fastdfs
+> 1. 上传
+> 1. 富文本编辑
+> 1. 嵌入百度地图
+> 1. 项目的字典数据（树，下拉）要放到redis中，用到就取出来，不用每次都去查数据；监控数据有变化就跟新内存，否则就一直放内存里面，方便项目中字典数据的使用；
+> 1. ...
+
+## 项目日志
+
 > 14. 2017-01-22 系统采用swagger2+springfox2.5.0重新部署restful接口部分，解决上一版本中关于上传文件无法展示上传按钮问题
 	项目同时升级采用tomcat8部署
 > 13. 2017-01-21 系统中集成[swagger](http://swagger.io/ "swagger"),关于SpringMVC整合swagger，可以参考[Restful形式接口文档生成之Swagger与SpringMVC整合手记](http://blog.csdn.net/xyw591238/article/details/51385233 "Swagger与SpringMVC整合")、[Swagger简介](http://blog.csdn.net/wangnan9279/article/details/44541665 "Swagger简介")这两篇文章，网上的整合很多，几乎都是千篇一律，这2篇文章也不出所外，只是相对较好一点儿;推荐看后一篇，不错，没毛病！    
@@ -46,19 +60,23 @@ Thinks a lot for all the Open Source Code lovers!
 	日志记录中,针对每一个方法,进行执行耗时统计；
 	新增字典管理表：dic\_info、dic\_datas、dic_cache。
  
- 
- 
 ## 技术选型 
  > 1. springmvc
- > 2. mybatis
- > 3. shiro
- > 4. websocket
- > 5. activiti
- > 6. logback
- > 7. quartz
- > 8. javamelody
- > 9. MethodLog(Spring AOP 方法日志记录)
- > 10. Swagger2
+ > 1. mybatis
+ > 1. shiro
+ > 1. websocket
+ > 1. activiti
+ > 1. logback
+ > 1. quartz
+ > 1. javamelody
+ > 1. MethodLog(Spring AOP 方法日志记录)
+ > 1. Swagger2
+ > 1. ...
  
-### if you like , contact me by QQ *980154978* .
-
+## 联系 
+### if you like, please contact me by QQ *980154978* or by email *wjw.happy.love@163.com*.
+## 捐赠
+>* 支付宝:wjw.happy.love@163.com
+>* 微信:junehappylove
+*****  
+*Thinks a lot for all the Open Source Code lovers!*
