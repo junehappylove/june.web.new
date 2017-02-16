@@ -51,15 +51,24 @@
 									</button>
 								</c:if>
 							</div>
-							<table id="menuInfoTable">
-							</table>
+							<div class="row">
+								<!-- 菜单树 -->
+								<div class="col-md-2">
+									<div class="zTreeDemoBackground left" style="padding-top: 10px;">
+									菜单树
+										<ul id="sycMenus" class="ztree"></ul>
+									</div>
+								</div>
+								<!-- 菜单列表 -->
+								<div class="col-md-10"><table id="menuInfoTable"></table></div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
+	<!-- 添加或者修改菜单 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="height: 1000px;">
 			<div class="modal-content">
@@ -129,7 +138,6 @@
 	</div>
 	<div class="modal fade bs-example-modal-sm" id="treeModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
-
 		<div class="modal-dialog modal-sm" style="height: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -150,7 +158,6 @@
 					<button type="button" class="btn btn-primary"
 						onclick="closeTreemodal()">取消</button>
 				</div>
-
 			</div>
 		</div>
 	</div>

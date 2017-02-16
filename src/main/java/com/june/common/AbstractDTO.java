@@ -54,6 +54,8 @@ public abstract class AbstractDTO implements Serializable {
 	private String version;
 	private List<TreeDto> tree;	//DTO的下拉值
 	
+	private String ids;//删除使用的字段
+	
 	protected abstract String getDtoName();
 
 	@Override
@@ -200,6 +202,14 @@ public abstract class AbstractDTO implements Serializable {
 
 	public void setSys_user(String sys_user) {
 		this.sys_user = sys_user;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

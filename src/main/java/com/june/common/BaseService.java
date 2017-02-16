@@ -112,6 +112,22 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 	public void deleteDtoById(DTO dto) {
 		dao.delete(dto);
 	}
+	
+	/**
+	 * 批量删除，只适合根据主键的删除(主键采用appid属性)
+	 * @param dto
+	 * @date 2017年2月16日 下午8:13:10
+	 * @writer junehappylove
+	 */
+	public void deleteDtoByIds(DTO dto){
+		String ids = dto.getIds();
+		if (ids != null) {
+			for (int i = 0; i < ids.split(",").length; i++) {
+				dto.setAppid(ids.split(",")[i]);
+				this.deleteDtoById(dto);
+			}
+		}
+	}
 
 	/**
 	 * 更新一条DTO
@@ -139,6 +155,10 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 	public List<TreeDto> getDrops(DTO dto) {
 		return dao.getDrops(dto);
 	}
+	
+	public List<TreeDto> getTree(TreeDto dto) {
+		return dao.getTree(dto);
+	}
 
 	/**
 	 * 设置检索的表，schema.table
@@ -164,6 +184,7 @@ public abstract class BaseService<DAO extends BaseDao<DTO>, DTO extends PageDTO<
 	}
 	
 	/**
+	 * 判断是否ajax调用
 	 * 
 	 * @param request
 	 * @return

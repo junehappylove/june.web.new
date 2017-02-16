@@ -11,11 +11,8 @@ package com.june.dto.back.login;
 
 import com.june.common.AbstractDTO;
 
-public class RoleDto extends AbstractDTO{
+public class RoleDto extends AbstractDTO {
 
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = -877636052050089720L;
 	private String roleId;
 	private String roleName;

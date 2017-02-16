@@ -1,200 +1,205 @@
 $(document).ready(function() {
-initDate();//初始化日期控件，如果有form表单日期控件的校验，日期控件的初始化必须在校验初始化之前
-$('#defaultForm').bootstrapValidator({
-	feedbackIcons: {
-	    valid: 'glyphicon glyphicon-ok',
-	    invalid: 'glyphicon glyphicon-remove',
-	    validating: 'glyphicon glyphicon-refresh'
-	},
-    fields: {
-    	username: {
-            validators: {
-                notEmpty: {
-                    message: getMessageFromList("ErrorMustInput",['用户名'])
-                },
-                stringLength: {
-                    min: 6,
-                    max: 30,
-                    message: getMessageFromList("ErrorLength2",['username','6','30'])
-                }
-            }
-        },
-        email: {
-            validators: {
-                notEmpty: {
-                    message: getMessageFromList("ErrorMustInput",['邮箱'])
-                },
-                emailAddress: {
-                    message: getMessageFromList("ErrorFormat",['邮箱'])
-                }
-            }
-        },
-        password: {
-            validators: {
-                notEmpty: {
-                    message: getMessageFromList("ErrorMustInput",['密码'])
-                }
-            }
-        },
-        meeting: {
-            validators: {
-                date: {
-                    format: 'YYYY-MM-DD HH:MM',
-                    message: 'The value is not a valid date'
-                },
-                notEmpty: {
-                    message: getMessageFromList("ErrorMustInput",['日期'])
-                }
-            }
-        },
-        startDate: {
-            validators: {
-                date: {
-                    format: 'YYYY-MM-DD',
-                    message: 'The value is not a valid date'
-                },
-                notEmpty: {
-                    message: getMessageFromList("ErrorMustInput",['开始日期'])
-                },
-                callback: {
-                    message: '开始日期不能大于结束日期',
-                    callback:function(){
-                      return checkEndTime("startDate","endDate");
-                    }
-                  }
-            }
-        },
-        endDate: {
-            validators: {
-            	notEmpty: {
-                	message: getMessageFromList("ErrorMustInput",['结束日期'])
-            	},
-                date: {
-                    format: 'YYYY-MM-DD',
-                    message: 'The value is not a valid date'
-                },
-                callback: {
-                    message: '结束日期不能小于开始日期',
-                    callback:function(){
-                      return checkEndTime("startDate","endDate");
-                    }
-                  }
-            }
-        },
-        daterange: {
-            validators: {
-                notEmpty: {
-                    message: 'The gender is required'
-                },
-                //日期范围正则表达式校验
-				regexp: { 
-					regexp: /((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))\s-\s((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))/, 
-					message: "日期范围格式错误！"
-				} 
-            }
-        },
-        gender: {
-            validators: {
-                notEmpty: {
-                    message: 'The gender is required'
-                }
-            }
-        },
-        languages: {
-            validators: {
-                notEmpty: {
-                    message: 'Please specify at least one language you can speak'
-                }
-            }
-        },
-        programs: {
-            validators: {
-                choice: {
-                    min: 2,
-                    max: 4,
-                    message: 'Please choose 2 - 4 programming languages you are good at'
-                }
-            }
-        }
-      
-    }
-}).on('success.form.bv', function(e) {
-	// 校验成功后执行以下方法
-    e.preventDefault();
-    var $form = $(e.target);
-    var bv = $form.data('bootstrapValidator');
-    // form表单提交时提示信息，确认执行回调函数submitForm进行ajax form提交，success函数是submitForm的回调函数
-    showConfirm(submitForm,"确认提交？",POST,$form.attr('action'), $form.serialize(),success);
-}); 
-
- $("#meeting").bind("change",function(){
- $('#defaultForm')
- // Get the bootstrapValidator instance
- .data('bootstrapValidator')
- // Mark the field as not validated, so it'll be re-validated when the user
- .updateStatus('meeting', 'NOT_VALIDATED', null)
- // Validate the field
- .validateField('meeting');
- });
+	initDate();//初始化日期控件，如果有form表单日期控件的校验，日期控件的初始化必须在校验初始化之前
+	$('#defaultForm').bootstrapValidator({
+		feedbackIcons: {
+		    valid: 'glyphicon glyphicon-ok',
+		    invalid: 'glyphicon glyphicon-remove',
+		    validating: 'glyphicon glyphicon-refresh'
+		},
+	    fields: {
+	    	username: {
+	            validators: {
+	                notEmpty: {
+	                    message: getMessageFromList("ErrorMustInput",['用户名'])
+	                },
+	                stringLength: {
+	                    min: 6,
+	                    max: 30,
+	                    message: getMessageFromList("ErrorLength2",['username','6','30'])
+	                }
+	            }
+	        },
+	        email: {
+	            validators: {
+	                notEmpty: {
+	                    message: getMessageFromList("ErrorMustInput",['邮箱'])
+	                },
+	                emailAddress: {
+	                    message: getMessageFromList("ErrorFormat",['邮箱'])
+	                }
+	            }
+	        },
+	        password: {
+	            validators: {
+	                notEmpty: {
+	                    message: getMessageFromList("ErrorMustInput",['密码'])
+	                }
+	            }
+	        },
+	        meeting: {
+	            validators: {
+	                date: {
+	                    format: 'YYYY-MM-DD HH:MM',
+	                    message: 'The value is not a valid date'
+	                },
+	                notEmpty: {
+	                    message: getMessageFromList("ErrorMustInput",['日期'])
+	                }
+	            }
+	        },
+	        startDate: {
+	            validators: {
+	                date: {
+	                    format: 'YYYY-MM-DD',
+	                    message: 'The value is not a valid date'
+	                },
+	                notEmpty: {
+	                    message: getMessageFromList("ErrorMustInput",['开始日期'])
+	                },
+	                callback: {
+	                    message: '开始日期不能大于结束日期',
+	                    callback:function(){
+	                      return checkEndTime("startDate","endDate");
+	                    }
+	                  }
+	            }
+	        },
+	        endDate: {
+	            validators: {
+	            	notEmpty: {
+	                	message: getMessageFromList("ErrorMustInput",['结束日期'])
+	            	},
+	                date: {
+	                    format: 'YYYY-MM-DD',
+	                    message: 'The value is not a valid date'
+	                },
+	                callback: {
+	                    message: '结束日期不能小于开始日期',
+	                    callback:function(){
+	                      return checkEndTime("startDate","endDate");
+	                    }
+	                  }
+	            }
+	        },
+	        daterange: {
+	            validators: {
+	                notEmpty: {
+	                    message: 'The gender is required'
+	                },
+	                //日期范围正则表达式校验
+					regexp: { 
+						regexp: /((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))\s-\s((([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29))/, 
+						message: "日期范围格式错误！"
+					} 
+	            }
+	        },
+	        gender: {
+	            validators: {
+	                notEmpty: {
+	                    message: 'The gender is required'
+	                }
+	            }
+	        },
+	        languages: {
+	            validators: {
+	                notEmpty: {
+	                    message: 'Please specify at least one language you can speak'
+	                }
+	            }
+	        },
+	        programs: {
+	            validators: {
+	                choice: {
+	                    min: 2,
+	                    max: 4,
+	                    message: 'Please choose 2 - 4 programming languages you are good at'
+	                }
+	            }
+	        }
+	      
+	    }
+	}).on('success.form.bv', function(e) {
+		// 校验成功后执行以下方法
+	    e.preventDefault();
+	    var $form = $(e.target);
+	    var bv = $form.data('bootstrapValidator');
+	    // form表单提交时提示信息，确认执行回调函数submitForm进行ajax form提交，success函数是submitForm的回调函数
+	    showConfirm(submitForm,"确认提交？",POST,$form.attr('action'), $form.serialize(),success);
+	}); 
+	/**
+	 * 
+	 */				
+	$("#meeting").bind("change", function() {
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// Mark the field as not validated, so it'll be
+		// re-validated when the user
+		.updateStatus('meeting', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('meeting');
+	});
 	// 给日期绑定change事件，日期改变时触发日期校验
-	//开始时间和结束时间联合校验时，此change事件需要同时校验开始时间和结束时间
-	$("#startDate").bind("change",function(){
-		 $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('startDate', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('startDate');
-	    
-	    $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    // Mark the field as not validated, so it'll be re-validated when the
+	// 开始时间和结束时间联合校验时，此change事件需要同时校验开始时间和结束时间
+	$("#startDate").bind("change", function() {
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// 将之前的检测结果清除，以便重新进行检测
+		.updateStatus('startDate', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('startDate');
+	
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// Mark the field as not validated, so it'll be
+		// re-validated when the
 		// user change date
-	    .updateStatus('endDate', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('endDate')
+		.updateStatus('endDate', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('endDate')
 	});
 	// 开始日期与结束日期联合校验时结束日期绑定校验事件
-	//开始时间和结束时间联合校验时，此change事件需要同时校验开始时间和结束时间
-	$("#endDate").bind("change",function(){
-		 $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('endDate', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('endDate');
-	    $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('startDate', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('startDate');
+	// 开始时间和结束时间联合校验时，此change事件需要同时校验开始时间和结束时间
+	$("#endDate").bind("change", function() {
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// 将之前的检测结果清除，以便重新进行检测
+		.updateStatus('endDate', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('endDate');
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// 将之前的检测结果清除，以便重新进行检测
+		.updateStatus('startDate', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('startDate');
 	});
 	
-	$("#meeting").bind("change",function(){
-		 $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('meeting', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('meeting');
-	   
+	$("#meeting").bind("change", function() {
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// 将之前的检测结果清除，以便重新进行检测
+		.updateStatus('meeting', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('meeting');
+	
 	});
-	$("#daterange").bind("change",function(){
-		 $('#defaultForm')
-	    // Get the bootstrapValidator instance
-	    .data('bootstrapValidator')
-	    //将之前的检测结果清除，以便重新进行检测
-	    .updateStatus('daterange', 'NOT_VALIDATED', null)
-	    // Validate the field
-	    .validateField('daterange');
-	   
+	$("#daterange").bind("change", function() {
+		$('#defaultForm')
+		// Get the bootstrapValidator instance
+		.data('bootstrapValidator')
+		// 将之前的检测结果清除，以便重新进行检测
+		.updateStatus('daterange', 'NOT_VALIDATED', null)
+		// Validate the field
+		.validateField('daterange');
+	
 	});
+	
 	loadTree();//加载树  
 	loadajaxtree();//异步加载树子节点
 	loadComboTree();//加载combotree
@@ -203,8 +208,7 @@ $('#defaultForm').bootstrapValidator({
 });
 
 //初始化上传控件
-function initUploadControl()
-{
+function initUploadControl(){
 	$("#uploadInput").fileinput({
 		language: "zh",//语言设置
 	    maxFileCount: 2,//上传文件的最大个数
@@ -255,14 +259,12 @@ function initUploadControl()
 			//doFileFormAjax("uploadForm",POST,contextPath + "/demo/uploadpicture",success);      
 	 });
 	}
-function uploadSuccess(response)
-{
+function uploadSuccess(response){
 	$("#uploadForm")[0].reset();
 }
 
 // 日期控件初始化
-function initDate()
-{
+function initDate(){
 	// 日期返回控件初始化
 	$('#daterange').daterangepicker({
 		autoApply: true,// 时间选择完成后是否自动关闭，如果有时间选择的话不起作用
@@ -339,28 +341,24 @@ function initDate()
 	
 }
 //form表单提交
-function submitForm(type,url,date,success)
-{
+function submitForm(type,url,date,success){
 	doAjax(type,url,date,success);
 }
 
-function success()
-{
-	alert("提交成功")
+function success(){
+	alert("提交成功");
 	// 重置表单
 	$('#defaultForm').data('bootstrapValidator').resetForm(true);
 }
 
 // 级联select改变事件
-function selectChange(s) 
-{ 
+function selectChange(s){ 
 	// 调用级联select共通的ajax请求
   doAjax(POST,contextPath+"/demo/selectChange",null,changeSuccess);
 }
 
 // 级联select请求成功回调函数
-function changeSuccess(response)
-{
+function changeSuccess(response){
 	$('#select').empty();// 先将级联值的值清除
 	$('#select').selectpicker('refresh');
 	// 循环加载新的级联
@@ -370,19 +368,20 @@ function changeSuccess(response)
      $('#select').selectpicker('refresh');// 动态加载值后需要 refresh
 }
 
-function showModal()
-{
-	$('#myModal').modal('show')
+function showModal(){
+	$('#myModal').modal('show');
 }
 
-// 树初始化
-function loadTree()
-{
-	doAjax(POST,contextPath+"/demo/initTree",null,treeCallback)
+// 树初始化(子节点非异步加载)
+function loadTree(){
+	doAjax(POST, contextPath + "/demo/initTree", null, treeCallback);
 }
 
-function treeCallback(response)
-{
+/**
+ * 
+ * @param response ajax调用后返回的json数据
+ */
+function treeCallback(response){
 	var setting = {
 		data: {
 			simpleData: {
@@ -397,40 +396,38 @@ function treeCallback(response)
 }
 
 // 节点点击事件
-function clickNode(event, treeId, treeNode,clickFlag)
-{
+function clickNode(event, treeId, treeNode, clickFlag){
 	alert(treeNode.name + treeNode.id);// 点击直接返回节点对象treeNode
 }
 
-function loadajaxtree()
-{
+/**
+ * 异步加载
+ */
+function loadajaxtree(){
 	// 获取一级节点
-	doAjax(POST,contextPath+"/demo/initAjaxTree",null,ajaxtreeCallback)
+	doAjax(POST, contextPath + "/demo/initAjaxTree", null, ajaxtreeCallback);
 }
 
-function ajaxtreeCallback(response)
-{
+function ajaxtreeCallback(response) {
 	var setting = {
-		async: {
-		enable: true,
-		url:contextPath+"/demo/getAjaxNode",
-		autoParam:["id", "name"] // 参数
+		async : {
+			enable : true,
+			url : contextPath + "/demo/getAjaxNode",
+			autoParam : [ "id", "name" ] // 参数
 		},
-		callback: {  
-			onClick: clickNode  
-		}  
+		callback : {
+			onClick : clickNode
+		}
 	};
 	$.fn.zTree.init($("#ajaxtreeDemo"), setting, response);
 }
 
 // 树初始化
-function loadComboTree()
-{
-	doAjax(POST,contextPath+"/demo/initTree",null,combotreeCallback)
+function loadComboTree(){
+	doAjax(POST,contextPath+"/demo/initTree",null,combotreeCallback);
 }
 
-function combotreeCallback(response)
-{
+function combotreeCallback(response){
 	var setting = {
 		check: {
 			enable: true
@@ -448,13 +445,11 @@ function combotreeCallback(response)
 }
 
 // ajax加载combotree
-function loadajaxcombotree()
-{
+function loadajaxcombotree(){
 	// 获取一级节点
-	doAjax(POST,contextPath+"/demo/initAjaxTree",null,ajaxcombotreeCallback)
+	doAjax(POST,contextPath+"/demo/initAjaxTree",null,ajaxcombotreeCallback);
 }
-function ajaxcombotreeCallback(response)
-{
+function ajaxcombotreeCallback(response){
 	var setting = {
 		check: {
 			enable: true
@@ -471,23 +466,20 @@ function ajaxcombotreeCallback(response)
 	$.fn.zTree.init($("#ajaxcombotreeDemo"), setting, response);
 }
 
-function getchecked()
-{
+function getchecked(){
 	var treeObj = $.fn.zTree.getZTreeObj("combotreeDemo");
 	var nodes = treeObj.getCheckedNodes(true);
-	alert(nodes.length)
+	alert(nodes.length);
 
 }
 // 折叠全部节点
-function expandAll()
-{
+function expandAll(){
 	var treeObj = $.fn.zTree.getZTreeObj("combotreeDemo");
 	treeObj.expandAll(false);
 }
 
 // 展开全部节点
-function collapseAll()
-{
+function collapseAll(){
 	var treeObj = $.fn.zTree.getZTreeObj("combotreeDemo");
 	treeObj.expandAll(true);
 }

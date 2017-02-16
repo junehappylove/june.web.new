@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 业务基础DTO <br>
- * 用于记录本项目相关业务性的内容
+ * 用于记录系统相关业务性的内容<br>
+ * 开发人员可以修改此类用于适应相应的系统的具体业务功能
  * 
  * @author 王俊伟 wjw.happy.love@163.com
  * @date 2016年12月11日 上午1:56:48
@@ -28,11 +29,6 @@ public abstract class BaseDTO extends AbstractDTO {
 	private Timestamp add_time;
 	private String upd_user_id;
 	private Timestamp upd_time;
-
-	private String lastName;	//上一次的修改名称，针对FTP修改目录名称而设置的
-		
-	private String currVehicle;//当前车型ID
-	private String currVehicleName;//当前车型名称
 	
 	public String getAdd_user_id() {
 		return add_user_id;
@@ -88,29 +84,5 @@ public abstract class BaseDTO extends AbstractDTO {
 
 	public void setAppid(String appid) {
 		this.appid = appid;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getCurrVehicle() {
-		return currVehicle;
-	}
-
-	public void setCurrVehicle(String currVehicle) {
-		this.currVehicle = currVehicle;
-	}
-
-	public String getCurrVehicleName() {
-		return currVehicleName;
-	}
-
-	public void setCurrVehicleName(String currVehicleName) {
-		this.currVehicleName = currVehicleName;
 	}
 }

@@ -7,9 +7,7 @@ import java.util.List;
  * 菜单列表
  */
 public class MenuListDto implements Serializable{
-	/**
-	 * long serialVersionUID
-	 */
+	
 	private static final long serialVersionUID = -7309986015225481529L;
 	private List<MenuDto> menus;
 

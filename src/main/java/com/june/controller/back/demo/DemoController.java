@@ -439,22 +439,66 @@ public class DemoController extends BaseController<MenuDto> {
 	public void initTree(HttpServletRequest request, HttpServletResponse response) {
 		TreeDto treeDto = new TreeDto();
 		treeDto.setId("1");
-		treeDto.setName("bb");
+		treeDto.setName("root");
 		treeDto.setOpen(true);
 		treeDto.setChecked(true);
+		
 		TreeDto treeDto2 = new TreeDto();
 		treeDto2.setId("2");
-		treeDto2.setName("dd");
+		treeDto2.setPid("1");
+		treeDto2.setName("node1");
 		treeDto2.setOpen(true);
 		treeDto2.setChecked(true);
+		
 		TreeDto treeDto3 = new TreeDto();
 		treeDto3.setId("3");
-		treeDto3.setName("dd");
+		treeDto3.setPid("1");
+		treeDto3.setName("node2");
 		treeDto3.setOpen(true);
+		
 		List<TreeDto> list = new ArrayList<TreeDto>();
 		list.add(treeDto2);
 		list.add(treeDto3);
 		treeDto.setChildren(list);
+		toJson(treeDto, response);
+	}
+
+	/**
+	 * 一级树结构数据初始化
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/initAjaxTree")
+	@ApiOperation(value = "一级树结构数据初始化", notes = "一级树结构数据初始化", httpMethod = "GET")
+	public void initAjaxTree(HttpServletRequest request, HttpServletResponse response) {
+		TreeDto treeDto = new TreeDto();
+		treeDto.setId("1");
+		treeDto.setPid("0");
+		treeDto.setIsParent("true");// 设置成true表示是父节点
+		treeDto.setName("异步加载演示root");
+		// treeDto.setOpen(false);
+		// treeDto.setChecked(true);
+		toJson(treeDto, response);
+	}
+
+	/**
+	 * 树结构数据初始化
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@ApiIgnore
+	@RequestMapping("/getAjaxNode")
+	public void getAjaxNode(HttpServletRequest request, HttpServletResponse response) {
+		TreeDto treeDto = new TreeDto();
+		// 参数映射到dto
+		fillRequestDto(request, treeDto);//取到其点击的节点
+		//TODO 根据被点击的节点在去获取子节点信息(这里就可以查数据库获取了)
+		treeDto.setPid(treeDto.getId());
+		treeDto.setId("2");
+		treeDto.setName("异步加载node1");
+		treeDto.setOpen(false);
 		toJson(treeDto, response);
 	}
 
@@ -738,43 +782,6 @@ public class DemoController extends BaseController<MenuDto> {
 		comboxDto.setName("岗位1");
 		// 返回消息 end
 		toJson(comboxDto, response);
-	}
-
-	/**
-	 * 一级树结构数据初始化
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("/initAjaxTree")
-	@ApiOperation(value = "一级树结构数据初始化", notes = "一级树结构数据初始化", httpMethod = "GET")
-	public void initAjaxTree(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		treeDto.setId("1");
-		treeDto.setpId("0");
-		treeDto.setIsParent("true");// 设置成true表示是父节点
-		treeDto.setName("bb");
-		// treeDto.setOpen(false);
-		// treeDto.setChecked(true);
-		toJson(treeDto, response);
-	}
-
-	/**
-	 * 树结构数据初始化
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@ApiIgnore
-	@RequestMapping("/getAjaxNode")
-	public void getAjaxNode(HttpServletRequest request, HttpServletResponse response) {
-		TreeDto treeDto = new TreeDto();
-		// 参数映射到dto
-		fillRequestDto(request, treeDto);
-		treeDto.setId("2");
-		treeDto.setName("bb");
-		treeDto.setOpen(false);
-		toJson(treeDto, response);
 	}
 
 }

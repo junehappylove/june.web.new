@@ -3,48 +3,44 @@ var api_saveEdit = contextPath + "/system/base/menu/saveEdit";
 var api_saveNew = contextPath + "/system/base/menu/newSave";
 var api_delete = contextPath + "/system/base/menu/deleteSelected";
 var api_check = contextPath + "/system/base/menu/checkDetail";
+var api_initMenuTree = contextPath + "/system/base/menu/initMenuTree";
+var api_child_menu = contextPath + "/system/base/menu/childMenu";
 var api_initOrgTree = contextPath + "/system/org/initOrgTree";
-var api_initRoleTree = contextPath + "/system/org/initRoleTree";
 /**
  * 权限信息js
  */
 $(function() {
-	$('#modalForm').bootstrapValidator(
-			{
-				feedbackIcons : {
-					valid : 'glyphicon glyphicon-ok',
-					invalid : 'glyphicon glyphicon-remove',
-					validating : 'glyphicon glyphicon-refresh'
-				},
-				fields : {
-					menu_id : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput", [ '菜单ID' ])
-							},
-							stringLength : {
-								min : 0,
-								max : 64,
-								message : getMessageFromList("ErrorLength2", ['菜单ID', '0', '64' ])
-							}
-						}
+	//校验
+	$('#modalForm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			menu_id : {
+				validators : {
+					notEmpty : {
+						message : getMessageFromList("ErrorMustInput", [ '菜单ID' ])
 					},
-					menu_name : {
-						validators : {
-							stringLength : {
-								min : 0,
-								max : 64,
-								message : getMessageFromList("ErrorLength2", ['菜单名称', '0', '64' ])
-							}
-						}
+					stringLength : {
+						min : 0, max : 64,
+						message : getMessageFromList("ErrorLength2", ['菜单ID', '0', '64' ])
 					}
 				}
-			}).on('success.form.bv', function(e) {
-		// Prevent form submission
+			},
+			menu_name : {
+				validators : {
+					stringLength : {
+						min : 0, max : 64,
+						message : getMessageFromList("ErrorLength2", ['菜单名称', '0', '64' ])
+					}
+				}
+			}
+		}
+	}).on('success.form.bv', function(e) {
 		e.preventDefault();
-		// Get the form instance
 		var $form = $(e.target);
-		// Get the BootstrapValidator instance
 		var bv = $form.data('bootstrapValidator');
 		if ($("#isNew").val() == 0) {
 			// 编辑保存
@@ -57,40 +53,40 @@ $(function() {
 
 	// 表格初始化
 	$('#menuInfoTable').bootstrapTable({
-						cache : false,
-						striped : true,
-						pagination : true,
-						toolbar : '#toolbar',
-						pageSize : 10,
-						pageNumber : 1,
-						pageList : [ 5, 10, 20 ],
-						clickToSelect : true,
-						sidePagination : 'server',// 设置为服务器端分页
-						columns : [
-								{ field : "", checkbox : true },
-								{ field : "menu_id", title : "ID",titleTooltip:"编码", align : "center", valign : "middle" , visible:false},
-								{ field : "menu_name", title : "名称", align : "center", valign : "middle" },
-								{ field : "parent_menu_id", title : "父菜单", align : "center", valign : "middle" },
-								{ field : 'menu_url', title : '地址', align : 'center', valign : 'middle' },
-								{ field : "menu_icon", title : "图标", align : "center", valign : "middle" },
-								{ field : "menu_notice", title : "描述", align : "center", valign : "middle" },
-								{ field : "order_num", title : "排序", align : "center", valign : "middle" },
-								{ field : "opration", title : "操作", align : "center", valign : "middle",
-									formatter : function(value, row, index) {
-										return showDetailHtml(row.menu_id);
-									}
-								} ],
-						onPageChange : function(size, number) {
-							searchInfo();
-						},
-						formatNoMatches : function() {
-							return NOT_FOUND_DATAS;
-						}
-					});
-});
-
-$(function() {
+		cache : false,
+		striped : true,
+		pagination : true,
+		toolbar : '#toolbar',
+		pageSize : 10,
+		pageNumber : 1,
+		pageList : [ 5, 10, 20 ],
+		clickToSelect : true,
+		sidePagination : 'server',// 设置为服务器端分页
+		columns : [
+			{ field : "", checkbox : true },
+			{ field : "menu_id", title : "ID",titleTooltip:"编码", align : "center", valign : "middle" , visible:false},
+			{ field : "menu_name", title : "名称", align : "center", valign : "middle" },
+			{ field : "parent_menu_id", title : "父菜单", align : "center", valign : "middle" },
+			{ field : 'menu_url', title : '地址', align : 'left', valign : 'middle' },
+			{ field : "menu_icon", title : "图标", align : "center", valign : "middle" },
+			{ field : "menu_notice", title : "描述", align : "left", valign : "middle" },
+			{ field : "order_num", title : "排序", align : "center", valign : "middle" },
+			{ field : "opration", title : "操作", align : "center", valign : "middle",
+				formatter : function(value, row, index) {
+					return showDetailHtml(row.menu_id);
+				}
+			} ],
+		onPageChange : function(size, number) {
+			searchInfo();
+		},
+		formatNoMatches : function() {
+			return NOT_FOUND_DATAS;
+		}
+	});
+	//默认查询加载数据
 	searchInfo();
+	// 菜单树初始化
+	loadMenuTree();
 });
 
 function saveSuccess(response) {
@@ -101,7 +97,6 @@ function saveSuccess(response) {
 	} else {
 		$("#saveBtn").removeAttr("disabled");
 	}
-
 }
 
 // 查询表格信息
@@ -109,28 +104,40 @@ function searchInfo() {
 	var data = getFormJson("searchForm");// 获取查询条件
 	commonGetrowdatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
 }
-
+// 删除
 function deleteRow() {
 	var rowCount = GetDataGridRows("menuInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("menuInfoTable");
 		var ids = "";
-		for (var row in rows) {
-			ids += row.menu_id + ",";
+		var row = {};
+		for ( var i = 0; i < rows.length; i++) {
+			ids += rows[i].menu_id + ",";
 		}
 		var data = {
-			menu_id : ids
+			ids : ids
 		};
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data, searchUserInfo);
 	} else {
 		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
 	}
-
 }
-
+//删除调用
 function sureDelete(type, url, data, success) {
 	doAjax(POST, url, data, success);
+}
+
+//新增菜单
+function addNew() {
+	$('#title').html('');
+	$('#title').append("添加菜单");// 设置modal的标题
+	$("#isNew").val('1');
+	$('#myModal').modal({
+		show : true,
+		backdrop : 'static',
+		keyboard : false
+	});
 }
 
 // 点击编辑按钮向后台请求要查询的数据
@@ -145,7 +152,6 @@ function editRow() {
 		$("#isNew").val('0');
 		checkDetail(row[0].menu_id);
 	}
-
 }
 
 // 关闭modal画面
@@ -160,14 +166,14 @@ function closemodal() {
 	$('#myModal').modal('hide');
 }
 
-// 查看权限详细信息
+// 查看详细信息
 function checkDetail(menu_id) {
 	var data = {
 		menu_id : menu_id
 	};
 	doAjax(POST, api_check, data, checkDetailSuccess);
 }
-
+// 详情回调
 function checkDetailSuccess(response) {
 	if (response.errList.length == 0) {
 		$("#modalForm #menu_id").attr("readonly", "readonly");
@@ -190,41 +196,38 @@ function checkDetailSuccess(response) {
 
 }
 
-// 初始化角色树
-function initRole() {
-	loadRoleTree();
-	$('#roleModal').modal({
-		show : true,
-		backdrop : 'static',
-		keyboard : false
-	});
-
+// 第一级菜单数据加载
+function loadMenuTree() {
+	var data = {};
+	doAjax(POST, api_initMenuTree, data, menuTreeCallback);
 }
-function loadRoleTree() {
-	var data = {
-		id : $("#menu_id").val()
-	}
-	doAjax(POST, api_initRoleTree, data, roleTreeCallback);
-}
-
-function roleTreeCallback(response) {
+// 菜单树回调
+function menuTreeCallback(response) {
+	var nodes = response;
 	var setting = {
-		check : {
-			enable : true
+		async : {
+			enable : true,
+			url : api_child_menu,		 //取子节点
+			autoParam : [ "id", "name" ] // 参数
 		},
-		data : {
-			simpleData : {
-				enable : true
-			}
+		callback : {
+			onClick : clickNode
 		}
 	};
-	$.fn.zTree.init($("#roleTree"), setting, response);
+	$.fn.zTree.init($("#sycMenus"), setting, nodes);
+}
+// 树节点点击
+function clickNode(event, treeId, treeNode, clickFlag){
+	june.log(treeNode.name + treeNode.id + treeNode.ids);// 点击直接返回节点对象treeNode
+	//点击节点做查询子菜单
+	var data = {parent_menu_id:treeNode.id};// 获取查询条件
+	commonGetrowdatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 // 关闭角色选择modal
 function closerolemodal() {
 	$('#roleModal').modal('hide');
 }
-// 角色选择画面确认按钮压下
+// 菜单选择节点被点击
 function roleSureClick() {
 	var treeObj = $.fn.zTree.getZTreeObj("roleTree");
 	var nodes = treeObj.getCheckedNodes(true);
@@ -251,16 +254,4 @@ function roleSureClick() {
 	.validateField('roleName');
 	$('#treeModal').modal('hide');
 	$('#roleModal').modal('hide');
-}
-
-// 新增权限
-function addNew() {
-	$('#title').html('');
-	$('#title').append("添加菜单");// 设置modal的标题
-	$("#isNew").val('1');
-	$('#myModal').modal({
-		show : true,
-		backdrop : 'static',
-		keyboard : false
-	});
 }

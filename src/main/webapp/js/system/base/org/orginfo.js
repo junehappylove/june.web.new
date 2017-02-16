@@ -164,14 +164,12 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("orgInfoTable");
 		var rowIds = "";
-		 for(var row in rows)
-		 {
-			rowIds += row.orgId + ",";
-		 }
-		 var data = {
-		      orgId:rowIds       
-		 }
-
+		for ( var i = 0; i < rows.length; i++) {
+			rowIds += rows[i].orgId + ",";
+		}
+		var data = {
+		    orgId:rowIds       
+		}
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, contextPath
 				+ "/system/org/deleteSelected", data, searchUserInfo);
 	} else {

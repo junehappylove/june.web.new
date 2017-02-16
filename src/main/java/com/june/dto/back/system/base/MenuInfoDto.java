@@ -13,17 +13,16 @@ package com.june.dto.back.system.base;
 import com.june.common.PageDTO;
 
 /**
- * 
- * 分配菜单用dto <br>
+ * 权限设计分配菜单使用
+ * MenuInfoDto <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
- * @date 2016年5月20日 下午12:16:45
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年2月16日 下午7:40:20
+ * @version 1.0.0
  */
 public class MenuInfoDto extends PageDTO<MenuInfoDto> {
 
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = 1000L;
 	private String id;// 菜单id
 	private String text;// 菜单名

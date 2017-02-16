@@ -22,6 +22,7 @@ import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
 import com.june.common.annotation.MethodLog;
+import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.SysMenuDto;
 import com.june.service.back.system.base.menu.SysMenuService;
 
@@ -147,14 +148,40 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 	@MethodLog(module = "系统菜单", remark = "删除系统菜单信息", operateType = Constants.OPERATE_TYPE_DELETE)
 	public void deleteSelected(HttpServletRequest request, HttpServletResponse response,
 			SysMenuDto menu) throws Exception {
-		String ids = menu.getUserId();
+		/*//
+		String ids = menu.getMenu_id();
 		if (ids != null) {
 			for (int i = 0; i < ids.split(",").length; i++) {
-				menu.setUserId(ids.split(",")[i]);
+				menu.setMenu_id(ids.split(",")[i]);
 				sysMenuService.deleteDtoById(menu);
 			}
-		}
+		}//*/
+		sysMenuService.deleteDtoByIds(menu);
 		message(response,"info_delete_success", MESSAGE_INFO);
+	}
+
+	/**
+	 * 初始化第一级菜单树
+	 * @param request
+	 * @param response
+	 * @date 2017年2月16日 下午8:03:31
+	 * @writer junehappylove
+	 */
+	@RequestMapping("/initMenuTree")
+	protected void initMenuTree(HttpServletRequest request, HttpServletResponse response){
+		TreeDto tree = new TreeDto();
+		tree.setPid("0");//设置父节点 
+		tree.setTree(sysMenuService.getTree(tree));
+		toJson(tree.getTree(), response);
+	}
+	
+	@RequestMapping("/childMenu")
+	protected void childMenu(HttpServletRequest request, HttpServletResponse response){
+		TreeDto tree = new TreeDto();
+		fillRequestDto(request, tree);
+		tree.setPid(tree.getId());//设置父节点 
+		tree.setTree(sysMenuService.getTree(tree));
+		toJson(tree.getTree(), response);
 	}
 }
 

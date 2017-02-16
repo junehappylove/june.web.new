@@ -10,11 +10,9 @@
 
 package com.june.dto.back.login;
 
-import java.io.Serializable;
-
 import com.june.common.PageDTO;
 
-public class ButtonDto extends PageDTO<ButtonDto> implements Serializable{
+public class ButtonDto extends PageDTO<ButtonDto> {
 
 	/**
 	 * long serialVersionUID

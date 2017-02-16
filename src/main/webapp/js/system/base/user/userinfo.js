@@ -164,8 +164,8 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("userInfoTable");
 		var rowIds = "";
-		for(var row in rows){
-			rowIds += row.userId + ",";
+		for ( var i = 0; i < rows.length; i++) {
+			rowIds += rows[i].userId + ",";
 		}
 		var data = {
 			userId:rowIds       

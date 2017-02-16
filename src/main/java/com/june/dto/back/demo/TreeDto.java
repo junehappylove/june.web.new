@@ -15,20 +15,20 @@ import java.util.List;
 
 import com.june.common.BaseDTO;
 
-/**  
-* @Description: 树形结构用dto
-* @author	caiyang
-* @date 2015年10月9日 上午8:59:54 
-* @version V1.0  
+/**
+ * 树形结构用dto
+ * TreeDto <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年2月16日 下午6:47:19
+ * @version 1.0.0
  */
 public class TreeDto extends BaseDTO implements Serializable{
 
-	/**
-	 * long serialVersionUID
-	 */
-	private static final long serialVersionUID = -4829530292506669871L;
+	private static final long serialVersionUID = 20170216L;
 	private String id; //节点id
-    private String pId;//父节点id
+    private String pid;//父节点id
     private String name ; //节点显示的内容
     private boolean open; //节点的状态，展开(open)还是闭合(closed)，
     private boolean checked;//节点是否勾选
@@ -64,12 +64,11 @@ public class TreeDto extends BaseDTO implements Serializable{
 	public void setOpen(boolean open) {
 		this.open = open;
 	}
-	
-	public String getpId() {
-		return pId;
+	public String getPid() {
+		return pid;
 	}
-	public void setpId(String pId) {
-		this.pId = pId;
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 	public String getIsParent() {
 		return isParent;

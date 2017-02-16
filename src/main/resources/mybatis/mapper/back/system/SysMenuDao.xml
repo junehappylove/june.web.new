@@ -23,6 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="menu_name != null and menu_name != ''">
 			AND T1.MENU_NAME LIKE '%${menu_name}%'
 		</if>
+		<if test="parent_menu_id != null and parent_menu_id != ''">
+			AND T1.PARENT_MENU_ID = #{parent_menu_id}
+		</if>
 		ORDER BY T1.PARENT_MENU_ID,T1.ORDER_NUM
 	</sql>
 
@@ -118,9 +121,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="menu_id != null and menu_id != ''">
             AND MENU_ID = #{menu_id}
         </if>
+        <if test="appid != null and appid != ''">
+        	<!-- 根据主键删除，为保证通用性，推荐使用此方法 -->
+            AND MENU_ID = #{appid}
+        </if>
         <if test="parent_menu_id != null and parent_menu_id != ''">
             AND PARENT_MENU_ID = #{parent_menu_id}
         </if>
 	</delete>
 	
+	<!-- 查询树形数据 -->
+	<select id="getTree" parameterType="com.june.dto.back.common.TreeDto" 
+		resultType="com.june.dto.back.common.TreeDto">
+		SELECT
+			m.MENU_ID 		AS id,
+			m.PARENT_MENU_ID AS pid,
+			m.MENU_NAME 	AS name,
+			m.MENU_URL 		AS ids, <!-- url最好其他属性接受参考ztree的api -->
+			'closed' 		AS open,
+			m.Z_IS_PARENT 	AS isParent
+		FROM 
+			sys_menu m 
+		WHERE 
+			1=1 
+		AND 
+			m.PARENT_MENU_ID = #{pid}
+	</select>
 </mapper>

@@ -1,18 +1,21 @@
 package com.june.dto.back.login;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.june.common.AbstractDTO;
 
 /**
  * 系统菜单
+ * MenuDto <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年2月16日 下午7:38:15
+ * @version 1.0.0
  */
-public class MenuDto extends AbstractDTO implements Serializable{
+public class MenuDto extends AbstractDTO {
 
-	private static final long serialVersionUID = 1797576506000676225L;
-	// 用户id
-	private String userId;
+	private static final long serialVersionUID = 20160216;
 	// 菜单id
 	private String menuId;
 	// 菜单的图标地址
@@ -54,122 +57,58 @@ public class MenuDto extends AbstractDTO implements Serializable{
 		this.state = state;
 	}
 
-	/**
-	 * @return the userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * @return the menuId
-	 */
 	public String getMenuId() {
 		return menuId;
 	}
 
-	/**
-	 * @param menuId
-	 *            the menuId to set
-	 */
 	public void setMenuId(String menuId) {
 		this.menuId = menuId;
 	}
 
-	/**
-	 * @return the icon
-	 */
 	public String getIcon() {
 		return icon;
 	}
 
-	/**
-	 * @param icon
-	 *            the icon to set
-	 */
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 
-	/**
-	 * @return the pid
-	 */
 	public String getPid() {
 		return pid;
 	}
 
-	/**
-	 * @param pid
-	 *            the pid to set
-	 */
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
 
-	/**
-	 * @return the url
-	 */
 	public String getUrl() {
 		return url;
 	}
 
-	/**
-	 * @param url
-	 *            the url to set
-	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-	/**
-	 * @return the menuName
-	 */
 	public String getMenuName() {
 		return menuName;
 	}
 
-	/**
-	 * @param menuName
-	 *            the menuName to set
-	 */
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
 	}
 
-	/**
-	 * @return the ord
-	 */
 	public Integer getOrderNum() {
 		return orderNum;
 	}
 
-	/**
-	 * @param orderNum
-	 *            the ord to set
-	 */
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
 	}
 
-	/**
-	 * @return the menus
-	 */
 	public List<MenuDto> getMenus() {
 		return menus;
 	}
 
-	/**
-	 * @param menus
-	 *            the menus to set
-	 */
 	public void setMenus(List<MenuDto> menus) {
 		this.menus = menus;
 	}

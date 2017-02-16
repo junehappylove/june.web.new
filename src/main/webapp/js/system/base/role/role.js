@@ -189,8 +189,8 @@ function deleteRow() {
 		// 获取选中行
 		var rows = GetSelectedRowsObj("roleInfoTable");
 		var rowIds = "";
-		for(var row in rows){
-			rowIds += row.roleId + ",";
+		for ( var i = 0; i < rows.length; i++) {
+			rowIds += rows[i].roleId + ",";
 		}
 		var data = {
 			roleId:rowIds       

@@ -10,35 +10,31 @@
 
 package com.june.dto.back.common;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.june.common.PageDTO;
 
 /**
- * 树形结构用dto
- *  <br>
+ * 树形结构用dto <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
  * @blog https://www.github.com/junehappylove
  * @date 2016年12月15日 上午2:37:43
  */
-public class TreeDto extends PageDTO<TreeDto> implements Serializable {
+public class TreeDto extends PageDTO<TreeDto> {
 
-	/**
-	 * long serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
-	private String id; // 节点id
-	private String pId;// 父节点id
-	private String name; // 节点显示的内容
-	private String open; // 节点的状态，展开(open)还是闭合(closed)，
+	private static final long serialVersionUID = 20170216L;
+	private String id; 		// 节点id
+	private String pid;		// 父节点id
+	private String name; 	// 节点显示的内容
+	private String open; 	// 节点的状态，展开(open)还是闭合(closed)，
 	private boolean checked;// 节点是否勾选
 	private String isParent = "false";
 	private List<TreeDto> children;
-	private String roleId;
-	private String filter;// 过滤条件
+	private String filter;	// 过滤条件
 	private String nocheck;
+	private String url;//附加信息
+	private String roleId;//附加信息
 
 	public String getNocheck() {
 		return nocheck;
@@ -100,14 +96,14 @@ public class TreeDto extends PageDTO<TreeDto> implements Serializable {
 		this.open = open;
 	}
 
-	public String getpId() {
-		pId = pId == null ? null : pId.trim();
-		return pId;
+	public String getPid() {
+		pid = pid == null ? null : pid.trim();
+		return pid;
 	}
 
-	public void setpId(String pId) {
-		pId = pId == null ? null : pId.trim();
-		this.pId = pId;
+	public void setPid(String pid) {
+		pid = pid == null ? null : pid.trim();
+		this.pid = pid;
 	}
 
 	public String getIsParent() {
@@ -129,6 +125,14 @@ public class TreeDto extends PageDTO<TreeDto> implements Serializable {
 	@Override
 	protected String getDtoName() {
 		return "树";
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }
