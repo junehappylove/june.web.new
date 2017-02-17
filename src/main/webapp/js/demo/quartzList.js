@@ -130,7 +130,7 @@ $(function(){
 							triggerName : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ 'trigger名称' ])
 									}
 								}
@@ -138,12 +138,12 @@ $(function(){
 							startTime : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '开始执行时间' ])
 									},
 									date: {
 					                    format: 'YYYY-MM-DD HH:mm:ss',
-					                    message: getMessageFromList("ErrorFormat",['开始执行时间'])
+					                    message: $message("ErrorFormat",['开始执行时间'])
 					                },
 					                callback: {
 					                    message: '开始日期不能大于结束日期',
@@ -157,7 +157,7 @@ $(function(){
 								validators : {
 									date: {
 					                    format: 'YYYY-MM-DD HH:mm:ss',
-					                    message: getMessageFromList("ErrorFormat",['执行结束时间'])
+					                    message: $message("ErrorFormat",['执行结束时间'])
 					                },
 					                callback: {
 					                    message: '结束日期不能小于开始日期',
@@ -171,7 +171,7 @@ $(function(){
 								validators : {
 				                 regexp: { 
 									regexp: /^[-]{0,1}[0-9]{1,}$/, 
-									message:  getMessageFromList("Errornum",['执行次数'])
+									message:  $message("Errornum",['执行次数'])
 									} 
 								}
 							},
@@ -179,7 +179,7 @@ $(function(){
 								validators : {
 				                 regexp: { 
 									regexp: /^[-]{0,1}[0-9]{1,}$/, 
-									message:  getMessageFromList("Errornum",['执行间隔'])
+									message:  $message("Errornum",['执行间隔'])
 									} 
 								}
 							}
@@ -207,7 +207,7 @@ $(function(){
 								triggerName : {
 									validators : {
 										notEmpty : {
-											message : getMessageFromList(
+											message : $message(
 													"ErrorMustInput", [ 'trigger名称' ])
 										}
 									}
@@ -215,7 +215,7 @@ $(function(){
 								cronExpress : {
 									validators : {
 										notEmpty : {
-											message : getMessageFromList(
+											message : $message(
 													"ErrorMustInput", [ 'cron表达式' ])
 										}
 									}
@@ -255,7 +255,7 @@ $(function(){
 });
 function search()
 {
-	commonGetrowdatas("quartzList",{},contextPath + "/quatrz/getquartzlist","commonCallback",true);
+	commonRowDatas("quartzList",{},contextPath + "/quatrz/getquartzlist","commonCallback",true);
 }
 
 function pause(name,group,state)

@@ -56,7 +56,7 @@ $(document).ready(function() {
 //                ,//密码强度验证，字母+数字+特殊字符
 //	                regexp: { 
 //						regexp: /^(?!\d+$)(?![a-zA-Z]+$)(?![@#$%^&]+$)[\da-zA-Z@#$%^&]+$/, 
-//						message: getMessageFromList("ErrorFormat",['电话号码'])
+//						message: $message("ErrorFormat",['电话号码'])
 //				    } 
                 }
             }

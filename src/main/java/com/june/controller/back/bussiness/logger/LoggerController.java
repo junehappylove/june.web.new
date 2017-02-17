@@ -180,7 +180,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 				messageErrorNotExist(response);
 			} else {
 				// Logger存在的情况进行更新
-				loggerService.updateDtoById(loggerDto);// Logger信息更新
+				loggerService.updateDto(loggerDto);// Logger信息更新
 				messageUpdateSuccess(response);
 			}
 		} else {
@@ -208,7 +208,7 @@ public class LoggerController extends BaseController<LoggerDto> {
 			String[] ids = loggerIds.split(",");
 			for (int i = 0; i < ids.length; i++) {
 				loggerDto.setLoggerId(ids[i]);
-				loggerService.deleteDtoById(loggerDto);
+				loggerService.deleteDto(loggerDto);
 			}
 		}
 		messageDeleteSuccess(response);

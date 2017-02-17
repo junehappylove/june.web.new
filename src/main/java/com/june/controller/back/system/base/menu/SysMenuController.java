@@ -4,6 +4,7 @@
  */
 package com.june.controller.back.system.base.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,12 @@ import com.june.common.Constants;
 import com.june.common.MessageDto;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.common.TreeDto;
+import com.june.dto.back.system.base.FunctionDto;
 import com.june.dto.back.system.base.SysMenuDto;
+import com.june.dto.back.system.base.SysQxsjDto;
+import com.june.service.back.system.base.menu.FunctionService;
 import com.june.service.back.system.base.menu.SysMenuService;
+import com.june.service.back.system.base.role.SysQxsjService;
 
 /**
  * SysMenuController:系统菜单 <br>
@@ -39,6 +44,10 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 
     @Autowired
     private SysMenuService sysMenuService;
+    @Autowired
+    private FunctionService functionService;
+    @Autowired
+    private SysQxsjService qxsjService;
 
     @RequestMapping("/")
     @MethodLog(module = "系统菜单", remark = "系统菜单页面初始化", operateType = Constants.OPERATE_TYPE_INIT)
@@ -135,7 +144,7 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 				message(response,"error_info_not_exist", MESSAGE_ERRO,menu.getDtoName(), menu.getMenu_name());
 			} else {
 				// 系统菜单存在的情况进行更新
-				sysMenuService.updateDtoById(menu);// 系统菜单信息更新
+				sysMenuService.updateDto(menu);// 系统菜单信息更新
 				message(response,"info_edit_success", MESSAGE_INFO, menu.getDtoName());
 			}
 		} else {
@@ -148,14 +157,6 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 	@MethodLog(module = "系统菜单", remark = "删除系统菜单信息", operateType = Constants.OPERATE_TYPE_DELETE)
 	public void deleteSelected(HttpServletRequest request, HttpServletResponse response,
 			SysMenuDto menu) throws Exception {
-		/*//
-		String ids = menu.getMenu_id();
-		if (ids != null) {
-			for (int i = 0; i < ids.split(",").length; i++) {
-				menu.setMenu_id(ids.split(",")[i]);
-				sysMenuService.deleteDtoById(menu);
-			}
-		}//*/
 		sysMenuService.deleteDtoByIds(menu);
 		message(response,"info_delete_success", MESSAGE_INFO);
 	}
@@ -182,6 +183,157 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 		tree.setPid(tree.getId());//设置父节点 
 		tree.setTree(sysMenuService.getTree(tree));
 		toJson(tree.getTree(), response);
+	}
+	
+	@RequestMapping("/selectQxsj/{menuId}")
+	protected ModelAndView selectQxsj(HttpServletRequest request, HttpServletResponse response,@PathVariable String menuId){
+		ModelAndView result = null;
+		result = new ModelAndView("system/base/menu/qxsj_btn");
+		SysMenuDto menu = new SysMenuDto();
+		menu.setMenu_id(menuId);
+		menu = sysMenuService.getDtoById(menu);
+		result.addObject("menu", menu);
+		return result;
+	}
+	
+	/**
+	 * 添加菜单权限按钮
+	 * @param request
+	 * @param response
+	 * @param menu
+	 * @throws Exception
+	 * @date 2017年2月18日 上午2:51:45
+	 * @writer junehappylove
+	 */
+	@RequestMapping("/menuQxsjSave")
+	protected void menuQxsjSave(HttpServletRequest request, HttpServletResponse response,SysMenuDto menu) throws Exception{
+		String idss = menu.getIds();//权限code
+		String menuId = menu.getMenu_id();//取当前操作的菜单id
+		String pid = null;
+		if(StringUtils.isNotEmpty(menuId)){
+			menu = sysMenuService.getDtoById(menu);//这条菜单详情
+			pid = menu.getParent_menu_id();
+		}
+		FunctionDto function = null;
+		SysQxsjDto qxsj = new SysQxsjDto();
+		List<FunctionDto> list = null;
+		List<FunctionDto> list2 = null;
+		if(StringUtils.isNotEmpty(idss)){
+			list = new ArrayList<>();
+			function = new FunctionDto();
+			function.setBtn_3_id(menuId);//设置菜单id用于查询
+			list2 = functionService.getDtos(function);//查询已经存在的权限功能列表
+			String[] ids = idss.split(",");
+			for (String code : ids) {
+				function = new FunctionDto();
+				qxsj.setQxsj_code(code);
+				qxsj = qxsjService.getDtoById(qxsj);//取此条权限实体
+				function.setBtn_3_id(menuId);
+				function.setBtn_1_id(pid);
+				function.setBtn_2_id(pid);//TODO 找二级菜单id
+				function.setBtn_page_id(code);//权限码
+				function.setBtn_name(qxsj.getQxsj_name());//
+				function.setBtn_func(qxsj.getQxsj_name());
+				function.setBtn_url(menu.getMenu_url());//
+				super.filluser(function);
+				if( ! exitFunction(function, list2)){
+					list.add(function);
+				}//不存在才添加
+			}
+			//先删除原来的权限，在添加新权限/
+			/*
+			FunctionDto temp = new FunctionDto();
+			temp.setBtn_3_id(menuId);
+			functionService.deleteDto(temp);//*/
+			//批量添加
+			functionService.addList(list);
+			messageSaveSuccess(response);
+		}else{
+			message(response, "menu_code_null", MESSAGE_ERRO);
+		}
+	}
+	
+	/**
+	 * 删除按钮
+	 * @param request
+	 * @param response
+	 * @param menu
+	 * @throws Exception
+	 * @date 2017年2月18日 上午3:59:50
+	 * @writer junehappylove
+	 */
+	@RequestMapping("/menuQxsjDelete")
+	protected void menuQxsjDelete(HttpServletRequest request, HttpServletResponse response,SysMenuDto menu) throws Exception{
+		String idss = menu.getIds();//权限code
+		String menuId = menu.getMenu_id();//取当前操作的菜单id
+		String pid = null;
+		if(StringUtils.isNotEmpty(menuId)){
+			menu = sysMenuService.getDtoById(menu);//这条菜单详情
+			pid = menu.getParent_menu_id();
+		}
+		FunctionDto function = null;
+		SysQxsjDto qxsj = new SysQxsjDto();
+		List<FunctionDto> list = null;
+		List<FunctionDto> list2 = null;
+		if(StringUtils.isNotEmpty(idss)){
+			list = new ArrayList<>();
+			function = new FunctionDto();
+			function.setBtn_3_id(menuId);//设置菜单id用于查询
+			list2 = functionService.getDtos(function);//查询已经存在的权限功能列表
+			String[] ids = idss.split(",");
+			for (String code : ids) {
+				function = new FunctionDto();
+				qxsj.setQxsj_code(code);
+				qxsj = qxsjService.getDtoById(qxsj);//取此条权限实体
+				function.setBtn_3_id(menuId);
+				function.setBtn_1_id(pid);
+				function.setBtn_2_id(pid);//TODO 找二级菜单id
+				function.setBtn_page_id(code);//权限码
+				function.setBtn_name(qxsj.getQxsj_name());//
+				function.setBtn_func(qxsj.getQxsj_name());
+				function.setBtn_url(menu.getMenu_url());//
+				super.filluser(function);
+				if(exitFunction(function, list2)){
+					list.add(function);
+				}//存在这条数据才去删除
+			}
+			// 批量删除
+			functionService.deleteList(list);
+			// TODO 删除权限按钮sys_function还应该关联删除sys_role_function的相关关系记录
+			messageDeleteSuccess(response);
+		}else{
+			message(response, "menu_code_null", MESSAGE_ERRO);
+		}
+	}
+	/**
+	 * 判断在功能表中，这个功能是否存在
+	 * @param function
+	 * @param list
+	 * @return
+	 * @date 2017年2月18日 上午3:07:55
+	 * @writer junehappylove
+	 */
+	private boolean exitFunction(FunctionDto function, List<FunctionDto> list) {
+		boolean ret = false;
+		if (list == null) {
+			return false;
+		}
+		if (list.size() == 0) {
+			return false;
+		}
+		if (function == null) {
+			return true;
+		}
+		for (FunctionDto temp : list) {
+			if (temp.getBtn_3_id().equals(function.getBtn_3_id())
+					&& temp.getBtn_page_id().equals(function.getBtn_page_id())) {
+				ret = true;
+				break;
+			} else {
+				ret = false;
+			}
+		}
+		return ret;
 	}
 }
 

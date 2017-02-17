@@ -168,7 +168,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 			if (roleInfoDtoByName != null) {
 				message(response,"error_info_exist",  MESSAGE_ERRO,roleInfoDtoByName.getDtoName(), roleInfoDto.getRoleName());
 			} else {
-				roleService.updateDtoById(roleInfoDto);
+				roleService.updateDto(roleInfoDto);
 				message(response,"info_edit_success", MESSAGE_INFO,roleInfoDto.getDtoName());
 			}
 		} else {

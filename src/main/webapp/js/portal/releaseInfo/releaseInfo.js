@@ -32,7 +32,7 @@ function submitInfo(){
 //提交资讯前弹出确认消息
 function showConfirmbebeforeSubmit(){
 	if(check())	{
-		showConfirm("submitInfo",getMessageFromList("SubmitContent",null),null,null,contextPath + "/portal/ReleaseInfo/submitContent",submitsuccess,false);
+		showConfirm("submitInfo",$message("SubmitContent",null),null,null,contextPath + "/portal/ReleaseInfo/submitContent",submitsuccess,false);
 	}
 }
 

@@ -85,7 +85,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	}
 	
 	@RequestMapping("/getAllList")
-	@MethodLog(module = "权限设计", remark = "获取所有权限设计信息", operateType = Constants.OPERATE_TYPE_SEARCH)
+	@MethodLog(module = "权限设计", remark = "获取所有权限设计信息,不分页", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public void getAllList(HttpServletRequest request, HttpServletResponse response) {
 		SysQxsjDto sysQxsjDto = new SysQxsjDto();
 		fillRequestDto(request, sysQxsjDto);
@@ -206,7 +206,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 				message(response,"error_info_not_exist", MESSAGE_ERRO,sysQxsjDto.getDtoName(), sysQxsjDto.getUserId());
 			} else {
 				// 权限设计存在的情况进行更新
-				qxsjService.updateDtoById(sysQxsjDto);// 权限设计信息更新
+				qxsjService.updateDto(sysQxsjDto);// 权限设计信息更新
 				message(response,"info_edit_success", MESSAGE_INFO, sysQxsjDto.getDtoName());
 			}
 		} else {
@@ -224,7 +224,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 		if (qxsjIds != null) {
 			for (int i = 0; i < qxsjIds.split(",").length; i++) {
 				sysQxsjDto.setUserId(qxsjIds.split(",")[i]);
-				qxsjService.deleteDtoById(sysQxsjDto);
+				qxsjService.deleteDto(sysQxsjDto);
 			}
 		}
 		message(response,"info_delete_success", MESSAGE_INFO);

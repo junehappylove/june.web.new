@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.system.base.menu.FunctionDao">
+	<sql id="selectData">
+		SELECT
+			T1.BUTTON_ID 	AS btn_id,
+			T1.BUTTON_1_ID	AS btn_1_id,
+			T1.BUTTON_2_ID	AS btn_2_id,
+			T1.BUTTON_3_ID	AS btn_3_id,
+			T1.BUTTON_PAGE_ID	AS btn_page_id,
+			T1.BUTTON_NAME 		AS btn_name,
+			T1.BUTTON_FUNCTION	AS btn_func,
+			T1.BUTTON_URL 	AS btn_url,
+			T1.ADD_USER_ID 	AS addUserId,
+			T1.ADD_TIME 	AS addTime,
+			T1.UPDATE_USER_ID AS updateUserId,
+			T1.UPDATE_TIME 	AS updateTime,
+            T1.VERSION 		AS version
+		FROM
+			sys_function T1
+		WHERE 1=1
+		<if test="btn_name != null and btn_name != ''">
+			AND T1.BUTTON_NAME LIKE '%${btn_name}%'
+		</if>
+		<if test="btn_id != null and btn_id != ''">
+			AND T1.BUTTON_ID = #{btn_id}
+		</if>
+		<if test="btn_3_id != null and btn_3_id != ''">
+			AND T1.BUTTON_3_ID = #{btn_3_id}
+		</if>
+		<if test="btn_page_id != null and btn_page_id != ''">
+			AND T1.BUTTON_PAGE_ID = #{btn_page_id}
+		</if>
+	</sql>
+
+	<!-- 根据列表 -->
+	<select id="getPageList" resultType="com.june.dto.back.system.base.FunctionDto"
+		parameterType="com.june.dto.back.system.base.FunctionDto">
+		<include refid="selectData" />
+		<include refid="pagelimit"/>
+	</select>
+	<!-- 分页现在条件 -->
+	<sql id="pagelimit">
+		limit #{start}, #{pageSize}
+	</sql>
+	<!-- 查询总条数 -->
+	<select id="getTotal" resultType="int" parameterType="com.june.dto.back.system.base.FunctionDto">
+		SELECT COUNT(1) FROM (<include refid="selectData"/>) TEMP
+	</select>
+	<!-- 获取所有 -->
+	<select id="getList" resultType="com.june.dto.back.system.base.FunctionDto"
+		parameterType="com.june.dto.back.system.base.FunctionDto">
+		<include refid="selectData" />
+	</select>
+	<!-- 添加 -->
+	<insert id="add" parameterType="com.june.dto.back.system.base.FunctionDto">
+		INSERT INTO sys_function (
+			BUTTON_ID,
+			BUTTON_1_ID,
+			BUTTON_2_ID,
+			BUTTON_3_ID,
+			BUTTON_PAGE_ID,
+			BUTTON_NAME,
+			BUTTON_FUNCTION,
+			BUTTON_URL,
+			ADD_USER_ID,
+			ADD_TIME,
+			UPDATE_USER_ID,
+			UPDATE_TIME,
+            VERSION
+		) VALUES (
+			#{btn_id},
+			#{btn_1_id},
+			#{btn_2_id},
+			#{btn_3_id},
+			#{btn_page_id},
+			#{btn_name},
+			#{btn_func},
+			#{btn_url},
+			#{sys_user},
+			NOW(),
+			#{sys_user},
+			NOW(),
+			0 )
+	</insert>
+	
+	<!-- 批量添加权限按钮信息 -->
+	<insert id="addList" parameterType="java.util.List">
+		<!-- <selectKey resultType="long" keyProperty="btn_id" order="AFTER">
+				SELECT LAST_INSERT_ID() 
+			</selectKey> 
+		  -->
+		<!-- BUTTON_ID 是主键，如果mysql中设置为主键自动增长，请忽略此属性 -->
+		<![CDATA[ INSERT INTO sys_function
+		  ( BUTTON_ID,
+			BUTTON_1_ID,
+			BUTTON_2_ID,
+			BUTTON_3_ID,
+			BUTTON_PAGE_ID,
+			BUTTON_NAME,
+			BUTTON_FUNCTION,
+			BUTTON_URL,
+			ADD_USER_ID,
+			ADD_TIME,
+			UPDATE_USER_ID,
+			UPDATE_TIME,
+            VERSION ) VALUES ]]>
+		<foreach collection="list" item="item" index="index" separator=",">
+		   (
+		    #{item.btn_id},
+			#{item.btn_1_id},
+			#{item.btn_2_id},
+			#{item.btn_3_id},
+			#{item.btn_page_id},
+			#{item.btn_name},
+			#{item.btn_func},
+			#{item.btn_url},
+			#{item.sys_user},
+			NOW(),
+			#{item.sys_user},
+			NOW(),
+			0
+		  )
+		</foreach>
+	</insert>
+	
+    <!-- 获取 -->
+	<select id="get" parameterType="com.june.dto.back.system.base.FunctionDto"
+		resultType="com.june.dto.back.system.base.FunctionDto">
+		SELECT
+			T1.BUTTON_ID 	AS btn_id,
+			T1.BUTTON_1_ID	AS btn_1_id,
+			T1.BUTTON_2_ID	AS btn_2_id,
+			T1.BUTTON_3_ID	AS btn_3_id,
+			T1.BUTTON_PAGE_ID	AS btn_page_id,
+			T1.BUTTON_NAME 		AS btn_name,
+			T1.BUTTON_FUNCTION	AS btn_func,
+			T1.BUTTON_URL 	AS btn_url,
+			T1.ADD_USER_ID 	AS addUserId,
+			T1.ADD_TIME 	AS addTime,
+			T1.UPDATE_USER_ID AS updateUserId,
+			T1.UPDATE_TIME 	AS updateTime,
+            T1.VERSION 		AS version
+		FROM	sys_function T1
+		WHERE	1=1
+		AND 	T1.BUTTON_ID = #{btn_id}
+	</select>
+    <!-- 更新 -->
+	<update id="update" parameterType="com.june.dto.back.system.base.FunctionDto">
+		UPDATE sys_function
+		SET
+			BUTTON_1_ID		= #{btn_1_id},
+			BUTTON_2_ID 	= #{btn_2_id},
+			BUTTON_3_ID 	= #{btn_3_id},
+			BUTTON_PAGE_ID 	= #{btn_page_id},
+			BUTTON_NAME 	= #{btn_name},
+			BUTTON_FUNCTION = #{btn_func},
+			BUTTON_URL		= #{btn_url},
+			UPD_USER_ID 	= #{sys_user},
+			UPD_TIME 		= NOW(),
+			VERSION 		= VERSION + 1
+		WHERE
+			BUTTON_ID 		= #{btn_id}
+	</update>
+	<!-- 删除 -->
+	<delete id="delete" parameterType="com.june.dto.back.system.base.FunctionDto">
+		DELETE FROM sys_function WHERE 1 = 1
+		<if test="btn_id != null and btn_id != ''">
+            AND BUTTON_ID 	= #{btn_id}
+        </if>
+        <if test="appid != null and appid != ''">
+        	<!-- 根据主键删除，为保证通用性，推荐使用此方法 -->
+            AND BUTTON_ID 	= #{appid}
+        </if>
+        <if test="btn_3_id != null and btn_3_id != ''">
+            AND BUTTON_3_ID	= #{btn_3_id}<!-- 根据叶子节点菜单id删除 -->
+        </if>
+	</delete>
+	
+	<!-- 查询树形数据 -->
+	<select id="getTree" parameterType="com.june.dto.back.common.TreeDto" 
+		resultType="com.june.dto.back.common.TreeDto">
+		SELECT
+			m.BUTTON_ID		AS id,
+			'' 				AS pid,
+			m.BUTTON_NAME 	AS name,
+			m.BUTTON_URL	AS ids, <!-- url最好其他属性接受参考ztree的api -->
+			'closed' 		AS open,
+			'false' 		AS isParent
+		FROM 
+			sys_function m 
+		WHERE 
+			1=1 
+	</select>
+</mapper>

@@ -120,4 +120,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM sys_qxsj WHERE qxsj_code=#{qxsj_code}
 	</delete>
 	
+	<!-- 查询所有权限按钮 TODO 应该根据菜单的id管连出那个菜单被选中了 -->
+	<select id="getList" resultType="com.june.dto.back.system.base.SysQxsjDto"
+		parameterType="com.june.dto.back.system.base.SysQxsjDto">
+		SELECT
+			T1.qxsj_code AS qxsj_code,
+			T1.qxsj_name AS qxsj_name,
+			T1.qxsj_type AS qxsj_type,
+			T1.qxsj_menu AS qxsj_menu,
+			T1.qxsj_sort AS qxsj_sort,
+			T1.qxsj_used AS qxsj_used,
+			T1.qxsj_text AS qxsj_text,
+			(
+				CASE
+				WHEN T1.qxsj_code IN (
+					SELECT
+						f.BUTTON_PAGE_ID AS qxsj_code
+					FROM
+						sys_function f
+					WHERE
+						f.BUTTON_3_ID = #{appid}	<!-- 这里的appid是菜单的主键id -->
+				) THEN
+					'1'
+				ELSE
+					'0'
+				END
+			) AS qxsj_stat,
+			T1.add_user_id AS addUserId,
+			T1.upd_user_id AS updUserId,
+			T1.add_time AS addTime,
+			T1.upd_time AS updTime
+		FROM
+			sys_qxsj T1
+		WHERE
+			1 = 1
+		<if test="qxsj_code != null and qxsj_code != ''"> 
+			AND T1.qxsj_code like '%${qxsj_code}%' 
+		</if> 
+		<if test="qxsj_name != null and qxsj_name != ''"> 
+			AND T1.qxsj_name like '%${qxsj_name}%'  
+		</if> 
+		<if test="qxsj_type != null and qxsj_type != ''"> 
+			AND T1.qxsj_type = #{qxsj_type}  
+		</if> 
+		<if test="qxsj_used != null and qxsj_used != ''"> 
+			AND T1.qxsj_used = #{qxsj_used}  
+		</if> 
+		ORDER BY T1.qxsj_type,T1.qxsj_sort,T1.qxsj_code
+	</select>
 </mapper>

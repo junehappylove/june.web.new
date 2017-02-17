@@ -10,29 +10,29 @@ $(document).ready(function() {
 	    	username: {
 	            validators: {
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['用户名'])
+	                    message: $message("ErrorMustInput",['用户名'])
 	                },
 	                stringLength: {
 	                    min: 6,
 	                    max: 30,
-	                    message: getMessageFromList("ErrorLength2",['username','6','30'])
+	                    message: $message("ErrorLength2",['username','6','30'])
 	                }
 	            }
 	        },
 	        email: {
 	            validators: {
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['邮箱'])
+	                    message: $message("ErrorMustInput",['邮箱'])
 	                },
 	                emailAddress: {
-	                    message: getMessageFromList("ErrorFormat",['邮箱'])
+	                    message: $message("ErrorFormat",['邮箱'])
 	                }
 	            }
 	        },
 	        password: {
 	            validators: {
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['密码'])
+	                    message: $message("ErrorMustInput",['密码'])
 	                }
 	            }
 	        },
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	                    message: 'The value is not a valid date'
 	                },
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['日期'])
+	                    message: $message("ErrorMustInput",['日期'])
 	                }
 	            }
 	        },
@@ -54,7 +54,7 @@ $(document).ready(function() {
 	                    message: 'The value is not a valid date'
 	                },
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['开始日期'])
+	                    message: $message("ErrorMustInput",['开始日期'])
 	                },
 	                callback: {
 	                    message: '开始日期不能大于结束日期',
@@ -67,7 +67,7 @@ $(document).ready(function() {
 	        endDate: {
 	            validators: {
 	            	notEmpty: {
-	                	message: getMessageFromList("ErrorMustInput",['结束日期'])
+	                	message: $message("ErrorMustInput",['结束日期'])
 	            	},
 	                date: {
 	                    format: 'YYYY-MM-DD',

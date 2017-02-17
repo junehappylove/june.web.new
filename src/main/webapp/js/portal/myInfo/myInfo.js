@@ -85,7 +85,7 @@ $(function(){
 
 //检索表格数据
 function searchMyInfo(){
-	commonGetrowdatas("MyInfoGrid",getSearchData(),contextPath + "/portal/MyInfo/search","commonCallback",true);
+	commonRowDatas("MyInfoGrid",getSearchData(),contextPath + "/portal/MyInfo/search","commonCallback",true);
 }
 
 function getSearchData(){
@@ -150,7 +150,7 @@ function checkRow(contentId){
 }
 //批量提交资讯
 function batchSubmit(){
-	var selectRows = GetDataGridRows("MyInfoGrid");
+	var selectRows = selectedCount("MyInfoGrid");
 	if(selectRows>0)	{
 		var rows = $('#MyInfoGrid').datagrid('getSelections');
 		var contentId="";
@@ -165,16 +165,16 @@ function batchSubmit(){
 			};
 			doAjax(POST,contextPath + "/portal/MyInfo/batchSubmit",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
+			showOnlyMessage(ERROR,$message("SelectSubmitRow",null));
 		}
 	}else{
-		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
+		showOnlyMessage(ERROR,$message("SelectRow",null));
 	}
 }
 
 //批量删除资讯
 function batchDel(){
-	var selectRows = GetDataGridRows("MyInfoGrid");
+	var selectRows = selectedCount("MyInfoGrid");
 	if(selectRows>0)	{
 		var rows = $('#MyInfoGrid').datagrid('getSelections');
 		var contentId="";
@@ -190,9 +190,9 @@ function batchDel(){
 			};
 			doAjax(POST,contextPath + "/portal/MyInfo/batchDel",data,"submitRowSuccess",null,false);
 		}else{
-			showOnlyMessage(ERROR,getMessageFromList("SelectSubmitRow",null));
+			showOnlyMessage(ERROR,$message("SelectSubmitRow",null));
 		}
 	}else{
-		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null));
+		showOnlyMessage(ERROR,$message("SelectRow",null));
 	}
 }

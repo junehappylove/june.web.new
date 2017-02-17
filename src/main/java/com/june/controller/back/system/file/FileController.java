@@ -235,7 +235,7 @@ public class FileController extends BaseController<FileDTO> {
 			user = userInfoService.getDtoById(user);
 			String userImage = file_code;
 			user.setUserImage(userImage);
-			userInfoService.updateDtoById(user);//要只更新用户的头像数据
+			userInfoService.updateDto(user);//要只更新用户的头像数据
 			//生成一条关系信息记录,相应设置其他记录为历史数据
 			String module_code = "SYSTEM";//所属模块
 			FileAppDTO fadto = null;
@@ -243,7 +243,7 @@ public class FileController extends BaseController<FileDTO> {
 			fadto.setApp_code(appid);
 			fadto.setModule_code(module_code);
 			fadto.setFile_history("T");//是历史记录
-			fileAppService.updateDtoById(fadto);
+			fileAppService.updateDto(fadto);
 			fadto = new FileAppDTO(appid,file_code,module_code);
 			fadto.setFile_history("F");//不是历史记录
 			fileAppService.addDto(fadto);

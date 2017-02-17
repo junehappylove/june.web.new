@@ -12,7 +12,7 @@ $(function() {
 	    	archiveName: {
 	            validators: {
 	                notEmpty: {
-	                    message: getMessageFromList("ErrorMustInput",['档案名称'])
+	                    message: $message("ErrorMustInput",['档案名称'])
 	                }
 	            }
 	        }
@@ -92,7 +92,7 @@ $(function() {
 });
 
 function searchList(){
-	commonGetrowdatas("archiveTable", {}, contextPath
+	commonRowDatas("archiveTable", {}, contextPath
 			+ "/archive/searchInfo", "commonCallback", true);
 }
 

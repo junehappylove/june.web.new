@@ -34,7 +34,15 @@ public class SysQxsjDto extends PageDTO<SysQxsjDto> {
 	private int qxsj_sort;
 	private String qxsj_used;
 	private String qxsj_text;
+	
+	private String qxsj_stat;	//用于记录某个菜单上是否存在此权限
 
+	public String getQxsj_stat() {
+		return qxsj_stat;
+	}
+	public void setQxsj_stat(String qxsj_stat) {
+		this.qxsj_stat = qxsj_stat;
+	}
 	public String getQxsj_code() {
 		return qxsj_code;
 	}

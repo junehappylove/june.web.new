@@ -24,53 +24,53 @@ $(function() {
 		fields : {
 			userId : {
 				validators : {
-					notEmpty : { message : getMessageFromList("ErrorMustInput",[ '用户ID' ]) },
+					notEmpty : { message : $message("ErrorMustInput",[ '用户ID' ]) },
 					stringLength: { min: 5,  max: 16,
-			        	message: getMessageFromList("ErrorLength2",['用户ID','5','16']) }
+			        	message: $message("ErrorLength2",['用户ID','5','16']) }
 				} 
 			},
 			userPassword : {
-				validators : { notEmpty : { message : getMessageFromList("ErrorMustInput",[ '密码' ]) } }
+				validators : { notEmpty : { message : $message("ErrorMustInput",[ '密码' ]) } }
 			},
 			orgName : {
-				validators : { notEmpty : { message : getMessageFromList("ErrorMustInput",[ '组织名' ]) } }
+				validators : { notEmpty : { message : $message("ErrorMustInput",[ '组织名' ]) } }
 			},
 			userName : {
 				validators : {
-					notEmpty : { message : getMessageFromList("ErrorMustInput",[ '用户名' ]) },
-					stringLength: { min: 2,  max: 16, message: getMessageFromList("ErrorLength2",['用户名','2','16']) } 
+					notEmpty : { message : $message("ErrorMustInput",[ '用户名' ]) },
+					stringLength: { min: 2,  max: 16, message: $message("ErrorLength2",['用户名','2','16']) } 
 				} 
 			},
 			userEmail : {
 				validators : {
-					emailAddress: { message: getMessageFromList("ErrorFormat",['邮箱']) },
-					stringLength: { min: 0, max: 50, message: getMessageFromList("ErrorLength",['邮箱','50'])  }
+					emailAddress: { message: $message("ErrorFormat",['邮箱']) },
+					stringLength: { min: 0, max: 50, message: $message("ErrorLength",['邮箱','50'])  }
 				}
 			},
 			userAddress : {
 				validators : {
-					stringLength: {  min: 0, max: 255, message: getMessageFromList("ErrorLength",['地址','255']) }
+					stringLength: {  min: 0, max: 255, message: $message("ErrorLength",['地址','255']) }
 				}
 			},
 			userMobile : {
 				validators : {
-					stringLength: {  min: 0, max: 11, message: getMessageFromList("ErrorLength",['手机','11']) },
-					regexp: { regexp: /^(1[0-9])\d{9}$/, message: getMessageFromList("ErrorFormat",['手机号码']) } 
+					stringLength: {  min: 0, max: 11, message: $message("ErrorLength",['手机','11']) },
+					regexp: { regexp: /^(1[0-9])\d{9}$/, message: $message("ErrorFormat",['手机号码']) } 
 				}
 			},
 			userTel : {
 				validators : {
-					stringLength: { min: 0, max: 13, message: getMessageFromList("ErrorLength",['电话号码','13']) },
-					regexp: { regexp: /^(0[0-9]{2,3}-)?([2-9][0-9]{6,7})$/, message: getMessageFromList("ErrorFormat",['电话号码']) } 
+					stringLength: { min: 0, max: 13, message: $message("ErrorLength",['电话号码','13']) },
+					regexp: { regexp: /^(0[0-9]{2,3}-)?([2-9][0-9]{6,7})$/, message: $message("ErrorFormat",['电话号码']) } 
 				}
 			},
 			roleName : {
-				validators : { notEmpty : { message : getMessageFromList("ErrorMustInput",[ '角色' ]) } }
+				validators : { notEmpty : { message : $message("ErrorMustInput",[ '角色' ]) } }
 			},
 			userBirthday : {
 				validators : {
-						notEmpty : { message : getMessageFromList("ErrorMustInput",[ '生日' ]) },
-						date: { format: 'YYYY-MM-DD', message: getMessageFromList("ErrorFormat",[ '生日' ]) }
+						notEmpty : { message : $message("ErrorMustInput",[ '生日' ]) },
+						date: { format: 'YYYY-MM-DD', message: $message("ErrorFormat",[ '生日' ]) }
 				}
 			}
 		}
@@ -114,7 +114,7 @@ $(function() {
 			{ field : 'userLocked', title : '用户账号状态', align : "center", valign : "middle" },
 			{ field : "opration", title : "操作", align : "center", valign : "middle",
 				formatter : function(value, row, index) {
-					return showDetailHtml(row.userId);
+					return detailBtn(row.userId);
 				}
 			} 
 		],
@@ -155,14 +155,14 @@ function bindChange(){
 //查询表格信息
 function searchUserInfo() {
 	var data = getFormJson("searchForm");//获取查询条件
-	commonGetrowdatas("userInfoTable", data, api_getPagedList, "commonCallback", true);
+	commonRowDatas("userInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 
 function deleteRow() {
-	var rowCount = GetDataGridRows("userInfoTable");
+	var rowCount = selectedCount("userInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("userInfoTable");
+		var rows = selectedRows("userInfoTable");
 		var rowIds = "";
 		for ( var i = 0; i < rows.length; i++) {
 			rowIds += rows[i].userId + ",";
@@ -172,7 +172,7 @@ function deleteRow() {
 		}
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_deleteSelected, data, searchUserInfo);
 	} else {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectNoDelete", null));
 	}
 
 }
@@ -183,14 +183,14 @@ function sureDelete(type, url, data, success) {
 
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
-    var selectRows = GetDataGridRows("userInfoTable");
+    var selectRows = selectedCount("userInfoTable");
     if (selectRows == 0){
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorNoSelectEdit",null));
     }else if(selectRows > 1){
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorSelectMultiEdit",null));
     }
     else{
-    	var row = GetSelectedRowsObj("userInfoTable");
+    	var row = selectedRows("userInfoTable");
     	$("#isNew").val('0');
     	checkDetail(row[0].userId);
     }

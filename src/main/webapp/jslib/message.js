@@ -1,20 +1,33 @@
+/*
+ * 消息文件定义js
+ */
+
+/** 定义全局消息列表 */
 var MSG_LIST = new Array();
 
-//获取js错误消息
-function getMessageFromList(msgid, msgParams) {
-			var msg = MSG_LIST[msgid];
-		    if ($.trim(msg) == "") {
-		        msg = msgid + "[该消息不存在。]";
-		        return msg;
-		    }
-		    if (msgParams != null) { 
-		    	for (var i=0; i<msgParams.length; i++) {
-		            msg = msg.replace("{" + i + "}", msgParams[i]);
-		        }  
-		    }
-		    return msg;
+/**
+ * 获取js消息
+ * 
+ * @param msgid
+ * @param msgParams
+ * @returns
+ */
+function $message(msgid, msgParams) {
+	var msg = MSG_LIST[msgid];
+	if ($.trim(msg) == "") {
+		msg = "[" + msgid + "]" + "该消息不存在!";
+		return msg;
+	}
+	msgParams = msgParams == undefined ? null : msgParams;
+	if (msgParams != null) {
+		for (var i = 0; i < msgParams.length; i++) {
+			msg = msg.replace("{" + i + "}", msgParams[i]);
+		}
+	}
+	return msg;
 }
 
+// 载入消息数据
 $(document).ready(function() {
 	MSG_LIST["ErrorMustInput"] = "请输入{0}。";
 	MSG_LIST["ErrorMustSelect"] = "请选择{0}。";
@@ -54,6 +67,10 @@ $(document).ready(function() {
 	MSG_LIST["ErrorNoSelectEdit"] = "请先选中要编辑的行。";
 	MSG_LIST["ErrorSelectMultiEdit"] = "编辑时只能选中一行。";
 	MSG_LIST["ErrorSelectNoDelete"] = "请选择要删除的行。";
+	MSG_LIST["ErrorSelect2Operate"] = "请选择要操作的行。";
 	MSG_LIST["ErrorNoSelectAssign"] = "请先选中要分配的角色。";
 	MSG_LIST["ErrorSelectMultiAssign"] = "为用户分配角色时只能选中一行。";
+	MSG_LIST["InfoOfSave"] = "是否确认要添加?";
+	MSG_LIST["InfoOfDelete"] = "是否确认要删除?";
+	MSG_LIST["WarnNotAuth"]="请为其子菜单授权";
 });

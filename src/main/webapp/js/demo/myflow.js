@@ -13,7 +13,7 @@ $(function(){
 							leaveNote : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '批注' ])
 									}
 								}
@@ -115,7 +115,7 @@ $(function(){
 
 function search()
 {
-	commonGetrowdatas("myFlow",{},contextPath + "/myflow/getmyFlow","commonCallback",true);
+	commonRowDatas("myFlow",{},contextPath + "/myflow/getmyFlow","commonCallback",true);
 }
 
 
@@ -126,7 +126,7 @@ function doprocessinit(id)
 	};
 	doAjax(POST,contextPath + "/myflow/doprocessinit",data,initSuccess);
 	//查询历史
-	commonGetrowdatas("history",data,contextPath + "/myflow/gethistory","commonCallback",true);
+	commonRowDatas("history",data,contextPath + "/myflow/gethistory","commonCallback",true);
 }
 //初始化成功进行赋值
 function initSuccess(response)

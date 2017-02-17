@@ -202,7 +202,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 				message(response,"error_info_not_exist", MESSAGE_ERRO,userInfoDto.getDtoName(), userInfoDto.getUserId());
 			} else {
 				// 用户存在的情况进行更新
-				userInfoService.updateDtoById(userInfoDto);// 用户信息更新
+				userInfoService.updateDto(userInfoDto);// 用户信息更新
 				userInfoService.updateUserRoleInfo(userInfoDto);// 用户角色更新
 				message(response,"info_edit_success", MESSAGE_INFO, userInfoDto.getDtoName());
 			}
@@ -221,7 +221,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 		if (userIds != null) {
 			for (int i = 0; i < userIds.split(",").length; i++) {
 				userInfoDto.setUserId(userIds.split(",")[i]);
-				userInfoService.deleteDtoById(userInfoDto);
+				userInfoService.deleteDto(userInfoDto);
 			}
 		}
 		message(response,"user_delete_success", MESSAGE_INFO);

@@ -50,13 +50,19 @@
 										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 									</button>
 								</c:if>
+								<c:if test="${btnMenuControll eq 'hasAuthority'}">
+									<button id="btn_delete" type="button"
+										class="btn btn-outline btn-default" onclick="menuControll()">
+										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>分配权限
+									</button>
+								</c:if>
 							</div>
 							<div class="row">
 								<!-- 菜单树 -->
 								<div class="col-md-2">
 									<div class="zTreeDemoBackground left" style="padding-top: 10px;">
-									菜单树
-										<ul id="sycMenus" class="ztree"></ul>
+									<a href="#" onclick="menuRoot()">菜单树</a>
+										<ul id="sycMenus" class="ztree"></ul><!-- ztree实现的菜单树 -->
 									</div>
 								</div>
 								<!-- 菜单列表 -->
@@ -133,31 +139,6 @@
 					</div>
 				</form>
 
-			</div>
-		</div>
-	</div>
-	<div class="modal fade bs-example-modal-sm" id="treeModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm" style="height: auto;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" onclick="closeTreemodal()">×</button>
-					权限机构选择
-				</div>
-
-				<div class="modal-body">
-					<div class="row">
-						<div>
-							<div class="zTreeDemoBackground" style="width: 100%; height: 280px; overflow: auto;">
-								<ul id="orgTree" class="ztree"></ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="closeTreemodal()">取消</button>
-				</div>
 			</div>
 		</div>
 	</div>

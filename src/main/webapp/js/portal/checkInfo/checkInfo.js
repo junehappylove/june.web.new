@@ -55,7 +55,7 @@ $(function(){
 
 //检索表格数据
 function searchCheckInfo(){
-	commonGetrowdatas("CheckInfoGrid",getSearchData(),contextPath + "/portal/CheckInfo/search","commonCallback",true);
+	commonRowDatas("CheckInfoGrid",getSearchData(),contextPath + "/portal/CheckInfo/search","commonCallback",true);
 }
 
 function getSearchData(){
@@ -97,7 +97,7 @@ function checkView(contentId){
 }
 
 function batchCheckPass(){
-	var selectRows = GetDataGridRows("CheckInfoGrid");
+	var selectRows = selectedCount("CheckInfoGrid");
 	if(selectRows>0)	{
 		var rows = $('#CheckInfoGrid').datagrid('getSelections');
 		var contentId="";
@@ -109,12 +109,12 @@ function batchCheckPass(){
 		};
 		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckPass",data,"checkPassSuccess",null,false);
 	}else{
-		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
+		showOnlyMessage(ERROR,$message("SelectRow",null))
 	}
 }
 
 function batchCheckBack(){
-	var selectRows = GetDataGridRows("CheckInfoGrid");
+	var selectRows = selectedCount("CheckInfoGrid");
 	if(selectRows>0)	{
 		var rows = $('#CheckInfoGrid').datagrid('getSelections');
 		var contentId="";
@@ -126,7 +126,7 @@ function batchCheckBack(){
 		};
 		doAjax(POST,contextPath + "/portal/CheckInfo/batchCheckBack",data,"checkPassSuccess",null,false);
 	}else{
-		showOnlyMessage(ERROR,getMessageFromList("SelectRow",null))
+		showOnlyMessage(ERROR,$message("SelectRow",null))
 	}
 }
 

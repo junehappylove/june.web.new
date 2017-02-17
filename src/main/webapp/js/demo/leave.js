@@ -83,13 +83,13 @@ $(function() {
 							leaveReason : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '请假原因' ])
 									},
 									stringLength : {
 										min : 1,
 										max : 100,
-										message : getMessageFromList(
+										message : $message(
 												"ErrorLength2", [ '请假原因', '1',
 														'100' ])
 									}
@@ -98,12 +98,12 @@ $(function() {
 							leaveStart : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '请假开始时间' ])
 									},
 									date: {
 					                    format: 'YYYY-MM-DD',
-					                    message: getMessageFromList("ErrorFormat",[ '请假开始时间' ])
+					                    message: $message("ErrorFormat",[ '请假开始时间' ])
 					                },
 					                callback: {
 					                    message: '开始日期不能大于结束日期',
@@ -116,12 +116,12 @@ $(function() {
 							leaveEnd : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '请假结束时间' ])
 									},
 									date: {
 					                    format: 'YYYY-MM-DD',
-					                    message: getMessageFromList("ErrorFormat",[ '请假结束时间' ])
+					                    message: $message("ErrorFormat",[ '请假结束时间' ])
 					                },
 					                callback: {
 					                    message: '结束日期不能小于开始日期',
@@ -134,7 +134,7 @@ $(function() {
 							leaveDays : {
 								validators : {
 									notEmpty : {
-										message : getMessageFromList(
+										message : $message(
 												"ErrorMustInput", [ '请假天数' ])
 									}
 								}
@@ -277,7 +277,7 @@ function initDate()
 
 //查询请假记录
 function search() {
-	commonGetrowdatas("leavegrid", {}, contextPath + "/leave/getleave",
+	commonRowDatas("leavegrid", {}, contextPath + "/leave/getleave",
 			"commonCallback", true);
 }
 
@@ -298,6 +298,6 @@ function closemodal() {
 function searchLeaveInfo()
 {
 	var data = getFormJson("searchForm");
-	commonGetrowdatas("leavegrid", data, contextPath + "/leave/getleave",
+	commonRowDatas("leavegrid", data, contextPath + "/leave/getleave",
 	"commonCallback", true);
 }

@@ -6,6 +6,7 @@ var api_check = contextPath + "/system/base/menu/checkDetail";
 var api_initMenuTree = contextPath + "/system/base/menu/initMenuTree";
 var api_child_menu = contextPath + "/system/base/menu/childMenu";
 var api_initOrgTree = contextPath + "/system/org/initOrgTree";
+var api_selectQxsj = contextPath + "/system/base/menu/selectQxsj/";//后面需要链接当前菜单的id
 /**
  * 权限信息js
  */
@@ -21,11 +22,11 @@ $(function() {
 			menu_id : {
 				validators : {
 					notEmpty : {
-						message : getMessageFromList("ErrorMustInput", [ '菜单ID' ])
+						message : $message("ErrorMustInput", [ '菜单ID' ])
 					},
 					stringLength : {
 						min : 0, max : 64,
-						message : getMessageFromList("ErrorLength2", ['菜单ID', '0', '64' ])
+						message : $message("ErrorLength2", ['菜单ID', '0', '64' ])
 					}
 				}
 			},
@@ -33,7 +34,7 @@ $(function() {
 				validators : {
 					stringLength : {
 						min : 0, max : 64,
-						message : getMessageFromList("ErrorLength2", ['菜单名称', '0', '64' ])
+						message : $message("ErrorLength2", ['菜单名称', '0', '64' ])
 					}
 				}
 			}
@@ -64,18 +65,15 @@ $(function() {
 		sidePagination : 'server',// 设置为服务器端分页
 		columns : [
 			{ field : "", checkbox : true },
-			{ field : "menu_id", title : "ID",titleTooltip:"编码", align : "center", valign : "middle" , visible:false},
+			{ field : "menu_id", title : "ID", titleTooltip:"编码", align : "center", valign : "middle", visible:false},
 			{ field : "menu_name", title : "名称", align : "center", valign : "middle" },
 			{ field : "parent_menu_id", title : "父菜单", align : "center", valign : "middle" },
 			{ field : 'menu_url', title : '地址', align : 'left', valign : 'middle' },
 			{ field : "menu_icon", title : "图标", align : "center", valign : "middle" },
 			{ field : "menu_notice", title : "描述", align : "left", valign : "middle" },
 			{ field : "order_num", title : "排序", align : "center", valign : "middle" },
-			{ field : "opration", title : "操作", align : "center", valign : "middle",
-				formatter : function(value, row, index) {
-					return showDetailHtml(row.menu_id);
-				}
-			} ],
+			{ field : "opration", title : "操作", align : "center", valign : "middle", formatter : $BUTTON } 
+		],
 		onPageChange : function(size, number) {
 			searchInfo();
 		},
@@ -88,6 +86,40 @@ $(function() {
 	// 菜单树初始化
 	loadMenuTree();
 });
+
+function $BUTTON(value, row, index) {
+	//XXX 自定义一个设置权限按钮
+	//return editBtn(row.menu_id) + SP + detailBtn(row.menu_id);
+	return detailBtn(row.menu_id);
+}
+
+function editDetail(id){
+	// 为菜单置权
+	layer.open({
+		type:2,
+		title:'选择权限按钮',
+		shadeClose:true,
+		area: ['480px', '90%'],
+		content: api_selectQxsj + id
+	});
+}
+
+function menuControll(){
+	var selectRows = selectedCount("menuInfoTable");
+	if (selectRows == 0) {
+		showOnlyMessage(ERROR, $message("ErrorNoSelectEdit", null));
+	} else if (selectRows > 1) {
+		showOnlyMessage(ERROR, $message("ErrorSelectMultiEdit", null));
+	} else {
+		var row = selectedRows("menuInfoTable");
+		var isParent = row[0].isParent;
+		if(isParent==true||isParent=="true"){
+			showOnlyMessage(WARN, $message("WarnNotAuth", null));
+		}else{
+			editDetail(row[0].menu_id);
+		}
+	}
+}
 
 function saveSuccess(response) {
 	var errType = response.errType;
@@ -102,14 +134,14 @@ function saveSuccess(response) {
 // 查询表格信息
 function searchInfo() {
 	var data = getFormJson("searchForm");// 获取查询条件
-	commonGetrowdatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
+	commonRowDatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 // 删除
 function deleteRow() {
-	var rowCount = GetDataGridRows("menuInfoTable");
+	var rowCount = selectedCount("menuInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("menuInfoTable");
+		var rows = selectedRows("menuInfoTable");
 		var ids = "";
 		var row = {};
 		for ( var i = 0; i < rows.length; i++) {
@@ -118,9 +150,9 @@ function deleteRow() {
 		var data = {
 			ids : ids
 		};
-		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data, searchUserInfo);
+		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data, searchInfo);
 	} else {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectNoDelete", null));
 	}
 }
 //删除调用
@@ -142,13 +174,13 @@ function addNew() {
 
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
-	var selectRows = GetDataGridRows("menuInfoTable");
+	var selectRows = selectedCount("menuInfoTable");
 	if (selectRows == 0) {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorNoSelectEdit", null));
+		showOnlyMessage(ERROR, $message("ErrorNoSelectEdit", null));
 	} else if (selectRows > 1) {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectMultiEdit", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectMultiEdit", null));
 	} else {
-		var row = GetSelectedRowsObj("menuInfoTable");
+		var row = selectedRows("menuInfoTable");
 		$("#isNew").val('0');
 		checkDetail(row[0].menu_id);
 	}
@@ -218,10 +250,22 @@ function menuTreeCallback(response) {
 }
 // 树节点点击
 function clickNode(event, treeId, treeNode, clickFlag){
-	june.log(treeNode.name + treeNode.id + treeNode.ids);// 点击直接返回节点对象treeNode
+	//june.log(treeNode.name + treeNode.id + treeNode.ids);// 点击直接返回节点对象treeNode
 	//点击节点做查询子菜单
-	var data = {parent_menu_id:treeNode.id};// 获取查询条件
-	commonGetrowdatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
+	var id = treeNode.id;
+	var data = {};
+	//june.log(treeNode.isParent);
+	if(treeNode.isParent == false || treeNode.isParent == 'false'){
+		data = {menu_id:id};
+	}else{
+		data = {parent_menu_id:id};// 获取查询条件
+	}
+	//june.log(data);
+	commonRowDatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
+}
+function menuRoot(){
+	var data = {parent_menu_id:'0'};// 获取查询条件
+	commonRowDatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 // 关闭角色选择modal
 function closerolemodal() {

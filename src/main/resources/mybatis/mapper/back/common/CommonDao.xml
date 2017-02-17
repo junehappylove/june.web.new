@@ -6,45 +6,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getFirstOrg" resultType="com.june.dto.back.common.TreeDto">
 		SELECT
-		T1.ORG_ID AS id,
-		T1.ORG_NAME AS name,
-		'fasle' as open
+			T1.ORG_ID AS id,
+			T1.ORG_NAME AS name,
+			'fasle' as open
 		FROM
-		sys_org T1
+			sys_org T1
 		WHERE
-		T1.PARENT_ORG_ID = '0'
+			T1.PARENT_ORG_ID = '0'
 	</select>
 	
-	<select id="getSubOrg" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getSubOrg" parameterType="com.june.dto.back.common.TreeDto" 
+		resultType="com.june.dto.back.common.TreeDto">
 		SELECT
-		T1.ORG_ID AS id,
-		T1.ORG_NAME AS name,
-		'fasle' as open
+			T1.ORG_ID AS id,
+			T1.ORG_NAME AS name,
+			'fasle' as open
 		FROM
-		sys_org T1
+			sys_org T1
 		WHERE
-		T1.PARENT_ORG_ID = #{id}
+			T1.PARENT_ORG_ID = #{id}
 	</select>
+	
 	<select id="getRole" resultType="com.june.dto.back.common.TreeDto">
 		SELECT
-		T1.ROLE_ID AS id,
-		T1.ROLE_NAME AS name,
-		'false' AS open
+			T1.ROLE_ID 	AS id,
+			T1.ROLE_NAME AS name,
+			'false' 	AS open
 		FROM
-		sys_role T1
+			sys_role T1
 	</select>
 	
-	<select id="getFunctionByRole" parameterType="com.june.dto.back.login.ButtonDto" resultType="com.june.dto.back.login.ButtonDto">
+	<select id="getFunctionByRole" parameterType="com.june.dto.back.login.ButtonDto" 
+		resultType="com.june.dto.back.login.ButtonDto">
 		SELECT
-		T2.BUTTON_ID AS buttonId,
-		T2.BUTTON_NAME AS buttonName,
-		T2.BUTTON_PAGE_ID AS buttonPageId
+			T2.BUTTON_ID AS buttonId,
+			T2.BUTTON_NAME AS buttonName,
+			T2.BUTTON_PAGE_ID AS buttonPageId
 		FROM
-		sys_menu T1,
-		sys_function T2,
-		sys_role_function T3
+			sys_menu T1,
+			sys_function T2,
+			sys_role_function T3
 		WHERE
-		T1.MENU_ID = T2.BUTTON_THIRDMODULE_ID
+			T1.MENU_ID = T2.BUTTON_3_ID
 		AND T1.MENU_URL = #{menuUrl}
 		AND T3.ROLE_ID = #{roleId}
 		AND T2.BUTTON_ID = T3.BUTTON_ID

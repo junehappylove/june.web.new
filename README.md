@@ -18,6 +18,8 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 
 ## 项目日志
 
+>15. 2017-02-18 引入菜单树(使用ztree，异步加载)、实现菜单配置权限按钮功能
+	可以直接配置相关按钮，之后在转入角色管理配置相关菜单的具体权限信息
 > 14. 2017-01-22 系统采用swagger2+springfox2.5.0重新部署restful接口部分，解决上一版本中关于上传文件无法展示上传按钮问题
 	项目同时升级采用tomcat8部署
 > 13. 2017-01-21 系统中集成[swagger](http://swagger.io/ "swagger"),关于SpringMVC整合swagger，可以参考[Restful形式接口文档生成之Swagger与SpringMVC整合手记](http://blog.csdn.net/xyw591238/article/details/51385233 "Swagger与SpringMVC整合")、[Swagger简介](http://blog.csdn.net/wangnan9279/article/details/44541665 "Swagger简介")这两篇文章，网上的整合很多，几乎都是千篇一律，这2篇文章也不出所外，只是相对较好一点儿;推荐看后一篇，不错，没毛病！    

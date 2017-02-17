@@ -201,28 +201,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getFunctions" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
 		SELECT
-			T1.BUTTON_ID AS id,
-			CONCAT(T1.BUTTON_NAME,'(',T1.BUTTON_FUNCTION,')') AS name,
-			'true' AS open
+			T1.BUTTON_ID	AS id,
+			CONCAT(T1.BUTTON_NAME,'(',T1.BUTTON_FUNCTION,')')	AS name,
+			'true'	AS open
 		FROM
 			sys_function T1
-		WHERE
-		(
-			T1.BUTTON_FIRSTMODULE_ID = #{id}
-			AND T1.BUTTON_SECONDMODULE_ID = '0'
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
-		)
-		OR
-		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID = #{id}
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
-		)
-		OR
-		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID != '0'
-			AND T1.BUTTON_THIRDMODULE_ID = #{id}
+		WHERE (
+			T1.BUTTON_1_ID = #{id}
+			AND T1.BUTTON_2_ID = '0'
+			AND T1.BUTTON_3_ID = '0'
+		) OR (
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID = #{id}
+			AND T1.BUTTON_3_ID = '0'
+		) OR (
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID != '0'
+			AND T1.BUTTON_3_ID = #{id}
 		)
 	</select>
 	
@@ -236,21 +231,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sys_role_function T2
 		WHERE
 		(
-			T1.BUTTON_FIRSTMODULE_ID = #{id}
-			AND T1.BUTTON_SECONDMODULE_ID = '0'
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
+			T1.BUTTON_1_ID = #{id}
+			AND T1.BUTTON_2_ID = '0'
+			AND T1.BUTTON_3_ID = '0'
 		)
 		OR
 		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID = #{id}
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID = #{id}
+			AND T1.BUTTON_3_ID = '0'
 		)
 		OR
 		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID != '0'
-			AND T1.BUTTON_THIRDMODULE_ID = #{id}
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID != '0'
+			AND T1.BUTTON_3_ID = #{id}
 		)
 		AND T2.ROLE_ID = #{roleId}
 		AND T2.BUTTON_ID = T1.BUTTON_ID

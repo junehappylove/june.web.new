@@ -77,10 +77,10 @@ import net.sf.json.JsonConfig;
  * @blog https://www.github.com/junehappylove
  * @date 2016年12月20日 下午7:45:54
  * @version 1.0.0
- * @param <DTO>
+ * @param <Dto>
  */
 @Transactional
-public abstract class BaseController<DTO extends PageDTO<DTO>> {
+public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	// 打印log
 	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	
@@ -131,7 +131,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @writer junehappylove
 	 */
 	@ModelAttribute
-	protected DTO validateForm(HttpServletRequest request, HttpServletResponse response,DTO dto)
+	protected Dto validateForm(HttpServletRequest request, HttpServletResponse response,Dto dto)
 			throws Exception {
 		// 将参数映射到对应的业务dto中并返回
 		fillRequestDto(request, dto);
@@ -194,7 +194,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @return Map <String,Object>
 	 */
-	protected void beantoMap(Map<String, Object> returnMap, DTO bean) {
+	protected void beantoMap(Map<String, Object> returnMap, Dto bean) {
 		BeanInfo beanInfo = null;
 		try {
 			beanInfo = Introspector.getBeanInfo(bean.getClass());
@@ -352,7 +352,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param response
 	 * @date 2015年12月4日 下午2:52:44
 	 */
-	protected void toJson(DTO bean, HttpServletResponse response) {
+	protected void toJson(Dto bean, HttpServletResponse response) {
 		PrintWriter out = null;
 		try {
 			response.setContentType("text/Xml;charset=gbk");
@@ -622,7 +622,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @param request
 	 */
-	protected void setCreater(DTO bean, HttpServletRequest request) {
+	protected void setCreater(Dto bean, HttpServletRequest request) {
 		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setAddUserId(userId);// 设置操作人id
@@ -642,7 +642,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param bean
 	 * @param request
 	 */
-	protected void setUpdater(DTO bean, HttpServletRequest request) {
+	protected void setUpdater(Dto bean, HttpServletRequest request) {
 		UserInfoDto userInfoDto = this.loginUser(request);
 		String userId = userInfoDto.getUserId();
 		bean.setUpdateUserId(userId);// 设置操作人id
@@ -701,7 +701,7 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 	 * @param page
 	 * @param bean
 	 */
-	protected void htmlEditInit(ModelAndView page, DTO bean) {
+	protected void htmlEditInit(ModelAndView page, Dto bean) {
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(bean.getUpdateUserId()));
 		page.addObject("updateUserName", user != null ? user.getUserName() : "未知用户");
 		// TODO 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
@@ -997,6 +997,10 @@ public abstract class BaseController<DTO extends PageDTO<DTO>> {
 			return ftpPath;
 		}else
 			return "";
+	}
+
+	public void filluser(AbstractDTO dto) {
+		dto.setSys_user(this.loginUser().getUserId());
 	}
 		
 }

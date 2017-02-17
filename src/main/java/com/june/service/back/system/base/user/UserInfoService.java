@@ -35,7 +35,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 */
 	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	@Override
-	public void deleteDtoById(UserInfoDto userInfoDto) {
+	public void deleteDto(UserInfoDto userInfoDto) {
 		userInfoDao.delete(userInfoDto);//删除用户
 		userInfoDao.deleteUserRoleInfo(userInfoDto);//删除用户的角色
 	}

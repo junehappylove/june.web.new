@@ -4,6 +4,7 @@ var ERROR = "error";
 var INFO = "info";
 var JSON = "json";
 var LABELS = ['default','success','primary','info','warning','danger'];
+var SP = "&nbsp;&nbsp;";
 /** 常用格式 */
 var FILE_TYPE_ARR = null;
 /** 文件格式 */
@@ -21,7 +22,7 @@ var NOT_FOUND_DATAS = '无符合条件的记录';
 //表示服务器缓存目录地址在tomcat的server.xml文件中配置
 var HTTP_URL = "http://10.50.200.38:8091/ftp/";
 //表示ftp服务器用hfs工具代理成http协议访问的地址
-var HTTP_URL_ = "http://192.168.100.5:280/智能维修平台FTP服务器";
+var HTTP_URL_ = "http://192.168.100.5:280/XXX_FTP_SEVER";
 
 /**
  * 共同取得一览数据的方法
@@ -31,7 +32,7 @@ var HTTP_URL_ = "http://192.168.100.5:280/智能维修平台FTP服务器";
  * @param success
  * @param boolean
  */
-function commonGetrowdatas(gridid, data, url, success, boolean) {
+function commonRowDatas(gridid, data, url, success, boolean) {
 	if (boolean) {
 		var options = $('#' + gridid).bootstrapTable('getOptions');
 		// 获取当前页
@@ -102,17 +103,19 @@ function commonGridAjax(type, url, data, success, gridid, boolean) {
 
 /**
  * 共同回掉函数
- * @param response:后台传回的数据
- * @param gridid：表格控件的id
+ * @param response 后台传回的数据
+ * @param gridid 表格控件的id
  * @param boolean 是否需要分页条件
  */
 function commonCallback(response, gridid, url, data, boolean) {
 	if (gridid != null && gridid != "") {
 		$("#" + gridid).bootstrapTable('load', response);
 		// db中数据被删除了，检索的后一页没有数据，页面显示前一页的数据
-		if (response.rows.length == 0 && response.total > 0) {
-			data.currpage = data.currpage - 1;
-			commonGetrowdatas(gridid, data, url, "commonCallback", boolean);
+		if(boolean){
+			if (response.rows.length == 0 && response.total > 0) {
+				data.currpage = data.currpage - 1;
+				commonRowDatas(gridid, data, url, "commonCallback", boolean);
+			}
 		}
 	}
 }
@@ -158,10 +161,10 @@ function ajaxFileUpload(type, url, id, success) {
 
 /**
  * form表单中有file的form提交共通方法
- * @param id:表单id
- * @param type:提交类型 get / post
- * @param url:提交路径
- * @param success:提交成功的回调函数
+ * @param id 表单id
+ * @param type 提交类型 get / post
+ * @param url 提交路径
+ * @param success 提交成功的回调函数
  */
 function doFileFormAjax(id, type, url, success) {
 	var loading = $('#loddingModal');
@@ -281,7 +284,7 @@ function docommonAjax(type, url, data, success) {
 /**
  * 弹出提示消息，供外部调用用接口 消息内容是从js配置文件中获取
  * 
- * @type 弹出消息类型 消息类型分为error、info和warning三种类型
+ * @param type 弹出消息类型 消息类型分为error、info和warning三种类型
  */
 function showMessage(type, fromid) {
 	if (main_Error_Array.length != 0) {
@@ -363,8 +366,8 @@ function showErrMsgFromBack(type, errList) {
 }
 
 // 求出两个日期相差的天数
-function DateDiff(sDate1, sDate2) { // sDate1和sDate2是yyyy-MM-dd格式
-
+function DateDiff(sDate1, sDate2) { 
+	// sDate1和sDate2是yyyy-MM-dd格式
 	var aDate, oDate1, oDate2, iDays;
 	aDate = sDate1.split("-");
 	oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); // 转换为yyyy-MM-dd格式
@@ -376,13 +379,13 @@ function DateDiff(sDate1, sDate2) { // sDate1和sDate2是yyyy-MM-dd格式
 }
 
 // 获取表格选中的行数
-function GetDataGridRows(id) {
+function selectedCount(id) {
 	var rows = $('#' + id).bootstrapTable('getAllSelections').length;
 	return rows;
 }
 
 // 获取选表格中行
-function GetSelectedRowsObj(id) {
+function selectedRows(id) {
 	var rowsObj = $('#' + id).bootstrapTable('getSelections');
 	return rowsObj;
 }
@@ -421,6 +424,29 @@ function showConfirm(funName, msg, type, url, date, success) {
 			eval(funName)(type, url, date, success);
 		}
 	});
+}
+
+/**
+ * 弹出确认框
+ * @param msg
+ * @param type
+ * @param url
+ * @param date
+ * @param success
+ */
+function $confirm(msg, type, url, date, success){
+	showConfirm("$sure",msg, type, url, date, success);
+}
+
+/**
+ * 仅供确认对话框调用
+ * @param type
+ * @param url
+ * @param data
+ * @param success
+ */
+function $sure(type, url, data, success) {
+	doAjax(POST, url, data, success);
 }
 
 /**
@@ -464,8 +490,22 @@ function checkEndTime(startid, endid) {
 }
 
 /**
- * “查看详细”html
+ * 详情btn
+ * @param value
+ * @returns {String}
  */
-function showDetailHtml(value) {
-	return '<a href="#" onclick="checkDetail(\'' + value + '\')">查看详细</a>';
+function detailBtn(value) {
+	//var html = '<span class="label label-sm label-info"><a href="#" onclick="checkDetail(\'' + value + '\')"><i class="fa fa-info"></i>详情</a></span>';
+	var html = '<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple" onclick="checkDetail(\'' + value + '\')"><i class="fa fa-info"></i>详情</a>';
+	return html;
+}
+
+/**
+ * 编辑btn
+ * @param value
+ * @returns {String}
+ */
+function editBtn(value) {
+	var html = '<a href="javascript:;" class="btn btn-outline btn-circle btn-sm purple" onclick="editDetail(\'' + value + '\')"><i class="fa fa-edit"></i>编辑</a>';
+	return html;
 }

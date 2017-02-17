@@ -89,12 +89,12 @@ $(function() {
 				group: '.group',
 				validators : {
 					notEmpty : {
-						message : getMessageFromList("ErrorMustInput",[ '角色名' ])
+						message : $message("ErrorMustInput",[ '角色名' ])
 					},
 					stringLength: {
 	                    min: 1,
 	                    max: 40,
-	                    message: getMessageFromList("ErrorLength2",['角色名','1','40'])
+	                    message: $message("ErrorLength2",['角色名','1','40'])
 	                }
 				}
 			},
@@ -102,12 +102,12 @@ $(function() {
 				group: '.group',
 				validators : {
 					notEmpty : {
-						message : getMessageFromList("ErrorMustInput",[ '角色描述' ])
+						message : $message("ErrorMustInput",[ '角色描述' ])
 					},
 					stringLength: {
 	                    min: 1,
 	                    max: 50,
-	                    message: getMessageFromList("ErrorLength2",['角色描述','1','50'])
+	                    message: $message("ErrorLength2",['角色描述','1','50'])
 	                }
 				}
 			}
@@ -135,7 +135,7 @@ $(function(){
 //检索表格数据
 function searchRoleInfo(){
 	var data = getFormJson("searchForm");//获取查询条件
-	commonGetrowdatas("roleInfoTable", data, api_role_list, "commonCallback", true)
+	commonRowDatas("roleInfoTable", data, api_role_list, "commonCallback", true)
 }
 
 //新增角色
@@ -149,13 +149,13 @@ function addNew(){
 
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
-    var selectRows = GetDataGridRows("roleInfoTable");
+    var selectRows = selectedCount("roleInfoTable");
     if (selectRows == 0) {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorNoSelectEdit",null));
     }else if(selectRows > 1) {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorSelectMultiEdit",null));
     }else{
-    	var row = GetSelectedRowsObj("roleInfoTable");
+    	var row = selectedRows("roleInfoTable");
     	$("#isNew").val('0');
     	checkDetail(row[0].roleId);
     }
@@ -184,10 +184,10 @@ function checkDetailSuccess(response){
 
 //删除选中行
 function deleteRow() {
-	var rowCount = GetDataGridRows("roleInfoTable");
+	var rowCount = selectedCount("roleInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("roleInfoTable");
+		var rows = selectedRows("roleInfoTable");
 		var rowIds = "";
 		for ( var i = 0; i < rows.length; i++) {
 			rowIds += rows[i].roleId + ",";
@@ -197,7 +197,7 @@ function deleteRow() {
 		};
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_role_dele, data, searchRoleInfo);
 	} else {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectNoDelete", null));
 	}
 }
 
@@ -229,13 +229,13 @@ function saveSuccess(response){
 
 //初始化菜单树
 function initMenu(){
-	var selectRows = GetDataGridRows("roleInfoTable");
+	var selectRows = selectedCount("roleInfoTable");
     if (selectRows == 0)	    {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectAssign",null));
+    	showOnlyMessage(ERROR,$message("ErrorNoSelectAssign",null));
     }else if(selectRows > 1)	    {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiAssign",null));
+    	showOnlyMessage(ERROR,$message("ErrorSelectMultiAssign",null));
     } else{
-    	var row = GetSelectedRowsObj("roleInfoTable");
+    	var row = selectedRows("roleInfoTable");
     	//initMenu(row[0].roleId);
     	loadMenuTree(row[0].roleId);
     	//$('#menuModal').modal('show');
@@ -266,7 +266,7 @@ function assignMenu(){
 	//获取选中的节点
 	var nodes = getSelectTree("menuTree");
 	//获取选中行
-	var row = GetSelectedRowsObj("roleInfoTable");
+	var row = selectedRows("roleInfoTable");
 	//alert(nodes[0].id)
 	var ids = "";
 	for(var i=0;i<nodes.length;i++)	{
@@ -290,13 +290,13 @@ function closemenumodal(){
 
 //初始化用户树
 function initUser(){
-	var selectRows = GetDataGridRows("roleInfoTable");
+	var selectRows = selectedCount("roleInfoTable");
     if (selectRows == 0) {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectAssign",null));
+    	showOnlyMessage(ERROR,$message("ErrorNoSelectAssign",null));
     }else if(selectRows > 1) {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiAssign",null));
+    	showOnlyMessage(ERROR,$message("ErrorSelectMultiAssign",null));
     } else{
-    	var row = GetSelectedRowsObj("roleInfoTable");
+    	var row = selectedRows("roleInfoTable");
     	loadUserTree(row[0].roleId);
     	//$('#userModal').modal('show');
     	$('#userModal').modal({show:true,backdrop: 'static', keyboard: false});
@@ -329,7 +329,7 @@ function assignUser(){
 	//获取选中的节点
 	var nodes = getSelectTree("userTree");
 	//获取选中行
-	var row = GetSelectedRowsObj("roleInfoTable");
+	var row = selectedRows("roleInfoTable");
 	var ids = "";
 	for(var i=0;i<nodes.length;i++)	{
 		if(nodes[i].id != '-1'){

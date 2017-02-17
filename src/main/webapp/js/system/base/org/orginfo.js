@@ -15,12 +15,12 @@ $(function() {
 					orgName : {
 						validators : {
 							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",[ '组织名' ])
+								message : $message("ErrorMustInput",[ '组织名' ])
 							},
 							stringLength: {
 			                    min: 5,
 			                    max: 16,
-			                    message: getMessageFromList("ErrorLength2",['组织名','0','32'])
+			                    message: $message("ErrorLength2",['组织名','0','32'])
 			                }
 						}
 					},
@@ -29,7 +29,7 @@ $(function() {
 							stringLength: {
 			                    min: 0,
 			                    max: 255,
-			                    message: getMessageFromList("ErrorLength",['地址','255'])
+			                    message: $message("ErrorLength",['地址','255'])
 			                }
 						}
 					}
@@ -119,8 +119,7 @@ $(function() {
 									align : "center",
 									valign : "middle",
 									formatter : function(value, row, index) {
-										var operation = '<a href="#" onclick="checkDetail(\''+ row.orgId + '\')">查看详细</a>';
-										return operation;
+										return detailBtn(row.orgId);
 									}
 								} 
 								],
@@ -155,14 +154,14 @@ function saveSuccess(response)
 //查询表格信息
 function searchInfo() {
 	var data = getFormJson("searchForm");//获取查询条件
-	commonGetrowdatas("orgInfoTable", data, api_getPagedList, "commonCallback", true);
+	commonRowDatas("orgInfoTable", data, api_getPagedList, "commonCallback", true);
 }
 
 function deleteRow() {
-	var rowCount = GetDataGridRows("orgInfoTable");
+	var rowCount = selectedCount("orgInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("orgInfoTable");
+		var rows = selectedRows("orgInfoTable");
 		var rowIds = "";
 		for ( var i = 0; i < rows.length; i++) {
 			rowIds += rows[i].orgId + ",";
@@ -173,7 +172,7 @@ function deleteRow() {
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, contextPath
 				+ "/system/org/deleteSelected", data, searchUserInfo);
 	} else {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectNoDelete", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectNoDelete", null));
 	}
 
 }
@@ -185,16 +184,16 @@ function sureDelete(type, url, data, success) {
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
 	//
-    var selectRows = GetDataGridRows("orgInfoTable");
+    var selectRows = selectedCount("orgInfoTable");
     if (selectRows == 0)
     {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorNoSelectEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorNoSelectEdit",null));
     }else if(selectRows > 1)
     {
-    	showOnlyMessage(ERROR,getMessageFromList("ErrorSelectMultiEdit",null));
+    	showOnlyMessage(ERROR,$message("ErrorSelectMultiEdit",null));
     }
     else{
-    	var row = GetSelectedRowsObj("orgInfoTable");
+    	var row = selectedRows("orgInfoTable");
     	$("#isNew").val('0');
     	checkDetail(row[0].orgId);
     }

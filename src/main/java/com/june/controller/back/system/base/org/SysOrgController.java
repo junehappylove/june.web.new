@@ -204,7 +204,7 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 				message(response,"error_info_not_exist", MESSAGE_ERRO,sysOrgDto.getDtoName(), sysOrgDto.getUserId());
 			} else {
 				// 组织存在的情况进行更新
-				sysOrgService.updateDtoById(sysOrgDto);// 组织信息更新
+				sysOrgService.updateDto(sysOrgDto);// 组织信息更新
 				message(response,"info_edit_success", MESSAGE_INFO, sysOrgDto.getDtoName());
 			}
 		} else {
@@ -222,7 +222,7 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 		if (orgIds != null) {
 			for (int i = 0; i < orgIds.split(",").length; i++) {
 				sysOrgDto.setUserId(orgIds.split(",")[i]);
-				sysOrgService.deleteDtoById(sysOrgDto);
+				sysOrgService.deleteDto(sysOrgDto);
 			}
 		}
 		message(response,"info_delete_success", MESSAGE_INFO);

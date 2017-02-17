@@ -9,40 +9,39 @@ var api_initRoleTree = contextPath + "/system/org/initRoleTree";
  * 权限信息js
  */
 $(function() {
-	$('#modalForm').bootstrapValidator(
-			{
-				feedbackIcons : {
-					valid : 'glyphicon glyphicon-ok',
-					invalid : 'glyphicon glyphicon-remove',
-					validating : 'glyphicon glyphicon-refresh'
-				},
-				fields : {
-					qxsj_code : {
-						validators : {
-							notEmpty : {
-								message : getMessageFromList("ErrorMustInput",
-										[ '权限代码' ])
-							},
-							stringLength : {
-								min : 0,
-								max : 64,
-								message : getMessageFromList("ErrorLength2", [
-										'权限代码', '0', '64' ])
-							}
-						}
+	$('#modalForm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			qxsj_code : {
+				validators : {
+					notEmpty : {
+						message : $message("ErrorMustInput",
+								[ '权限代码' ])
 					},
-					qxsj_name : {
-						validators : {
-							stringLength : {
-								min : 0,
-								max : 128,
-								message : getMessageFromList("ErrorLength2", [
-										'权限名称', '0', '128' ])
-							}
-						}
+					stringLength : {
+						min : 0,
+						max : 64,
+						message : $message("ErrorLength2", [
+								'权限代码', '0', '64' ])
 					}
 				}
-			}).on('success.form.bv', function(e) {
+			},
+			qxsj_name : {
+				validators : {
+					stringLength : {
+						min : 0,
+						max : 128,
+						message : $message("ErrorLength2", [
+								'权限名称', '0', '128' ])
+					}
+				}
+			}
+		}
+	}).on('success.form.bv', function(e) {
 		// Prevent form submission
 		e.preventDefault();
 		// Get the form instance
@@ -60,81 +59,78 @@ $(function() {
 
 	// 表格初始化
 	$('#qxsjInfoTable').bootstrapTable({
-						cache : false,
-						striped : true,
-						pagination : true,
-						toolbar : '#toolbar',
-						pageSize : 5,
-						pageNumber : 1,
-						pageList : [ 5, 10, 20 ],
-						clickToSelect : true,
-						sidePagination : 'server',// 设置为服务器端分页
-						columns : [
-								{
-									field : "",
-									checkbox : true
-								},
-								{
-									field : "qxsj_code",
-									title : "代码",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "qxsj_name",
-									title : "名称",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "qxsj_type",
-									title : "类型",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : 'qxsj_menu',
-									title : '菜单',
-									width : '',
-									align : 'center'
-								},
-								{
-									field : "qxsj_sort",
-									title : "排序",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "qxsj_used",
-									title : "状态",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "qxsj_text",
-									title : "描述",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "opration",
-									title : "操作",
-									align : "center",
-									valign : "middle",
-									formatter : function(value, row, index) {
-										var operation = '<a href="#" onclick="checkDetail(\''
-												+ row.qxsj_code
-												+ '\')">查看详细</a>';
-										return operation;
-									}
-								} ],
-						onPageChange : function(size, number) {
-							searchInfo();
-						},
-						formatNoMatches : function() {
-							return NOT_FOUND_DATAS;
-						}
-					});
+		cache : false,
+		striped : true,
+		pagination : true,
+		toolbar : '#toolbar',
+		pageSize : 5,
+		pageNumber : 1,
+		pageList : [ 5, 10, 20 ],
+		clickToSelect : true,
+		sidePagination : 'server',// 设置为服务器端分页
+		columns : [
+				{
+					field : "",
+					checkbox : true
+				},
+				{
+					field : "qxsj_code",
+					title : "代码",
+					align : "left",
+					valign : "middle"
+				},
+				{
+					field : "qxsj_name",
+					title : "名称",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "qxsj_type",
+					title : "类型",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : 'qxsj_menu',
+					title : '菜单',
+					width : '',
+					align : 'center'
+				},
+				{
+					field : "qxsj_sort",
+					title : "排序",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "qxsj_used",
+					title : "状态",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "qxsj_text",
+					title : "描述",
+					align : "left",
+					valign : "middle"
+				},
+				{
+					field : "opration",
+					title : "操作",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return detailBtn(row.qxsj_code);
+					}
+				} ],
+		onPageChange : function(size, number) {
+			searchInfo();
+		},
+		formatNoMatches : function() {
+			return NOT_FOUND_DATAS;
+		}
+	});
 });
 
 $(function() {
@@ -156,15 +152,15 @@ function saveSuccess(response) {
 // 查询表格信息
 function searchInfo() {
 	var data = getFormJson("searchForm");// 获取查询条件
-	commonGetrowdatas("qxsjInfoTable", data, api_getPagedList, "commonCallback",
+	commonRowDatas("qxsjInfoTable", data, api_getPagedList, "commonCallback",
 			true);
 }
 
 function deleteRow() {
-	var rowCount = GetDataGridRows("qxsjInfoTable");
+	var rowCount = selectedCount("qxsjInfoTable");
 	if (rowCount > 0) {
 		// 获取选中行
-		var rows = GetSelectedRowsObj("qxsjInfoTable");
+		var rows = selectedRows("qxsjInfoTable");
 		var qxsj_codes = "";
 		for ( var i = 0; i < rows.length; i++) {
 			qxsj_codes += rows[i].qxsj_code + ",";
@@ -175,7 +171,7 @@ function deleteRow() {
 		showConfirm(sureDelete, IF_DELETE_INFO, POST, api_delete, data, searchUserInfo);
 	} else {
 		showOnlyMessage(ERROR,
-				getMessageFromList("ErrorSelectNoDelete", null));
+				$message("ErrorSelectNoDelete", null));
 	}
 
 }
@@ -186,13 +182,13 @@ function sureDelete(type, url, data, success) {
 
 // 点击编辑按钮向后台请求要查询的数据
 function editRow() {
-	var selectRows = GetDataGridRows("qxsjInfoTable");
+	var selectRows = selectedCount("qxsjInfoTable");
 	if (selectRows == 0) {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorNoSelectEdit", null));
+		showOnlyMessage(ERROR, $message("ErrorNoSelectEdit", null));
 	} else if (selectRows > 1) {
-		showOnlyMessage(ERROR, getMessageFromList("ErrorSelectMultiEdit", null));
+		showOnlyMessage(ERROR, $message("ErrorSelectMultiEdit", null));
 	} else {
-		var row = GetSelectedRowsObj("qxsjInfoTable");
+		var row = selectedRows("qxsjInfoTable");
 		$("#isNew").val('0');
 		checkDetail(row[0].qxsj_code);
 	}

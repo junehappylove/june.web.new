@@ -24,6 +24,7 @@ public class SysMenuDto extends PageDTO<SysMenuDto>{
     private String menu_state;
     private String order_num;
     private String menu_notice;
+    private String isParent;//是否父级菜单
 
     public String getMenu_id() {
         return menu_id;
@@ -89,7 +90,15 @@ public class SysMenuDto extends PageDTO<SysMenuDto>{
         this.menu_notice = menu_notice;
     }
 
-    @Override
+    public String getIsParent() {
+		return isParent;
+	}
+
+	public void setIsParent(String isParent) {
+		this.isParent = isParent;
+	}
+
+	@Override
 	public String getDtoName() {
         return "系统菜单";
     }

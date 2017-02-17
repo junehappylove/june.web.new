@@ -30,17 +30,17 @@ $(function(){
 	        afterPageText: '页    共 {pages} 页',
 	        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',
 	        onChangePageSize:function(pagesize){
-	        	commonGetrowdatas("datagrid",getdata(),contextPath + "/contact/getcontacts.do","commonCallback",true);
+	        	commonRowDatas("datagrid",getdata(),contextPath + "/contact/getcontacts.do","commonCallback",true);
 	         },
 	         onSelectPage:function(pageNumber,pageSize){
-	        	 commonGetrowdatas("datagrid",getdata(),contextPath + "/contact/getcontacts.do","commonCallback",true);
+	        	 commonRowDatas("datagrid",getdata(),contextPath + "/contact/getcontacts.do","commonCallback",true);
 	          }
 	    });
 });
 
 //页面加载时执行该方法，查询表格内容
 $(function(){
-	commonGetrowdatas("gnxwlist",getdata(),contextPath + "/gnxw/getgnxwlist","commonCallback",true);
+	commonRowDatas("gnxwlist",getdata(),contextPath + "/gnxw/getgnxwlist","commonCallback",true);
 });
 function getdata()
 {
@@ -60,7 +60,7 @@ function newadd()
 
 function addsuccess()
 {
-	commonGetrowdatas("gnxwlist",getdata(),contextPath + "/gnxw/getgnxwlist","commonCallback",true);
+	commonRowDatas("gnxwlist",getdata(),contextPath + "/gnxw/getgnxwlist","commonCallback",true);
 }
 
 
