@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>Button Search TLD with Attribute</short-name>
+	<tag>
+		<name>btn</name>
+		<tag-class>com.judy.june.tag.btn.SearchButtonTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required>
+			<description>可选值:search,insert,delete,update,import,export,cancle,save,edit,custom</description>
+		</attribute>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>css</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+		</attribute>
+	</tag>
+</taglib>
+
+<!-- Usage -->
+<!-- 
+<%@ taglib prefix="june" uri="/WEB-INF/tld/june-btn-search.tld"%>
+<html>
+  <head>
+    <title>A sample custom tag</title>
+  </head>
+  <body>
+    <june:btn type="search" id="btn_search" onclick="searchInfo()"/>
+  </body>
+</html>
+ -->

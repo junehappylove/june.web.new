@@ -8,7 +8,7 @@
  *   
  */
 
-package com.june.utility;
+package com.june.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +22,8 @@ import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
 import com.june.common.Constants;
-import com.june.utility.exception.CustomException;
-import com.june.utility.exception.FastDFSException;
+import com.june.util.exception.CustomException;
+import com.june.util.exception.FastDFSException;
 
 /**
  * 
@@ -60,7 +60,7 @@ public class FastDfsUtils {
 		}
 
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		// XXX 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
 		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 		ClientGlobal.init(configFilePath);
 		TrackerServer trackerServer = null;
@@ -112,7 +112,7 @@ public class FastDfsUtils {
 		}
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		// XXX 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
 		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);
@@ -195,7 +195,7 @@ public class FastDfsUtils {
 		}
 		// 读取fdfs的配置文件
 		String classPath = new File(FastDfsUtils.class.getResource("/").getFile()).getCanonicalPath();
-		// TODO 如果不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
+		// XXX 如果读取fdfs_client.properties不成功，将配置文件名修改为fdfs_client.conf,相应修改资源目录下的文件名
 		String configFilePath = classPath + File.separator + "conf" + File.separator + "fdfs_client.properties";
 
 		ClientGlobal.init(configFilePath);

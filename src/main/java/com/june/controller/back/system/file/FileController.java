@@ -46,9 +46,9 @@ import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.file.BaseFile;
 import com.june.dto.back.system.file.FileAppDTO;
 import com.june.dto.back.system.file.FileDTO;
-import com.june.utility.MD5Util;
-import com.june.utility.MessageUtil;
-import com.june.utility.StringUtil;
+import com.june.util.MD5Util;
+import com.june.util.MessageUtil;
+import com.june.util.StringUtil;
 
 /**
  * FileController <br>
@@ -195,7 +195,7 @@ public class FileController extends BaseController<FileDTO> {
 							logger.debug(MessageUtil.$VALUE("image_exist", file_name,file_md5));
 							if(temp.getFile_height()==64&&temp.getFile_width()==64&&temp.getFile_name().contains("avatar")){
 								baseFileTemp = temp;
-								//TODO 这个步骤是非常有必要的
+								//XXX 这个步骤是非常有必要的
 								//这个file_name是当前用户操作的文件名，可能跟sys_file_base表中的文件名不一样
 								//因为同一个文件的md5值是一样的，但是可以对同一个文件命名不同
 								baseFileTemp.setFile_name(file_name);

@@ -4,135 +4,127 @@ var api_getPagedList = contextPath + "/system/org/getPagedList";
  */
 $(function() {
 	// modalform校验
-	$('#modalForm').bootstrapValidator(
-			{
-				feedbackIcons : {
-					valid : 'glyphicon glyphicon-ok',
-					invalid : 'glyphicon glyphicon-remove',
-					validating : 'glyphicon glyphicon-refresh'
-				},
-				fields : {
-					orgName : {
-						validators : {
-							notEmpty : {
-								message : $message("ErrorMustInput",[ '组织名' ])
-							},
-							stringLength: {
-			                    min: 5,
-			                    max: 16,
-			                    message: $message("ErrorLength2",['组织名','0','32'])
-			                }
-						}
+	$('#modalForm').bootstrapValidator({
+		feedbackIcons : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		fields : {
+			orgName : {
+				validators : {
+					notEmpty : {
+						message : $message("ErrorMustInput",[ '组织名' ])
 					},
-					remark : {
-						validators : {
-							stringLength: {
-			                    min: 0,
-			                    max: 255,
-			                    message: $message("ErrorLength",['地址','255'])
-			                }
-						}
-					}
+					stringLength: {
+	                    min: 5,
+	                    max: 16,
+	                    message: $message("ErrorLength2",['组织名','0','32'])
+	                }
 				}
-			}).on('success.form.bv', function(e) {
+			},
+			remark : {
+				validators : {
+					stringLength: {
+	                    min: 0,
+	                    max: 255,
+	                    message: $message("ErrorLength",['地址','255'])
+	                }
+				}
+			}
+		}
+	}).on('success.form.bv', function(e) {
 		// Prevent form submission
 		e.preventDefault();
 		// Get the form instance
 		var $form = $(e.target);
 		// Get the BootstrapValidator instance
 		var bv = $form.data('bootstrapValidator');
-		if($("#isNew").val()== 0)
-		{
+		if($("#isNew").val()== 0){
 			//编辑保存
 			doAjax(POST,contextPath + "/system/org/saveEdit",$form.serialize(),saveSuccess);
 		}
-		else if($("#isNew").val() == 1)
-		{
+		else if($("#isNew").val() == 1)	{
 			//新增保存
 			doAjax(POST,contextPath + "/system/org/newSave",$form.serialize(),saveSuccess);
 		}
 	});
 	
 	// 表格初始化
-	$('#orgInfoTable')
-			.bootstrapTable(
-					{
-						cache : false,
-						striped : true,
-						pagination : true,
-						toolbar : '#toolbar',
-						pageSize : 5,
-						pageNumber : 1,
-						pageList : [ 5, 10, 20 ],
-						clickToSelect : true,
-						sidePagination : 'server',// 设置为服务器端分页
-						columns : [
-								{
-									field : "",
-									checkbox : true
-								},
-								{
-									field : "orgId",
-									title : "组织ID",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "orgName",
-									title : "组织名",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "parentOrgId",
-									title : "上级",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									title : '领导',
-									field : 'orgLeader',
-									width : '',
-									align : 'center'
-								},
-								{
-									field : "remark",
-									title : "地址",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "delFlag",
-									title : "状态",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "districtId",
-									title : "地区",
-									align : "center",
-									valign : "middle"
-								},
-								{
-									field : "opration",
-									title : "操作",
-									align : "center",
-									valign : "middle",
-									formatter : function(value, row, index) {
-										return detailBtn(row.orgId);
-									}
-								} 
-								],
-						onPageChange : function(size, number) {
-							searchInfo();
-						},
-						formatNoMatches : function() {
-							return NOT_FOUND_DATAS;
-						}
-					});
-});
-
-$(function() {
+	$('#orgInfoTable').bootstrapTable({
+		cache : false,
+		striped : true,
+		pagination : true,
+		toolbar : '#toolbar',
+		pageSize : 5,
+		pageNumber : 1,
+		pageList : [ 5, 10, 20 ],
+		clickToSelect : true,
+		sidePagination : 'server',// 设置为服务器端分页
+		columns : [
+				{
+					field : "",
+					checkbox : true
+				},
+				{
+					field : "orgId",
+					title : "组织ID",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "orgName",
+					title : "组织名",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "parentOrgId",
+					title : "上级",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					title : '领导',
+					field : 'orgLeader',
+					width : '',
+					align : 'center'
+				},
+				{
+					field : "remark",
+					title : "地址",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "delFlag",
+					title : "状态",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "districtId",
+					title : "地区",
+					align : "center",
+					valign : "middle"
+				},
+				{
+					field : "opration",
+					title : "操作",
+					align : "center",
+					valign : "middle",
+					formatter : function(value, row, index) {
+						return detailBtn(row.orgId);
+					}
+				} 
+				],
+		onPageChange : function(size, number) {
+			searchInfo();
+		},
+		formatNoMatches : function() {
+			return NOT_FOUND_DATAS;
+		}
+	});
 	searchInfo();
 });
 

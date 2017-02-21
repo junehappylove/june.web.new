@@ -17,7 +17,8 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 > 1. ...
 
 ## 项目日志
-
+>16. 2017-02-21 引入自定义按钮标签，简化按钮开发
+	项目分包，单独提出util包和tag包
 >15. 2017-02-18 引入菜单树(使用ztree，异步加载)、实现菜单配置权限按钮功能
 	可以直接配置相关按钮，之后在转入角色管理配置相关菜单的具体权限信息
 > 14. 2017-01-22 系统采用swagger2+springfox2.5.0重新部署restful接口部分，解决上一版本中关于上传文件无法展示上传按钮问题

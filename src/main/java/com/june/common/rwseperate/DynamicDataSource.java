@@ -1,4 +1,4 @@
-package com.june.rwseperate;
+package com.june.common.rwseperate;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

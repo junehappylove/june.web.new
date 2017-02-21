@@ -12,7 +12,7 @@ import com.june.common.Constants;
 import com.june.robot.Answer;
 import com.june.robot.BaseAnswer;
 import com.june.robot.Result;
-import com.june.utility.NetUtil;
+import com.june.util.NetUtil;
 
 /**
  * QasAnswerImpl <br>

@@ -11,7 +11,7 @@ import com.june.common.BaseService;
 import com.june.dao.back.system.base.user.UserInfoDao;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.base.UserRoleDto;
-import com.june.utility.StringUtil;
+import com.june.util.StringUtil;
 
 /**
  * @Description 用户信息Service

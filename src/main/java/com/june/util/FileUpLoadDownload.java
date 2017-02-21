@@ -1,4 +1,4 @@
-package com.june.utility;
+package com.june.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

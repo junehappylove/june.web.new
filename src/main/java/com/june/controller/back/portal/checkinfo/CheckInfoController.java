@@ -27,7 +27,7 @@ import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.checkinfo.CheckInfoService;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.utility.MessageUtil;
+import com.june.util.MessageUtil;
 
 /**
  * 审核资讯用controller

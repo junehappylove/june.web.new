@@ -41,9 +41,9 @@ import com.june.dto.back.system.base.UserInfoDto;
 import com.june.shiro.dao.ShiroUserDao;
 import com.june.shiro.dto.Resource;
 import com.june.shiro.dto.User;
-import com.june.utility.DateUtil;
-import com.june.utility.MessageUtil;
-import com.june.utility.exception.LoginAttemptException;
+import com.june.util.DateUtil;
+import com.june.util.MessageUtil;
+import com.june.util.exception.LoginAttemptException;
 
 /**
  * 实现MyRealm：继承AuthorizingRealm，并重写认证授权方法 

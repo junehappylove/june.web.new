@@ -1,4 +1,4 @@
-package com.june.rwseperate;
+package com.june.common.rwseperate;
 
 public class DynamicDataSourceHolder {
     public static final ThreadLocal<String> holder = new ThreadLocal<String>();

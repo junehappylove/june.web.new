@@ -43,8 +43,8 @@ import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.base.UserRoleDto;
 import com.june.service.back.login.LoginService;
 import com.june.service.back.system.base.user.UserInfoService;
-import com.june.utility.MessageUtil;
-import com.june.utility.exception.LoginAttemptException;
+import com.june.util.MessageUtil;
+import com.june.util.exception.LoginAttemptException;
 
 import net.sf.json.JSONObject;
 
@@ -161,7 +161,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 		userInfoDto.setUserId(username);
 		loginService.updateSuccessLoginAttempt(userInfoDto);
 		request.getSession().setAttribute("username", username);
-		//TODO 限制只能一个用户登录 start
+		//XXX 限制只能一个用户登录 start
 //		String sessionId = shardedJedisPool.getResource().get(username);
 //		if (sessionId != null) {
 //			//如果该sessionId已经存在，则删除该sessionid

@@ -59,11 +59,11 @@ import com.june.service.back.system.base.user.UserInfoService;
 import com.june.service.back.system.file.BaseFileService;
 import com.june.service.back.system.file.FileAppService;
 import com.june.service.back.system.file.FileService;
-import com.june.utility.DateUtil;
-import com.june.utility.MessageUtil;
-import com.june.utility.SendMail;
-import com.june.utility.exception.CustomException;
-import com.june.utility.exception.FastDFSException;
+import com.june.util.DateUtil;
+import com.june.util.MessageUtil;
+import com.june.util.SendMail;
+import com.june.util.exception.CustomException;
+import com.june.util.exception.FastDFSException;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -704,7 +704,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	protected void htmlEditInit(ModelAndView page, Dto bean) {
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(bean.getUpdateUserId()));
 		page.addObject("updateUserName", user != null ? user.getUserName() : "未知用户");
-		// TODO 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
+		// XXX 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		if (bean.getUpdateTime() == null) {
 			bean.setUpdateTime(time);

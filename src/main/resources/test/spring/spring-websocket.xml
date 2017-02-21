@@ -9,6 +9,7 @@
 
 	<!-- websocket消息处理bean -->
 	<bean id="MinichatHandler" class="com.june.websocket.chat.MiniChatHandler" />
+	
 	<websocket:handlers>
 		<!-- 配置消息处理bean和路径的映射关系 -->
 		<websocket:mapping path="/minichat" handler="MinichatHandler" />

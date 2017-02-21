@@ -56,12 +56,12 @@ import com.june.dto.back.demo.SchemaDto;
 import com.june.dto.back.demo.TreeDto;
 import com.june.dto.back.demo.TreeGridDto;
 import com.june.service.back.demo.DemoService;
-import com.june.utility.CheckUtil;
-import com.june.utility.DBUtil;
-import com.june.utility.ExportImportExcel;
-import com.june.utility.FastDfsUtils;
-import com.june.utility.FileUpLoadDownload;
-import com.june.utility.MessageUtil;
+import com.june.util.CheckUtil;
+import com.june.util.DBUtil;
+import com.june.util.ExportImportExcel;
+import com.june.util.FastDfsUtils;
+import com.june.util.FileUpLoadDownload;
+import com.june.util.MessageUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -126,7 +126,6 @@ public class DemoController extends BaseController<MenuDto> {
 		} else {
 			// TODO 没错误执行业务逻辑
 		}
-
 	}
 
 	//@ApiIgnore

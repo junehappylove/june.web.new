@@ -1,4 +1,4 @@
-package com.june.utility;
+package com.june.util;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

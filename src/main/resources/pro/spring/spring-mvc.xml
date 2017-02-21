@@ -18,15 +18,62 @@
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
     http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
 
+	<!-- 扫描注解Bean -->
+	<context:component-scan base-package="com.june.*"></context:component-scan>
+	<!-- 
+	使用<context:annotation- config/>隐式地向 Spring容器注册AutowiredAnnotationBeanPostProcessor、
+	RequiredAnnotationBeanPostProcessor、
+	CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这4个BeanPostProcessor
+	参考：http://www.cnblogs.com/iuranus/archive/2012/07/19/2599084.html
+	 -->
 	<context:annotation-config />
- 	<!-- 启动Springmvc注解驱动 -->  
-    <mvc:annotation-driven/> 
+ 	<!-- 启动Springmvc注解驱动 -->
+ 	<!-- 
+ 	<mvc:annotation-driven />， 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean
+ 	 -->
+    <mvc:annotation-driven/>
+    <!-- 
+    <mvc:annotation-driven />实际做了以下工作：（不包括添加自己定义的拦截器）
+    //注解请求映射  
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">        
+        <property name="interceptors">
+            <list>  
+                //日志拦截器，这是你自定义的拦截器 
+                <ref bean="logNDCInteceptor"/>
+            </list>        
+        </property>        
+    </bean>      
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">  
+            <list>  
+                <ref bean="byteArray_hmc" />  
+                <ref bean="string_hmc" />  
+                <ref bean="resource_hmc" />  
+                <ref bean="source_hmc" />  
+                <ref bean="xmlAwareForm_hmc" />  
+                <ref bean="jaxb2RootElement_hmc" />  
+                <ref bean="jackson_hmc" />  
+            </list>  
+        </property>  
+    </bean>  
+    <bean id="byteArray_hmc" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+    <bean id="string_hmc" class="org.springframework.http.converter.StringHttpMessageConverter" />
+    <bean id="resource_hmc" class="org.springframework.http.converter.ResourceHttpMessageConverter" /
+    <bean id="source_hmc" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+    <bean id="xmlAwareForm_hmc" class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
+    <bean id="jaxb2RootElement_hmc" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+    <bean id="jackson_hmc" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+    
+    	参考：http://www.cnblogs.com/yangzhilong/p/3725849.html
+     -->
     
 	<mvc:view-controller path="/" view-name="login/login" />
 	<mvc:view-controller path="/login" view-name="login/login" />
 	<mvc:view-controller path="/login/" view-name="login/login" />
+	
 	<!-- 引入jdbc配置文件 -->
 	<import resource="classpath*:mybatis/mybatis-jdbc.xml" />
+	
 	<!--validation配置 start -->
 	<mvc:annotation-driven validator="validator" />
 	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
@@ -64,8 +111,6 @@
     
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	<!-- 扫描注解Bean -->
-	<context:component-scan base-package="com.june.*"></context:component-scan>
 
 	<!-- 映射静态资源 -->  
 	<!-- 在spring-mvc.xml中配置<mvc:default-servlet-handler />后，

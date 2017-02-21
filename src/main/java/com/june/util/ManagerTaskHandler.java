@@ -1,4 +1,4 @@
-package com.june.utility;
+package com.june.util;
 
 import javax.servlet.http.HttpServletRequest;
 

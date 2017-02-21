@@ -22,40 +22,15 @@
 								<div class="col-sm-2">
 									<input type="text" class="form-control" name="menu_name" id="menu_name" />
 								</div>
-								<c:if test="${search eq 'hasAuthority'}">
-									<button id="btn_add" type="button" class="btn btn-primary" onclick="searchInfo()">
-										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
-									</button>
-								</c:if>
+								<june:btn type="search" id="" icon="" onclick="searchInfo()" />
 							</div>
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
-								<c:if test="${btnAdd eq 'hasAuthority'}">
-									<button id="btn_add" type="button"
-										class="btn btn-outline btn-default" onclick="addNew()">
-										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-									</button>
-								</c:if>
-								<c:if test="${btnEdit eq 'hasAuthority'}">
-									<button id="btn_edit" type="button"
-										class="btn btn-outline btn-default" onclick="editRow()">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-										编辑
-									</button>
-								</c:if>
-								<c:if test="${btnDelete eq 'hasAuthority'}">
-									<button id="btn_delete" type="button"
-										class="btn btn-outline btn-default" onclick="deleteRow()">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-									</button>
-								</c:if>
-								<c:if test="${btnMenuControll eq 'hasAuthority'}">
-									<button id="btn_delete" type="button"
-										class="btn btn-outline btn-default" onclick="menuControll()">
-										<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>分配权限
-									</button>
-								</c:if>
+								<june:btn type="insert" />
+								<june:btn type="update" title="编辑" icon="" />
+								<june:btn type="delete" />
+								<june:btn type="custom" id="btn_auth" onclick="menuControll()" icon="" css="" title="分配权限"/>
 							</div>
 							<div class="row">
 								<!-- 菜单树 -->

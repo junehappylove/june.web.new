@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import com.june.common.annotation.DataSource;
-import com.june.rwseperate.DynamicDataSourceHolder;
+import com.june.common.rwseperate.DynamicDataSourceHolder;
 
 @Aspect
 public class DataSourceAspect {

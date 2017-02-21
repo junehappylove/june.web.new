@@ -33,7 +33,7 @@ public class MiniChatHandler extends TextWebSocketHandler {
 		super.handleTextMessage(session, message);
 		String clientMessage = message.getPayload();
 		log.debug("接受客户端ID[" + session.getId() + "]-内容为:" + clientMessage);
-		// TODO 这里进行高级信息处理业务
+		// XXX 这里进行高级信息处理业务
 		//clientMessage = StringUtil.randomCode(clientMessage.length());
 		Answer answer = QasAnswerImpl.instance();
 		clientMessage = answer.getAnswer(clientMessage).getAnswer();

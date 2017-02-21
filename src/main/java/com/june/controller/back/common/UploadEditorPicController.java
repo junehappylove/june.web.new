@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.june.utility.FastDfsUtils;
-import com.june.utility.FileUpLoadDownload;
-import com.june.utility.MessageUtil;
+import com.june.util.FastDfsUtils;
+import com.june.util.FileUpLoadDownload;
+import com.june.util.MessageUtil;
 
 /**
  * kindeditor图片上传到服务器 UploadEditorPicController <br>

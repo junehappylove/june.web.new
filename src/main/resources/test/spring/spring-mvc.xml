@@ -20,7 +20,7 @@
 
 	<context:annotation-config />
  	<!-- 启动Springmvc注解驱动 -->  
-    <mvc:annotation-driven/> 
+    <mvc:annotation-driven /> 
     
 	<mvc:view-controller path="/" view-name="login/login" />
 	<mvc:view-controller path="/login" view-name="login/login" />

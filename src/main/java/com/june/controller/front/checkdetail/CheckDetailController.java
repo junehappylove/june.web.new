@@ -29,8 +29,8 @@ import com.june.common.BaseController;
 import com.june.dto.front.checkdetail.CommentDto;
 import com.june.dto.front.portalinit.ArticleDto;
 import com.june.service.front.checkdetail.CheckDetailService;
-import com.june.utility.FreemarkerUtil;
-import com.june.utility.exception.CustomException;
+import com.june.util.FreemarkerUtil;
+import com.june.util.exception.CustomException;
 
 import freemarker.template.TemplateException;
 

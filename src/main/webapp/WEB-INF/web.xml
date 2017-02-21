@@ -66,7 +66,7 @@
 		<init-param>
 			<!-- 经常需要排除一些不必要的url，比如.js,/jslib/等等。配置在init-param中 -->
 			<param-name>exclusions</param-name>
-			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,*.ttf,*.woff,*.less,/swagger/**</param-value>
+			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*,*.ttf,*.woff,*.less,/swagger/**,*.tld</param-value>
 		</init-param>
 		<!-- 缺省sessionStatMaxCount是1000个。你可以按需要进行配置 -->
 		<init-param>

@@ -8,29 +8,27 @@
  *   
  */
 
-package com.june.utility.exception;
+package com.june.util.exception;
+
+import org.apache.shiro.authc.AuthenticationException;
 
 /**
- * 
- * FastDFSException <br>
+ * 登录次数过多异常
+ * LoginAttemptException <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
  * @blog https://www.github.com/junehappylove
- * @date 2017年1月19日 下午8:09:22
+ * @date 2017年1月19日 下午8:09:47
  * @version 1.0.0
  */
-public class FastDFSException extends RuntimeException {
+public class LoginAttemptException extends AuthenticationException {
+
 	/**
 	 * long serialVersionUID
 	 */
-	private static final long serialVersionUID = -7940543048941866246L;
+	private static final long serialVersionUID = 2706768060158155015L;
 
-	/**
-	 * 自定义fastdfs异常
-	 * 
-	 * @param message 异常信息
-	 */
-	public FastDFSException(String message) {
+	public LoginAttemptException(String message) {
 		super(message);
 	}
 }

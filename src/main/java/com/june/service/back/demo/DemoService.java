@@ -20,7 +20,7 @@ import com.june.common.BaseService;
 import com.june.dao.back.demo.DemoDao;
 import com.june.dto.back.demo.MenuDto;
 import com.june.dto.back.demo.SchemaDto;
-import com.june.utility.exception.CustomException;
+import com.june.util.exception.CustomException;
 
 @Service
 public class DemoService extends BaseService<DemoDao, MenuDto>{

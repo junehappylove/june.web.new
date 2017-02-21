@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>Example TLD with Attribute</short-name>
+	<tag>
+		<name>hello</name>
+		<tag-class>com.judy.june.tag.demo.HelloAttrTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>message</name>
+		</attribute>
+	</tag>
+</taglib>
+
+<!-- Usage -->
+<!-- 
+<%@ taglib prefix="ex" uri="WEB-INF/tld/hello-attr.tld"%>
+<html>
+  <head>
+    <title>A sample custom tag</title>
+  </head>
+  <body>
+    <ex:Hello message="This is custom tag" />
+  </body>
+</html>
+ -->

@@ -10,7 +10,7 @@
 
 	<!-- 引入config.properties配置文件 ,注意ignore-unresolvable="true"属性引入多个文件扫描器需要添加这个属性-->
 	<context:property-placeholder location="classpath*:conf/config.properties" ignore-unresolvable="true"/>
-	<bean id="emailService" class="com.june.utility.SendMail">
+	<bean id="emailService" class="com.june.util.SendMail">
 		<property name="mailSender" ref="mailSender" />
 	</bean>
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

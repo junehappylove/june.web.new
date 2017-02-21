@@ -25,7 +25,7 @@ import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.utility.MessageUtil;
+import com.june.util.MessageUtil;
 
 @Controller
 @RequestMapping("/portal/ReleaseInfo/")

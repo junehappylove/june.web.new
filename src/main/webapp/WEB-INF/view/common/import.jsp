@@ -6,6 +6,10 @@
 <%@taglib uri="http://ckeditor.com" prefix="ckeditor" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <c:set var="env" value="<%=Constants.ENVIRONMENT %>" />
+<%@taglib prefix="d" uri="/WEB-INF/tld/hello.tld" %>
+<%@taglib prefix="d.body" uri="/WEB-INF/tld/hello-body.tld"%>
+<%@taglib prefix="d.attr" uri="/WEB-INF/tld/hello-attr.tld"%>
+<%@ taglib prefix="june" uri="/WEB-INF/tld/june-btn-search.tld"%>
 
 <link href="${ctx}/jslib/bootstrap/css/bootstrap.min.css?v=3.3.5" type="text/css" rel="stylesheet">
 <link href="${ctx}/jslib/bootstrap/css/font-awesome.min.css?v=4.4.0" type="text/css" rel="stylesheet">

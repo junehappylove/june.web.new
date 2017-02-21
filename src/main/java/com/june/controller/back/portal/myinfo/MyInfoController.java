@@ -26,7 +26,7 @@ import com.june.common.annotation.MethodLog;
 import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.utility.MessageUtil;
+import com.june.util.MessageUtil;
 
 /**
  * @Description: 我的资讯用controller

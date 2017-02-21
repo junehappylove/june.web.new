@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.dto.back.demo.QuartzTriggerDto;
 import com.june.service.back.demo.QuartzService;
-import com.june.utility.MessageUtil;
+import com.june.util.MessageUtil;
 
 /**
  * 

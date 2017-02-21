@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.dto.back.archive.ArchiveDto;
 import com.june.service.back.archive.ArchiveService;
-import com.june.utility.FileUpLoadDownload;
-import com.june.utility.exception.CustomException;
+import com.june.util.FileUpLoadDownload;
+import com.june.util.exception.CustomException;
 
 @Controller
 @RequestMapping("/archive")

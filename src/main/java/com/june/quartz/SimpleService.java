@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.june.common.BaseService;
 import com.june.dao.back.system.base.role.RoleDao;
 import com.june.dto.back.system.base.RoleInfoDto;
-import com.june.utility.exception.CustomException;
+import com.june.util.exception.CustomException;
 
 @Service("simpleService")
 public class SimpleService extends BaseService<RoleDao, RoleInfoDto> {
