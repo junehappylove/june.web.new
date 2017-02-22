@@ -62,9 +62,9 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 > 5. 2016-12-15 解决后台日期时间类型传递到前台总是展示成[[`Object obj`](http://www.cnblogs.com/aquriushu/p/5777844.html)]对象类型问题；代码大量优化
 
 > 4. 2016-12-12 重新整理pom,实现maven自动构建打包发布到tomcat下，可以参考这三个帖子
- [`maven tomcat plugin实现热部署`](http://blog.csdn.net/a468903507/article/details/45392083 "maven tomcat plugin实现热部署")、
- [`开发过程使用Tomcat Maven插件持续快捷部署Web项目`](https://my.oschina.net/feichexia/blog/326893 "开发过程使用Tomcat Maven插件持续快捷部署Web项目") 、
- [`Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署`](http://blog.csdn.net/chwshuang/article/details/48499231 "Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署")
+ [`maven tomcat plugin实现热部署`](https://github.com/junehappylove/june_web_new/wiki/maven-tomcat-plugin%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2 "maven tomcat plugin实现热部署")、
+ [`开发过程使用Tomcat Maven插件持续快捷部署Web项目`](https://github.com/junehappylove/june_web_new/wiki/%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%BD%BF%E7%94%A8Tomcat-Maven%E6%8F%92%E4%BB%B6%E6%8C%81%E7%BB%AD%E5%BF%AB%E6%8D%B7%E9%83%A8%E7%BD%B2Web%E9%A1%B9%E7%9B%AE "开发过程使用Tomcat Maven插件持续快捷部署Web项目") 、
+ [`Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署`](https://github.com/junehappylove/june_web_new/wiki/Eclipse%E4%B8%AD%E7%9A%84Maven%E9%A1%B9%E7%9B%AE%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%B0Tomcat%E6%9C%8D%E5%8A%A1%E5%99%A8-%E6%94%AF%E6%8C%81%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2 "Eclipse中的Maven项目一键部署到Tomcat服务器 - 支持多环境部署")
  
 > 3. 2016-12-11 解决shrio的quartz1.6同项目本身quartz2.2的jar包冲突问题；
  	优化项目的配置文件；
