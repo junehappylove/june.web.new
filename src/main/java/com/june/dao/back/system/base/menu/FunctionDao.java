@@ -18,4 +18,11 @@ import com.june.dto.back.system.base.FunctionDto;
  */
 public interface FunctionDao extends BaseDao<FunctionDto> {
 
+	/**
+	 * 根据按钮id删除与角色关联的按钮信息
+	 * @param id 按钮id
+	 * @date 2017年2月22日 下午6:27:04
+	 * @writer junehappylove
+	 */
+	void deleteByBtnId(String id);
 }

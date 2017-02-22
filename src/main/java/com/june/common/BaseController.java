@@ -850,6 +850,9 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
 			for (int i = 0; i < list.size(); i++) {
 				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
+				// XXX
+				//request.setAttribute(list.get(i).getButtonPageId(), "hasAuthority");
+				//request.getServletContext().setAttribute(list.get(i).getButtonPageId(), "hasAuthority");
 			}
 		}
 		return result;

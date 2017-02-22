@@ -25,6 +25,7 @@ import com.june.dto.back.common.TreeDto;
 public abstract class BaseService<Dao extends BaseDao<Dto>, Dto extends PageDTO<Dto>> {
 
 	protected static Logger logger = LoggerFactory.getLogger(BaseService.class);
+	
 	@Autowired
 	protected Dao dao;
 

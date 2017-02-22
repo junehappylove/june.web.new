@@ -198,6 +198,7 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 	
 	/**
 	 * 添加菜单权限按钮
+	 * 
 	 * @param request
 	 * @param response
 	 * @param menu
@@ -236,15 +237,10 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 				function.setBtn_func(qxsj.getQxsj_name());
 				function.setBtn_url(menu.getMenu_url());//
 				super.filluser(function);
-				if( ! exitFunction(function, list2)){
+				if (!exitFunction(function, list2)) {
 					list.add(function);
-				}//不存在才添加
+				} // 不存在才添加
 			}
-			//先删除原来的权限，在添加新权限/
-			/*
-			FunctionDto temp = new FunctionDto();
-			temp.setBtn_3_id(menuId);
-			functionService.deleteDto(temp);//*/
 			//批量添加
 			functionService.addList(list);
 			messageSaveSuccess(response);
@@ -255,6 +251,7 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 	
 	/**
 	 * 删除按钮
+	 * 
 	 * @param request
 	 * @param response
 	 * @param menu
@@ -266,35 +263,23 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 	protected void menuQxsjDelete(HttpServletRequest request, HttpServletResponse response,SysMenuDto menu) throws Exception{
 		String idss = menu.getIds();//权限code
 		String menuId = menu.getMenu_id();//取当前操作的菜单id
-		String pid = null;
-		if(StringUtils.isNotEmpty(menuId)){
-			menu = sysMenuService.getDtoById(menu);//这条菜单详情
-			pid = menu.getParent_menu_id();
-		}
+		
 		FunctionDto function = null;
-		SysQxsjDto qxsj = new SysQxsjDto();
-		List<FunctionDto> list = null;
-		List<FunctionDto> list2 = null;
+		FunctionDto fun = null;
+		List<FunctionDto> list = null;//deletes
+		List<FunctionDto> btnlist = null;
 		if(StringUtils.isNotEmpty(idss)){
 			list = new ArrayList<>();
 			function = new FunctionDto();
 			function.setBtn_3_id(menuId);//设置菜单id用于查询
-			list2 = functionService.getDtos(function);//查询已经存在的权限功能列表
+			btnlist = functionService.getDtos(function);//查询已经存在的权限功能列表
 			String[] ids = idss.split(",");
 			for (String code : ids) {
-				function = new FunctionDto();
-				qxsj.setQxsj_code(code);
-				qxsj = qxsjService.getDtoById(qxsj);//取此条权限实体
-				function.setBtn_3_id(menuId);
-				function.setBtn_1_id(pid);
-				function.setBtn_2_id(pid);//TODO 找二级菜单id
-				function.setBtn_page_id(code);//权限码
-				function.setBtn_name(qxsj.getQxsj_name());//
-				function.setBtn_func(qxsj.getQxsj_name());
-				function.setBtn_url(menu.getMenu_url());//
-				super.filluser(function);
-				if(exitFunction(function, list2)){
-					list.add(function);
+				fun = new FunctionDto();
+				fun.setBtn_3_id(menuId);
+				fun.setBtn_page_id(code);//权限码
+				if(exitFunction(fun, btnlist)){
+					list.add(fun);
 				}//存在这条数据才去删除
 			}
 			// 批量删除
@@ -327,6 +312,8 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 		for (FunctionDto temp : list) {
 			if (temp.getBtn_3_id().equals(function.getBtn_3_id())
 					&& temp.getBtn_page_id().equals(function.getBtn_page_id())) {
+				function.setAppid(temp.getBtn_id());//XXX 删除时候用的的主键 	注意 引用传递
+				function.setBtn_id(temp.getBtn_id());//XXX 删除时候用到的主键
 				ret = true;
 				break;
 			} else {

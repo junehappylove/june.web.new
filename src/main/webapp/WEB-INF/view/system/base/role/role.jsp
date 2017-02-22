@@ -26,45 +26,16 @@
 		                            <div class="col-sm-2">
 		                                <input type="text" class="form-control" name="roleDesc" id="roleDesc"/>
 		                            </div>
-		                            <c:if test="${search eq 'hasAuthority'}">
-		                             <button id="btn_add" type="button" class="btn btn-primary" onclick="searchRoleInfo()">
-										<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
-									</button>
-									</c:if>
+									<june:btn type="search" onclick="searchRoleInfo()"></june:btn>
 		                    </div>
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
-							<c:if test="${btnAdd eq 'hasAuthority'}">
-								<button id="btn_add" type="button" class="btn btn-outline btn-default"
-								onclick="addNew()">
-									<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-								</button>
-								</c:if>
-								<c:if test="${btnEdit eq 'hasAuthority'}">
-								<button id="btn_edit" type="button" class="btn btn-outline btn-default"
-									onclick="editRow()">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-									编辑
-								</button>
-								</c:if>
-								<c:if test="${btnDelete eq 'hasAuthority'}">
-								<button id="btn_delete" type="button" class="btn btn-outline btn-default"
-									onclick="deleteRow()">
-									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-								</button>
-								</c:if>
-								<c:if test="${btnAssignUser eq 'hasAuthority'}">
-								<button id="btn_assignUser" type="button" class="btn btn-outline btn-default"
-									onclick="initUser()">
-									<span class="glyphicon glyphicon-user" aria-hidden="true"></span>分配用户
-								</button>
-								</c:if>
-								<c:if test="${btnAssignMenu eq 'hasAuthority'}">
-								<button id="btn_assignMenu" type="button" class="btn btn-outline btn-default" onclick="initMenu()">
-									<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>分配菜单
-								</button>
-								</c:if>
+								<june:btn type="insert"></june:btn>
+								<june:btn type="update"></june:btn>
+								<june:btn type="delete"></june:btn>
+								<june:btn type="custom" auth="btnAssignUser" onclick="initUser()" id="btn_assignUser" title="分配用户" icon="user" ></june:btn>
+								<june:btn type="custom" auth="btnAssignMenu" onclick="initMenu()" id="btn_assignMenu" title="分配菜单" icon="list-alt" ></june:btn>
 							</div>
 							<table id="roleInfoTable">
 							</table>
@@ -107,11 +78,8 @@
                     
 					</div>
 					<div class="modal-footer">
-					<c:if test="${saveAssignUser eq 'hasAuthority' || saveAssignMenu eq 'hasAuthority'}">
-						<button type="button" class="btn btn-primary"
-							onclick="closemodal()">取消</button>
-						<button type="submit" id="saveBtn" class="btn btn-primary">保存</button>
-						</c:if>
+						<june:btn type="cancle"></june:btn>
+						<june:btn type="save"></june:btn>
 					</div>
 				</form>
 
@@ -137,11 +105,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-				<c:if test="${saveAssignMenu eq 'hasAuthority'}">
-					<button type="button" class="btn btn-primary"
-						onclick="closemenumodal()">取消</button>
-					<button type="button" id="saveAssignMenu" class="btn btn-primary" onclick="assignMenu()">确定</button>
-				</c:if>
+					<june:btn type="cancle" onclick="closemenumodal()"></june:btn>
+					<june:btn type="custom" auth="saveAssignMenu" id="saveAssignMenu" onclick="assignMenu()" css="btn btn-primary" icon="ok" title="确定"></june:btn>
 				</div>
 			</div>
 		</div>
@@ -164,13 +129,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-				<c:if test="${saveAssignUser eq 'hasAuthority'}">
-					<button type="button" class="btn btn-primary"
-						onclick="closeusermodal()">取消</button>
-					<button type="button" id="saveAssignUser" class="btn btn-primary" onclick="assignUser()">确定</button>
-				</c:if>
+					<june:btn type="cancle" onclick="closeusermodal()"></june:btn>
+					<june:btn type="custom" auth="saveAssignUser" id="saveAssignUser" onclick="assignUser()" css="btn btn-primary" icon="ok" title="确定"></june:btn>
 				</div>
-
 			</div>
 		</div>
 	</div>

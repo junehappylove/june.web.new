@@ -24,16 +24,15 @@
 								</div>
 								<label class="col-sm-1 control-label">组织名</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control" name="orgName"
-										id="orgName" />
+									<input type="text" class="form-control" name="orgName" id="orgName" />
 								</div>
-								<june:btn type="search" onclick="searchInfo()"></june:btn>
+								<june:btn type="search"></june:btn>
 							</div>
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
 								<june:btn type="insert"></june:btn>
-								<june:btn type="update" title="编辑"></june:btn>
+								<june:btn type="update"></june:btn>
 								<june:btn type="delete"></june:btn>
 							</div>
 							<table id="orgInfoTable">
@@ -46,7 +45,6 @@
 
 	</div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
 		<div class="modal-dialog" style="height: 1000px;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -90,12 +88,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<c:if
-							test="${btnAddSave eq 'hasAuthority' || btnEditSave eq 'hasAuthority'}">
-							<button type="button" class="btn btn-primary"
-								onclick="closemodal()">取消</button>
-							<button type="submit" id="saveBtn" class="btn btn-primary">保存</button>
-						</c:if>
+						<june:btn type="cancle"></june:btn>
+						<june:btn type="save"></june:btn>
 					</div>
 				</form>
 

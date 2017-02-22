@@ -17,6 +17,8 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 > 1. ...
 
 ## 项目日志
+
+>17. 2017-02-22 完善按钮权限系统实现,tag按钮生成黑科技，自带权限
 >16. 2017-02-21 引入自定义按钮标签，简化按钮开发
 	项目分包，单独提出util包和tag包
 >15. 2017-02-18 引入菜单树(使用ztree，异步加载)、实现菜单配置权限按钮功能

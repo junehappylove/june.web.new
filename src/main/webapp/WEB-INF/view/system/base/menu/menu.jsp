@@ -22,15 +22,15 @@
 								<div class="col-sm-2">
 									<input type="text" class="form-control" name="menu_name" id="menu_name" />
 								</div>
-								<june:btn type="search" id="" icon="" onclick="searchInfo()" />
+								<june:btn type="search"></june:btn>
 							</div>
 						</form>
 						<div class="col-md-12">
 							<div id="toolbar" class="btn-group">
 								<june:btn type="insert" />
-								<june:btn type="update" title="编辑" icon="" />
+								<june:btn type="update" />
 								<june:btn type="delete" />
-								<june:btn type="custom" id="btn_auth" onclick="menuControll()" icon="" css="" title="分配权限"/>
+								<june:btn type="custom" id="btn_auth" auth="btnMenuControll" onclick="menuControll()" title="分配权限"/>
 							</div>
 							<div class="row">
 								<!-- 菜单树 -->
@@ -107,13 +107,13 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<c:if test="${btnAddSave eq 'hasAuthority' || btnEditSave eq 'hasAuthority'}">
+						<%-- <c:if test="${btnAddSave eq 'hasAuthority' || btnEditSave eq 'hasAuthority'}">
 							<button type="button" class="btn btn-primary" onclick="closemodal()">取消</button>
-							<button type="submit" id="saveBtn" class="btn btn-primary">保存</button>
-						</c:if>
+						</c:if> --%>
+						<june:btn type="cancle"></june:btn>
+						<june:btn type="save"></june:btn>
 					</div>
 				</form>
-
 			</div>
 		</div>
 	</div>

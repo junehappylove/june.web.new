@@ -37,7 +37,7 @@ $(function() {
 function useful(){
 	$('#qxsjInfoTable').bootstrapTable("checkBy", {
 		field : "qxsj_code",
-		values : [ 'btnAdd', 'search','btnEditSave','btnAddSave','btnDelete','btnEdit']
+		values : [ 'btnAdd', 'search', 'cancle', 'btnEditSave', 'btnAddSave', 'btnDelete', 'btnEdit']
 	});
 }
 

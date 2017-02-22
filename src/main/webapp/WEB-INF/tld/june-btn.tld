@@ -3,38 +3,51 @@
 <taglib>
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
-	<short-name>Button Search TLD with Attribute</short-name>
+	<short-name>Button TLD with Attribute</short-name>
 	<tag>
 		<name>btn</name>
-		<tag-class>com.judy.june.tag.btn.SearchButtonTag</tag-class>
+		<tag-class>com.judy.june.tag.btn.ButtonTag</tag-class>
 		<body-content>scriptless</body-content>
 		<attribute>
 			<name>type</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 			<description>可选值:search,insert,delete,update,import,export,cancle,save,edit,custom</description>
 		</attribute>
 		<attribute>
 			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>auth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>name</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>title</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>css</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>icon</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>onclick</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 </taglib>

@@ -179,6 +179,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
 	</delete>
 	
+	<!-- 根据按钮id删除角色跟按钮管理的数据 -->
+	<delete id="deleteByBtnId" parameterType="java.lang.String">
+		DELETE FROM sys_role_function WHERE 1=1
+		AND BUTTON_ID = #{id}
+	</delete>
+	
 	<!-- 查询树形数据 -->
 	<select id="getTree" parameterType="com.june.dto.back.common.TreeDto" 
 		resultType="com.june.dto.back.common.TreeDto">

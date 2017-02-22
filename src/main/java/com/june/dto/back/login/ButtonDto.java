@@ -14,9 +14,6 @@ import com.june.common.PageDTO;
 
 public class ButtonDto extends PageDTO<ButtonDto> {
 
-	/**
-	 * long serialVersionUID
-	 */
 	private static final long serialVersionUID = -147792280064499369L;
 	private String buttonId;//按钮id
 	private String firstModuleId;//一级模块id
@@ -28,6 +25,7 @@ public class ButtonDto extends PageDTO<ButtonDto> {
 	private String buttonUrl;//按钮的url
 	private String roleId;//角色id
 	private String menuUrl;//页面url
+	
 	public String getButtonId() {
 		return buttonId;
 	}
