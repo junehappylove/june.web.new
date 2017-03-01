@@ -55,16 +55,17 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<!-- common -->
+		<!-- common包中自动依赖util -->
+		<dependency>
+			<groupId>com.judy.june</groupId>
+			<artifactId>june.web.common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<!-- tag -->
 		<dependency>
 			<groupId>com.judy.june</groupId>
 			<artifactId>june.web.tag</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<!-- util -->
-		<dependency>
-			<groupId>com.judy.june</groupId>
-			<artifactId>june.util</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<!-- Spring -->

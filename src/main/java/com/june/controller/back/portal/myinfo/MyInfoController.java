@@ -22,11 +22,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.util.MessageUtil;
 
 /**
  * @Description: 我的资讯用controller
@@ -136,7 +136,7 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 		;
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_change_success"));
+		errList.add(Message.$VALUE("content_change_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -165,7 +165,7 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 		releaseInfoService.submitNoDirect(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_submit_success"));
+		errList.add(Message.$VALUE("content_submit_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -209,7 +209,7 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 		myInfoService.deleteRow(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_delete_success"));
+		errList.add(Message.$VALUE("content_delete_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -236,7 +236,7 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 		}
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_submit_success"));
+		errList.add(Message.$VALUE("content_submit_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -263,7 +263,7 @@ public class MyInfoController extends BaseController<ReleaseInfoDto> {
 		}
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_delete_success"));
+		errList.add(Message.$VALUE("content_delete_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end

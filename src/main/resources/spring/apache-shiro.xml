@@ -75,11 +75,11 @@
 	<!-- sessionManager -->
 	<!-- <bean id="sessionManager" class="com.june.shiro.service.SessionManager">
 	    <property name="sessionDAO" ref="redisSessionDAO" />
-	    <property name="globalSessionTimeout" value="5400000"/>  
-	    <property name="deleteInvalidSessions" value="true"/>  
-	    <property name="sessionValidationSchedulerEnabled" value="true"/>  
-	    <property name="sessionValidationInterval" value="5400000"/>  
-	    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+	    <property name="globalSessionTimeout" value="5400000"/>
+	    <property name="deleteInvalidSessions" value="true"/>
+	    <property name="sessionValidationSchedulerEnabled" value="true"/>
+	    <property name="sessionValidationInterval" value="5400000"/>
+	    <property name="sessionIdCookie" ref="sessionIdCookie"/>
 	</bean> -->
 
 	<!-- <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  

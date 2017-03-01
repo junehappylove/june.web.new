@@ -41,13 +41,13 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.file.BaseFile;
 import com.june.dto.back.system.file.FileAppDTO;
 import com.june.dto.back.system.file.FileDTO;
 import com.june.util.MD5Util;
-import com.june.util.MessageUtil;
 import com.june.util.StringUtil;
 
 /**
@@ -192,7 +192,7 @@ public class FileController extends BaseController<FileDTO> {
 								file.transferTo(tempimg);
 							}
 							//数据存在的话不需要操作了(也不需要去更新)，业务中关注的去更新sys_file表数据即可
-							logger.debug(MessageUtil.$VALUE("image_exist", file_name,file_md5));
+							logger.debug(Message.$VALUE("image_exist", file_name,file_md5));
 							if(temp.getFile_height()==64&&temp.getFile_width()==64&&temp.getFile_name().contains("avatar")){
 								baseFileTemp = temp;
 								//XXX 这个步骤是非常有必要的

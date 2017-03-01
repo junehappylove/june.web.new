@@ -13,7 +13,7 @@ package com.june.dao.back.common;
 import java.util.List;
 
 import com.june.common.BaseDao;
-import com.june.dto.back.common.TreeDto;
+import com.june.common.TreeDto;
 import com.june.dto.back.login.ButtonDto;
 
 /**

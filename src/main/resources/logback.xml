@@ -67,6 +67,7 @@
         <appender-ref ref="STDOUT" />  
         <!-- 对日志的双向记录 -->
 		<appender-ref ref="FILE" />
+		<!-- 解开这句日志记录到数据库中 -->
         <!-- <appender-ref ref="DB_MYSQL_POOL" />   -->
     </root>
 </configuration>

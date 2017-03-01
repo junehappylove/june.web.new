@@ -139,8 +139,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 查询树形数据 -->
-	<select id="getTree" parameterType="com.june.dto.back.common.TreeDto" 
-		resultType="com.june.dto.back.common.TreeDto">
+	<select id="getTree" parameterType="com.june.common.TreeDto" 
+		resultType="com.june.common.TreeDto">
 		SELECT
 			m.MENU_ID 		AS id,
 			m.PARENT_MENU_ID AS pid,

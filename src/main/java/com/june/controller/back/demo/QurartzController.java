@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
+import com.june.common.Message;
 import com.june.dto.back.demo.QuartzTriggerDto;
 import com.june.service.back.demo.QuartzService;
-import com.june.util.MessageUtil;
 
 /**
  * 
@@ -108,9 +108,9 @@ public class QurartzController extends BaseController<QuartzTriggerDto> {
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
 		if (result) {
-			errList.add(MessageUtil.$VALUE("quartz_delete_success"));
+			errList.add(Message.$VALUE("quartz_delete_success"));
 		} else {
-			errList.add(MessageUtil.$VALUE("quartz_delete_error"));
+			errList.add(Message.$VALUE("quartz_delete_error"));
 		}
 		quartzTriggerDto.setErrList(errList);
 		quartzTriggerDto.setErrType("info");

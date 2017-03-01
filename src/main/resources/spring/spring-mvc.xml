@@ -18,14 +18,6 @@
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
     http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
 
-	<!-- 扫描注解Bean -->
-	<context:component-scan base-package="com.june.*"></context:component-scan>
-	<!-- 
-	使用<context:annotation- config/>隐式地向 Spring容器注册AutowiredAnnotationBeanPostProcessor、
-	RequiredAnnotationBeanPostProcessor、
-	CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这4个BeanPostProcessor
-	参考：http://www.cnblogs.com/iuranus/archive/2012/07/19/2599084.html
-	 -->
 	<context:annotation-config />
  	<!-- 启动Springmvc注解驱动 -->
  	<!-- 
@@ -111,7 +103,16 @@
     
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-
+	
+	<!-- 扫描注解Bean -->
+	<!-- 
+	使用<context:annotation- config/>隐式地向 Spring容器注册AutowiredAnnotationBeanPostProcessor、
+	RequiredAnnotationBeanPostProcessor、
+	CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这4个BeanPostProcessor
+	参考：http://www.cnblogs.com/iuranus/archive/2012/07/19/2599084.html
+	 -->
+	<context:component-scan base-package="com.june.*"></context:component-scan>
+	
 	<!-- 映射静态资源 -->  
 	<!-- 在spring-mvc.xml中配置<mvc:default-servlet-handler />后，
 		会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，

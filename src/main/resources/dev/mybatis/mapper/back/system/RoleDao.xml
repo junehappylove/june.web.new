@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ROLE_ID=#{roleId}
 	</delete>
 	
-	<select id="getFirstMenus" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getFirstMenus" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.MENU_ID AS id,
 			T1.MENU_NAME AS name,
@@ -154,7 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			T1.PARENT_MENU_ID = '0'
 		ORDER BY T1.ORDER_NUM
 	</select>
-	<select id="getFirstMenusByRole" parameterType="String" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getFirstMenusByRole" parameterType="String" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.MENU_ID AS id,
 			T1.MENU_NAME AS name,
@@ -170,7 +170,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND T3.MENU_ID = T1.MENU_ID
 		ORDER BY T1.ORDER_NUM
 	</select>
-	<select id="getSubMenu" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getSubMenu" parameterType="com.june.common.TreeDto" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.MENU_ID AS id,
 			T1.MENU_NAME AS name,
@@ -182,7 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY T1.ORDER_NUM
 	</select>
 	
-	<select id="getSubMenuByRole" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getSubMenuByRole" parameterType="com.june.common.TreeDto" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.MENU_ID AS id,
 			T1.MENU_NAME AS name,
@@ -199,34 +199,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY T1.ORDER_NUM
 	</select>
 	
-	<select id="getFunctions" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getFunctions" parameterType="com.june.common.TreeDto" resultType="com.june.common.TreeDto">
 		SELECT
-			T1.BUTTON_ID AS id,
-			CONCAT(T1.BUTTON_NAME,'(',T1.BUTTON_FUNCTION,')') AS name,
-			'true' AS open
+			T1.BUTTON_ID	AS id,
+			CONCAT(T1.BUTTON_NAME,'(',T1.BUTTON_FUNCTION,')')	AS name,
+			'true'	AS open
 		FROM
 			sys_function T1
-		WHERE
-		(
-			T1.BUTTON_FIRSTMODULE_ID = #{id}
-			AND T1.BUTTON_SECONDMODULE_ID = '0'
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
-		)
-		OR
-		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID = #{id}
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
-		)
-		OR
-		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID != '0'
-			AND T1.BUTTON_THIRDMODULE_ID = #{id}
+		WHERE (
+			T1.BUTTON_1_ID = #{id}
+			AND T1.BUTTON_2_ID = '0'
+			AND T1.BUTTON_3_ID = '0'
+		) OR (
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID = #{id}
+			AND T1.BUTTON_3_ID = '0'
+		) OR (
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID != '0'
+			AND T1.BUTTON_3_ID = #{id}
 		)
 	</select>
 	
-	<select id="getFunctionsByRole" parameterType="com.june.dto.back.common.TreeDto" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getFunctionsByRole" parameterType="com.june.common.TreeDto" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.BUTTON_ID AS id,
 			CONCAT(T1.BUTTON_NAME,'(',T1.BUTTON_FUNCTION,')') AS name,
@@ -236,21 +231,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			sys_role_function T2
 		WHERE
 		(
-			T1.BUTTON_FIRSTMODULE_ID = #{id}
-			AND T1.BUTTON_SECONDMODULE_ID = '0'
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
+			T1.BUTTON_1_ID = #{id}
+			AND T1.BUTTON_2_ID = '0'
+			AND T1.BUTTON_3_ID = '0'
 		)
 		OR
 		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID = #{id}
-			AND T1.BUTTON_THIRDMODULE_ID = '0'
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID = #{id}
+			AND T1.BUTTON_3_ID = '0'
 		)
 		OR
 		(
-			T1.BUTTON_FIRSTMODULE_ID !='0'
-			AND T1.BUTTON_SECONDMODULE_ID != '0'
-			AND T1.BUTTON_THIRDMODULE_ID = #{id}
+			T1.BUTTON_1_ID !='0'
+			AND T1.BUTTON_2_ID != '0'
+			AND T1.BUTTON_3_ID = #{id}
 		)
 		AND T2.ROLE_ID = #{roleId}
 		AND T2.BUTTON_ID = T1.BUTTON_ID
@@ -336,7 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND T1.ROLE_ID = #{roleId}
 	</select>
 	<!-- 获取角色授权的人员信息列表 -->
-	<select id="getUsers" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getUsers" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.USER_ID AS id,
 			CONCAT(T1.USER_NAME,'(',T4.ORG_NAME,')') AS name,

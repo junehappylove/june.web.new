@@ -18,8 +18,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
+import com.june.common.TreeDto;
 import com.june.dao.back.system.base.role.RoleDao;
-import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.MenuInfoDto;
 import com.june.dto.back.system.base.RoleInfoDto;
 

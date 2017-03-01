@@ -31,8 +31,9 @@
  	<!-- 
  	<mvc:annotation-driven />， 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean
  	 -->
-    <mvc:annotation-driven /> 
-    <!-- <mvc:annotation-driven />实际做了以下工作：（不包括添加自己定义的拦截器）
+    <mvc:annotation-driven />
+    <!-- 
+    <mvc:annotation-driven />实际做了以下工作：（不包括添加自己定义的拦截器）
     //注解请求映射  
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">        
         <property name="interceptors">
@@ -66,9 +67,9 @@
     	参考：http://www.cnblogs.com/yangzhilong/p/3725849.html
      -->
     
-	<mvc:view-controller path="/" view-name="login/login"/>
-	<mvc:view-controller path="/login" view-name="login/login"/>
-	<mvc:view-controller path="/login/" view-name="login/login"/>
+	<mvc:view-controller path="/" view-name="login/login" />
+	<mvc:view-controller path="/login" view-name="login/login" />
+	<mvc:view-controller path="/login/" view-name="login/login" />
 	
 	<!-- 引入jdbc配置文件 -->
 	<import resource="classpath*:mybatis/mybatis-jdbc.xml" />

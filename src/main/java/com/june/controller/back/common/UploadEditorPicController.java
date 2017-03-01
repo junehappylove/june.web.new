@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.june.common.Message;
 import com.june.util.FastDfsUtils;
 import com.june.util.FileUpLoadDownload;
-import com.june.util.MessageUtil;
 
 /**
  * kindeditor图片上传到服务器 UploadEditorPicController <br>
@@ -116,14 +116,14 @@ public class UploadEditorPicController {
 			} else {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.$VALUE("error_image_file") + "');");
+						+ Message.$VALUE("error_image_file") + "');");
 				out.println("</script>");
 				return null;
 			}
 			if (upload.getSize() > 6000 * 1024) {
 				out.println("<script type=\"text/javascript\">");
 				out.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",''," + "'"
-						+ MessageUtil.$VALUE("error_file_size", new String[] { "6M" }) + "');");
+						+ Message.$VALUE("error_file_size", new String[] { "6M" }) + "');");
 				out.println("</script>");
 				return null;
 			}

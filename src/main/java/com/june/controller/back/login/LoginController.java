@@ -37,13 +37,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.code.kaptcha.Producer;
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.common.MessageDto;
 import com.june.dto.back.login.MenuDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.base.UserRoleDto;
 import com.june.service.back.login.LoginService;
 import com.june.service.back.system.base.user.UserInfoService;
-import com.june.util.MessageUtil;
 import com.june.util.exception.LoginAttemptException;
 
 import net.sf.json.JSONObject;
@@ -118,7 +118,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 	@RequestMapping("/logincheck")
 	public String checkLogin(HttpServletRequest request,
 			HttpServletResponse response,RedirectAttributes redirectAttributes) throws Exception{
-		String username = request.getParameter("username");
+		String userid = request.getParameter("username");
 	    String password = request.getParameter("password");
 	    String kaptchaFormjsp = request.getParameter("kaptcha");//获取页面传过来的验证码
 	    String kaptchaExpected = (String) request.getSession().getAttribute("kaptcha");//获取session中的验证码
@@ -134,7 +134,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 		    }
 	    }
 	    Subject subject = SecurityUtils.getSubject();
-	    UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+	    UsernamePasswordToken token = new UsernamePasswordToken(userid,password);
 		token.setRememberMe(false);
 		UserInfoDto userInfoDto = new UserInfoDto();
 		try {
@@ -149,7 +149,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 			return "redirect:/login/";
 		} catch (IncorrectCredentialsException e) {
 			token.clear();
-			userInfoDto.setUserId(username);
+			userInfoDto.setUserId(userid);
 			loginService.updateFailLoginAttempt(userInfoDto);
 			redirectAttributes.addFlashAttribute("errormsg", Constants.USER_NOT_EXIT);
 			return "redirect:/login/";
@@ -158,16 +158,16 @@ public class LoginController extends BaseController<UserInfoDto>{
 			redirectAttributes.addFlashAttribute("errormsg", e.getMessage());
 			return "redirect:/login/";
 		}
-		userInfoDto.setUserId(username);
+		userInfoDto.setUserId(userid);
 		loginService.updateSuccessLoginAttempt(userInfoDto);
-		request.getSession().setAttribute("username", username);
+		request.getSession().setAttribute("username", userid);
 		//XXX 限制只能一个用户登录 start
-//		String sessionId = shardedJedisPool.getResource().get(username);
+//		String sessionId = shardedJedisPool.getResource().get(userid);
 //		if (sessionId != null) {
 //			//如果该sessionId已经存在，则删除该sessionid
 //			shardedJedisPool.getResource().del("shiro_redis_session:" + sessionId);
 //		}
-//		shardedJedisPool.getResource().set(username,request.getSession().getId());
+//		shardedJedisPool.getResource().set(userid,request.getSession().getId());
 		//限制只能一个用户登录 end
 		return "redirect:/login/main"; 
 	}
@@ -292,7 +292,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 		ModelAndView result = null;
 		
 		result = new ModelAndView("error/403");
-		String msg = MessageUtil.$VALUE("access_denied");
+		String msg = Message.$VALUE("access_denied");
 		// 将错误信息返回到页面
 		result.addObject("error", msg);
 		return result;

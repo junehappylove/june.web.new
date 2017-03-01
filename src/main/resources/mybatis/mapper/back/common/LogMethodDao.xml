@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.june.dao.back.common.LogMethodDao">
+	<!-- 添加操作日志 -->
+	<insert id="add" parameterType="com.june.dto.back.common.LogMethodDto">
+		INSERT INTO log_operate (
+			LOG_ID,
+			USER_ID,
+			OPERATE_TYPE,
+			FUN_MODULE,
+			OPERATE_REMARK,
+			OPERATE_METHOD,
+			OPETATE_PARAMS,
+			OPERATE_TIME
+		) VALUES (
+			NULL,
+			#{userId},
+			#{operateType},
+			#{funModule},
+			#{operateRemark},
+			#{operateMethod},
+			#{opetateParams},
+			#{operateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<!-- 判断用户是否存在 -->
+	<select id="userExit" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM sys_user u WHERE u.USER_ID = #{userId}
+	</select>
+
+</mapper>

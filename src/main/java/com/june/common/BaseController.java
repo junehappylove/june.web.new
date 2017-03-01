@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
-//import org.apache.commons.beanutils.PropertyUtilsBean;
-//import org.apache.shiro.authc.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,6 @@ import org.springframework.web.util.WebUtils;
 import com.june.common.converter.DateConverter;
 import com.june.common.converter.DateJsonValueProcessor;
 import com.june.common.converter.TimestampConverter;
-import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.dto.back.system.file.BaseFile;
@@ -60,7 +57,6 @@ import com.june.service.back.system.file.BaseFileService;
 import com.june.service.back.system.file.FileAppService;
 import com.june.service.back.system.file.FileService;
 import com.june.util.DateUtil;
-import com.june.util.MessageUtil;
 import com.june.util.SendMail;
 import com.june.util.exception.CustomException;
 import com.june.util.exception.FastDFSException;
@@ -92,12 +88,16 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	}
 	protected static String article_template_path = "template/cmstemplate/article.html";
 	protected static String commentlist_template_path = "template/cmstemplate/comment_list.html";
+	
 	@Autowired
 	protected SendMail sendMail;
+	
 	@Autowired
 	protected UserInfoService userInfoService;
+	
 	@Autowired
 	private HttpServletRequest request;
+	
 	@Autowired
 	protected CommonService commonService;
 	//=====================================================================================
@@ -105,8 +105,10 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	//=====================================================================================
 	@Autowired
 	protected FileAppService fileAppService;
+	
 	@Autowired
 	protected BaseFileService baseFileService;
+	
 	@Autowired
 	protected FileService fileService;
 	
@@ -114,10 +116,6 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	@Value("${project.environment}")//表示运行环境 dev test pro
 	protected String environment;
 
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
 	//=====================================================================================
 	
 	/**
@@ -584,7 +582,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 						params = (String[]) stooges.toArray();
 					}
 					stooges.clear();
-					errList.add(MessageUtil.$VALUE(message, params));
+					errList.add(Message.$VALUE(message, params));
 				} else {
 					errList.add(list.getDefaultMessage());
 				}
@@ -794,7 +792,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	protected void message(HttpServletResponse response,String messages, String type, String... params) throws Exception {
 		ArrayList<String> errList = new ArrayList<String>();
 		message = new MessageDto();
-		errList.add(MessageUtil.$VALUE(messages,params));
+		errList.add(Message.$VALUE(messages,params));
 		message.setErrList(errList);
 		message.setErrType(type);
 		// 返回消息 end
@@ -850,9 +848,6 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
 			for (int i = 0; i < list.size(); i++) {
 				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
-				// XXX
-				//request.setAttribute(list.get(i).getButtonPageId(), "hasAuthority");
-				//request.getServletContext().setAttribute(list.get(i).getButtonPageId(), "hasAuthority");
 			}
 		}
 		return result;

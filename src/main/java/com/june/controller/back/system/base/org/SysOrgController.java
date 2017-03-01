@@ -22,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.june.common.BaseController;
 import com.june.common.Constants;
 import com.june.common.MessageDto;
+import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.SysOrgDto;
 import com.june.service.back.system.base.org.SysOrgService;
 

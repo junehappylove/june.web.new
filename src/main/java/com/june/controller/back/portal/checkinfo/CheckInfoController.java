@@ -22,12 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.checkinfo.CheckInfoService;
 import com.june.service.back.portal.myinfo.MyInfoService;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.util.MessageUtil;
 
 /**
  * 审核资讯用controller
@@ -110,7 +110,7 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		checkInfoService.checkPass(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_checkpass_success"));
+		errList.add(Message.$VALUE("content_checkpass_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -126,7 +126,7 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		checkInfoService.checkBack(releaseInfoDto);
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_checkback_success"));
+		errList.add(Message.$VALUE("content_checkback_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -174,7 +174,7 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		}
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_checkpass_success"));
+		errList.add(Message.$VALUE("content_checkpass_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end
@@ -202,7 +202,7 @@ public class CheckInfoController extends BaseController<ReleaseInfoDto> {
 		}
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("content_checkback_success"));
+		errList.add(Message.$VALUE("content_checkback_success"));
 		releaseInfoDto.setErrList(errList);
 		releaseInfoDto.setErrType("info");
 		// 返回消息 end

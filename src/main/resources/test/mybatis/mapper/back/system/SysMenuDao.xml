@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			T1.MENU_ICON 	AS menu_icon,
 			T1.ORDER_NUM 	AS order_num,
 			T1.MENU_NOTICE 	AS menu_notice,
+			T1.Z_IS_PARENT  AS isParent,
 			T1.ADD_USER_ID 	AS addUserId,
 			T1.ADD_TIME 	AS addTime,
 			T1.UPDATE_USER_ID AS updateUserId,
@@ -22,6 +23,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE 1=1
 		<if test="menu_name != null and menu_name != ''">
 			AND T1.MENU_NAME LIKE '%${menu_name}%'
+		</if>
+		<if test="menu_id != null and menu_id != ''">
+			AND T1.MENU_ID = #{menu_id}
+		</if>
+		<if test="parent_menu_id != null and parent_menu_id != ''">
+			AND T1.PARENT_MENU_ID = #{parent_menu_id}
 		</if>
 		ORDER BY T1.PARENT_MENU_ID,T1.ORDER_NUM
 	</sql>
@@ -55,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			MENU_ICON,
 			ORDER_NUM,
 			MENU_NOTICE,
+			Z_IS_PARENT,
 			ADD_USER_ID,
 			ADD_TIME,
 			UPDATE_USER_ID,
@@ -68,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{menu_icon},
 			#{order_num},
 			#{menu_notice},
+			#{isParent},
 			#{sys_user},
 			NOW(),
 			#{sys_user},
@@ -79,18 +88,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="com.june.dto.back.system.base.SysMenuDto"
 		resultType="com.june.dto.back.system.base.SysMenuDto">
 		SELECT
-			T1.MENU_ID AS menu_id,
-			T1.MENU_NAME AS menu_name,
+			T1.MENU_ID		AS menu_id,
+			T1.MENU_NAME	AS menu_name,
 			T1.PARENT_MENU_ID AS parent_menu_id,
-			T1.MENU_URL AS menu_url,
-			T1.MENU_ICON AS menu_icon,
-			T1.ORDER_NUM AS order_num,
-			T1.MENU_NOTICE AS menu_notice,
-			T1.ADD_USER_ID AS addUserId,
-			T1.ADD_TIME AS addTime,
+			T1.MENU_URL		AS menu_url,
+			T1.MENU_ICON	AS menu_icon,
+			T1.ORDER_NUM	AS order_num,
+			T1.MENU_NOTICE	AS menu_notice,
+			T1.Z_IS_PARENT	AS isParent,
+			T1.ADD_USER_ID	AS addUserId,
+			T1.ADD_TIME		AS addTime,
 			T1.UPDATE_USER_ID AS updateUserId,
-			T1.UPDATE_TIME AS updateTime,
-            T1.VERSION AS version
+			T1.UPDATE_TIME	AS updateTime,
+            T1.VERSION		AS version
 		FROM
 			sys_menu T1
 		WHERE
@@ -106,6 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			MENU_ICON = #{menu_icon},
 			ORDER_NUM = #{order_num},
 			MENU_NOTICE = #{menu_notice},
+			Z_IS_PARENT = #{isParent},
 			UPD_USER_ID = #{sys_user},
 			UPD_TIME = NOW(),
 			VERSION = VERSION + 1
@@ -118,9 +129,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="menu_id != null and menu_id != ''">
             AND MENU_ID = #{menu_id}
         </if>
+        <if test="appid != null and appid != ''">
+        	<!-- 根据主键删除，为保证通用性，推荐使用此方法 -->
+            AND MENU_ID = #{appid}
+        </if>
         <if test="parent_menu_id != null and parent_menu_id != ''">
             AND PARENT_MENU_ID = #{parent_menu_id}
         </if>
 	</delete>
 	
+	<!-- 查询树形数据 -->
+	<select id="getTree" parameterType="com.june.common.TreeDto" 
+		resultType="com.june.common.TreeDto">
+		SELECT
+			m.MENU_ID 		AS id,
+			m.PARENT_MENU_ID AS pid,
+			m.MENU_NAME 	AS name,
+			m.MENU_URL 		AS ids, <!-- url最好其他属性接受参考ztree的api -->
+			'closed' 		AS open,
+			m.Z_IS_PARENT 	AS isParent
+		FROM 
+			sys_menu m 
+		WHERE 
+			1=1 
+		AND 
+			m.PARENT_MENU_ID = #{pid}
+	</select>
 </mapper>

@@ -47,6 +47,7 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.june.common.AbstractDTO;
 import com.june.common.BaseController;
+import com.june.common.Message;
 import com.june.common.MessageDto;
 import com.june.dto.back.demo.ComboxDto;
 import com.june.dto.back.demo.DemoDto;
@@ -61,7 +62,6 @@ import com.june.util.DBUtil;
 import com.june.util.ExportImportExcel;
 import com.june.util.FastDfsUtils;
 import com.june.util.FileUpLoadDownload;
-import com.june.util.MessageUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -278,13 +278,13 @@ public class DemoController extends BaseController<MenuDto> {
 		String[] titles = { "编号", "姓名", "部门", "岗位", "打卡日期", "上班时间", "下班时间", "卡钟地址", "采集日期", "车牌号", "处理状态" };
 		String[] attrs = { "no", "name", "dept", "title", "date", "onTime", "offTime", "address", "getDate", "carNo",
 				"status" };
-		ExportImportExcel.exportExcelToFolder(list, titles, attrs, "test", MessageUtil.$KEY("file.downloadpath"),
+		ExportImportExcel.exportExcelToFolder(list, titles, attrs, "test", Message.$KEY("file.downloadpath"),
 				"aaa");
 
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("export_success"));
+		errList.add(Message.$VALUE("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 end
@@ -346,7 +346,7 @@ public class DemoController extends BaseController<MenuDto> {
 		MessageDto messageDto = new MessageDto();
 
 		// 获取文件保存的路径，路径在配置文件config.properties文件中保存
-		String realPath = MessageUtil.$KEY("savePicUrl");
+		String realPath = Message.$KEY("savePicUrl");
 		String message = FileUpLoadDownload.uploadSingleFile(file, request, response, realPath, null);
 		ArrayList<String> errList = new ArrayList<String>();
 		errList.add(message);
@@ -372,7 +372,7 @@ public class DemoController extends BaseController<MenuDto> {
 	@RequestMapping("/getImage")
 	@ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET", produces = "image/png")
 	public void getImage(HttpServletRequest request, HttpServletResponse response) {
-		String realPath = MessageUtil.$KEY("savePicUrl");
+		String realPath = Message.$KEY("savePicUrl");
 		String filePath = realPath + "22.png";
 		returnImage(response, filePath);
 	}
@@ -596,7 +596,7 @@ public class DemoController extends BaseController<MenuDto> {
 		while (entries.hasNext()) {
 			Map.Entry<String, MultipartFile> entry = entries.next();
 			multipartFile = entry.getValue();
-			String realPath = MessageUtil.$KEY("savePicUrl");
+			String realPath = Message.$KEY("savePicUrl");
 			// 上传文件到指定文件夹
 			String message = FileUpLoadDownload.uploadSingleFile(multipartFile, request, response, realPath, null);
 			// 获取文件流
@@ -766,7 +766,7 @@ public class DemoController extends BaseController<MenuDto> {
 		MessageDto messageDto = new MessageDto();
 		// 返回消息 start
 		ArrayList<String> errList = new ArrayList<String>();
-		errList.add(MessageUtil.$VALUE("export_success"));
+		errList.add(Message.$VALUE("export_success"));
 		messageDto.setErrList(errList);
 		messageDto.setErrType("info");
 		// 返回消息 endlist

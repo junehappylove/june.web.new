@@ -22,10 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.portal.ReleaseInfo.ReleaseInfoDto;
 import com.june.service.back.portal.releaseinfo.ReleaseInfoService;
-import com.june.util.MessageUtil;
 
 @Controller
 @RequestMapping("/portal/ReleaseInfo/")
@@ -80,7 +80,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.saveContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.$VALUE("content_save_success"));
+	        errList.add(Message.$VALUE("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -89,7 +89,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.updateContent(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.$VALUE("content_save_success"));
+	        errList.add(Message.$VALUE("content_save_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end
@@ -127,7 +127,7 @@ public class ReleaseInfoController extends BaseController<ReleaseInfoDto>{
 			releaseInfoService.submitNoDirect(releaseInfoDto);
 			 //返回消息 start
 			ArrayList<String> errList = new ArrayList<String>();
-	        errList.add(MessageUtil.$VALUE("content_submit_success"));
+	        errList.add(Message.$VALUE("content_submit_success"));
 	        releaseInfoDto.setErrList(errList);
 	        releaseInfoDto.setErrType("info");
 	        //返回消息 end

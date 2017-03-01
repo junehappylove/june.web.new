@@ -21,10 +21,11 @@ import org.springframework.util.StopWatch;
 
 import com.june.common.Constants;
 import com.june.common.annotation.MethodLog;
-import com.june.dto.back.common.LogOperateDto;
-import com.june.service.back.common.LogOperateService;
+import com.june.dto.back.common.LogMethodDto;
+import com.june.service.back.common.LogMethodService;
 
 /**
+ * 日志切面<br>
  * 操作日志记录，添加、删除、修改、查询等方法的AOP <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
@@ -37,7 +38,7 @@ public class LogAspect {
 	 * 日志记录 service
 	 */
 	@Autowired
-	private LogOperateService logService;
+	private LogMethodService logMethodService;
 
 	@Pointcut("@annotation(com.june.common.annotation.MethodLog)")
 	public void methodCachePointcut() {
@@ -47,6 +48,7 @@ public class LogAspect {
 	public void before(){
 		//System.out.println("before");
 	}
+	
 	@After("methodCachePointcut()")
 	public void after(){
 		//System.out.println("after");
@@ -77,7 +79,7 @@ public class LogAspect {
 			return object;
 		}
 		// 获取登录管理员id
-		String adminUserId = logService.getLoginUserId();
+		String adminUserId = logMethodService.getLoginUserId();
 		if (adminUserId == null) {// 没有管理员登录
 			return null;
 		}
@@ -100,8 +102,8 @@ public class LogAspect {
 			// 判断参数类型
 			if (methodParam[0] instanceof Map) {
 				@SuppressWarnings("unchecked")
-				Map<String, String> paramsMap = logService.getParameterMap((Map<String, Object>) methodParam[0]);
-				params = logService.mapToString(paramsMap);
+				Map<String, String> paramsMap = logMethodService.getParameterMap((Map<String, Object>) methodParam[0]);
+				params = logMethodService.mapToString(paramsMap);
 			} else if (methodParam[0] instanceof HttpServletRequest) {
 				HttpServletRequest request = (HttpServletRequest) methodParam[0];
 
@@ -112,7 +114,7 @@ public class LogAspect {
 					String udStr = URLDecoder.decode(appParams, "UTF-8");
 					params = udStr;
 				} else {
-					params = logService.getParams(request);
+					params = logMethodService.getParams(request);
 				}
 			}
 			watch = new StopWatch();
@@ -135,10 +137,15 @@ public class LogAspect {
 			methodRemark = methodMap.get("remark"); // 获取操作备注
 			operateType = methodMap.get("operateType"); // 获取操作类型
 			//记录耗时
-			methodRemark +=",执行耗时:"+watch.getTotalTimeMillis()+"ms";
+			long times = watch.getTotalTimeMillis();
+			if(times > 1000){
+				methodRemark += ",执行耗时:<span style='color:red;'>" + times + "ms<span>";
+			}else{
+				methodRemark += ",执行耗时:<span style='color:green;'>" + times + "ms<span>";
+			}
 		}
 
-		LogOperateDto logDto = new LogOperateDto();
+		LogMethodDto logDto = new LogMethodDto();
 		logDto.setUserId(adminUserId);
 		logDto.setFunModule(funModule);
 		logDto.setOperateType(operateType);
@@ -148,7 +155,7 @@ public class LogAspect {
 		Timestamp now = new Timestamp(System.currentTimeMillis());
 		logDto.setOperateTime(now);
 
-		logService.addLogOperate(logDto); // 添加日志记录
+		logMethodService.addDto(logDto); // 添加日志记录
 
 		return object;
 	}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.june.common.BaseController;
-import com.june.dto.back.common.TreeDto;
+import com.june.common.TreeDto;
 
 /**
  * 通用的树形结构获取器

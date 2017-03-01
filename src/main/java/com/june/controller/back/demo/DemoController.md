@@ -62,7 +62,7 @@ import com.june.util.DBUtil;
 import com.june.util.ExportImportExcel;
 import com.june.util.FastDfsUtils;
 import com.june.util.FileUpLoadDownload;
-import com.june.util.MessageUtil;
+import com.june.common.Message;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

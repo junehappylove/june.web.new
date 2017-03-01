@@ -13,7 +13,7 @@ import com.june.common.PageDTO;
  * @blog https://www.github.com/junehappylove
  * @date 2016年12月15日 上午2:37:13
  */
-public class LogOperateDto extends PageDTO<LogOperateDto> implements Serializable{
+public class LogMethodDto extends PageDTO<LogMethodDto> implements Serializable{
 	/**
 	 * long serialVersionUID
 	 */

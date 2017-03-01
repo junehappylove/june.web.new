@@ -31,7 +31,7 @@
  	<!-- 
  	<mvc:annotation-driven />， 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean
  	 -->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven />
     <!-- 
     <mvc:annotation-driven />实际做了以下工作：（不包括添加自己定义的拦截器）
     //注解请求映射  

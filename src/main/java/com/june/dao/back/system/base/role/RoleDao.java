@@ -16,8 +16,8 @@ import java.util.Map;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.june.common.BaseDao;
+import com.june.common.TreeDto;
 import com.june.common.annotation.DataSource;
-import com.june.dto.back.common.TreeDto;
 import com.june.dto.back.system.base.MenuInfoDto;
 import com.june.dto.back.system.base.RoleInfoDto;
 

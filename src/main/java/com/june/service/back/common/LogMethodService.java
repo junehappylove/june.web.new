@@ -16,35 +16,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
 import com.june.common.BaseService;
-import com.june.dao.back.common.LogOperateDao;
-import com.june.dao.back.system.base.user.UserInfoDao;
-import com.june.dto.back.common.LogOperateDto;
-import com.june.dto.back.system.base.UserInfoDto;
+import com.june.dao.back.common.LogMethodDao;
+import com.june.dto.back.common.LogMethodDto;
 
 /**
- * 
- * 操作日志Service <br>
+ * 操作日志Service
+ * LogMethodService <br>
  * 
  * @author 王俊伟 wjw.happy.love@163.com
- * @date 2016年12月8日 下午3:51:22
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年2月24日 上午7:43:28
+ * @version 1.0.0
  */
-@Service
-public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto> {
+@Service 
+public class LogMethodService extends BaseService<LogMethodDao, LogMethodDto> {
 
-	@Autowired
-	private LogOperateDao logOperateDao;
-
-	@Autowired
-	private UserInfoDao userInfoDao;
-
-	/**
-	 * 添加日志
-	 * 
-	 * @param logOperateDto
-	 */
-	public void addLogOperate(LogOperateDto logOperateDto) {
-		logOperateDao.addLogOperate(logOperateDto);
-	}
+	@Autowired 
+	private LogMethodDao logMethodDao;
 
 	/**
 	 * 获取登录用户id
@@ -52,17 +40,14 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	 * @return
 	 */
 	public String getLoginUserId() {
-
 		// 获取登录管理员帐号名
 		String userId = (String) SecurityUtils.getSubject().getPrincipal();
-
 		if (userId == null || userId.equals("")) {
 			return null;
 		}
 		// 判断该用户是否存在
-		UserInfoDto userInfoDto = userInfoDao.get(userId);
-
-		if (userInfoDto == null) {
+		int num = logMethodDao.userExit(userId);
+		if (num < 1) {
 			return null;
 		}
 		return userId;
@@ -95,15 +80,15 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 	 * @param request
 	 * @return
 	 */
-	public Map<String,String> getParameterMap(Map<String,Object> map) {
+	public Map<String, String> getParameterMap(Map<String, Object> map) {
 		// 返回值Map
 		Map<String, String> returnMap = new HashMap<String, String>();
 		Iterator<Entry<String, Object>> entries = map.entrySet().iterator();
-		Map.Entry<String,Object> entry;
+		Map.Entry<String, Object> entry;
 		String name = "";
 		String value = "";
 		while (entries.hasNext()) {
-			entry = (Map.Entry<String,Object>) entries.next();
+			entry = (Map.Entry<String, Object>) entries.next();
 			name = (String) entry.getKey();
 			Object valueObj = entry.getValue();
 			if (null == valueObj) {
@@ -124,16 +109,16 @@ public class LogOperateService extends BaseService<LogOperateDao, LogOperateDto>
 		}
 		return returnMap;
 	}
-	
-	public Map<String,String> getParameterMap2(Map<String,String[]> map) {
+
+	public Map<String, String> getParameterMap2(Map<String, String[]> map) {
 		// 返回值Map
 		Map<String, String> returnMap = new HashMap<String, String>();
 		Iterator<Entry<String, String[]>> entries = map.entrySet().iterator();
-		Map.Entry<String,String[]> entry;
+		Map.Entry<String, String[]> entry;
 		String name = "";
 		String value = "";
 		while (entries.hasNext()) {
-			entry = (Map.Entry<String,String[]>) entries.next();
+			entry = (Map.Entry<String, String[]>) entries.next();
 			name = (String) entry.getKey();
 			Object valueObj = entry.getValue();
 			if (null == valueObj) {

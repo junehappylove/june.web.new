@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.june.dao.back.common.CommonDao">
 
-	<select id="getFirstOrg" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getFirstOrg" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.ORG_ID AS id,
 			T1.ORG_NAME AS name,
@@ -15,8 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			T1.PARENT_ORG_ID = '0'
 	</select>
 	
-	<select id="getSubOrg" parameterType="com.june.dto.back.common.TreeDto" 
-		resultType="com.june.dto.back.common.TreeDto">
+	<select id="getSubOrg" parameterType="com.june.common.TreeDto" 
+		resultType="com.june.common.TreeDto">
 		SELECT
 			T1.ORG_ID AS id,
 			T1.ORG_NAME AS name,
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			T1.PARENT_ORG_ID = #{id}
 	</select>
 	
-	<select id="getRole" resultType="com.june.dto.back.common.TreeDto">
+	<select id="getRole" resultType="com.june.common.TreeDto">
 		SELECT
 			T1.ROLE_ID 	AS id,
 			T1.ROLE_NAME AS name,

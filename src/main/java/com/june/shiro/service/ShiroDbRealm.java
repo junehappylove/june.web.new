@@ -36,13 +36,13 @@ import org.apache.shiro.web.subject.WebSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.june.common.Constants;
+import com.june.common.Message;
 import com.june.dao.back.login.LoginDao;
 import com.june.dto.back.system.base.UserInfoDto;
 import com.june.shiro.dao.ShiroUserDao;
 import com.june.shiro.dto.Resource;
 import com.june.shiro.dto.User;
 import com.june.util.DateUtil;
-import com.june.util.MessageUtil;
 import com.june.util.exception.LoginAttemptException;
 
 /**
@@ -53,13 +53,17 @@ import com.june.util.exception.LoginAttemptException;
  * @blog https://www.github.com/junehappylove
  * @date 2016年12月18日 下午7:52:26
  */
-public class ShiroDbRealm extends AuthorizingRealm{  
+public class ShiroDbRealm extends AuthorizingRealm {
 	 
     @Autowired  
     private ShiroUserDao shiroUserDao;  
     
     @Autowired
     private LoginDao loginDao;
+    
+    private static final String NL = "/"; 
+    private static final String noaccess = "noaccess";
+    private static final String access = "access";	
  
     /**
      * 当用户进行访问链接时的授权方法  
@@ -69,13 +73,13 @@ public class ShiroDbRealm extends AuthorizingRealm{
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {  
     	// 因为非正常退出，即没有显式调用 SecurityUtils.getSubject().logout()
         // (可能是关闭浏览器，或超时)，但此时缓存依旧存在(principals)，所以会自己跑到授权方法里。
-        if (!SecurityUtils.getSubject().isAuthenticated()) {
-            doClearCache(principals);
-            SecurityUtils.getSubject().logout();
-            return null;
-        }
+		if (!SecurityUtils.getSubject().isAuthenticated()) {
+			doClearCache(principals);
+			SecurityUtils.getSubject().logout();
+			return null;
+		}
         if (principals == null) {  
-            throw new AuthorizationException(MessageUtil.$KEY("principal_not_null"));  
+            throw new AuthorizationException(Message.$KEY("principal_not_null"));  
         }  
         ServletRequest request = ((WebSubject)SecurityUtils.getSubject()).getServletRequest();  
         //获取访问的url
@@ -92,18 +96,18 @@ public class ShiroDbRealm extends AuthorizingRealm{
         //获取角色对应的业务url
         List<Resource> buttonUrlList = shiroUserDao.getRoleButtons(userInfoDto.getRoleId());
         //判断是否是一级菜单或者二级菜单请求
-        if (url.contains("/frame/")||url.contains("/SecondMenu/init/")) {
+		if (url.contains("/frame/") || url.contains("/SecondMenu/init/")) {
         	//获取一级菜单的id
-			String menuId = url.split("/")[url.split("/").length-1];
+			String menuId = url.split(NL)[url.split(NL).length - 1];
 			Resource resource = new Resource();
 			resource.setRoleId(userInfoDto.getRoleId());
 			resource.setMenuId(menuId);
 			//判断该角色是否有访问该菜单的权限
 			resource = shiroUserDao.getMenubyRoleIdMenuId(resource);
 			if (resource == null) {
-				permissions.add("noaccess");
+				permissions.add(noaccess);
 			}else{
-				permissions.add("access");
+				permissions.add(access);
 			}
 		}else{
 			//否则是三级菜单或者业务url
@@ -127,10 +131,10 @@ public class ShiroDbRealm extends AuthorizingRealm{
 				}
 			}
 			if (!permissionFlag) {
-				permissions.add("noaccess");
+				permissions.add(noaccess);
 			}
 			else{
-				permissions.add("access");
+				permissions.add(access);
 			}
 		}
         info.addStringPermissions(permissions);
@@ -146,14 +150,14 @@ public class ShiroDbRealm extends AuthorizingRealm{
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;  
         String username = usernamePasswordToken.getUsername();  
         if (username == null) {  
-            throw new AccountException(MessageUtil.$KEY("user_name_not_null"));  
+            throw new AccountException(Message.$KEY("user_name_not_null"));  
         }  
         User user = shiroUserDao.getUserByUsername(username);  
         if (user == null) {  
-            throw new UnknownAccountException(MessageUtil.$VALUE("user_info_not_exist", username));  
+            throw new UnknownAccountException(Message.$VALUE("user_info_not_exist", username));  
         }  
 		if(user.getUserLock().equals("1")){
-			throw new  LockedAccountException(MessageUtil.$KEY("user_info_locked"));
+			throw new  LockedAccountException(Message.$KEY("user_info_locked"));
 		}
 		String lastLoginTime = user.getLastLoginTime();
 		Date lastLoginTimeDate = DateUtil.convert2Date(lastLoginTime);//上一次登录时间
@@ -167,9 +171,8 @@ public class ShiroDbRealm extends AuthorizingRealm{
 			if (attempt == Constants.ATTEMP_TIME) {
 				int min = (int) ((Constants.LOCK_TIME * 60 * 1000 -time)/60000);
 				int sec = (int) (((Constants.LOCK_TIME * 60 * 1000) -( min * 60 * 1000) - time)/1000);
-				throw new LoginAttemptException(MessageUtil.$VALUE("login_attempt_error", String.valueOf(min),String.valueOf(sec)));
+				throw new LoginAttemptException(Message.$VALUE("login_attempt_error", String.valueOf(min),String.valueOf(sec)));
 			}
-		
 		}else{
 			//非连续登陆
 			UserInfoDto userInfoDto = new UserInfoDto();

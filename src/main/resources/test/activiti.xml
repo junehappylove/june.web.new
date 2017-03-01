@@ -4,15 +4,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-<!-- Activiti begin -->
-
+	<!-- Activiti begin -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jobExecutorActivate" value="false" />
 		<property name="history" value="full" />
-<!-- 自动部署 -->
+		<!-- 自动部署 -->
         <property name="deploymentResources">
             <list>
                 <value>classpath*:deployments/*</value>
@@ -32,5 +31,4 @@
 	<bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
 	<bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
 	<!-- Activiti end -->
-	
-	</beans>
+</beans>
