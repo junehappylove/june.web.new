@@ -709,12 +709,22 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-		 <!-- ehcache -->
+		<!-- 缓存 ehcache -->
+		<dependency>
+		    <groupId>com.googlecode.ehcache-spring-annotations</groupId>
+		    <artifactId>ehcache-spring-annotations</artifactId>
+		    <version>1.2.0</version>
+		</dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>2.9.0</version>
         </dependency>
+        <dependency>
+		    <groupId>org.mybatis.caches</groupId>
+		    <artifactId>mybatis-ehcache</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
 		<!-- <dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>

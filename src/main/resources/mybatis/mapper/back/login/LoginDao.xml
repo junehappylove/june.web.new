@@ -3,6 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.june.dao.back.login.LoginDao">
+
 	<select id="loginCheck" parameterType="com.june.dto.back.system.base.UserInfoDto"
 		resultType="com.june.dto.back.system.base.UserInfoDto">
 		SELECT

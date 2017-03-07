@@ -270,7 +270,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 	 */
 	private List<MenuDto> getMenus(List<MenuDto> firstMenu) {
 		for (int i = 0; i < firstMenu.size(); i++) {
-			firstMenu.get(i).setMenus(loginService.GetSecondMenu(firstMenu.get(i)));
+			firstMenu.get(i).setMenus(loginService.getSecondMenu(firstMenu.get(i)));
 			getMenus(firstMenu.get(i).getMenus());
 		}
 		return firstMenu;

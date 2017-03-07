@@ -12,6 +12,7 @@ package com.june.service.back.login;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
@@ -30,23 +31,12 @@ import com.june.dto.back.system.base.UserInfoDto;
  */
 @Service
 public class LoginService extends BaseService<LoginDao, UserInfoDto> {
+	
 	/**
 	 * 登录用dao注入
 	 */
 	@Autowired
-	protected LoginDao loginDao;
-
-	/**
-	 * 人员service
-	 */
-	// @Autowired
-	// protected PersonInfoService personInfoService;
-
-	/**
-	 * 围栏service
-	 */
-	// @Autowired
-	// protected FenceSetService fenceSetService;
+	private LoginDao loginDao;
 
 	/**
 	 * 登录用户check
@@ -69,6 +59,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:42
 	 * @writer junehappylove
 	 */
+	@Cacheable(value="getFristMenu", key = "#userInfoDto.userId.concat(#userInfoDto.roleId)")
 	public List<MenuDto> getFristMenu(UserInfoDto userInfoDto) {
 		List<MenuDto> list = loginDao.getFristMenu(userInfoDto);
 		return list;
@@ -82,8 +73,8 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:35
 	 * @writer junehappylove
 	 */
-	// @Cacheable(value = "CustomerCache")
-	public List<MenuDto> GetSecondMenu(MenuDto menuDto) {
+	@Cacheable(value = "getSecondMenu", key = "#menuDto.userId.concat(#menuDto.roleId).concat(#menuDto.menuId)", condition="#menuDto.pid!='0'")
+	public List<MenuDto> getSecondMenu(MenuDto menuDto) {
 		return loginDao.getSecondMenu(menuDto);
 	}
 
@@ -95,6 +86,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:28
 	 * @writer junehappylove
 	 */
+	@Cacheable(value = "getMenuById", key="#menuDto.menuId")
 	public MenuDto getMenuById(MenuDto menuDto) {
 		menuDto = loginDao.getMenuById(menuDto);
 		return menuDto;
@@ -108,6 +100,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:39
 	 * @writer junehappylove
 	 */
+	@Cacheable(value = "getUserInfoById", key="#userId")
 	public UserInfoDto getUserInfoById(String userId) {
 		return loginDao.getUserInfoById(userId);
 	}
@@ -120,6 +113,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:50
 	 * @writer junehappylove
 	 */
+	@Cacheable(value = "getRoleInfoByUserId", key="#userInfoDto.userId")
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto) {
 		return loginDao.getRoleInfoByUserId(userInfoDto);
 	}
@@ -132,6 +126,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:59
 	 * @writer junehappylove
 	 */
+	@Cacheable(value = "getRoleButton", key="#userInfoDto.roleId")
 	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto) {
 		return loginDao.getRoleButton(userInfoDto);
 	}

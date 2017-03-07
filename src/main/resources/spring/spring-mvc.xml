@@ -19,6 +19,8 @@
     http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
 
 	<context:annotation-config />
+	<!-- 基于注解支持Spring cache缓存 -->
+	<cache:annotation-driven/>
  	<!-- 启动Springmvc注解驱动 -->
  	<!-- 
  	<mvc:annotation-driven />， 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean
@@ -228,6 +230,7 @@
 	<!-- aop配置 -->
 	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
 	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
+	
 	<!-- 引入websocket消息处理 -->
 	<import resource="classpath*:spring/spring-websocket.xml" />
 	

@@ -14,92 +14,92 @@ import com.june.dto.back.system.base.UserInfoDto;
 * @version V1.0  
  */
 public interface LoginDao extends BaseDao<UserInfoDto> {
-	/** 
-	* @Description: 登录用户查询
-	* @param @param userInfoDto
-	* @param @return  
-	* @return UserInfoDto 
-	* @throws 
-	*/ 
+	
+	/**
+	 * 登录用户查询
+	 * @param userInfoDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:04
+	 * @writer junehappylove
+	 */
 	public UserInfoDto loginCheck(UserInfoDto userInfoDto);
 	
-	/**   
-	 * @Description: 根据userid获取用户信息
-	 * @param: @param userId
-	 * @param: @return      
-	 * @return: UserInfoDto      
-	 * @throws   
+	/**
+	 * 根据userid获取用户信息
+	 * @param userId
+	 * @return
+	 * @date 2017年3月7日 上午12:32:14
+	 * @writer junehappylove
 	 */
 	public UserInfoDto getLoginUser(String userId);
 	
-	/**   
-	 * @Description: 获取一级菜单
-	 * @param: @param menuDto
-	 * @return: List<MenuDto>      
-	 * @throws   
+	/**
+	 * 获取一级菜单
+	 * @param userInfoDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:20
+	 * @writer junehappylove
 	 */
 	public List<MenuDto> getFristMenu(UserInfoDto userInfoDto);
 	
-	/**   
-	 * @Description: 获取二级以及三级菜单
-	 * @param: @param menuDto
-	 * @return: List<MenuDto>      
-	 * @throws   
+	/**
+	 * 获取二级以及三级菜单
+	 * @param menuDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:27
+	 * @writer junehappylove
 	 */
 	public List<MenuDto> getSecondMenu(MenuDto menuDto);
 	
-	/**   
-	 * @Description: 根据menuid获取菜单信息
-	 * @param: @param menuDto
-	 * @return: List<MenuDto>      
-	 * @throws   
+	/**
+	 * 根据menuid获取菜单信息
+	 * @param menuDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:34
+	 * @writer junehappylove
 	 */
 	public MenuDto getMenuById(MenuDto menuDto);
 	
-	/**   
-	 * @Description: 根据userid获取用户信息
-	 * @author caiyang
-	 * @param: @return      
-	 * @return: UserInfoDto      
-	 * @throws   
+	/**
+	 * 根据userid获取用户信息
+	 * @param userId
+	 * @return
+	 * @date 2017年3月7日 上午12:32:41
+	 * @writer junehappylove
 	 */
 	public UserInfoDto getUserInfoById(String userId);
 	
-	/**   
-	 * @Description: 根据用户id到，用户对应的schema下获取对应的角色信息
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: UserInfoDto      
-	 * @throws   
+	/**
+	 * 根据用户id到，用户对应的schema下获取对应的角色信息
+	 * @param userInfoDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:48
+	 * @writer junehappylove
 	 */
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto);
 	
-	/**   
-	 * @Description: 获取角色对应的有权限的按钮
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: ButtonDto      
-	 * @throws   
+	/**
+	 * 获取角色对应的有权限的按钮
+	 * @param userInfoDto
+	 * @return
+	 * @date 2017年3月7日 上午12:32:53
+	 * @writer junehappylove
 	 */
 	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto);
 	
-	/**   
-	 * @Description: 登录失败时更新登录尝试次数
-	 * @author caiyang
-	 * @param:       
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 登录失败时更新登录尝试次数
+	 * @param userInfoDto
+	 * @date 2017年3月7日 上午12:32:59
+	 * @writer junehappylove
 	 */
 	public void updateFailLoginAttempt(UserInfoDto userInfoDto);
 	
-	/**   
-	 * @Description: 登录成功时更新登录尝试次数
-	 * @author caiyang
-	 * @param:       
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 登录成功时更新登录尝试次数
+	 * @param userInfoDto
+	 * @date 2017年3月7日 上午12:33:06
+	 * @writer junehappylove
 	 */
 	public void updateSuccessLoginAttempt(UserInfoDto userInfoDto);
 }
