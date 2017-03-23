@@ -5,8 +5,10 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" 
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
 	xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
@@ -18,19 +20,9 @@
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd 
     http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd">
 
-	<!-- 扫描注解Bean -->
-	<context:component-scan base-package="com.june.*"></context:component-scan>
-	<!-- 
-	使用<context:annotation- config/>隐式地向 Spring容器注册AutowiredAnnotationBeanPostProcessor、
-	RequiredAnnotationBeanPostProcessor、
-	CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这4个BeanPostProcessor
-	参考：http://www.cnblogs.com/iuranus/archive/2012/07/19/2599084.html
-	 -->
 	<context:annotation-config />
  	<!-- 启动Springmvc注解驱动 -->
- 	<!-- 
- 	<mvc:annotation-driven />， 它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean
- 	 -->
+ 	<!-- <mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter 这两个bean  -->
     <mvc:annotation-driven />
     <!-- 
     <mvc:annotation-driven />实际做了以下工作：（不包括添加自己定义的拦截器）
@@ -66,7 +58,17 @@
     
     	参考：http://www.cnblogs.com/yangzhilong/p/3725849.html
      -->
-    
+	
+	<!-- 引入缓存配置 -->
+	<import resource="classpath*:spring/spring-cache.xml" />
+	<!-- 如果不用import语句，也可以在web.xml中引入配置，方法如下： -->
+	<!-- 
+	<context-param>
+	  <param-name>contextConfigLocation</param-name>
+	  <param-value>classpath*:spring/spring-mvc.xml,classpath:spring/spring-cache.xml</param-value>
+	</context-param>
+	 -->
+	
 	<mvc:view-controller path="/" view-name="login/login" />
 	<mvc:view-controller path="/login" view-name="login/login" />
 	<mvc:view-controller path="/login/" view-name="login/login" />
@@ -111,7 +113,16 @@
     
 	<!-- 激活自动代理功能 -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-
+	
+	<!-- 扫描注解Bean -->
+	<!-- 
+	使用<context:annotation- config/>隐式地向 Spring容器注册AutowiredAnnotationBeanPostProcessor、
+	RequiredAnnotationBeanPostProcessor、
+	CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这4个BeanPostProcessor
+	参考：http://www.cnblogs.com/iuranus/archive/2012/07/19/2599084.html
+	 -->
+	<context:component-scan base-package="com.june.*"></context:component-scan>
+	
 	<!-- 映射静态资源 -->  
 	<!-- 在spring-mvc.xml中配置<mvc:default-servlet-handler />后，
 		会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
@@ -227,6 +238,7 @@
 	<!-- aop配置 -->
 	<bean id="logAspect" class="com.june.common.aspect.LogAspect"></bean>
 	<!-- <bean id="dataSourceAspect" class=" com.june.common.aspect.DataSourceAspect"></bean> -->
+	
 	<!-- 引入websocket消息处理 -->
 	<import resource="classpath*:spring/spring-websocket.xml" />
 	

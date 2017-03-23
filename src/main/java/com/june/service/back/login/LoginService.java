@@ -59,10 +59,9 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:42
 	 * @writer junehappylove
 	 */
-	@Cacheable(value="getFristMenu", key = "#userInfoDto.userId.concat(#userInfoDto.roleId)")
+	@Cacheable(value="getFristMenu", key = "(#userInfoDto.userId).concat(#userInfoDto.roleId)")
 	public List<MenuDto> getFristMenu(UserInfoDto userInfoDto) {
-		List<MenuDto> list = loginDao.getFristMenu(userInfoDto);
-		return list;
+		return loginDao.getFristMenu(userInfoDto);
 	}
 
 	/**
@@ -88,8 +87,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 */
 	@Cacheable(value = "getMenuById", key="#menuDto.menuId")
 	public MenuDto getMenuById(MenuDto menuDto) {
-		menuDto = loginDao.getMenuById(menuDto);
-		return menuDto;
+		return loginDao.getMenuById(menuDto);
 	}
 
 	/**
@@ -106,7 +104,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	}
 
 	/**
-	 * 根据用户id到，用户对应的schema下获取对应的角色信息
+	 * 根据用户id到用户对应的schema下获取对应的角色信息
 	 * 
 	 * @param userInfoDto
 	 * @return
@@ -115,6 +113,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 */
 	@Cacheable(value = "getRoleInfoByUserId", key="#userInfoDto.userId")
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto) {
+		System.out.println("测试缓存...仅调用一次表示缓存有效!");
 		return loginDao.getRoleInfoByUserId(userInfoDto);
 	}
 
@@ -130,6 +129,14 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto) {
 		return loginDao.getRoleButton(userInfoDto);
 	}
+	
+	/*
+	 * 以上面获取权限按钮为例，做Spring cache缓存测试
+	 * 根据用的角色id查询其所有的按钮，查询后数据被缓存下来
+	 * 如果有新的按钮加入，则需要强制更新这个缓存
+	 * 使用@CachePut这个注解
+	 * 
+	 */
 
 	/**
 	 * 登录失败时更新登录尝试次数

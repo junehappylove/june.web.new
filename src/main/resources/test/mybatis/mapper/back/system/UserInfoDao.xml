@@ -145,13 +145,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 添加用户信息后，对应的在租户表中添加一条信息 -->
 	<insert id="addUserInfoToTenant" parameterType="com.june.dto.back.system.base.UserInfoDto">
-		INSERT INTO
-		sys_tenant
-		(TEANT_ID,
-		USER_ID)
-		VALUES (
-		#{tenantId},
-		#{userId});
+		INSERT INTO 
+			sys_tenant (TEANT_ID, USER_ID)
+		VALUES ( #{tenantId}, #{userId})
 	</insert>
 
 	<!-- 编辑用户信息 -->

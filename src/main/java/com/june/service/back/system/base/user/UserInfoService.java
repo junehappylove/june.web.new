@@ -14,9 +14,13 @@ import com.june.dto.back.system.base.UserRoleDto;
 import com.june.util.StringUtil;
 
 /**
- * @Description 用户信息Service
- * @author liren
- *
+ * 用户信息Service
+ * UserInfoService <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年3月12日 下午8:58:53
+ * @version 1.0.0
  */
 @Service
 public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
@@ -29,12 +33,10 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 
 	/**
 	 * 删除用户以及用户相关的角色信息
-	 * 
 	 * @param userInfoDto
-	 * @return: void
 	 */
-	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	@Override
+	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void deleteDto(UserInfoDto userInfoDto) {
 		userInfoDao.delete(userInfoDto);//删除用户
 		userInfoDao.deleteUserRoleInfo(userInfoDto);//删除用户的角色
@@ -44,7 +46,6 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 * 用户角色更新
 	 * 
 	 * @param userInfoDto
-	 * @return: void @throws
 	 */
 	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void updateUserRoleInfo(UserInfoDto userInfoDto) {
@@ -57,9 +58,10 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 
 	/**
 	 * 根据用户ID获取用户角色信息
-	 * 
-	 * @param params
+	 * @param userInfoDto
 	 * @return
+	 * @date 2017年3月12日 下午8:58:21
+	 * @writer junehappylove
 	 */
 	public List<UserRoleDto> getRolesById(UserInfoDto userInfoDto) {
 		return userInfoDao.getRolesById(userInfoDto);
@@ -69,7 +71,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 *
 	 * 删除用户所有角色信息
 	 * 
-	 * @return void
+	 * @param userInfoDto
 	 */
 	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void deleteUserRoleInfo(UserInfoDto userInfoDto) {
@@ -89,7 +91,6 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 		String roleIds = userInfoDto.getRoleId();
 		if (!StringUtil.isBlank(roleIds)) {
 			String[] roleIdArray = roleIds.split(",");
-
 			for (String roleId : roleIdArray) {
 				if (!StringUtil.isBlank(roleId)) {
 					userInfoDto.setRoleId(roleId);
@@ -103,13 +104,4 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 		}
 	}
 	
-	/**
-	 * 设置用户默认车型
-	 * @param userInfoDto
-	 * @date 2016年6月29日 下午2:09:49
-	 * @writer wjw.happy.love@163.com
-	 */
-	public void setDefaultVehicle(UserInfoDto userInfoDto){
-		userInfoDao.setDefaultVehicle(userInfoDto);
-	}
 }

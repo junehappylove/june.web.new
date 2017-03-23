@@ -21,252 +21,185 @@ import com.june.common.annotation.DataSource;
 import com.june.dto.back.system.base.MenuInfoDto;
 import com.june.dto.back.system.base.RoleInfoDto;
 
-/**  
-* @Description: 角色管理模块用dao
-* @author caiyang
-* @date 2015年11月10日 上午9:05:00 
-* @version V1.0  
+/**
+ * 角色管理模块用dao
+ * RoleDao <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年3月23日 下午3:45:10
+ * @version 1.0.0
  */
 public interface RoleDao extends BaseDao<RoleInfoDto>{
 
-	/**   
-	 * @Description: 插入新增角色
-	 * @author	caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 插入新增角色
+	 * @param roleInfoDto
 	 */
 	@DataSource("slave")
 	public void saveAddRole(RoleInfoDto roleInfoDto);
 	
-	/**   
-	 * @Description: 根据roleName获取角色信息
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: RoleInfoDto      
-	 * @throws   
+	/**
+	 * 根据roleName获取角色信息
+	 * @param roleInfoDto
+	 * @return RoleInfoDto
 	 */
 	public RoleInfoDto getRoleByRoleName(RoleInfoDto roleInfoDto);
 	
-	/**   
-	 * @Description: 根据roleId获取角色信息
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: RoleInfoDto      
-	 * @throws   
+	/**
+	 * 根据roleId获取角色信息
+	 * @param roleId
+	 * @return RoleInfoDto
 	 */
 	public RoleInfoDto getRoleByRoleId(String roleId);
 	
-	/**   
-	 * @Description: 更新角色信息
-	 * @author caiyang
-	 * @param:       
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 更新角色信息
+	 * @param roleInfoDto
+	 * @date 2017年3月23日 下午3:44:24
+	 * @writer junehappylove
 	 */
-	
 	public void updateRoleById(RoleInfoDto roleInfoDto);
 	
-	/**   
-	 * @Description: 删除角色信息
-	 * @author	caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 删除角色信息
+	 * @param roleId
 	 */
 	public void deleteRoleById(String roleId);
 	
-	/**   
-	 * @Description: 根据角色获取菜单
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: List<MenuInfoDto>   
-	 * @throws   
+	/**
+	 * 根据角色获取菜单
+	 * @param roleId
+	 * @return List<TreeDto>
 	 */
 	public List<TreeDto> getFirstMenusByRole(String roleId);
 	
-	/**   
-	 * @Description: 获取子菜单
-	 * @author caiyang
-	 * @param: @param treeDto
-	 * @param: @return      
-	 * @return: List<TreeDto>      
-	 * @throws   
+	/**
+	 * 获取子菜单
+	 * @param treeDto
+	 * @return List<TreeDto>
 	 */
 	public List<TreeDto> getSubMenu(TreeDto treeDto);
 	
-	/**   
-	 * @Description: 根据角色获取有权限的子菜单
-	 * @author caiyang
-	 * @param: @param treeDto
-	 * @param: @return      
-	 * @return: List<TreeDto>      
-	 * @throws   
+	/**
+	 * 根据角色获取有权限的子菜单
+	 * @param treeDto
+	 * @return List<TreeDto>
 	 */
 	public List<TreeDto> getSubMenuByRole(TreeDto treeDto);
 	
-	/**   
-	 * @Description: 获取功能
-	 * @author caiyang
-	 * @param: @param treeDto
-	 * @param: @return      
-	 * @return: List<TreeDto>      
-	 * @throws   
+	/**
+	 * 获取功能
+	 * @param treeDto
+	 * @return List<TreeDto>
 	 */
 	public List<TreeDto> getFunctions(TreeDto treeDto);
 	
-	/**   
-	 * @Description: 根据角色获取有权限的功能
-	 * @author caiyang
-	 * @param: @param treeDto
-	 * @param: @return      
-	 * @return: List<TreeDto>      
-	 * @throws   
+	/**
+	 * 根据角色获取有权限的功能
+	 * @param treeDto
+	 * @return List<TreeDto>
 	 */
 	public List<TreeDto> getFunctionsByRole(TreeDto treeDto);
 	
-	/**   
-	 * @Description: 获取菜单
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: List<MenuInfoDto>   
-	 * @throws   
+	/**
+	 * 获取菜单
+	 * @return List<TreeDto>
 	 */
 	@Cacheable(value="getFirstMenus",key="#root.caches[0].name")
 	public List<TreeDto> getFirstMenus();
 	
 	
-	/**   
-	 * @Description: 获取该角色所拥有的所有权限
-	 * @author	caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: String      
-	 * @throws   
+	/**
+	 * 获取该角色所拥有的所有权限
+	 * @param roleId
+	 * @return List<MenuInfoDto>
 	 */
-	@Cacheable(value="getauthorityofRole",key="#root.caches[0].name")
-	public List<MenuInfoDto> getauthorityofRole(String roleId);
+	@Cacheable(value="getAuthorityofRole",key="#root.caches[0].name")
+	public List<MenuInfoDto> getAuthorityofRole(String roleId);
 	
-	/**   
-	 * @Description: 获取该角色拥有的按钮权限
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: String      
-	 * @throws   
+	/**
+	 * 获取该角色拥有的按钮权限
+	 * @param roleId
+	 * @return List<MenuInfoDto>
 	 */
 	@Cacheable(value="getButtonauthorityOfRole",key="#root.caches[0].name")
 	public List<MenuInfoDto> getButtonauthorityOfRole(String roleId);
 	
-	/**   
-	 * @Description: 给角色赋权限
-	 * @author	caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 给角色赋权限
+	 * @param menuInfoDto
 	 */
 	public void authorityMenu(MenuInfoDto menuInfoDto);
 	
-	/**   
-	 * @Description: 给角色赋按钮权限
-	 * @author	caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 给角色赋按钮权限
+	 * @param menuInfoDto
 	 */
 	public void authorityButton(MenuInfoDto menuInfoDto);
 	
-	/**   
-	 * @Description: 给角色删除权限
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 给角色删除权限
+	 * @param menuInfoDto
 	 */
 	public void delAuthorityMenu(MenuInfoDto menuInfoDto);
 
-	/**   
-	 * @Description: 给角色按钮权限
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 给角色按钮权限
+	 * @param menuInfoDto
 	 */
 	public void delAuthorityButton(MenuInfoDto menuInfoDto);
-	/**   
-	 * @Description: 根据角色id获取用户
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: List<MenuInfoDto>      
-	 * @throws   
+	
+	/**
+	 * 根据角色id获取用户
+	 * @param roleId
+	 * @return List<MenuInfoDto>
 	 */
 	public List<MenuInfoDto> selectUserByRoleId(String roleId);
 	
-	/**   
-	 * @Description: 获取schema中的用户
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: List<MenuInfoDto>      
-	 * @throws   
+	/**
+	 * 获取schema中的用户
+	 * @return List<MenuInfoDto>
 	 */
 	public List<TreeDto> getUsers();
 	
-	
-	/**   
-	 * @Description: 根据角色id获取用户id
-	 * @author caiyang
-	 * @param: @param params
-	 * @param: @return      
-	 * @return: List<RoleInfoDto>      
-	 * @throws   
+	/**
+	 * 根据角色id获取用户id
+	 * @param roleId
+	 * @return List<RoleInfoDto>
 	 */
 	public List<RoleInfoDto> getUsersByRoleId(String roleId);
- 	/**   
-	 * @Description: 根据userid和roleid获取用户角色是否存在
-	 * @author	caiyang
-	 * @param: @return      
-	 * @return: RoleInfoDto      
-	 * @throws   
+ 	
+	/**   
+	 * 根据userid和roleid获取用户角色是否存在
+	 * @param params
+	 * @return RoleInfoDto      
 	 */
 	public RoleInfoDto getUserRoleByKey(Map<String, Object> params);
 	
-	/**   
-	 * @Description: 添加用户角色关系
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 添加用户角色关系
+	 * @param menuInfoDto
 	 */
 	public void addUserRole(MenuInfoDto menuInfoDto);
 	
-	/**   
-	 * @Description: 删除用户角色关系
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: void      
-	 * @throws   
+	/**
+	 * 删除用户角色关系
+	 * @param menuInfoDto
 	 */
 	public void delUserRole(MenuInfoDto menuInfoDto);
 	
-	/**   
-	 * @Description: 获取button
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: List<MenuInfoDto>   
-	 * @throws   
+	/**
+	 * 获取button
+	 * @param menuInfoDto
+	 * @return List<MenuInfoDto>
 	 */
 	public List<MenuInfoDto> getButtons(MenuInfoDto menuInfoDto);
 	
-	/**   
-	 * @Description: 获取角色对应的button
-	 * @author caiyang
-	 * @param: @param params      
-	 * @return: List<MenuInfoDto>   
-	 * @throws   
+	/**
+	 * 获取角色对应的button
+	 * @param menuInfoDto
+	 * @return List<MenuInfoDto>
 	 */
 	public List<MenuInfoDto> getButtonsByRole(MenuInfoDto menuInfoDto);
 }

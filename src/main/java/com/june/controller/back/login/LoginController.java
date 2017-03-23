@@ -122,7 +122,7 @@ public class LoginController extends BaseController<UserInfoDto>{
 	    String password = request.getParameter("password");
 	    String kaptchaFormjsp = request.getParameter("kaptcha");//获取页面传过来的验证码
 	    String kaptchaExpected = (String) request.getSession().getAttribute("kaptcha");//获取session中的验证码
-	    //TODO 开发环境下无需设置验证码 dev test pro
+	    //XXX 开发环境下无需设置验证码 dev test pro
 	    if(!environment.equalsIgnoreCase("dev")){
 		    if(kaptchaFormjsp.isEmpty()){
 				redirectAttributes.addFlashAttribute("errormsg", Constants.ERROR_CODE_EMPTY);
@@ -341,11 +341,9 @@ public class LoginController extends BaseController<UserInfoDto>{
 		String errorCode = request.getParameter("error");
 		if (errorCode.equals("401")) {
 			result = new ModelAndView("error/InvalidSessionError");
-		}
-		else if(errorCode.equals("403"))
-		{
+		} else if(errorCode.equals("403")) {
 			result = new ModelAndView("error/403");
-		}else if (errorCode.endsWith("500")) {
+		} else if (errorCode.endsWith("500")) {
 			result = new ModelAndView("error/internal-server-error");
 		}
 		return result;
@@ -455,29 +453,28 @@ public class LoginController extends BaseController<UserInfoDto>{
 	
 	@RequestMapping("/app/login")
 	public void applogin(HttpServletRequest request,
-			HttpServletResponse response) throws IOException
-	{
+			HttpServletResponse response) throws IOException {
 		String username = request.getParameter("j_username");
 	    String password = request.getParameter("j_password");
 	    Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 		token.setRememberMe(false);
-		 try {
-			  subject.login(token);
-		      UserInfoDto userInfoDto = new UserInfoDto();
-		      userInfoDto = loginService.getUserInfoById(username);
-		      //根据用户id获取用户信息
-		      request.getSession().setAttribute("userinfodto", userInfoDto);
-		      request.getSession().setAttribute("LOGIN_SUCCESS","success");
-		      response.setStatus(HttpServletResponse.SC_OK);
-		      System.out.println(request.getSession().getId());
-		      response.getWriter().write(request.getSession().getId());
-		    }catch (Exception e) {
-		      e.printStackTrace();
-		      token.clear();
-		      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  
-		      response.getWriter().write("login error");
-		    }
+		try {
+			subject.login(token);
+			UserInfoDto userInfoDto = new UserInfoDto();
+			userInfoDto = loginService.getUserInfoById(username);
+			// 根据用户id获取用户信息
+			request.getSession().setAttribute("userinfodto", userInfoDto);
+			request.getSession().setAttribute("LOGIN_SUCCESS", "success");
+			response.setStatus(HttpServletResponse.SC_OK);
+			System.out.println(request.getSession().getId());
+			response.getWriter().write(request.getSession().getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			token.clear();
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().write("login error");
+		}
 	}
 	
 }

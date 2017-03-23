@@ -403,7 +403,6 @@ public class DemoController extends BaseController<MenuDto> {
 		}
 
 		MessageDto messageDto = new MessageDto();
-		// TODO
 		toJson(messageDto, response);
 	}
 

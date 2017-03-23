@@ -100,9 +100,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	
 	@Autowired
 	protected CommonService commonService;
-	//=====================================================================================
-	//===================== 文件服务相关注册 =================================================
-	//=====================================================================================
+	// 文件服务相关注册 
 	@Autowired
 	protected FileAppService fileAppService;
 	
@@ -116,8 +114,6 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	@Value("${project.environment}")//表示运行环境 dev test pro
 	protected String environment;
 
-	//=====================================================================================
-	
 	/**
 	 * form表单后台验证
 	 * @param request
@@ -136,18 +132,6 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 		return dto;
 	}
 		
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	//=====================================================================================
-	
 	/**
 	 * 
 	 * @return
@@ -702,7 +686,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	protected void htmlEditInit(ModelAndView page, Dto bean) {
 		UserInfoDto user = userInfoService.getDtoById(new UserInfoDto(bean.getUpdateUserId()));
 		page.addObject("updateUserName", user != null ? user.getUserName() : "未知用户");
-		// XXX 约定： 这里默认使用bean存放，或者开发人员在自己业务里自定义
+		// XXX 约定:这里默认使用bean存放，或者开发人员在自己业务里自定义
 		Timestamp time = new Timestamp(System.currentTimeMillis());
 		if (bean.getUpdateTime() == null) {
 			bean.setUpdateTime(time);

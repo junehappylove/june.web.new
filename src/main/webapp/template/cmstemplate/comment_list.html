@@ -44,7 +44,7 @@
 		 <#list list as comment>
 		<div class="commentuser">评论用户：${(comment.commentUser)!""}</div>
 		<div class="content">评论内容：</div>
-		<div class="content"><textarea name="text" class="cinput" cols="60" rows="5" readonly="true">${(comment.commentContent)!""}</textarea></div>
+		<div class="content"><textarea name="text" class="cinput" cols="60" rows="5" readonly="readonly">${(comment.commentContent)!""}</textarea></div>
 	 </#list>
       </#if>
 	</div>

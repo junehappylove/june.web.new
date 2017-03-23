@@ -111,6 +111,7 @@
         </property>  
         <property name="defaultTargetDataSource" ref="masterdataSource"/>  
     </bean> -->
+    
     <!-- spring myBatis配置start -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -122,7 +123,7 @@
             </array>
         </property>
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
-		<property name="typeAliasesPackage" value="com.june.dao.*,com.june.shiro.dao.*,com.june.common.*"/>
+		<property name="typeAliasesPackage" value="com.june.*,com.june.dao.*,com.june.shiro.dao.*,com.june.common.*"/>
 	</bean>
 
 	<!-- scan for mappers and let them be autowired -->

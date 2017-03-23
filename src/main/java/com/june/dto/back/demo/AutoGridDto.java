@@ -43,7 +43,6 @@ public class AutoGridDto extends PageDTO<AutoGridDto> implements Serializable{
 	}
 	@Override
 	protected String getDtoName() {
-		// TODO 
-		return null;
+		return "AutoGridDto";
 	}
 }

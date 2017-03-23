@@ -67,7 +67,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
  
     /**
      * 当用户进行访问链接时的授权方法  
-     *   
+     * @param principals 
      */ 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {  

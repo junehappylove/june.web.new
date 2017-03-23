@@ -7,11 +7,14 @@ import com.june.dto.back.login.ButtonDto;
 import com.june.dto.back.login.MenuDto;
 import com.june.dto.back.system.base.UserInfoDto;
 
-/**  
-* @Description: 登录用dao
-* @author caiyang
-* @date 2015年9月11日 下午2:42:28 
-* @version V1.0  
+/**
+ * 登录用dao
+ * LoginDao <br>
+ * 
+ * @author 王俊伟 wjw.happy.love@163.com
+ * @blog https://www.github.com/junehappylove
+ * @date 2017年3月10日 下午12:02:11
+ * @version 1.0.0
  */
 public interface LoginDao extends BaseDao<UserInfoDto> {
 	

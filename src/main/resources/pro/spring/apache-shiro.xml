@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	xmlns:cache="http://www.springframework.org/schema/cache"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
-    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
-    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-    http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
-
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	
+	<bean id="shiroSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroDbRealm" />
 		 <!-- sessionManager -->
    		<!-- <property name="sessionManager" ref="sessionManager" /> -->
@@ -42,7 +35,7 @@
 	</bean>
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
+		<property name="securityManager" ref="shiroSecurityManager" />
 		<property name="loginUrl" value="/login/" />
 		<property name="unauthorizedUrl" value="/denied"/>
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" />
@@ -75,11 +68,11 @@
 	<!-- sessionManager -->
 	<!-- <bean id="sessionManager" class="com.june.shiro.service.SessionManager">
 	    <property name="sessionDAO" ref="redisSessionDAO" />
-	    <property name="globalSessionTimeout" value="5400000"/>  
-	    <property name="deleteInvalidSessions" value="true"/>  
-	    <property name="sessionValidationSchedulerEnabled" value="true"/>  
-	    <property name="sessionValidationInterval" value="5400000"/>  
-	    <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+	    <property name="globalSessionTimeout" value="5400000"/>
+	    <property name="deleteInvalidSessions" value="true"/>
+	    <property name="sessionValidationSchedulerEnabled" value="true"/>
+	    <property name="sessionValidationInterval" value="5400000"/>
+	    <property name="sessionIdCookie" ref="sessionIdCookie"/>
 	</bean> -->
 
 	<!-- <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  

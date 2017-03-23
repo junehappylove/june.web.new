@@ -258,7 +258,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 		String buttonIds = getButtons(authorityMenus);
 
 		// 更新操作之前查询角色的菜单权限
-		String originalauthorityMenus = roleService.getauthorityofRole(menuInfoDto.getRoleId());
+		String originalauthorityMenus = roleService.getAuthorityofRole(menuInfoDto.getRoleId());
 		// 更新操作之前查询角色的按钮权限
 		String originalauthorityButtons = roleService.getButtonauthorityOfRole(menuInfoDto.getRoleId());
 		// 获取需要添加的菜单权限

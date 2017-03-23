@@ -68,7 +68,7 @@ public class FastDfsUtils {
 		try {
 			trackerServer = trackerClient.getConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO handle exception
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
@@ -122,7 +122,7 @@ public class FastDfsUtils {
 		try {
 			trackerServer = trackerClient.getConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO handle exception
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {
@@ -205,7 +205,7 @@ public class FastDfsUtils {
 		try {
 			trackerServer = trackerClient.getConnection();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO handle exception
 		}
 		// 如果trackerserver为null，则抛出异常
 		if (trackerServer == null) {

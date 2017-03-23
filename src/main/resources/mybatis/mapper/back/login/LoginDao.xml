@@ -123,7 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND T3.ROLE_ID = T2.ROLE_ID
 	</select>
 
-
+	<!-- 根据用户的角色id获取此角色的所有权限按钮 -->
 	<select id="getRoleButton" parameterType="com.june.dto.back.system.base.UserInfoDto"
 		resultType="com.june.dto.back.login.ButtonDto">
 		SELECT
