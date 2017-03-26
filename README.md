@@ -21,6 +21,7 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 ## 项目日志
 
 >19. 2017-03-23 提供对ehcache的支持，项目使用中，如果提示缓存的错误，请在缓存文件配置中添加相应的缓存属性，参考:ehcache.xml
+	pom.xml采用私服，需要自己参考修改
 
 >18. 2017-03-06 提供缓存执行，使用Spring cache以注解方式使用，这样只需要为特定方法添加缓存注解即可
 其他无需做任何修改,可以参考LoginService这个类处理缓存数据
