@@ -1,4 +1,4 @@
-# june_web_new
+# june.web.new(june_web_new)
 
 ## 项目介绍 
 
@@ -19,6 +19,8 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 > 1. ...
 
 ## 项目日志
+
+>20. 2017-03-26 项目正式更名为 june.web.new
 
 >19. 2017-03-23 提供对ehcache的支持，项目使用中，如果提示缓存的错误，请在缓存文件配置中添加相应的缓存属性，参考:ehcache.xml
 	pom.xml采用私服，需要自己参考修改
