@@ -14,6 +14,7 @@ package com.june.robot;
  * @version 1.0.0
  */
 public interface Answer {
+	
 	/** 默认返回答案的数目 10条 */
 	static int DEFALUT_ANSWER_NUM = 10;
 

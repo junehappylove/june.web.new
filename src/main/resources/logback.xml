@@ -63,7 +63,7 @@
     </appender> -->
     
 	<!-- DEBUG  INFO  ERROR WARN -->
-	<root level="WARN">
+	<root level="DEBUG">
         <appender-ref ref="STDOUT" />  
         <!-- 对日志的双向记录 -->
 		<appender-ref ref="FILE" />

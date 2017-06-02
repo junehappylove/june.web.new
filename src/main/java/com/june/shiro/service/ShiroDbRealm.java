@@ -56,7 +56,7 @@ import com.june.util.exception.LoginAttemptException;
 public class ShiroDbRealm extends AuthorizingRealm {
 	 
     @Autowired  
-    private ShiroUserDao shiroUserDao;  
+    private ShiroUserDao shiroUserDao;
     
     @Autowired
     private LoginDao loginDao;

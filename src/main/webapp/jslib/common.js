@@ -25,12 +25,43 @@ var HTTP_URL = "http://10.50.200.38:8091/ftp/";
 var HTTP_URL_ = "http://192.168.100.5:280/XXX_FTP_SEVER";
 
 /**
+ * 分页取得一览数据的方法
+ * @param gridid 表格id
+ * @param data 请求参数
+ * @param url 请求url
+ */
+function pagedRowDatas(gridid, data, url) {
+	var options = $('#' + gridid).bootstrapTable('getOptions');
+	// 获取当前页
+	var currpage = options.pageNumber;
+	if (currpage == 0) {
+		currpage = 1;
+	}
+	// 获取当前页显示数据条数
+	var pageSize = options.pageSize;
+	data.currpage = currpage;
+	data.pageSize = pageSize;
+	commonGridAjax(POST, url, data, "commonCallback", gridid, true);
+}
+
+/**
+ * 不分页取得一览数据的方法
+ * @param gridid 表格id
+ * @param data 请求参数
+ * @param url 请求url
+ * @param success 回调函数
+ */
+function unpagedRowDatas(gridid, data, url, success) {
+	commonGridAjax(POST, url, data, success, gridid, false);
+}
+
+/**
  * 共同取得一览数据的方法
- * @param gridid
- * @param data
- * @param url
- * @param success
- * @param boolean
+ * @param gridid 表格id
+ * @param data 请求参数
+ * @param url 请求url
+ * @param success 回调函数
+ * @param boolean 是否分页
  */
 function commonRowDatas(gridid, data, url, success, boolean) {
 	if (boolean) {
@@ -102,7 +133,7 @@ function commonGridAjax(type, url, data, success, gridid, boolean) {
 }
 
 /**
- * 共同回掉函数
+ * 共同回调函数
  * @param response 后台传回的数据
  * @param gridid 表格控件的id
  * @param boolean 是否需要分页条件
@@ -121,7 +152,7 @@ function commonCallback(response, gridid, url, data, boolean) {
 }
 
 /**
- * 单独上传文件ajax共通方法
+ * 单独上传文件ajax共同方法
  * @param type
  * @param url
  * @param id
@@ -160,7 +191,7 @@ function ajaxFileUpload(type, url, id, success) {
 }
 
 /**
- * form表单中有file的form提交共通方法
+ * form表单中有file的form提交共同方法
  * @param id 表单id
  * @param type 提交类型 get / post
  * @param url 提交路径

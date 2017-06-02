@@ -1,11 +1,11 @@
-package com.june.service.back.bussiness.logger;
+package com.june.service.back.log;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.june.common.BaseService;
-import com.june.dao.back.bussiness.logger.LoggerDao;
-import com.june.dto.back.bussiness.logger.LoggerDto;
+import com.june.dao.back.log.LoggerDao;
+import com.june.dto.log.LoggerDto;
 
 /**
  * 
@@ -36,7 +36,6 @@ public class LoggerService extends BaseService<LoggerDao, LoggerDto> {
 
 	public void clear() {
 		loggerDao.clear();
-		
 	}
 
 }

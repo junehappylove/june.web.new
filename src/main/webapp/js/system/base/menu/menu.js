@@ -248,7 +248,8 @@ function menuTreeCallback(response) {
 	};
 	$.fn.zTree.init($("#sycMenus"), setting, nodes);
 }
-// 树节点点击
+
+/** 树节点点击 */
 function clickNode(event, treeId, treeNode, clickFlag){
 	//june.log(treeNode.name + treeNode.id + treeNode.ids);// 点击直接返回节点对象treeNode
 	//点击节点做查询子菜单
@@ -261,16 +262,19 @@ function clickNode(event, treeId, treeNode, clickFlag){
 		data = {parent_menu_id:id};// 获取查询条件
 	}
 	//june.log(data);
-	commonRowDatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
+	pagedRowDatas("menuInfoTable", data, api_getPagedList);
 }
+
 function menuRoot(){
 	var data = {parent_menu_id:'0'};// 获取查询条件
-	commonRowDatas("menuInfoTable", data, api_getPagedList, "commonCallback", true);
+	pagedRowDatas("menuInfoTable", data, api_getPagedList);
 }
+
 // 关闭角色选择modal
 function closerolemodal() {
 	$('#roleModal').modal('hide');
 }
+
 // 菜单选择节点被点击
 function roleSureClick() {
 	var treeObj = $.fn.zTree.getZTreeObj("roleTree");
@@ -289,13 +293,7 @@ function roleSureClick() {
 	$("#roleName").val(nodeNames);
 	$("#roleId").val(nodeIds);
 	// 由于不是直接在输入框中输入，需要重新出发校验事件
-	$('#modalForm')
-	// Get the bootstrapValidator instance
-	.data('bootstrapValidator')
-	// 将之前的检测结果清除，以便重新进行检测
-	.updateStatus('roleName', 'NOT_VALIDATED', null)
-	// Validate the field
-	.validateField('roleName');
+	$('#modalForm').data('bootstrapValidator').updateStatus('roleName', 'NOT_VALIDATED', null).validateField('roleName');
 	$('#treeModal').modal('hide');
 	$('#roleModal').modal('hide');
 }

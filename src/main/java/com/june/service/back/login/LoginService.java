@@ -113,7 +113,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 */
 	@Cacheable(value = "getRoleInfoByUserId", key="#userInfoDto.userId")
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto) {
-		System.out.println("测试缓存...仅调用一次表示缓存有效!");
+		System.out.println("test cache...仅调用一次表示缓存有效!");
 		return loginDao.getRoleInfoByUserId(userInfoDto);
 	}
 

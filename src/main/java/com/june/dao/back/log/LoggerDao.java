@@ -1,7 +1,7 @@
-package com.june.dao.back.bussiness.logger;
+package com.june.dao.back.log;
 
 import com.june.common.BaseDao;
-import com.june.dto.back.bussiness.logger.LoggerDto;
+import com.june.dto.log.LoggerDto;
 
 /**
  * 

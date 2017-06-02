@@ -1,4 +1,4 @@
-package com.june.controller.back.bussiness.logger;
+package com.june.controller.back.log;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ import com.june.common.AbstractDTO;
 import com.june.common.BaseController;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
-import com.june.dto.back.bussiness.logger.LoggerDto;
-import com.june.service.back.bussiness.logger.LoggerService;
+import com.june.dto.log.LoggerDto;
+import com.june.service.back.log.LoggerService;
 
 /**
  * 
