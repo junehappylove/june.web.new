@@ -11,6 +11,7 @@ var api_role_list = contextPath + "/system/base/role/getRoleInfo";
 var api_role_dele = contextPath + "/system/base/role/delRole";
 
 var api_assgin_users = contextPath + "/system/base/role/assginUsers";
+
 //初始化表格
 $(function() {
 	$('#roleInfoTable').bootstrapTable({
@@ -236,16 +237,15 @@ function initMenu(){
     	showOnlyMessage(ERROR,$message("ErrorSelectMultiAssign",null));
     } else{
     	var row = selectedRows("roleInfoTable");
-    	//initMenu(row[0].roleId);
     	loadMenuTree(row[0].roleId);
-    	//$('#menuModal').modal('show');
     	$('#menuModal').modal({show:true,backdrop: 'static', keyboard: false});
     }
 }
 
 //加载菜单树
 function loadMenuTree(roleId){
-	doAjax(POST, api_menu_tree, {roleId:roleId}, menuTreeCallback);
+	var data = {roleId:roleId};
+	doAjax(POST, api_menu_tree, data, menuTreeCallback);
 }
 
 function menuTreeCallback(response){
@@ -267,7 +267,6 @@ function assignMenu(){
 	var nodes = getSelectTree("menuTree");
 	//获取选中行
 	var row = selectedRows("roleInfoTable");
-	//alert(nodes[0].id)
 	var ids = "";
 	for(var i=0;i<nodes.length;i++)	{
 		ids = ids + nodes[i].id + ",";
@@ -298,7 +297,6 @@ function initUser(){
     } else{
     	var row = selectedRows("roleInfoTable");
     	loadUserTree(row[0].roleId);
-    	//$('#userModal').modal('show');
     	$('#userModal').modal({show:true,backdrop: 'static', keyboard: false});
     }
 }

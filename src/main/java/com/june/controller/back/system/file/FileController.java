@@ -41,6 +41,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.Message;
 import com.june.common.annotation.MethodLog;
 import com.june.dto.back.system.base.UserInfoDto;
@@ -64,11 +65,14 @@ public class FileController extends BaseController<FileDTO> {
 	
 	public static final String TYPE = Constants.USER_HEAD_TYPE;
 	public static final String PAHT = Constants.USER_HEAD_PATH;
-
+	
+	private final JspPage page = new JspPage("system/file/file","file");
+	private final JspPage head = new JspPage("system/file/head");
+	
 	@RequestMapping("/")
 	@MethodLog(module = "系统文件管理", remark = "页面初始化", operateType = Constants.OPERATE_TYPE_INIT)
 	public ModelAndView init(HttpServletRequest request) {
-		return initPage(request,"system/file/file");
+		return initPage(request, page);
 	}
 	
 	/**
@@ -81,7 +85,7 @@ public class FileController extends BaseController<FileDTO> {
 	@RequestMapping("/user/head")
 	@MethodLog(module = "系统文件管理", remark = "修改头像页面", operateType = Constants.OPERATE_TYPE_INIT)
 	public ModelAndView head(HttpServletRequest request) {
-		return initPage(request,"system/file/head");
+		return initPage(request, head);
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package com.june.controller.back.system.base.user;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
@@ -32,6 +33,7 @@ import java.util.List;
 @RequestMapping("/system/user")
 public class UserInfoController extends BaseController<UserInfoDto> {
 
+	private final JspPage page = new JspPage("system/base/user/userinfo","user");
 	/**
 	 * 用户信息Service
 	 */
@@ -49,7 +51,7 @@ public class UserInfoController extends BaseController<UserInfoDto> {
 	@RequestMapping("/")
 	@MethodLog(module = "用户管理", remark = "用户信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public ModelAndView InitUserManagement(HttpServletRequest request) {
-		return initPage(request,"system/base/user/userinfo");
+		return initPage(request, page);
 	}
 	
 	@RequestMapping("/view/{id}")

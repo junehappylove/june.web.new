@@ -10,14 +10,12 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.june.common.AbstractDTO;
 import com.june.common.BaseController;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
-import com.june.common.TreeDto;
 import com.june.dto.log.LoggerDto;
 import com.june.service.back.log.LoggerService;
 
@@ -29,50 +27,26 @@ import com.june.service.back.log.LoggerService;
  * @date 2016年5月10日 下午2:02:48
  */
 @Controller
-@RequestMapping("/logger")
+@RequestMapping("/system/log")
 public class LoggerController extends BaseController<LoggerDto> {
-
+	
+	private final JspPage page = new JspPage("system/log/logger","log");
+	
 	@Autowired
 	protected LoggerService loggerService;
-
-	/**
-	 * form表单后台验证
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 * @return AbstractDTO
-	 */
-	@ModelAttribute
-	public AbstractDTO validateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// 将参数映射到对应的业务dto中并返回
-		LoggerDto loggerDto = new LoggerDto();
-		fillRequestDto(request, loggerDto);
-		return loggerDto;
-	}
 
 	/**
 	 * Logger信息查询页面初始化
 	 * 
 	 * @return ModelAndView
-	 */
-	@RequestMapping("/search/")
-	public ModelAndView init(HttpServletRequest request) {
-		String page = new String("business/logger/logger");
+	 */	
+	@RequestMapping(value = {"/","/add","/edit","/info","/list"})
+	public ModelAndView jspPage(HttpServletRequest request) throws NoSuchMethodException, SecurityException{
+		String callurl = request.getRequestURI();
+		page.setMatchPath(callurl);
 		ModelAndView result = initPage(request, page);
-		List<TreeDto> list = commonService.getErrorLevel();
-		result.addObject("errorLevelDrops", list);
-		result.addObject("impactVehicleDrops", null);//FIXME 需要前台删掉
-		return result;
-	}
-
-	@RequestMapping("/import/")
-	public ModelAndView importData(HttpServletRequest request) {
-		String page = new String("business/logger/import");
-		ModelAndView result = initPage(request, page);
-		List<TreeDto> list = commonService.getErrorLevel();
-		result.addObject("errorLevelDrops", list);
-		result.addObject("impactVehicleDrops", null);//FIXME 需要前台删掉
+		String id = request.getParameter("id");
+		result.addObject("loggerId", id);
 		return result;
 	}
 

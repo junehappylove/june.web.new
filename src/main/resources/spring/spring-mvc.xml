@@ -60,7 +60,7 @@
      -->
 	
 	<!-- 引入缓存配置 -->
-	<import resource="classpath*:spring/spring-cache.xml" />
+	<!-- <import resource="classpath*:spring/spring-cache.xml" /> -->
 	<!-- 如果不用import语句，也可以在web.xml中引入配置，方法如下： -->
 	<!-- 
 	<context-param>

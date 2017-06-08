@@ -38,8 +38,6 @@ public class CommonService extends BaseService<CommonDao, TreeDto> {
 	 * 获取故障等级下拉数据
 	 * 
 	 * @return
-	 * @date 2016年5月16日 上午10:12:08
-	 * @writer wjw.happy.love@163.com
 	 */
 	public List<TreeDto> getErrorLevel(){
 		return commonDao.getErrorLevel();
@@ -49,8 +47,6 @@ public class CommonService extends BaseService<CommonDao, TreeDto> {
 	 * 获取组织树
 	 * 
 	 * @return
-	 * @date 2016年5月16日 上午10:14:29
-	 * @writer wjw.happy.love@163.com
 	 */
 	public List<TreeDto> getOrgTree() {
 		// 获取一级组织
@@ -64,8 +60,6 @@ public class CommonService extends BaseService<CommonDao, TreeDto> {
 	 * 
 	 * @param firstOrg
 	 * @return
-	 * @date 2016年5月16日 上午10:14:20
-	 * @writer wjw.happy.love@163.com
 	 */
 	private List<TreeDto> getSubOrg(List<TreeDto> firstOrg) {
 		if (firstOrg != null) {
@@ -82,8 +76,6 @@ public class CommonService extends BaseService<CommonDao, TreeDto> {
 	 * 获取所有的角色
 	 * 
 	 * @return
-	 * @date 2016年5月16日 上午10:14:12
-	 * @writer wjw.happy.love@163.com
 	 */
 	public List<TreeDto> getRole() {
 		return commonDao.getRole();
@@ -94,10 +86,8 @@ public class CommonService extends BaseService<CommonDao, TreeDto> {
 	 * 
 	 * @param buttonDto
 	 * @return
-	 * @date 2016年5月16日 上午10:13:56
-	 * @writer wjw.happy.love@163.com
 	 */
-	@Cacheable(value = "getFunctionByRole", key = "#root.args[0]")
+	//@Cacheable(value = "getFunctionByRole", key = "#root.args[0]")
 	public List<ButtonDto> getFunctionByRole(ButtonDto buttonDto) {
 		return commonDao.getFunctionByRole(buttonDto);
 	}

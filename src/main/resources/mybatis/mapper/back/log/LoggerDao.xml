@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       v.OPETATE_PARAMS	AS operateParams,
 		       v.OPERATE_TIME 	AS operateTime,
 		       u.USER_NAME 		AS userName
-		 FROM LOG_OPERATE_SERVER v
+		 FROM LOG_OPERATE v
 		 LEFT JOIN SYS_USER u ON u.USER_ID = v.USER_ID
 		 WHERE 1 = 1
 		<if test="operateModule != null and operateModule != ''">
@@ -30,11 +30,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 查询服务端日志列表 -->
 	<select id="getPageList" resultType="com.june.dto.log.LoggerDto"
 		parameterType="com.june.dto.log.LoggerDto">
-		<include refid="pagetop" />
 		<include refid="selectData" />
 			ORDER BY v.OPERATE_TIME DESC
-		<include refid="pageend" />
+        <include refid="pagelimit" />
 	</select>
+
+    <sql id="pagelimit">
+        limit #{start}, #{pageSize}
+    </sql>
+    
 	<sql id="pagetop">
 		<![CDATA[SELECT * FROM (SELECT ROWNUM AS PNUM, TNUM.* FROM ( ]]>
 	</sql>
@@ -65,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       v.OPETATE_PARAMS	AS operateParams,
 		       v.OPERATE_TIME 	AS operateTime,
 		       u.USER_NAME 		AS userName
-		 FROM LOG_OPERATE_SERVER v
+		 FROM LOG_OPERATE v
 		 LEFT JOIN SYS_USER u ON u.USER_ID = v.USER_ID
 		 WHERE v.LOG_ID = #{loggerId}
 	</select>
@@ -75,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey keyProperty="errorId" resultType="java.lang.String" order="BEFORE">
 			SELECT LOG_SERVER_SEQ.NEXTVAL AS LOG_ID FROM DUAL 
 		</selectKey>
-		<![CDATA[ INSERT INTO LOG_OPERATE_SERVER (
+		<![CDATA[ INSERT INTO LOG_OPERATE (
 		  	LOG_ID    		,
 			USER_ID      	,
 			OPERATE_TYPE    ,
@@ -97,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 编辑服务端日志信息 -->
 	<update id="update" parameterType="com.june.dto.log.LoggerDto">
-		UPDATE LOG_OPERATE_SERVER
+		UPDATE LOG_OPERATE
 		   SET USER_ID     		= #{userId},
 		       OPERATE_TYPE     = #{operateType},
 		       FUN_MODULE     	= #{operateModule},
@@ -110,10 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 删除服务端日志 -->
 	<delete id="delete" parameterType="com.june.dto.log.LoggerDto">
-	  DELETE FROM LOG_OPERATE_SERVER WHERE LOG_ID = #{loggerId}
+	  DELETE FROM LOG_OPERATE WHERE LOG_ID = #{loggerId}
 	</delete>
 	<!-- 删除服务端日志 -->
 	<delete id="clear">
-	  DELETE FROM LOG_OPERATE_SERVER WHERE 1=1 
+	  DELETE FROM LOG_OPERATE WHERE 1=1 
 	</delete>
 </mapper>

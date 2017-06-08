@@ -36,7 +36,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 * @param userInfoDto
 	 */
 	@Override
-	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
+	//@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void deleteDto(UserInfoDto userInfoDto) {
 		userInfoDao.delete(userInfoDto);//删除用户
 		userInfoDao.deleteUserRoleInfo(userInfoDto);//删除用户的角色
@@ -47,7 +47,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 * 
 	 * @param userInfoDto
 	 */
-	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
+	//@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void updateUserRoleInfo(UserInfoDto userInfoDto) {
 		// 删除用户角色信息
 		userInfoDao.deleteUserRoleInfo(userInfoDto);
@@ -73,7 +73,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 * 
 	 * @param userInfoDto
 	 */
-	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
+	//@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void deleteUserRoleInfo(UserInfoDto userInfoDto) {
 		List<UserRoleDto> userRoleList = getRolesById(userInfoDto);
 		if (userRoleList != null && userRoleList.size() > 0) {// 如果存在用户角色信息
@@ -86,7 +86,7 @@ public class UserInfoService extends BaseService<UserInfoDao, UserInfoDto> {
 	 * 
 	 * @param userInfoDto
 	 */
-	@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
+	//@CacheEvict(value = { "getUserInfoById", "getPageList", "getTotal" }, allEntries = true)
 	public void addUserRoleInfo(UserInfoDto userInfoDto) {
 		String roleIds = userInfoDto.getRoleId();
 		if (!StringUtil.isBlank(roleIds)) {

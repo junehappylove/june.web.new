@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
@@ -41,7 +42,7 @@ import com.june.service.back.system.base.role.SysQxsjService;
 @Controller
 @RequestMapping("/system/base/menu")
 public class SysMenuController extends BaseController<SysMenuDto> {
-
+	private final JspPage page = new JspPage("system/base/menu/menu","menu");
     @Autowired
     private SysMenuService sysMenuService;
     @Autowired
@@ -52,7 +53,7 @@ public class SysMenuController extends BaseController<SysMenuDto> {
     @RequestMapping("/")
     @MethodLog(module = "系统菜单", remark = "系统菜单页面初始化", operateType = Constants.OPERATE_TYPE_INIT)
     public ModelAndView init(HttpServletRequest request) {
-        return initPage(request,"system/base/menu/menu");
+        return initPage(request, page);
     }
 
 	@RequestMapping("/view/{id}")
@@ -242,7 +243,8 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 				} // 不存在才添加
 			}
 			//批量添加
-			functionService.addList(list);
+			if(list != null && list.size()>0)
+				functionService.addList(list);
 			messageSaveSuccess(response);
 		}else{
 			message(response, "menu_code_null", MESSAGE_ERRO);
@@ -283,7 +285,8 @@ public class SysMenuController extends BaseController<SysMenuDto> {
 				}//存在这条数据才去删除
 			}
 			// 批量删除
-			functionService.deleteList(list);
+			if(list != null && list.size()>0)
+				functionService.deleteList(list);
 			// TODO 删除权限按钮sys_function还应该关联删除sys_role_function的相关关系记录
 			messageDeleteSuccess(response);
 		}else{

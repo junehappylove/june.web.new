@@ -47,7 +47,7 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	 * @date 2016年5月13日 下午2:00:55
 	 * @writer wjw.happy.love@163.com
 	 */
-	@Cacheable(value = "getRoleByRoleName", key = "#root.args[0]")
+	//@Cacheable(value = "getRoleByRoleName", key = "#root.args[0]")
 	public RoleInfoDto getRoleByRoleName(RoleInfoDto roleInfoDto) {
 		return roleDao.getRoleByRoleName(roleInfoDto);
 	}
@@ -60,7 +60,7 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	 * @date 2016年5月13日 下午2:01:09
 	 * @writer wjw.happy.love@163.com
 	 */
-	@Cacheable(value = "getRoleByRoleId", key = "#p0")
+	//@Cacheable(value = "getRoleByRoleId", key = "#p0")
 	public RoleInfoDto getRoleByRoleId(String roleId) {
 		return roleDao.get(new RoleInfoDto(roleId));
 	}
@@ -68,7 +68,7 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 删除角色信息 void
 	 */
-	@CacheEvict(value = { "getPageList", "getTotal", "getRoleByRoleId", "getRoleByRoleName" }, allEntries = true)
+	//@CacheEvict(value = { "getPageList", "getTotal", "getRoleByRoleId", "getRoleByRoleName" }, allEntries = true)
 	public void deleteRoleById(String roleId) {
 		roleDao.delete(new RoleInfoDto(roleId));
 	}
@@ -132,8 +132,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 给角色赋菜单权限
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void authorityMenu(MenuInfoDto menuInfoDto) {
 		roleDao.authorityMenu(menuInfoDto);
 	}
@@ -141,8 +141,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 给角色赋按钮权限
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void authorityButton(MenuInfoDto menuInfoDto) {
 		roleDao.authorityButton(menuInfoDto);
 	}
@@ -150,8 +150,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 给角色删除权限
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void delAuthorityMenu(MenuInfoDto menuInfoDto) {
 		roleDao.delAuthorityMenu(menuInfoDto);
 	}
@@ -159,8 +159,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 给角色按钮权限
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void delAuthorityButton(MenuInfoDto menuInfoDto) {
 		roleDao.delAuthorityButton(menuInfoDto);
 	}
@@ -173,7 +173,7 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 		String authorityMenus = "";
 		if (list != null && list.size() > 0) {
 			for (int i = 0; i < list.size(); i++) {
-				authorityMenus = authorityMenus + list.get(i).getId() + ",";
+				authorityMenus += list.get(i).getId() + ",";
 			}
 		}
 		return authorityMenus;
@@ -187,7 +187,7 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 		String authorityButtons = "";
 		if (list != null && list.size() > 0) {
 			for (int i = 0; i < list.size(); i++) {
-				authorityButtons = authorityButtons + list.get(i).getId() + ",";
+				authorityButtons += list.get(i).getId() + ",";
 			}
 		}
 		return authorityButtons;
@@ -233,8 +233,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 添加用户角色关系
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void addUserRole(MenuInfoDto menuInfoDto) {
 		roleDao.addUserRole(menuInfoDto);
 	}
@@ -242,8 +242,8 @@ public class RoleService extends BaseService<RoleDao, RoleInfoDto> {
 	/**
 	 * 删除用户角色关系
 	 */
-	@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
-			"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
+	//@CacheEvict(value = { "getFunctionByRole", "getAuthorityofRole", "getButtonauthorityOfRole", "getPageList",
+	//		"getTotal", "getRoleMenus", "getRoleButtons" }, allEntries = true)
 	public void delUserRole(MenuInfoDto menuInfoDto) {
 		roleDao.delUserRole(menuInfoDto);
 	}

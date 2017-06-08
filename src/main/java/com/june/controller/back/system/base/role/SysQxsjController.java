@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
@@ -38,6 +39,8 @@ import com.june.service.back.system.base.role.SysQxsjService;
 @RequestMapping("/system/base/qxsj")
 public class SysQxsjController extends BaseController<SysQxsjDto> {
 
+	private final JspPage page = new JspPage("system/base/role/qxsj","qxsj");
+	
 	@Autowired
 	private SysQxsjService qxsjService;
 	
@@ -52,7 +55,7 @@ public class SysQxsjController extends BaseController<SysQxsjDto> {
 	@RequestMapping("/")
 	@MethodLog(module = "权限设计", remark = "权限设计信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public ModelAndView init(HttpServletRequest request) {
-		return initPage(request,"system/base/role/qxsj");
+		return initPage(request, page);
 	}
 	
 	@RequestMapping("/view/{id}")

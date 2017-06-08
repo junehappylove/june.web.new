@@ -94,7 +94,6 @@
 					<button type="button" class="close" onclick="closemenumodal()">×</button>
 					分配角色权限
 				</div>
-
 				<div class="modal-body">
 					<div class="row">
 						<div>

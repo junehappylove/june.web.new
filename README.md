@@ -20,15 +20,18 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 
 ## 项目日志
 
+>22. 2017-06-08 系统日志展示
+    添加系统日志功能；暂时屏蔽缓存注解；添加通用初始页面类JspPage
+
 >21. 2017-06-02 添加系统日志，新建dto项目
     后期打算模块化分离，将各个模块单独项目，先对dto分离试点。
+    
 >20. 2017-03-26 项目正式更名为 june.web.new
 
 >19. 2017-03-23 提供对ehcache的支持，项目使用中，如果提示缓存的错误，请在缓存文件配置中添加相应的缓存属性，参考:ehcache.xml
 	pom.xml采用私服，需要自己参考修改
 
->18. 2017-03-06 提供缓存执行，使用Spring cache以注解方式使用，这样只需要为特定方法添加缓存注解即可
-其他无需做任何修改,可以参考LoginService这个类处理缓存数据
+>18. 2017-03-06 提供缓存执行，使用Spring cache以注解方式使用，这样只需要为特定方法添加缓存注解即可其他无需做任何修改,可以参考LoginService这个类处理缓存数据
 
 >17. 2017-02-22 完善按钮权限系统实现,tag按钮生成黑科技，自带权限
 
@@ -122,5 +125,6 @@ JavaWeb new framework - springmvc+mybatis+shiro+websocket+activiti+logback+quart
 >* 微信: junehappylove
 >* 财付通: 980154978
 
-====
+----
+
 *Thinks a lot for all the Open Source Code lovers!*

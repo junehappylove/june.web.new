@@ -59,7 +59,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:42
 	 * @writer junehappylove
 	 */
-	@Cacheable(value="getFristMenu", key = "(#userInfoDto.userId).concat(#userInfoDto.roleId)")
+	//@Cacheable(value="getFristMenu", key = "(#userInfoDto.userId).concat(#userInfoDto.roleId)")
 	public List<MenuDto> getFristMenu(UserInfoDto userInfoDto) {
 		return loginDao.getFristMenu(userInfoDto);
 	}
@@ -72,7 +72,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:35
 	 * @writer junehappylove
 	 */
-	@Cacheable(value = "getSecondMenu", key = "#menuDto.userId.concat(#menuDto.roleId).concat(#menuDto.menuId)", condition="#menuDto.pid!='0'")
+	//@Cacheable(value = "getSecondMenu", key = "#menuDto.userId.concat(#menuDto.roleId).concat(#menuDto.menuId)", condition="#menuDto.pid!='0'")
 	public List<MenuDto> getSecondMenu(MenuDto menuDto) {
 		return loginDao.getSecondMenu(menuDto);
 	}
@@ -85,7 +85,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:15:28
 	 * @writer junehappylove
 	 */
-	@Cacheable(value = "getMenuById", key="#menuDto.menuId")
+	//@Cacheable(value = "getMenuById", key="#menuDto.menuId")
 	public MenuDto getMenuById(MenuDto menuDto) {
 		return loginDao.getMenuById(menuDto);
 	}
@@ -98,7 +98,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:39
 	 * @writer junehappylove
 	 */
-	@Cacheable(value = "getUserInfoById", key="#userId")
+	//@Cacheable(value = "getUserInfoById", key="#userId")
 	public UserInfoDto getUserInfoById(String userId) {
 		return loginDao.getUserInfoById(userId);
 	}
@@ -111,7 +111,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:50
 	 * @writer junehappylove
 	 */
-	@Cacheable(value = "getRoleInfoByUserId", key="#userInfoDto.userId")
+	//@Cacheable(value = "getRoleInfoByUserId", key="#userInfoDto.userId")
 	public List<UserInfoDto> getRoleInfoByUserId(UserInfoDto userInfoDto) {
 		System.out.println("test cache...仅调用一次表示缓存有效!");
 		return loginDao.getRoleInfoByUserId(userInfoDto);
@@ -125,7 +125,7 @@ public class LoginService extends BaseService<LoginDao, UserInfoDto> {
 	 * @date 2016年12月20日 下午8:14:59
 	 * @writer junehappylove
 	 */
-	@Cacheable(value = "getRoleButton", key="#userInfoDto.roleId")
+	//@Cacheable(value = "getRoleButton", key="#userInfoDto.roleId")
 	public List<ButtonDto> getRoleButton(UserInfoDto userInfoDto) {
 		return loginDao.getRoleButton(userInfoDto);
 	}

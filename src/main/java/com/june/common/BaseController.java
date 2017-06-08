@@ -119,7 +119,7 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 	 * @param request
 	 * @param response
 	 * @param dto
-	 * @return
+	 * @return dto
 	 * @throws Exception
 	 * @date 2016年12月14日 下午11:09:34
 	 * @writer junehappylove
@@ -820,6 +820,36 @@ public abstract class BaseController<Dto extends PageDTO<Dto>> {
 		message(response,messages, type);
 	}
 
+	/**
+	 * 初始化页面
+	 * @param request http请求
+	 * @param page jsp页面
+	 * @return 视图
+	 */
+	protected ModelAndView initPage(HttpServletRequest request, JspPage page) {
+		ModelAndView result = new ModelAndView(page.toString());
+		// 获取用户信息
+		UserInfoDto userInfoDto = loginUser(request);
+		ButtonDto buttonDto = new ButtonDto();
+		if (userInfoDto != null) {
+			buttonDto.setRoleId(userInfoDto.getRoleId());
+			buttonDto.setMenuUrl(request.getServletPath());
+			// 根据故障代码角色和初始化的页面获取该页面有权限的操作
+			List<ButtonDto> list = commonService.getFunctionByRole(buttonDto);
+			for (int i = 0; i < list.size(); i++) {
+				result.addObject(list.get(i).getButtonPageId(), "hasAuthority");
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 推荐使用 {@link #initPage(HttpServletRequest, JspPage) }
+	 * @deprecated
+	 * @param request 请求
+	 * @param page 页面
+	 * @return 视图
+	 */
 	protected ModelAndView initPage(HttpServletRequest request, String page) {
 		ModelAndView result = new ModelAndView(page);
 		// 获取用户信息

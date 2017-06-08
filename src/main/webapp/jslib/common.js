@@ -499,14 +499,18 @@ function Encrypt(id) {
 	}
 }
 
-// 获取checkboxtree所有选中的节点
+/**
+ * 获取checkboxtree所有选中的节点
+ */
 function getSelectTree(treeId) {
 	var treeObj = $.fn.zTree.getZTreeObj(treeId);
 	var nodes = treeObj.getCheckedNodes(true);
 	return nodes;
 }
 
-// 比较开始日期和结束日期
+/** 比较开始日期和结束日期
+ * 
+ */
 function checkEndTime(startid, endid) {
 	var startTime = $("#" + startid).val();
 	// var start=new Date(startTime.replace("-", "/").replace("-", "/"));

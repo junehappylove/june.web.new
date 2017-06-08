@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
@@ -38,6 +39,8 @@ import com.june.service.back.system.base.org.SysOrgService;
 @RequestMapping("/system/org")
 public class SysOrgController extends BaseController<SysOrgDto> {
 
+	private final JspPage page = new JspPage("system/base/org/orginfo","org");
+	
 	@Autowired
 	protected SysOrgService sysOrgService;
 	
@@ -52,7 +55,7 @@ public class SysOrgController extends BaseController<SysOrgDto> {
 	@RequestMapping("/")
 	@MethodLog(module = "组织管理", remark = "组织信息页面初始化", operateType = Constants.OPERATE_TYPE_SEARCH)
 	public ModelAndView init(HttpServletRequest request) {
-		return initPage(request,"system/base/org/orginfo");
+		return initPage(request, page);
 	}
 	
 	@RequestMapping("/view/{id}")

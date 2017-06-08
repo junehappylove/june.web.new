@@ -33,10 +33,8 @@ public interface ShiroUserDao {
 	 * 根据角色获取对应的menu
 	 * @param roleId
 	 * @return
-	 * @date 2016年6月23日 下午1:39:06
-	 * @writer wjw.happy.love@163.com
 	 */
-	@Cacheable(value="getRoleMenus",key="#root.caches[0].name")
+	//@Cacheable(value="getRoleMenus",key="#root.caches[0].name")
 	public List<Resource> getRoleMenus(String roleId);
 	
 	public Resource getMenubyRoleIdMenuId(Resource resource);
@@ -45,9 +43,7 @@ public interface ShiroUserDao {
 	 * 根据角色获取对应的button
 	 * @param roleId
 	 * @return
-	 * @date 2016年6月23日 下午1:39:38
-	 * @writer wjw.happy.love@163.com
 	 */
-	@Cacheable(value="getRoleButtons",key="#root.caches[0].name")
+	//@Cacheable(value="getRoleButtons",key="#root.caches[0].name")
 	public List<Resource> getRoleButtons(String roleId);
 }

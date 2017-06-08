@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.june.common.BaseController;
 import com.june.common.Constants;
+import com.june.common.JspPage;
 import com.june.common.MessageDto;
 import com.june.common.TreeDto;
 import com.june.common.annotation.MethodLog;
@@ -44,7 +45,7 @@ import com.june.service.back.system.base.role.RoleService;
 @Controller
 @RequestMapping("/system/base/role")
 public class RoleController extends BaseController<RoleInfoDto> {
-
+	private final JspPage page = new JspPage("system/base/role/role", "role");
 	/**
 	 * 角色管理用service注入
 	 */
@@ -58,7 +59,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	protected CommonService commonService;
 
 	/**
-	 * 角色管理画面初期画
+	 * 初始化页面
 	 * 
 	 * @param request
 	 * @return
@@ -67,7 +68,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 */
 	@RequestMapping("/")
 	public ModelAndView init(HttpServletRequest request) {
-		return initPage(request,"system/base/role/role");
+		return initPage(request, page);
 	}
 
 	/**
@@ -102,19 +103,20 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	@RequestMapping("/saveAddRole")
 	public void saveAddRole(HttpServletRequest request, HttpServletResponse response,
 			@Validated({ ValidateInsert.class }) RoleInfoDto roleInfoDto, BindingResult bindingResult)
-					throws Exception {
+			throws Exception {
 		MessageDto messageDto = getValidateError(bindingResult);// 将校验消息存放到messagedto中
 		if (StringUtils.isEmpty(messageDto.getErrType())) {
 			messageDto = new MessageDto();
 			// 判断角色名称是否已经存在，存在返回错误消息，否则插入
 			RoleInfoDto roleInfoDtoByName = roleService.getRoleByRoleName(roleInfoDto);
 			if (roleInfoDtoByName != null) {
-				message(response, "error_info_exist", MESSAGE_ERRO, roleInfoDtoByName.getDtoName(),roleInfoDtoByName.getRoleName());
+				message(response, "error_info_exist", MESSAGE_ERRO, roleInfoDtoByName.getDtoName(),
+						roleInfoDtoByName.getRoleName());
 			} else {
 				roleService.addDto(roleInfoDto);
 				message(response, "save_new_success", MESSAGE_INFO, roleInfoDto.getDtoName());
 			}
-		}else{
+		} else {
 			// 有错误返回
 			toJson(messageDto, response);
 		}
@@ -131,16 +133,16 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/checkDetail")
-	public void checkDetail(HttpServletRequest request, HttpServletResponse response,
-			RoleInfoDto roleInfoDto) throws Exception {
+	public void checkDetail(HttpServletRequest request, HttpServletResponse response, RoleInfoDto roleInfoDto)
+			throws Exception {
 		if (roleInfoDto.getRoleId().isEmpty()) {
-			message(response,"not_empty_error", MESSAGE_ERRO, "角色ID");
+			message(response, "not_empty_error", MESSAGE_ERRO, "角色ID");
 		} else {
 			String roleName = roleInfoDto.getRoleName();
 			roleInfoDto = roleService.getRoleByRoleId(roleInfoDto.getRoleId());
 			if (roleInfoDto == null) {
-				message(response,"role_not_exist", MESSAGE_ERRO, roleName);
-			}else{
+				message(response, "role_not_exist", MESSAGE_ERRO, roleName);
+			} else {
 				toJson(roleInfoDto, response);
 			}
 		}
@@ -166,10 +168,11 @@ public class RoleController extends BaseController<RoleInfoDto> {
 			// 判断角色名称是否已经存在，存在返回错误消息，否则更新
 			RoleInfoDto roleInfoDtoByName = roleService.getRoleByRoleName(roleInfoDto);
 			if (roleInfoDtoByName != null) {
-				message(response,"error_info_exist",  MESSAGE_ERRO,roleInfoDtoByName.getDtoName(), roleInfoDto.getRoleName());
+				message(response, "error_info_exist", MESSAGE_ERRO, roleInfoDtoByName.getDtoName(),
+						roleInfoDto.getRoleName());
 			} else {
 				roleService.updateDto(roleInfoDto);
-				message(response,"info_edit_success", MESSAGE_INFO,roleInfoDto.getDtoName());
+				message(response, "info_edit_success", MESSAGE_INFO, roleInfoDto.getDtoName());
 			}
 		} else {
 			toJson(messageDto, response);
@@ -187,14 +190,14 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/delRole")
-	public void delRole(HttpServletRequest request, HttpServletResponse response,
-			RoleInfoDto roleInfoDto) throws Exception {
+	public void delRole(HttpServletRequest request, HttpServletResponse response, RoleInfoDto roleInfoDto)
+			throws Exception {
 		String roleId = roleInfoDto.getRoleId();
-		//MessageDto messageDto = new MessageDto();// 返回消息dto
+		// MessageDto messageDto = new MessageDto();// 返回消息dto
 		if (roleId.isEmpty()) {
-			message(response,"not_empty_error", MESSAGE_ERRO, "角色ID");
+			message(response, "not_empty_error", MESSAGE_ERRO, "角色ID");
 		} else {
-			//ArrayList<String> errList = new ArrayList<String>();// 返回消息list
+			// ArrayList<String> errList = new ArrayList<String>();// 返回消息list
 			String errorString = "";// 删除未成功的角色
 			String successString = "";// 删除成功的角色
 			for (int i = 0; i < roleId.split(",").length; i++) {
@@ -212,13 +215,13 @@ public class RoleController extends BaseController<RoleInfoDto> {
 				}
 			}
 			if (!errorString.equals("")) {
-				message(response,"delete_role_error",MESSAGE_WARN,errorString);
+				message(response, "delete_role_error", MESSAGE_WARN, errorString);
 			}
 			if (!successString.equals("")) {
-				message(response,"delete_role_success",MESSAGE_INFO,successString);
+				message(response, "delete_role_success", MESSAGE_INFO, successString);
 			}
 		}
-		//toJson(messageDto, response);
+		// toJson(messageDto, response);
 	}
 
 	/**
@@ -244,18 +247,15 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @param request
 	 * @param response
 	 * @throws Exception
-	 * @date 2016年5月18日 下午2:04:10
-	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/authorityMenus")
-	public void authorityMenus(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public void authorityMenus(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MenuInfoDto menuInfoDto = new MenuInfoDto();
 		fillRequestDto(request, menuInfoDto);
 		// 页面选中的菜单和button的id
-		String authorityMenus = menuInfoDto.getAuthorityMenusId();
-		String menuIds = getMenus(authorityMenus);
-		String buttonIds = getButtons(authorityMenus);
+		String authorityMenus = menuInfoDto.getAuthorityMenusId();// 拿到ztree的所有节点
+		String menuIds = getMenus(authorityMenus);//分出菜单节点
+		String buttonIds = getButtons(authorityMenus);//分出按钮节点
 
 		// 更新操作之前查询角色的菜单权限
 		String originalauthorityMenus = roleService.getAuthorityofRole(menuInfoDto.getRoleId());
@@ -300,7 +300,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 			}
 		}
 
-		message(response,"authority_success", MESSAGE_INFO, "角色");
+		message(response, "authority_success", MESSAGE_INFO, "角色");
 	}
 
 	/**
@@ -309,8 +309,6 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @param authorityFromPage
 	 * @param authorityOriginal
 	 * @return
-	 * @date 2016年5月18日 下午2:04:25
-	 * @writer wjw.happy.love@163.com
 	 */
 	private String compareAddAuthority(String authorityFromPage, String authorityOriginal) {
 		// 如果页面传过来的为空，则不需要进行比较选出需要添加的权限
@@ -333,8 +331,6 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @param authorityFromPage
 	 * @param authorityOriginal
 	 * @return
-	 * @date 2016年5月18日 下午2:04:32
-	 * @writer wjw.happy.love@163.com
 	 */
 	private String compareDelAuthority(String authorityFromPage, String authorityOriginal) {
 		// 如果页面传过来的为空，则需要将权限全部删除
@@ -357,8 +353,6 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @param str1
 	 * @param str2
 	 * @return
-	 * @date 2016年5月18日 下午2:04:40
-	 * @writer wjw.happy.love@163.com
 	 */
 	private String stringCompare(String str1, String str2) {
 		String[] arr1 = str1.split(",");
@@ -411,8 +405,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * @writer wjw.happy.love@163.com
 	 */
 	@RequestMapping("/assginUsers")
-	public void assginUsers(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public void assginUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MenuInfoDto menuInfoDto = new MenuInfoDto();
 		fillRequestDto(request, menuInfoDto);
 
@@ -436,7 +429,7 @@ public class RoleController extends BaseController<RoleInfoDto> {
 				roleService.delUserRole(menuInfoDto);
 			}
 		}
-		message(response,"assign_userrole_success", MESSAGE_INFO);
+		message(response, "assign_userrole_success", MESSAGE_INFO);
 	}
 
 	/**
@@ -444,15 +437,14 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * 
 	 * @param authority
 	 * @return
-	 * @date 2016年5月18日 下午2:05:02
-	 * @writer wjw.happy.love@163.com
 	 */
 	private String getMenus(String authority) {
 		String menuIds = "";
 		if (authority.contains(",")) {
-			for (int i = 0; i < authority.split(",").length; i++) {
-				if (!authority.split(",")[i].contains("button")) {
-					menuIds = menuIds + authority.split(",")[i] + ",";
+			String[] temp = authority.split(",");
+			for (String str : temp) {
+				if (!str.contains("button")) {
+					menuIds += str + ",";
 				}
 			}
 		} else {
@@ -468,15 +460,14 @@ public class RoleController extends BaseController<RoleInfoDto> {
 	 * 
 	 * @param authority
 	 * @return
-	 * @date 2016年5月18日 下午2:05:07
-	 * @writer wjw.happy.love@163.com
 	 */
 	private String getButtons(String authority) {
 		String buttonIds = "";
 		if (authority.contains(",")) {
-			for (int i = 0; i < authority.split(",").length; i++) {
-				if (authority.split(",")[i].contains("button")) {
-					buttonIds = buttonIds + authority.split(",")[i].substring(6) + ",";
+			String[] temp = authority.split(",");
+			for (String str : temp) {
+				if (str.contains("button")) {
+					buttonIds += str.substring(6) + ",";
 				}
 			}
 		} else {

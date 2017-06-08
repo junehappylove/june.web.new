@@ -33,33 +33,11 @@ import com.june.dto.back.system.base.RoleInfoDto;
 public interface RoleDao extends BaseDao<RoleInfoDto>{
 
 	/**
-	 * 插入新增角色
-	 * @param roleInfoDto
-	 */
-	@DataSource("slave")
-	public void saveAddRole(RoleInfoDto roleInfoDto);
-	
-	/**
 	 * 根据roleName获取角色信息
 	 * @param roleInfoDto
 	 * @return RoleInfoDto
 	 */
 	public RoleInfoDto getRoleByRoleName(RoleInfoDto roleInfoDto);
-	
-	/**
-	 * 根据roleId获取角色信息
-	 * @param roleId
-	 * @return RoleInfoDto
-	 */
-	public RoleInfoDto getRoleByRoleId(String roleId);
-	
-	/**
-	 * 更新角色信息
-	 * @param roleInfoDto
-	 * @date 2017年3月23日 下午3:44:24
-	 * @writer junehappylove
-	 */
-	public void updateRoleById(RoleInfoDto roleInfoDto);
 	
 	/**
 	 * 删除角色信息
@@ -106,7 +84,7 @@ public interface RoleDao extends BaseDao<RoleInfoDto>{
 	 * 获取菜单
 	 * @return List<TreeDto>
 	 */
-	@Cacheable(value="getFirstMenus",key="#root.caches[0].name")
+	//@Cacheable(value="getFirstMenus",key="#root.caches[0].name")
 	public List<TreeDto> getFirstMenus();
 	
 	
@@ -115,7 +93,7 @@ public interface RoleDao extends BaseDao<RoleInfoDto>{
 	 * @param roleId
 	 * @return List<MenuInfoDto>
 	 */
-	@Cacheable(value="getAuthorityofRole",key="#root.caches[0].name")
+	//@Cacheable(value="getAuthorityofRole",key="#root.caches[0].name")
 	public List<MenuInfoDto> getAuthorityofRole(String roleId);
 	
 	/**
@@ -123,7 +101,7 @@ public interface RoleDao extends BaseDao<RoleInfoDto>{
 	 * @param roleId
 	 * @return List<MenuInfoDto>
 	 */
-	@Cacheable(value="getButtonauthorityOfRole",key="#root.caches[0].name")
+	//@Cacheable(value="getButtonauthorityOfRole",key="#root.caches[0].name")
 	public List<MenuInfoDto> getButtonauthorityOfRole(String roleId);
 	
 	/**
