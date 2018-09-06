@@ -138,6 +138,7 @@
 	</bean>
 	<!-- 注解式事务处理 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+
 	<!-- 可通过注解控制事务 -->
 	<!-- <tx:annotation-driven /> -->
 	<!-- 声明式事务配置 -->
@@ -164,7 +165,7 @@
     </tx:advice> -->
 
     <!-- 配置切面 -->
-   <!--  <aop:config>
+    <!--  <aop:config>
         <aop:pointcut id="transactionPointcut" expression="execution(* com.june.service..*.*(..))"/>
         <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
     </aop:config> -->

@@ -46,22 +46,20 @@ public class LogAspect {
 
 	@Before("methodCachePointcut()")
 	public void before(){
-		//System.out.println("before");
 	}
 	
 	@After("methodCachePointcut()")
 	public void after(){
-		//System.out.println("after");
 	}
 	
 	/**
-	 * spring aop中@Around @Before @After<br>
+	 * spring aop中'@Around' '@Before' '@After'<br>
 	 * 三个注解的区别 <br>
 	 * <blockquote>
 	 * 
-	 * '@Before是在所拦截方法执行之前执行一段逻辑。 <br>
-	 * '@After 是在所拦截方法执行之后执行一段逻辑。<br>
-	 * '@Around是可以同时在所拦截方法的前后执行一段逻辑。<br>
+	 * '@Before'是在所拦截方法执行之前执行一段逻辑。 <br>
+	 * '@After' 是在所拦截方法执行之后执行一段逻辑。<br>
+	 * '@Around'是可以同时在所拦截方法的前后执行一段逻辑。<br>
 	 * </blockquote>
 	 * 
 	 * @param point
@@ -72,7 +70,6 @@ public class LogAspect {
 	 */
 	@Around("methodCachePointcut()")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
-		//System.out.println("around");
 		Object object;
 		if (!Constants.IF_LOG) {
 			object = point.proceed();
